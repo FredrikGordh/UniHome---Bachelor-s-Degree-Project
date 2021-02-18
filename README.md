@@ -9,6 +9,7 @@ Detta är ett kandidatarbete gjort i kursen TDDD83 på Linköpings Universitet v
 - Joel Einarsson - joeei929@student.liu.se
 
 # Grafiska Riktlinjer
+**Från brainwriting:**
 - Snygg enkel sida
 - Enkel betalsida
 - Lätt att ladda upp bilder
@@ -30,7 +31,7 @@ Detta är ett kandidatarbete gjort i kursen TDDD83 på Linköpings Universitet v
 - Förklarande bilder
 - Pastellfärger
 
-Färgförslag:
+**Färgförslag:**
 
 - `#CCC0BC`
 - `#FF7C74`
