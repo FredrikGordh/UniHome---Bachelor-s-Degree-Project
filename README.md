@@ -29,3 +29,11 @@ Detta är ett kandidatarbete gjort i kursen TDDD83 på Linköpings Universitet v
 - Rundade ikoner
 - Förklarande bilder
 - Pastellfärger
+
+Färgförslag:
+
+- `#CCC0BC`
+- `#FF7C74`
+- `#A3625B`
+- `#533E3C`
+
