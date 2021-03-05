@@ -1,4 +1,3 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,venv,windows,macos,linux,git
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode,venv,windows,macos,linux,git
 
@@ -251,3 +250,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,venv,windows,macos,linux,git
+
+
+.gitlab/
