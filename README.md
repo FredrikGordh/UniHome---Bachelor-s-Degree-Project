@@ -33,7 +33,7 @@ Detta är ett kandidatarbete gjort i kursen TDDD83 på Linköpings Universitet v
 - Förklarande bilder
 - Pastellfärger
 
-**Färgförslag:**
+**Färgförslag:**  
 
 - `#CCC0BC`
 - `#FF7C74`
