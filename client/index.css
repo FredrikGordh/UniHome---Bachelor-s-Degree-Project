@@ -14,8 +14,15 @@
     background-color: black;
     color:white;
     width: 100%;
+    padding: 50px 250px;
+}
+
+.no-dot-list{
+      list-style-type: none;
 }
 
 body{
     
 }
+
+
