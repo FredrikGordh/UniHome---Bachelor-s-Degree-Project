@@ -253,3 +253,6 @@ $RECYCLE.BIN/
 
 
 .gitlab/
+
+#database
+server/database.db

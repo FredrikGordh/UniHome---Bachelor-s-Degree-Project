@@ -8,13 +8,11 @@ dbConnection = "mysql+pymysql://{}:{}@{}/{}".format(
     'client', 'tddd83', '83.249.161.212', 'unihome')
 
 app = Flask(__name__, static_folder='../client', static_url_path='/')
-app.config['SQLALCHEMY_DATABASE_URI'] = dbConnection
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'LuSg31rsf76nGvMVjzeqV1R0vchtnxu6XTrhrOSLtek'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-db.drop_all()
-db.create_all()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -108,7 +106,7 @@ def signup():
     db.session.commit()
     return "Success", 200
 
-@app.route('/user/list')
+@app.route('/users')
 def list_users():
     user_list = []
     all_users = User.query.all()
