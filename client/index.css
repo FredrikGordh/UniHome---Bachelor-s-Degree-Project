@@ -7,20 +7,6 @@
   left: 50px;
 }
 
-a:hover{
-  text-decoration: none;
-}
-
-.footer a{
-  color: white;
-}
-
-.section{
-  width: 100%;
-  /*To be removed:*/
-  height: 500px;
-}  
-
 #home-reviews {
   background-color: aqua;
 }
@@ -33,29 +19,20 @@ a:hover{
 #home-types {
   background-color: yellow;
 }
-
-#navbarNavDarkDropdown{
-  z-index: 1;
-  -webkit-user-select: none;
-  user-select: none;
-}
   
-#menuToggle a
-{
+#menuToggle a{
   text-decoration: none;
   color: #232323;
   
   transition: color 0.3s ease;
 }
 
-#menuToggle a:hover
-{
+#menuToggle a:hover{
   color: tomato;
 }
   
   
-#menuToggle input
-{
+#menuToggle input{
   display: block;
   width: 40px;
   height: 32px;
@@ -75,8 +52,7 @@ a:hover{
   * Just a quick hamburger
   */
    
-#menuToggle span
-{
+#menuToggle span{
   display: block;
   width: 33px;
   height: 4px;
@@ -95,22 +71,19 @@ a:hover{
     opacity 0.55s ease;
 }
 
-#menuToggle span:first-child
-{
+#menuToggle span:first-child{
   transform-origin: 0% 0%;
 }
 
-#menuToggle span:nth-last-child(2)
-{
+#menuToggle span:nth-last-child(2){
   transform-origin: 0% 100%;
 }
   
-  /* 
-   * Transform all the slices of hamburger
-   * into a crossmark.
-   */
-#menuToggle input:checked ~ span
-{
+/* 
+  * Transform all the slices of hamburger
+  * into a crossmark.
+  */
+#menuToggle input:checked ~ span{
   opacity: 1;
   transform: rotate(45deg) translate(-2px, -1px);
   background: #232323;
@@ -119,49 +92,49 @@ a:hover{
 /*
   * But let's hide the middle one.
   */
-#menuToggle input:checked ~ span:nth-last-child(3)
-{
+#menuToggle input:checked ~ span:nth-last-child(3){
   opacity: 0;
   transform: rotate(0deg) scale(0.2, 0.2);
 }
 
-  /*
-   * Ohyeah and the last one should go the other direction
-   */
+/*
+  * Ohyeah and the last one should go the other direction
+  */
 #menuToggle input:checked ~ span:nth-last-child(2){
   transform: rotate(-45deg) translate(0, -1px);
 }
   
-  /*
-   * Make this absolute positioned
-   * at the top left of the screen
-   */
-  #menu{
+/*
+  * Make this absolute positioned
+  * at the top left of the screen
+  */
+#menu{
   position: absolute;
   width: 300px;
   margin: -100px 0 0 -50px;
   padding: 50px;
   padding-top: 125px;
-  
+
   background: #ededed;
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
   /* to stop flickering of text in safari */
-  
+
   transform-origin: 0% 0%;
   transform: translate(-100%, 0);
-  
+
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-  }
+}
   
 #menu li{
   padding: 10px 0;
   font-size: 22px;
 }
   
-  /*
-   * And let's slide it in from the left
-   */
+/*
+* And let's slide it in from the left
+*/
+
 #menuToggle input:checked ~ ul{
   transform: none;
 }
@@ -177,15 +150,29 @@ a:hover{
 .footer{
   background-color: black;
   color:white;
+  color: s
   width: 100vw;
 }
 
-#logo {
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: black;
+.no-dot-list{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
+
+a:hover{
+  text-decoration: none;
+}
+
+.footer a{
+  color: white;
+}
+
+.section{
+  width: 100%;
+  /*To be removed:*/
+  height: 500px;
+}  
 
 body{
   margin: 0;
@@ -195,10 +182,4 @@ body{
   background: #232323;
   color: #cdcdcd;
   font-family: "Avenir Next", "Avenir", sans-serif;
-}
-
-.no-dot-list{
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
 }
