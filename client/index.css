@@ -17,8 +17,8 @@ a:hover{
 
 .section{
   width: 100%;
-  /*To be removed:*/
-  height: 500px;
+  margin: 0;
+  padding: 0;
 }  
 
 #home-reviews {
@@ -40,6 +40,10 @@ a:hover{
   user-select: none;
 }
   
+#menuToggle{
+    width: 100px;;
+}
+
 #menuToggle a
 {
   text-decoration: none;
@@ -136,23 +140,23 @@ a:hover{
    * Make this absolute positioned
    * at the top left of the screen
    */
-  #menu{
-  position: absolute;
-  width: 300px;
-  margin: -100px 0 0 -50px;
-  padding: 50px;
-  padding-top: 125px;
-  
-  background: #ededed;
-  list-style-type: none;
-  -webkit-font-smoothing: antialiased;
-  /* to stop flickering of text in safari */
-  
-  transform-origin: 0% 0%;
-  transform: translate(-100%, 0);
-  
-  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-  }
+#menu{
+    position: absolute;
+    width: 300px;
+    margin: -100px 0 0 -50px;
+    padding: 50px;
+    padding-top: 125px;
+
+    background: #ededed;
+    list-style-type: none;
+    -webkit-font-smoothing: antialiased;
+    /* to stop flickering of text in safari */
+
+    transform-origin: 0% 0%;
+    transform: translate(-100%, 0);
+
+    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
   
 #menu li{
   padding: 10px 0;
@@ -166,6 +170,11 @@ a:hover{
   transform: none;
 }
 
+#content {
+    margin: 0;
+    padding: 0;
+}
+
 .header{
   background-color: paleturquoise;
   color:black;
@@ -177,7 +186,7 @@ a:hover{
 .footer{
   background-color: black;
   color:white;
-  width: 100vw;
+  width: 100%;
 }
 
 #logo {
@@ -195,6 +204,10 @@ body{
   background: #232323;
   color: #cdcdcd;
   font-family: "Avenir Next", "Avenir", sans-serif;
+}
+html {
+    margin: 0;
+    padding: 0;
 }
 
 .no-dot-list{
