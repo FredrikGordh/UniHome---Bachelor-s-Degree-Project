@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import jsonify
 from flask import request
 from flask_bcrypt import Bcrypt
+from flask_jwt_extended import (JWTManager, create_access_token, jwt_required, get_jwt_identity)
+
 
 dbConnection = "mysql+pymysql://{}:{}@{}/{}".format(
     'client', 'tddd83', '83.249.161.212', 'unihome')
@@ -11,6 +13,7 @@ app = Flask(__name__, static_folder='../client', static_url_path='/')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'LuSg31rsf76nGvMVjzeqV1R0vchtnxu6XTrhrOSLtek'
+jwt = JWTManager(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
@@ -106,13 +109,58 @@ def signup():
     db.session.commit()
     return "Success", 200
 
-@app.route('/users')
+@app.route('/user/login', methods = ['POST'])
+def login():
+    user = request.get_json(force=True)
+    found = User.query.filter_by(email=user['email']).first()
+    print(found.serialize())
+    if found:
+        if (bcrypt.check_password_hash(found.password_hash, user['password'])):
+            access_token = create_access_token(identity=found.id)
+            response = {"token": access_token, "user": found.serialize()}
+            return jsonify(response), 200
+        else:
+            abort(401)
+    else:
+        abort(401)
+
+@app.route('/users', methods = ['GET'])
 def list_users():
     user_list = []
     all_users = User.query.all()
     for user in all_users:
       user_list.append(user.serialize())
     return jsonify(user_list)
+
+@app.route('/ad/<int:ad_id>', methods = ['PUT', 'GET'])
+def list_ad(ad_id):
+    if request.method == 'GET':
+        return jsonify(Ad.query.get_or_404(ad_id).serialize())
+    elif request.method == 'PUT':
+        return "NYI"
+        
+
+@app.route('/ads', methods = ['GET'])
+def ads():
+    if request.method == 'GET':
+        ad_list = []
+        all_ads = Ad.query.all()
+        for ad in all_ads:
+            ad_list.append(ad.serialize())
+        return jsonify(ad_list)
+
+
+
+@app.route('/ad/create', methods = ['POST'])
+@jwt_required()
+def create_ad():
+    if request.method == 'POST':
+            current_user_id = get_jwt_identity()
+            newad = request.get_json(force=True)
+            newadDB = Ad(adress=newad.get('adress'), description=newad.get('description'), user_id=(current_user_id))
+            db.session.add(newadDB)
+            db.session.commit()
+            return "success", 200
 
 if __name__ == "__main__":
     app.run(debug=True)
