@@ -17,7 +17,13 @@ h1 {
     margin: 0;
 }
 
+
 /* ID */
+#home_area_search{
+  background-color: white;
+  color: black;
+}
+
 #nav-bar{
   height: 0px;
 }
@@ -184,7 +190,7 @@ h1 {
   position: absolute;
   top: 0;
   z-index: -1;
-  padding: 10vw;
+  padding-top: 20vw;
 }
 
 #home_search {
