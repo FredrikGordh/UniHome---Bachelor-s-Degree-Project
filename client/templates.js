@@ -11,13 +11,7 @@ var home = '<div id="home-now-hot" class="section">'
     + '<h1>Reviews</h1>'
     + '</div>';
 
+var search = '<div id="searchbox"></div>'
+    + '<div id="searchresult"></div>';
 
-
-
-
-
-
-
-
-
-
+var home_header = '<h1>Header</h1>';

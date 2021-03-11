@@ -210,6 +210,10 @@ html {
     padding: 0;
 }
 
+h1 {
+    margin: 0;
+}
+
 .no-dot-list{
   list-style-type: none;
   margin: 0;
