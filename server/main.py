@@ -20,6 +20,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
+    # age, gender, tel_no, utbildning, verified_student
     is_admin = db.Column(db.Boolean, default=False, nullable = False) 
     password_hash = db.Column(db.String, nullable = False)
 
@@ -40,7 +41,8 @@ class Ad(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     adress = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
-  #  features = db.Column(db.String, nullable=False)
+   # features = db.Column(db.String, nullable=False)
+   # Dishwasher, wifi, square_meter, No. of beds, price/night, pet, distance_to_campus, sauna, shared, type, city, street, neighborhood, postal_code, available_date_start, available_date_finish, student_city
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = True)
 
     def __repr__(self):
