@@ -13,6 +13,10 @@ body, html{
   padding: 0;
 }
 
+h1 {
+    margin: 0;
+}
+
 /* ID */
 #nav-bar{
   height: 0px;
@@ -172,8 +176,7 @@ body, html{
     padding: 0;
 }
 
-/* Classer */
-.header{
+#header{
   background-color: paleturquoise;
   color:black;
   width: 100%;
@@ -181,7 +184,19 @@ body, html{
   position: absolute;
   top: 0;
   z-index: -1;
+  padding: 10vw;
 }
+
+#home_search {
+  background-color: white;
+  width: 75vw;
+  height: 75px;
+  border-radius: 37px;
+  margin: 0 auto;
+}
+
+/* Classer */
+
 
 .footer{
   background-color: black;
@@ -203,9 +218,6 @@ a:hover{
   color: white;
 }
 
-h1 {
-    margin: 0;
-}
 .section{
   width: 100%;
 }  
