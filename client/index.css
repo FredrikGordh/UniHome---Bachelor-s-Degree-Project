@@ -1,25 +1,35 @@
+body{
+  
+  /* make it look decent enough */
+  background: #232323;
+  color: #cdcdcd;
+  font-family: "Avenir Next", "Avenir", sans-serif;
+}
+
+body, html{
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* ID */
+#nav-bar{
+  height: 0px;
+}
+
+#navbar-logo{
+  width: 10vw;
+}
 
 #menuToggle
 {
   display: block;
   position: relative;
-  top: 50px;
-  left: 50px;
+  top: 20px;
+  left: calc(100% - 70px);
+  width: 100px;
 }
-
-a:hover{
-  text-decoration: none;
-}
-
-.footer a{
-  color: white;
-}
-
-.section{
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}  
 
 #home-reviews {
   background-color: aqua;
@@ -30,36 +40,24 @@ a:hover{
 #home-areas {
   background-color: pink;
 }
+
 #home-types {
   background-color: yellow;
 }
 
-#navbarNavDarkDropdown{
-  z-index: 1;
-  -webkit-user-select: none;
-  user-select: none;
-}
-  
-#menuToggle{
-    width: 100px;;
-}
-
-#menuToggle a
-{
+#menuToggle a{
   text-decoration: none;
   color: #232323;
   
   transition: color 0.3s ease;
 }
 
-#menuToggle a:hover
-{
+#menuToggle a:hover{
   color: tomato;
 }
   
   
-#menuToggle input
-{
+#menuToggle input{
   display: block;
   width: 40px;
   height: 32px;
@@ -79,8 +77,7 @@ a:hover{
   * Just a quick hamburger
   */
    
-#menuToggle span
-{
+#menuToggle span{
   display: block;
   width: 33px;
   height: 4px;
@@ -99,22 +96,19 @@ a:hover{
     opacity 0.55s ease;
 }
 
-#menuToggle span:first-child
-{
+#menuToggle span:first-child{
   transform-origin: 0% 0%;
 }
 
-#menuToggle span:nth-last-child(2)
-{
+#menuToggle span:nth-last-child(2){
   transform-origin: 0% 100%;
 }
   
-  /* 
-   * Transform all the slices of hamburger
-   * into a crossmark.
-   */
-#menuToggle input:checked ~ span
-{
+/* 
+  * Transform all the slices of hamburger
+  * into a crossmark.
+  */
+#menuToggle input:checked ~ span{
   opacity: 1;
   transform: rotate(45deg) translate(-2px, -1px);
   background: #232323;
@@ -123,39 +117,41 @@ a:hover{
 /*
   * But let's hide the middle one.
   */
-#menuToggle input:checked ~ span:nth-last-child(3)
-{
+#menuToggle input:checked ~ span:nth-last-child(3){
   opacity: 0;
   transform: rotate(0deg) scale(0.2, 0.2);
 }
 
-  /*
-   * Ohyeah and the last one should go the other direction
-   */
+/*
+  * Ohyeah and the last one should go the other direction
+  */
 #menuToggle input:checked ~ span:nth-last-child(2){
   transform: rotate(-45deg) translate(0, -1px);
 }
   
-  /*
-   * Make this absolute positioned
-   * at the top left of the screen
-   */
+/*
+* Make this absolute positioned
+* at the top left of the screen
+*/
+
 #menu{
-    position: absolute;
-    width: 300px;
-    margin: -100px 0 0 -50px;
-    padding: 50px;
-    padding-top: 125px;
+  position: absolute;
+  width: 300px;
+  padding: 50px;
+  border-radius: 20px;
+  /*opacity: 0;*/
 
-    background: #ededed;
-    list-style-type: none;
-    -webkit-font-smoothing: antialiased;
-    /* to stop flickering of text in safari */
+  background: #ededed;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
 
-    transform-origin: 0% 0%;
-    transform: translate(-100%, 0);
+  top: -10px;
+  left: -250px;
+  /*transform-origin: 0% 0%;*/
+  transform: translate(120%, 0%);
 
-    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
 }
   
 #menu li{
@@ -163,24 +159,28 @@ a:hover{
   font-size: 22px;
 }
   
-  /*
-   * And let's slide it in from the left
-   */
+/*
+* And let's slide it in from the left
+*/
+
 #menuToggle input:checked ~ ul{
   transform: none;
 }
 
 #content {
-    margin: 0;
+    margin-top: 100vh;
     padding: 0;
 }
 
+/* Classer */
 .header{
   background-color: paleturquoise;
   color:black;
   width: 100%;
-  height: 100%;
-  height: 90vh;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  z-index: -1;
 }
 
 .footer{
@@ -189,33 +189,47 @@ a:hover{
   width: 100%;
 }
 
-#logo {
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: black;
-}
-
-body{
+.no-dot-list{
+  list-style-type: none;
   margin: 0;
   padding: 0;
-  
-  /* make it look decent enough */
-  background: #232323;
-  color: #cdcdcd;
-  font-family: "Avenir Next", "Avenir", sans-serif;
 }
-html {
-    margin: 0;
-    padding: 0;
+
+a:hover{
+  text-decoration: none;
+}
+
+.footer a{
+  color: white;
 }
 
 h1 {
     margin: 0;
 }
+.section{
+  width: 100%;
+}  
 
 .no-dot-list{
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+a:hover{
+  text-decoration: none;
+}
+
+.footer a{
+  color: white;
+}
+
+.section{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}  
+
+.navbar-style{
+  background-color: rgba(0,0,0,0);
 }
