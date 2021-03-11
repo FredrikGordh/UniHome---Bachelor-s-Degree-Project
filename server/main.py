@@ -15,7 +15,7 @@ bcrypt = Bcrypt(app)
 
 ########################### CLASSES ###########################
 
-#Klassen user innehåller all information om användaren på hemsidan. Skriven av Jakob, Gustav, Joel & Fredrik
+#The class user contains all information about the user. Written by Jakob, Gustav, Joel & Fredrik
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -35,7 +35,7 @@ class User(db.Model):
         self.is_admin = True
 
 
-#Klassen ad innehåller all information om annonserna, en annons ägs av en user. Skriven av Jakob, Gustav, Joel & Fredrik
+#The class ad containts all the information about the ads. A ad is owned by a user. Written by Jakob, Gustav, Joel & Fredrik
 class Ad(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     adress = db.Column(db.String, nullable=False)
@@ -50,7 +50,7 @@ class Ad(db.Model):
 
 ########################### APP.ROUTES ###########################
 
-#/user/signup har metoden POST som används då man vill skapa en ny användare på webbapplikationen. Skriven av Jakob, Gustav, Joel & Fredrik
+#/user/signup has the method POST that is used when you want to create a new user on the website. Written by Jakob, Gustav, Joel & Fredrik
 @app.route('/user/signup', methods = ['POST'])
 def signup():
     newuser = request.get_json(force=True)
@@ -63,7 +63,7 @@ def signup():
     db.session.commit()
     return "Success", 200
 
-#/user/login har metoden POST som används då man vill logga in med en användare på webbapplikationen. Skriven av Jakob, Gustav, Joel & Fredrik
+#/user/login has the method POST that is used when you want to log in with a user. Written by Jakob, Gustav, Joel & Fredrik
 @app.route('/user/login', methods = ['POST'])
 def login():
     user = request.get_json(force=True)
@@ -79,7 +79,7 @@ def login():
     else:
         abort(401)
 
-#/users har metoden GET som används då man vill hämta alla users som finns registrerade. Inte säkert att denna behövs. Skriven av Jakob, Gustav, Joel & Fredrik
+#/users has the method GET that is used when you want to retrieve all the users that are in the database. Not sure if we actually need it. Written by Jakob, Gustav, Joel & Fredrik
 @app.route('/users', methods = ['GET'])
 def list_users():
     user_list = []
@@ -89,7 +89,7 @@ def list_users():
     return jsonify(user_list)
 
 
-#/ad/<int:ad_id> har metoderna PUT, GET. Metoden PUT .....
+#/ad/<int:ad_id> has the method PUT, GET. The method PUT .....
 @app.route('/ad/<int:ad_id>', methods = ['PUT', 'GET'])
 def list_ad(ad_id):
     if request.method == 'GET':
@@ -98,7 +98,7 @@ def list_ad(ad_id):
         return "NYI"
         
 
-#/ads har metoden GET, den används för att hämta hem alla annonser som finns i databasen. Skriven av Jakob, Gustav, Joel & Fredrik
+#/ads has the method GET, it is used to retrieve all the ads that is stored in the database. Written by Jakob, Gustav, Joel & Fredrik
 @app.route('/ads', methods = ['GET'])
 def ads():
     if request.method == 'GET':
@@ -109,7 +109,7 @@ def ads():
         return jsonify(ad_list)
 
 
-#/ad/create har metoden POST, den används för att göra en annons som kopplas till den specifika användaren som skapar den. Skriven av Jakob, Gustav, Joel & Fredrik
+#/ad/create has the method POST, it is used to make an ad that is connected to the specifik user that created it. Written by Jakob, Gustav, Joel & Fredrik
 @app.route('/ad/create', methods = ['POST'])
 @jwt_required()
 def create_ad():
@@ -125,34 +125,34 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 # API:
-# Användare 
-# Bli värd 
-# Användaruppgifter 
-# Användarnamn -
+# Anvandare 
+# Bli vard 
+# Anvandaruppgifter 
+# Anvandarnamn -
 # Epost -
-# Lösenord - 
+# Losenord - 
 # Profilbeskrivning 
 # Profilbild? 
 # Bli medlem 
-# Användaruppgifter 
-# Användarnamn 
+# Anvandaruppgifter 
+# Anvandarnamn 
 # Epost 
-# Lösenord 
+# Losenord 
 # Profilbeskrivning 
 # Profilbild? 
 # Logga in/ut 
-# Glömt lösenord 
-# Ändra lösenord 
-# Redigera användare 
-# Användaruppgifter 
-# Användarnamn 
+# Glomt losenord 
+# Andra losenord 
+# Redigera anvandare 
+# Anvandaruppgifter 
+# Anvandarnamn 
 # Epost 
-# Lösenord 
+# Losenord 
 # Profilbeskrivning 
 # Profilbild? 
 
 # Annonser 
-# Lägga upp annons 
+# Lagga upp annons 
 # Beskrivning 
 # Bilder 
 # Plats 
@@ -160,11 +160,11 @@ if __name__ == "__main__":
 # Beskrivning 
 # Bilder 
 # Plats 
-# Sökning av annons 
+# Sokning av annons 
 # Plats 
 # Adress 
 # Stad 
-# Område 
+# Omrade 
 # Specifika attribut 
-# Storlek på lägenhet/rum 
+# Storlek pa lagenhet & rum  
 # Funktioner 
