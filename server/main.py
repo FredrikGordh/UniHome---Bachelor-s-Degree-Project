@@ -5,6 +5,7 @@ from flask import request
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import (
     JWTManager, create_access_token, jwt_required, get_jwt_identity)
+from flask import abort
 
 app = Flask(__name__, static_folder='../client', static_url_path='/')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -26,9 +27,9 @@ class User(db.Model):
     telephone = db.Column(db.String, nullable=False)
 
     gender = db.Column(db.String, nullable=False)
-    yearofbirth = db.Column(db.Integer, nullable=False)
-    monthofbirth = db.Column(db.Integer, nullable=False)
-    dayofbirth = db.Column(db.Integer, nullable=False)
+    birthdate = db.relationship("Date", backref ='birthdate')
+    hostads = db.relationship("Ad", backref = "host", foreign_keys = "Ad.host_id")
+    bookedads = db.relationship("Ad", backref = "tenant", foreign_keys = "Ad.tenant_id")
 
     university = db.Column(db.String, nullable=True)
     education = db.Column(db.String, nullable=True)
@@ -38,11 +39,13 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False, nullable=False)
     password_hash = db.Column(db.String, nullable=False)
 
+    
+
     def __repr__(self):
-        return '<user {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.name, self.email, self.telephone, self.gender, self.yearofbirth, self.monthofbirth, self.dayofbirth, self.university, self.education, self.bio, self.verified_student, self.is_admin)
+        return '<user {} {} {} {} {} {} {} {} {} {} >'.format(self.id, self.name, self.email, self.telephone, self.gender, self.university, self.education, self.bio, self.verified_student, self.is_admin)
 
     def serialize(self):
-        return dict(id=self.id, name=self.name, email=self.email, telephone=self.telephone, gender=self.gender, yearofbirth=self.yearofbirth, monthofbirth=self.monthofbirth, dayofbirth=self.dayofbirth, university=self.university, education=self.education, bio=self.bio, verified_student=self.verified_student, is_admin=self.is_admin, )  # har lagt till is_admin
+        return dict(id=self.id, name=self.name, email=self.email, telephone=self.telephone, gender=self.gender, university=self.university, education=self.education, bio=self.bio, verified_student=self.verified_student, is_admin=self.is_admin, birthdate=Date.query.filter_by(user_id = self.id).first().serialize()) 
 
     def set_password(self, password):
         self.password_hash = bcrypt.generate_password_hash(
@@ -57,80 +60,89 @@ class Ad(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
-    neighbourhood = db.Column(db.String, nullable=False)
-    studentcity = db.Column(db.String, nullable=False)
+    neighbourhood = db.Column(db.String, nullable=True)
+    studentcity = db.Column(db.String, nullable=True)
 
-    streetaddress = db.Column(db.String, nullable=False)
-    streetnumber = db.Column(db.String, nullable=False)
-    city = db.Column(db.String, nullable=False)
-    postalcode = db.Column(db.Integer, nullable=False)
-    country = db.Column(db.String, nullable=False)
+    streetaddress = db.Column(db.String, nullable=True)
+    streetnumber = db.Column(db.String, nullable=True)
+    city = db.Column(db.String, nullable=True)
+    postalcode = db.Column(db.Integer, nullable=True)
+    country = db.Column(db.String, nullable=True)
 
-    startyear = db.Column(db.Integer, nullable=False)
-    startmonth = db.Column(db.Integer, nullable=False)
-    startday = db.Column(db.Integer, nullable=False)
-    stopyear = db.Column(db.Integer, nullable=False)
-    stopmonth = db.Column(db.Integer, nullable=False)
-    stopday = db.Column(db.Integer, nullable=False)
+    startdate = db.relationship("Date", backref ='start', foreign_keys = "Date.start_ad_id")
+    enddate = db.relationship("Date", backref ='end', foreign_keys = "Date.end_ad_id")
+    #attributes = db.relationship("Attributes", backref = 'ad_attribute')
 
+    squaremetres = db.Column(db.Integer, nullable=True)
+    price = db.Column(db.Integer, nullable=True)
+    beds = db.Column(db.Integer, nullable=True)
+    accommodationtype = db.Column(db.String, nullable=True)
+   
+    host_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    tenant_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+
+    def __repr__(self):
+        return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description, self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode, self.country, self.squaremetres, self.price, self.beds, self.accommodationtype)
+
+    def serialize(self):
+        return dict(id=self.id, title=self.title, description=self.description, neighbourhood=self.neighbourhood, studentcity=self.studentcity, streetaddress=self.streetaddress, streetnumber=self.streetnumber, city=self.city, postalcode=self.postalcode, country=self.country, squaremetres=self.squaremetres, price=self.price, beds=self.beds, accommodationtype=self.accommodationtype, host=User.query.get(self.host_id).serialize(), startdate=Date.query.filter_by(start_ad_id = self.id).first().serialize(), enddate=Date.query.filter_by(end_ad_id = self.id).first().serialize() )
+
+class Attributes(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     dishwasher = db.Column(db.Boolean, nullable=False)
     wifi = db.Column(db.Boolean, nullable=False)
     washingmachine = db.Column(db.Boolean, nullable=False)
     sauna = db.Column(db.Boolean, nullable=False)
     bike = db.Column(db.Boolean, nullable=False)
-
-    squaremetres = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Integer, nullable=False)
-    beds = db.Column(db.Integer, nullable=False)
-    accommodationtype = db.Column(db.String, nullable=False)
-   
-   # features = db.Column(db.String, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable = True)
 
     def __repr__(self):
-        return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description, self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode, self.country, self.startyear, self.startmonth, self.startday, self.stopyear, self.stopmonth, self.stopday, self.dishwasher, self.wifi, self.washingmachine, self.sauna, self.bike, self.squaremetres, self.price, self.beds, self.accommodationtype)
+        return '<Attributes {} {} {} {} {} {}>'.format(self.id, self.dishwasher, self.wifi, self.washingmachine, self.sauna, self.bike)
 
     def serialize(self):
-        return dict(id=self.id, title=self.title, description=self.description, neighbourhood=self.neighbourhood, studentcity=self.studentcity, streetaddress=self.streetaddress, streetnumber=self.streetnumber, city=self.city, postalcode=self.postalcode, country=self.country, startyear=self.startyear, startmonth=self.startmonth, startday=self.startday, stopyear=self.stopyear, stopmonth=self.stopmonth, stopday=self.stopday, dishwasher=self.dishwasher, wifi=self.wifi, washingmachine=self.washingmachine, sauna=self.sauna, bike=self.bike, squaremetres=self.squaremetres, price=self.price, beds=self.beds, accommodationtype=self.accommodationtype user=User.query.get(self.user_id).serialize())
-
-# class Attributes(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     attribute = db.Column(db.String, nullable=False)
-
+        return dict(id=self.id, dishwasher=self.dishwasher, wifi=self.wifi, washingmachine=self.washingmachine, sauna=self.sauna, bike=self.bike)
     
-# class Date(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     year = db.Column(db.Integer, nullable=False)
-#     month = db.Column(db.Integer, nullable=False)
-#     day = db.Column(db.Integer, nullable=False)
+class Date(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    year = db.Column(db.Integer, nullable=False)
+    month = db.Column(db.Integer, nullable=False)
+    day = db.Column(db.Integer, nullable=False)
+    start_ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable = True)
+    end_ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable = True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = True)
 
-#     def __repr__(self):
-#         return '<Date {} {} {}>'.format(self.id, self.year, self.month, self.day)
+    def __repr__(self):
+        return '<Date {} {} {} {}>'.format(self.id, self.year, self.month, self.day)
 
-#     def serialize(self):
-#         return dict(id=self.id, adress=self.adress, description=self.description, user=User.query.get(self.user_id).serialize())
+    def serialize(self):
+        return dict(id=self.id, year=self.year, month=self.month, day=self.day)
 
 
 
 ########################### APP.ROUTES ###########################
 
-# /user/signup has the method POST that is used when you want to create a new user on the website. Written by Jakob, Gustav, Joel & Fredrik
+# /user/signup has the method POST that is used when you want to create a new user on the website. Written by Jakob, Gustav & Joel
 
 
 @app.route('/user/signup', methods=['POST'])
 def signup():
     newuser = request.get_json(force=True)
     if not (User.query.filter_by(email=newuser.get('email')).first()):
-        newuserDB = User(name=newuser.get('name'), email=newuser.get('email'), telephone=newuser.get('telephone'), gender=newuser.get('gender'), yearofbirth=newuser.get('yearofbirth'), monthofbirth=newuser.get('monthofbirth'), dayofbirth=newuser.get('dayofbirth'))
+        newuserDB = User(name=newuser.get('name'), email=newuser.get('email'), telephone=newuser.get('telephone'), gender=newuser.get('gender'))
         User.set_password(newuserDB, newuser.get('password'))
-
+        db.session.add(newuserDB)
+        db.session.commit()
+        birthdateDB = Date(year=newuser.get('year'), month=newuser.get('month'), day=newuser.get('day'), user_id = newuserDB.id)
+        db.session.add(birthdateDB)
+        db.session.commit()
+        return "Created", 201
+    else:
+        return "E-mail already in use", 409
     # if(newuser.get('is_admin') == "True"):
     #    User.set_admin(newuserDB)
     # Needs to be changed
-
-    db.session.add(newuserDB)
-    db.session.commit()
-    return "Success", 200
+#KLAR TILLS VIDARE
+    
 
 # /user/login has the method POST that is used when you want to log in with a user. Written by Jakob, Gustav, Joel & Fredrik
 
@@ -149,10 +161,9 @@ def login():
             abort(401)
     else:
         abort(401)
+#KLAR TILLS VIDARE
 
 # /users has the method GET that is used when you want to retrieve all the users that are in the database. Not sure if we actually need it. Written by Jakob, Gustav, Joel & Fredrik
-
-
 @app.route('/users', methods=['GET'])
 def list_users():
     user_list = []
@@ -160,7 +171,7 @@ def list_users():
     for user in all_users:
         user_list.append(user.serialize())
     return jsonify(user_list)
-
+#KLAR TILLS VIDARE
 
 # /ad/<int:ad_id> has the method PUT, GET. The method PUT .....
 @app.route('/ad/<int:ad_id>', methods=['PUT', 'GET'])
@@ -189,10 +200,16 @@ def create_ad():
     if request.method == 'POST':
         current_user_id = get_jwt_identity()
         newad = request.get_json(force=True)
-        newadDB = Ad(adress=newad.get('adress'), description=newad.get(
-            'description'), user_id=(current_user_id))
+        newadDB = Ad(title=newad.get('title'), description=newad.get(
+            'description'), host_id=(current_user_id))
         db.session.add(newadDB)
         db.session.commit()
+        startdayDB = Date(year=newad.get('startyear'), month=newad.get('startmonth'), day=newad.get('startday'), start_ad_id = newadDB.id)
+        enddayDB = Date(year=newad.get('endyear'), month=newad.get('endmonth'), day=newad.get('endday'), end_ad_id = newadDB.id)
+        db.session.add(startdayDB)
+        db.session.add(enddayDB)
+        db.session.commit()
+
         return "success", 200
 
 
