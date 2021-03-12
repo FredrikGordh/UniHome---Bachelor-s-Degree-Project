@@ -4,6 +4,7 @@ body{
   background: #232323;
   color: #cdcdcd;
   font-family: "Avenir Next", "Avenir", sans-serif;
+  z-index: -2;
 }
 
 body, html{
@@ -195,10 +196,8 @@ h1 {
 
 #home_search {
   background-color: white;
-  width: 75vw;
-  height: 75px;
   border-radius: 37px;
-  margin: 0 auto;
+  padding: 10px;
 }
 
 /* Classer */
