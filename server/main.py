@@ -149,6 +149,13 @@ class Date(db.Model):
 # /user/signup has the method POST that is used when you want to create a new user on the website.
 # Written by Jakob, Gustav
 # KIND OF DONE
+
+
+@app.route('/')
+def default():
+    return app.send_static_file("index.html")
+
+
 @app.route('/user/signup', methods=['POST'])
 def signup():
     newuser = request.get_json(force=True)
