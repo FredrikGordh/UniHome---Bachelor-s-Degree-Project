@@ -1,3 +1,3 @@
 var accomodation = '<div class="accomodation">'
-    + '{{Title}}'
+    + '{{title}}'
     + '</div>';
