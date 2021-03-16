@@ -39,32 +39,30 @@
         but hey, it's pure CSS magic.
         -->
       <ul id="menu">
-        <a href="#">
-          <li>Bli medlem</li>
+        <a href="">
+          <li id="register_button">Bli medlem</li>
         </a>
-        <a href="#">
-          <li>Logga in</li>
+        <a href="">
+          <li id="login_button">Logga in</li>
         </a>
-        <a href="#">
-          <li>Vilka är vi</li>
+        <a href="">
+          <li id="about_us_button">Vilka är vi</li>
         </a>
-        <a href="#">
-          <li>Kontakta oss</li>
+        <a href="">
+          <li id="contact_button">Kontakta oss</li>
         </a>
-        <a href="#" target="_blank">
-          <li>Hjälp</li>
+        <a href="" target="_blank">
+          <li id="help_button">Hjälp</li>
         </a>
       </ul>
     </div>
   </nav>
 
-  <!-- As a link -->
   <nav class="navbar navbar-style">
-    <a class="navbar-brand"><img id="navbar-logo" src="Media/Unihome-logga.png"></a>
+    <a href="" class="navbar-brand"><img id="navbar-logo" src="Media/Unihome-logga.png"></a>
   </nav>
 
-  <!-- En välkomnsheader-->
-  <div id="header"></div>
+
 
   <div id="content" class="container-fluid"></div>
 
@@ -105,41 +103,57 @@
   </div>
 
   <!-- Home page view -->
-  <script id="home" type="text/html">
-        <div id="home-now-hot" class="section">
-            <h1> Hetaste boendena/Bäst reviews</h1>
+  <script id="home_page" type="text/html">
+    <div id="home_container" class="container-fluid">
+      <div id="header">
+        <div class="container">
+          <div class="align-items-center justify-content-center" id="home_search">
+            <form class="col-12">
+              <div class="form-row align-items-center">
+                <div class="form-group col-4 mt-3">
+                  <select class="form-control no-border" id="home_select_area">
+                    <option>Område</option>
+                  </select>            
+                </div>
+                <div class="form-group col-2 mt-3">
+                  <select class="form-control no-border" id="home_select_start_year">
+                    <option>År</option>
+                  </select>  
+                </div>
+                <div class="form-group col-2 mt-3">
+                  <select class="form-control no-border" id="home_select_start_month">
+                    <option>Månad</option>
+                  </select>  
+                </div>
+                <div class="form-group col-2 mt-3">
+                  <select class="form-control no-border" id="home_select_length">
+                    <option>Antal dagar</option>
+                  </select>  
+                </div>
+                  <button type="submit" id="home_search_submit" class="btn btn-primary col-1 offset-1 search_button">Sök</button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div id="home-areas" class="section">
-            <h1>Områden</h1>
-        </div>
-        <div id="home-types" class="section">
-            <h1>Typer av boenden</h1>
-        </div>
-        <div id="home-reviews" class="section">
-            <h1>Reviews</h1>
-        </div>
-    </script>
+      </div>
+      <div id="home-now-hot" class="section">
+        <h1> Hetaste boendena/Bäst reviews</h1>
+      </div>
+      <div id="home-areas" class="section">
+        <h1>Områden</h1>
+      </div>
+      <div id="home-types" class="section">
+        <h1>Typer av boenden</h1>
+      </div>
+      <div id="home-reviews" class="section">
+        <h1>Reviews</h1>
+      </div>
+    </div>
+  </script>
 
   <!-- Home header view -->
   <script id="home_header" type="text/html">
-        <div class="container">
-          <div class="row align-items-center" id="home_search">
-              <div class="col-3">  
-                <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="home_area_search" data-bs-toggle="dropdown" aria-expanded="false">
-                    Område
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
-                </div>              
-              </div>
-              <div class="col-3">Inflytt</div>
-              <div class="col-3">Utflytt</div>
-          </div>
-        </div>
+
     </script>
 
 
@@ -198,9 +212,9 @@
         </div>
         <div class="form-group">
           <label for="password_login">Password</label>
-          <input type="password" class="form-control" id="password_login" placeholder="Password">
+          <input type="password" class="form-control" id="password_register" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" id="register_form_button" class="btn btn-primary">Registrera</button>
       </form>
     </div>
   </script>
@@ -217,7 +231,7 @@
           <label for="password_login">Password</label>
           <input type="password" class="form-control" id="password_login" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" id="login_form_button" class="btn btn-primary">Logga in</button>
       </form>
     </div>
   </script>
