@@ -27,6 +27,9 @@ h1 {
 
 #nav-bar{
   height: 0px;
+  position: fixed;
+  z-index: 6;
+  left: 94vw;
 }
 
 #navbar-logo{
@@ -185,7 +188,7 @@ h1 {
 }
 
 #home_container {
-  margin-top: 1020px;
+  margin-top: 1080px;
   padding: 0;
 }
 
@@ -217,10 +220,6 @@ h1 {
 
 .search_button {
   border-radius: 50px;
-}
-
-.navbar {
-  z-index: 2;
 }
 
 .footer{
@@ -273,4 +272,6 @@ a:hover{
 
 .navbar-style{
   background-color: rgba(0,0,0,0);
+  position: fixed;
+  z-index: 2;
 }

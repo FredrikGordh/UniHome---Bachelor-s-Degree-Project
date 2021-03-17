@@ -25,7 +25,7 @@ $(document).ready(function () {
         go_login();
     });
 
-    $("#home_search_submit").click(function (e) {
+    $("#content").on("click", "#home_search_submit", function (e) {
         e.preventDefault();
         go_search();
     });
@@ -38,13 +38,13 @@ $(document).ready(function () {
     //Submit register form
     $("#content").on("click", "#register_form_button", function (e) {
         e.preventDefault();
-        register_request();
+        submit_register_form();
     });
 
     //Submit login form
     $("#content").on("click", "#login_form_button", function (e) {
         e.preventDefault();
-        login_request();
+        submit_login_form();
     });
 })
 
