@@ -141,7 +141,32 @@
   <!-- Search page view -->
   <script id="search_page" type="text/html">
     <div id="search_page_container" class="container-fluid">
-      <div id="search_result"></div>
+      <form class="col-12">
+              <div class="form-row align-items-center">
+                <div class="form-group col-2">
+                  <select class="form-control no-border" id="search_page_select_area">
+                    <option>Område</option>
+                  </select>            
+                </div>
+                <div class="form-group col-2">
+                  <select class="form-control no-border" id="search_page_select_start_year">
+                    <option>År</option>
+                  </select>  
+                </div>
+                <div class="form-group col-2">
+                  <select class="form-control no-border" id="search_page_select_start_month">
+                    <option>Månad</option>
+                  </select>  
+                </div>
+                <div class="form-group col-2">
+                  <select class="form-control no-border" id="search_page_select_length">
+                    <option>Antal dagar</option>
+                  </select>  
+                </div>
+                  <button type="button" id="search_page_search_submit" class="btn btn-primary col-1 offset-1 search_button">Sök</button>
+              </div>
+            </form>
+      <div id="search_result" class="row justify-content-center align-items-start"></div>
     </div>
   </script>
 
@@ -217,12 +242,33 @@
     </div>
   </script>
 
+  <!-- My page view -->
   <script id="my_page" type="text/html">
     <div id="my_page_container" class="container-fluid">
-      
+
     </div>
   </script>
 
+  <!-- About us view -->
+  <script id="about_us_page" type="text/html">
+      <div id="about_us_page_container" class="container-fluid">
+  
+    </div>
+  </script>
+
+  <!-- Contact view -->
+  <script id="contact_page" type="text/html">
+        <div id="contact_page_container" class="container-fluid">
+    
+    </div>
+  </script>
+
+  <!-- Help view -->
+  <script id="help_page" type="text/html">
+    <div id="help_page_container" class="container-fluid">
+      
+    </div>
+  </script>
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

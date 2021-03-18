@@ -214,13 +214,20 @@ h1 {
 #search_page_container {
   height: 500px;
   color: white;
+  margin-top: 10vh;
 }
 
 #search_result {
-
+  margin-top: 50px;
 }
 
 /* Klasser */
+
+.accomodation {
+  background-color: white;
+  border-radius: 20px;
+  color: black;
+}
 
 .search_button {
   border-radius: 50px;
