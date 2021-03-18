@@ -18,7 +18,7 @@ bcrypt = Bcrypt(app)
 ###################################################### CLASSES ######################################################
 
 # The class user contains all information about the user. 
-# Written by Jakob, Gustav, Joel & Fredrik
+# Written by Jakob, Gustav, Joel
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -95,7 +95,8 @@ class Ad(db.Model):
         postalcode=self.postalcode, country=self.country, squaremetres=self.squaremetres, price=self.price, beds=self.beds, 
         accommodationtype=self.accommodationtype, host=User.query.get(self.host_id).serialize(), 
         startdate=Date.query.filter_by(start_ad_id=self.id).first().serialize(), 
-        enddate=Date.query.filter_by(end_ad_id=self.id).first().serialize())
+        enddate=Date.query.filter_by(end_ad_id=self.id).first().serialize(),
+        attributes=Attributes.query.filter_by(ad_id=self.id).first().serialize())
 
 
 #The class attributes contains all the attributes of ad that has a boolean.
@@ -199,11 +200,12 @@ def list_ad(ad_id):
     if request.method == 'GET':
         return jsonify(Ad.query.get_or_404(ad_id).serialize())
     elif request.method == 'PUT':
+        #NOT NECCESSARY TO IMPLEMENT YET
         return "NYI"
 
 
 # /ads has the method GET, it is used to retrieve all the ads that is stored in the database. 
-# Written by Jakob, Gustav, Joel & Fredrik
+# Written by Jakob, Gustav, Joel
 @app.route('/ads', methods=['GET'])
 def ads():
     if request.method == 'GET':
@@ -214,8 +216,8 @@ def ads():
         return jsonify(ad_list)
 
 
-# /ad/create has the method POST, it is used to make an ad that is connected to the specifik user that created it. 
-# Written by Jakob, Gustav, Joel & Fredrik
+# /ad/create has the method POST, it is used to make an ad that is connected to the specific user that created it. 
+# Written by Jakob, Gustav, Joel
 @app.route('/ad/create', methods=['POST'])
 @jwt_required()
 def create_ad():
