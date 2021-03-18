@@ -5,7 +5,6 @@ $(document).ready(function () {
     go_home();
 
 
-    //----Menu events:
 
     //Click on logo to go home
     $("#navbar-logo").click(function (e) {
@@ -25,15 +24,13 @@ $(document).ready(function () {
         go_login();
     });
 
+    //Using .on()-function since we need to check if the content of #content is loaded before checking for events
+
+    //Go to search page
     $("#content").on("click", "#home_search_submit", function (e) {
         e.preventDefault();
         go_search();
     });
-
-
-    //----Other events:
-
-    //Using .on()-function since we need to check if the content of #content is loaded before checking for events
 
     //Submit register form
     $("#content").on("click", "#register_form_button", function (e) {
