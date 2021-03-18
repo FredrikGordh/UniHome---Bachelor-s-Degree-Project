@@ -69,55 +69,6 @@ $(document).ready(function () {
     });
 })
 
-//-------------------------REQUESTS-------------------------
-
-//----Request variables:
-
-//Global request variable: host
-var host = 'http://localhost:5000';
-
-//----Requests:
-
-//Function for making a request for all ads from database
-function load_ads_request(search) {
-    //TODO: use search parameters when making api request, witing for backend to finish as of 18/3
-    $.ajax({
-        url: host + '/ads',
-        type: 'GET',
-        success: function (ads) {
-            $("#search_result").empty();
-            ads.forEach(element => {
-                $("#search_result").append(Mustache.render(accomodation, element));
-            });
-        }
-    })
-}
-
-//Function for making a login request 
-function login_request(user) {
-    $.ajax({
-        url: host + '/user/login',
-        type: 'POST',
-        data: JSON.stringify(user),
-        success: function (response) {
-            sessionStorage.setItem('auth', JSON.stringify(response));
-            go_home();
-        }
-    })
-}
-
-//Function for making a register request 
-function register_request(user) {
-    $.ajax({
-        url: host + '/user/signup',
-        type: 'POST',
-        data: JSON.stringify(user),
-        success: function (response) {
-            go_home();
-        }
-    })
-}
-
 
 //-------------------------Functions-------------------------
 
@@ -167,6 +118,55 @@ function go_about_us_page() {
     $("#content").html($("#about_us_page").html());
 }
 
+
+//-------------------------REQUESTS-------------------------
+
+//----Request variables:
+
+//Global request variable: host
+var host = 'http://localhost:5000';
+
+//----Requests:
+
+//Function for making a request for all ads from database
+function load_ads_request(search) {
+    //TODO: use search parameters when making api request, witing for backend to finish as of 18/3
+    $.ajax({
+        url: host + '/ads',
+        type: 'GET',
+        success: function (ads) {
+            $("#search_result").empty();
+            ads.forEach(element => {
+                $("#search_result").append(Mustache.render(accomodation, element));
+            });
+        }
+    })
+}
+
+//Function for making a login request 
+function login_request(user) {
+    $.ajax({
+        url: host + '/user/login',
+        type: 'POST',
+        data: JSON.stringify(user),
+        success: function (response) {
+            sessionStorage.setItem('auth', JSON.stringify(response));
+            go_home();
+        }
+    })
+}
+
+//Function for making a register request 
+function register_request(user) {
+    $.ajax({
+        url: host + '/user/signup',
+        type: 'POST',
+        data: JSON.stringify(user),
+        success: function (response) {
+            go_home();
+        }
+    })
+}
 
 
 //----Functional functions:

@@ -92,7 +92,7 @@ h1 {
   margin-bottom: 5px;
   position: relative;
   
-  background: black;
+  background: white;
   border-radius: 3px;
   
   z-index: 5;
@@ -219,6 +219,11 @@ h1 {
 
 #search_result {
   margin-top: 50px;
+}
+
+#contact_page_container {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
 }
 
 /* Klasser */
