@@ -19,47 +19,33 @@
 <body>
   <!-- Navbar: En hamburgarmeny + navbar -->
   <nav id="nav-bar" role="navigation">
-    <div id="menuToggle">
-      <!--
-        A fake / hidden checkbox is used as click reciever,
-        so you can use the :checked selector on it.-->
-      <input type="checkbox" />
 
-      <!--Some spans to act as a hamburger.
-        
-        They are acting like a real hamburger,
-        not that McDonalds stuff.
-        -->
-      <span></span>
-      <span></span>
-      <span></span>
-
-      <!--
-        Too bad the menu has to be inside of the button
-        but hey, it's pure CSS magic.
-        -->
-      <ul id="menu">
-        <a href="">
-          <li id="register_button">Bli medlem</li>
-        </a>
-        <a href="">
-          <li id="login_button">Logga in</li>
-        </a>
-        <a href="">
-          <li id="about_us_button">Vilka är vi</li>
-        </a>
-        <a href="">
-          <li id="contact_button">Kontakta oss</li>
-        </a>
-        <a href="" target="_blank">
-          <li id="help_button">Hjälp</li>
-        </a>
-      </ul>
-    </div>
   </nav>
 
   <nav class="navbar navbar-style">
     <a href="" class="navbar-brand"><img id="navbar-logo" src="Media/Unihome-logga.png"></a>
+    <div id="menuToggle">
+      <!--
+            A fake / hidden checkbox is used as click reciever,
+            so you can use the :checked selector on it.-->
+      <input type="checkbox" />
+
+      <!--Some spans to act as a hamburger.
+            
+            They are acting like a real hamburger,
+            not that McDonalds stuff.
+            -->
+      <span></span>
+      <span></span>
+      <span></span>
+
+      <!--
+            Too bad the menu has to be inside of the button
+            but hey, it's pure CSS magic.
+            -->
+      <ul id="menu">
+      </ul>
+    </div>
   </nav>
 
 
@@ -151,11 +137,6 @@
     </div>
   </script>
 
-  <!-- Home header view -->
-  <script id="home_header" type="text/html">
-
-    </script>
-
 
   <!-- Search page view -->
   <script id="search_page" type="text/html">
@@ -233,6 +214,12 @@
         </div>
         <button type="button" id="login_form_button" class="btn btn-primary">Logga in</button>
       </form>
+    </div>
+  </script>
+
+  <script id="my_page" type="text/html">
+    <div id="my_page_container" class="container-fluid">
+      
     </div>
   </script>
 

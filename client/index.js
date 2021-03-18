@@ -12,19 +12,25 @@ $(document).ready(function () {
         go_home();
     });
 
+    //Using .on()-function since we need to check if the content of #content is loaded before checking for events
+
     //Burger menu: Go register
-    $("#register_button").click(function (e) {
+    $("#menu").on("click", "#register_button", function (e) {
         e.preventDefault();
         go_register();
     });
 
     //Burger menu: Go login
-    $("#login_button").click(function (e) {
+    $("#menu").on("click", "#login_button", function (e) {
         e.preventDefault();
         go_login();
     });
 
-    //Using .on()-function since we need to check if the content of #content is loaded before checking for events
+    //Burger menu: Go to my page
+    $("#menu").on("click", "#my_page_button", function (e) {
+        e.preventDefault();
+        go_my_page();
+    });
 
     //Go to search page
     $("#content").on("click", "#home_search_submit", function (e) {
@@ -102,6 +108,7 @@ function register_request(user) {
 function go_home() {
     $("#content").html($("#home_page").html());
     load_search_dropdowns();
+    load_burger();
 }
 
 //Function for going to view: Register_page
@@ -113,13 +120,32 @@ function go_register() {
 //Function for going to view: Login_page
 function go_login() {
     $("#content").html($("#login_page").html());
-
 }
 
 //Function for going to view: Search_result_page
 function go_search() {
     $("#content").html($("#search_page").html());
     load_ads_request();
+}
+
+function go_my_page() {
+    $("#content").html($("#my_page").html());
+}
+
+//Function for loading all content in hamburger menu
+function load_burger() {
+    $("#menu").empty();
+
+    if (sessionStorage.getItem('auth') == null) {
+        $("#menu").prepend('<a href=""><li id="register_button">Bli medlem</li></a>'
+            + '<a href=""><li id="login_button">Logga in</li></a>')
+    } else {
+        $("#menu").prepend('<a href=""><li id="my_page_button">Mina sidor</li></a>')
+    }
+
+    $("#menu").append('<a href=""><li id="about_us_button"> Vilka är vi</li></a>'
+        + '<a href=""><li id="contact_button">Kontakta oss</li></a>'
+        + '<a href=""><li id="help_button">Hjälp</li></a>')
 }
 
 //----Functional functions:
