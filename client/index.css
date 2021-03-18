@@ -25,13 +25,6 @@ h1 {
   color: black;
 }
 
-#nav-bar{
-  height: 0px;
-  position: fixed;
-  z-index: 6;
-  left: 94vw;
-}
-
 #navbar-logo{
   width: 10vw;
 }
@@ -39,10 +32,11 @@ h1 {
 #menuToggle
 {
   display: block;
-  position: relative;
   top: 30px;
-  left: calc(100% - 70px);
+  left: calc(100% - 80px);
   width: 100px;
+  position: absolute;
+  z-index: 6;
 }
 
 #home-reviews {
@@ -98,7 +92,7 @@ h1 {
   margin-bottom: 5px;
   position: relative;
   
-  background: black;
+  background: white;
   border-radius: 3px;
   
   z-index: 5;
@@ -192,6 +186,16 @@ h1 {
   padding: 0;
 }
 
+#register_container {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+}
+
+#login_container {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+}
+
 #header{
   background-color: paleturquoise;
   color:black;
@@ -210,13 +214,25 @@ h1 {
 #search_page_container {
   height: 500px;
   color: white;
+  margin-top: 10vh;
 }
 
 #search_result {
+  margin-top: 50px;
+}
 
+#contact_page_container {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
 }
 
 /* Klasser */
+
+.accomodation {
+  background-color: white;
+  border-radius: 20px;
+  color: black;
+}
 
 .search_button {
   border-radius: 50px;
@@ -274,4 +290,5 @@ a:hover{
   background-color: rgba(0,0,0,0);
   position: fixed;
   z-index: 2;
+  width: 100vw;
 }

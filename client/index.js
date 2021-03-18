@@ -5,7 +5,6 @@ $(document).ready(function () {
     go_home();
 
 
-    //----Menu events:
 
     //Click on logo to go home
     $("#navbar-logo").click(function (e) {
@@ -13,27 +12,49 @@ $(document).ready(function () {
         go_home();
     });
 
+    //Using .on()-function since we need to check if the content of #content is loaded before checking for events
+
     //Burger menu: Go register
-    $("#register_button").click(function (e) {
+    $("#menu").on("click", "#register_button", function (e) {
         e.preventDefault();
         go_register();
     });
 
     //Burger menu: Go login
-    $("#login_button").click(function (e) {
+    $("#menu").on("click", "#login_button", function (e) {
         e.preventDefault();
         go_login();
     });
 
-    $("#content").on("click", "#home_search_submit", function (e) {
+    //Burger menu: Go to my page
+    $("#menu").on("click", "#my_page_button", function (e) {
         e.preventDefault();
-        go_search();
+        go_my_page();
     });
 
+    //Burger menu: Go to help page
+    $("#menu").on("click", "#help_button", function (e) {
+        e.preventDefault();
+        go_help_page();
+    });
 
-    //----Other events:
+    //Burger menu: Go to about us page
+    $("#menu").on("click", "#about_us_button", function (e) {
+        e.preventDefault();
+        go_about_us_page();
+    });
 
-    //Using .on()-function since we need to check if the content of #content is loaded before checking for events
+    //Burger menu: Go to contact page
+    $("#menu").on("click", "#contact_button", function (e) {
+        e.preventDefault();
+        go_contact_page();
+    });
+
+    //Go to search page
+    $("#content").on("click", "#home_search_submit", function (e) {
+        e.preventDefault();
+        submit_home_search_form();
+    });
 
     //Submit register form
     $("#content").on("click", "#register_form_button", function (e) {
@@ -48,6 +69,56 @@ $(document).ready(function () {
     });
 })
 
+
+//-------------------------Functions-------------------------
+
+//----Nav functions:
+
+//Function for going to view: Home_page
+function go_home() {
+    $("#content").html($("#home_page").html());
+    load_search_dropdowns();
+    load_burger();
+}
+
+//Function for going to view: Register_page
+function go_register() {
+    $("#content").html($("#register_page").html());
+    load_register_dates();
+}
+
+//Function for going to view: Login_page
+function go_login() {
+    $("#content").html($("#login_page").html());
+}
+
+//Function for going to view: Search_result_page
+function go_search(search) {
+    $("#content").html($("#search_page").html());
+    load_ads_request(search);
+}
+
+//Function for going to view: My page
+function go_my_page() {
+    $("#content").html($("#my_page").html());
+}
+
+//Function for going to view: Contact
+function go_contact_page() {
+    $("#content").html($("#contact_page").html());
+}
+
+//Function for going to view: Help
+function go_help_page() {
+    $("#content").html($("#help_page").html());
+}
+
+//Function for going to view: About us
+function go_about_us_page() {
+    $("#content").html($("#about_us_page").html());
+}
+
+
 //-------------------------REQUESTS-------------------------
 
 //----Request variables:
@@ -58,9 +129,11 @@ var host = 'http://localhost:5000';
 //----Requests:
 
 //Function for making a request for all ads from database
-function load_ads_request() {
+function load_ads_request(search) {
+    //TODO: use search parameters when making api request, witing for backend to finish as of 18/3
+    //TODO: add parameters to url with data tag (https://stackoverflow.com/questions/13242414/passing-a-list-of-objects-into-an-mvc-controller-method-using-jquery-ajax)
     $.ajax({
-        url: host + '/ads',
+        url: host + '/ads?sort=asc&sortparam=title',
         type: 'GET',
         success: function (ads) {
             $("#search_result").empty();
@@ -97,35 +170,24 @@ function register_request(user) {
 }
 
 
-//-------------------------Functions-------------------------
-
-//----Nav functions:
-
-//Function for going to view: Home_page
-function go_home() {
-    $("#content").html($("#home_page").html());
-    load_search_dropdowns();
-}
-
-//Function for going to view: Register_page
-function go_register() {
-    $("#content").html($("#register_page").html());
-    load_register_dates();
-}
-
-//Function for going to view: Login_page
-function go_login() {
-    $("#content").html($("#login_page").html());
-
-}
-
-//Function for going to view: Search_result_page
-function go_search() {
-    $("#content").html($("#search_page").html());
-    load_ads_request();
-}
-
 //----Functional functions:
+
+
+//Function for loading all content in hamburger menu
+function load_burger() {
+    $("#menu").empty();
+
+    if (sessionStorage.getItem('auth') == null) {
+        $("#menu").prepend('<a href=""><li id="register_button">Bli medlem</li></a>'
+            + '<a href=""><li id="login_button">Logga in</li></a>')
+    } else {
+        $("#menu").prepend('<a href=""><li id="my_page_button">Mina sidor</li></a>')
+    }
+
+    $("#menu").append('<a href=""><li id="about_us_button"> Vilka är vi</li></a>'
+        + '<a href=""><li id="contact_button">Kontakta oss</li></a>'
+        + '<a href=""><li id="help_button">Hjälp</li></a>')
+}
 
 //Function for calling all date loaders
 function load_register_dates() {
@@ -202,4 +264,15 @@ function submit_login_form() {
         password: $("#password_login").val()
     }
     login_request(user);
+}
+
+function submit_home_search_form() {
+    var search = {
+        //TODO: Names need to be updated to fit API
+        area: $("#home_select_area").val(),
+        year: $("#home_select_start_year").val(),
+        month: $("#home_select_start_month").val(),
+        length: $("#home_select_length").val()
+    }
+    go_search(search);
 }

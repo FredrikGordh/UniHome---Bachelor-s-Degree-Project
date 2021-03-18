@@ -20,7 +20,6 @@ bcrypt = Bcrypt(app)
 # The class user contains all information about the user.
 # Written by Jakob, Gustav, Joel & Fredrik
 
-
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -30,8 +29,7 @@ class User(db.Model):
     gender = db.Column(db.String, nullable=False)
     birthdate = db.relationship("Date", backref='birthdate')
     hostads = db.relationship("Ad", backref="host", foreign_keys="Ad.host_id")
-    bookedads = db.relationship(
-        "Ad", backref="tenant", foreign_keys="Ad.tenant_id")
+    bookedads = db.relationship("Ad", backref="tenant", foreign_keys="Ad.tenant_id")
 
     university = db.Column(db.String, nullable=True)
     education = db.Column(db.String, nullable=True)
