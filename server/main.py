@@ -137,6 +137,9 @@ class Date(db.Model):
         return dict(id=self.id, year=self.year, month=self.month, day=self.day)
 
 
+#WILL MAKE A IMAGE/PICTURE CLASS HERE EVENTUALLY
+
+
 ###################################################### APP.ROUTES ######################################################
 
 # /user/signup has the method POST that is used when you want to create a new user on the website. 
