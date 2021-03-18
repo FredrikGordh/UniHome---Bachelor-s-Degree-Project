@@ -1,0 +1,277 @@
+body{
+  
+  /* make it look decent enough */
+  background: #232323;
+  color: #cdcdcd;
+  font-family: "Avenir Next", "Avenir", sans-serif;
+  z-index: -2;
+}
+
+body, html{
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+    margin: 0;
+}
+
+
+/* ID */
+#home_area_search{
+  background-color: white;
+  color: black;
+}
+
+#nav-bar{
+  height: 0px;
+  position: fixed;
+  z-index: 6;
+  left: 94vw;
+}
+
+#navbar-logo{
+  width: 10vw;
+}
+
+#menuToggle
+{
+  display: block;
+  position: relative;
+  top: 30px;
+  left: calc(100% - 70px);
+  width: 100px;
+}
+
+#home-reviews {
+  background-color: aqua;
+}
+#home-now-hot {
+  background-color: red;
+}
+#home-areas {
+  background-color: pink;
+}
+
+#home-types {
+  background-color: yellow;
+}
+
+#menuToggle a{
+  text-decoration: none;
+  color: #232323;
+  
+  transition: color 0.3s ease;
+}
+
+#menuToggle a:hover{
+  color: tomato;
+}
+  
+  
+#menuToggle input{
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+  
+  cursor: pointer;
+  
+  opacity: 0; /* hide this */
+  z-index: 6; /* and place it over the hamburger */
+  
+  -webkit-touch-callout: none;
+}
+
+/*
+  * Just a quick hamburger
+  */
+   
+#menuToggle span{
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  
+  background: black;
+  border-radius: 3px;
+  
+  z-index: 5;
+  
+  transform-origin: 4px 0px;
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+    background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+    opacity 0.55s ease;
+}
+
+#menuToggle span:first-child{
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2){
+  transform-origin: 0% 100%;
+}
+  
+/* 
+  * Transform all the slices of hamburger
+  * into a crossmark.
+  */
+#menuToggle input:checked ~ span{
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: #232323;
+}
+  
+/*
+  * But let's hide the middle one.
+  */
+#menuToggle input:checked ~ span:nth-last-child(3){
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+/*
+  * Ohyeah and the last one should go the other direction
+  */
+#menuToggle input:checked ~ span:nth-last-child(2){
+  transform: rotate(-45deg) translate(0, -1px);
+}
+  
+/*
+* Make this absolute positioned
+* at the top left of the screen
+*/
+
+#menu{
+  position: absolute;
+  width: 300px;
+  padding: 50px;
+  border-radius: 20px;
+  /*opacity: 0;*/
+
+  background: #ededed;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
+
+  top: -20px;
+  left: -250px;
+  /*transform-origin: 0% 0%;*/
+  transform: translate(120%, 0%);
+
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+
+  z-index: 4;
+}
+  
+#menu li{
+  padding: 10px 0;
+  font-size: 22px;
+}
+  
+/*
+* And let's slide it in from the left
+*/
+
+#menuToggle input:checked ~ ul{
+  transform: none;
+}
+
+#content {
+    padding: 0;
+}
+
+#home_container {
+  margin-top: 1080px;
+  padding: 0;
+}
+
+#header{
+  background-color: paleturquoise;
+  color:black;
+  width: 100%;
+  height: 1080px;
+  position: absolute;
+  top: 0;
+  padding-top: 20vw;
+}
+
+#home_search {
+  background-color: white;
+  border-radius: 37px;
+}
+
+#search_page_container {
+  height: 500px;
+  color: white;
+}
+
+#search_result {
+
+}
+
+/* Klasser */
+
+.search_button {
+  border-radius: 50px;
+}
+
+.footer{
+  background-color: black;
+  color:white;
+  width: 100%;
+}
+
+.no-dot-list{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a:hover{
+  text-decoration: none;
+}
+
+.footer a{
+  color: white;
+}
+
+.section{
+  width: 100%;
+}  
+
+.no-dot-list{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.no-border {
+  border-style: none;
+}
+
+a:hover{
+  text-decoration: none;
+}
+
+.footer a{
+  color: white;
+}
+
+.section{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}  
+
+.navbar-style{
+  background-color: rgba(0,0,0,0);
+  position: fixed;
+  z-index: 2;
+}

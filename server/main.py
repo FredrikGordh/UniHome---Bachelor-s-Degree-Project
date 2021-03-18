@@ -18,7 +18,7 @@ bcrypt = Bcrypt(app)
 ###################################################### CLASSES ######################################################
 
 # The class user contains all information about the user.
-# Written by Jakob, Gustav, Joel
+# Written by Jakob, Gustav, Joel & Fredrik
 
 
 class User(db.Model):
@@ -154,6 +154,13 @@ class Date(db.Model):
 # /user/signup has the method POST that is used when you want to create a new user on the website.
 # Written by Jakob, Gustav
 # KIND OF DONE
+
+
+@app.route('/')
+def default():
+    return app.send_static_file("index.html")
+
+
 @app.route('/user/signup', methods=['POST'])
 def signup():
     newuser = request.get_json(force=True)
@@ -215,7 +222,7 @@ def list_ad(ad_id):
 
 
 # /ads has the method GET, it is used to retrieve all the ads that is stored in the database.
-# Written by Jakob, Gustav, Joel
+# Written by Jakob, Gustav, Joel & Fredrik
 @app.route('/ads', methods=['GET'])
 def ads():
     if request.method == 'GET':
@@ -233,8 +240,8 @@ def ads():
         return jsonify(ad_list)
 
 
-# /ad/create has the method POST, it is used to make an ad that is connected to the specific user that created it.
-# Written by Jakob, Gustav, Joel
+# /ad/create has the method POST, it is used to make an ad that is connected to the specifik user that created it.
+# Written by Jakob, Gustav, Joel & Fredrik
 @app.route('/ad/create', methods=['POST'])
 @jwt_required()
 def create_ad():
