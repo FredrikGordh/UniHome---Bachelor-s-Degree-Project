@@ -99,7 +99,9 @@ class Ad(db.Model):
                         self.host_id).serialize(),
                     startdate=Date.query.filter_by(
                         start_ad_id=self.id).first().serialize(),
-                    enddate=Date.query.filter_by(end_ad_id=self.id).first().serialize())
+                    enddate=Date.query.filter_by(
+                        end_ad_id=self.id).first().serialize(),
+                    attributes=Attributes.query.filter_by(ad_id=self.id).first().serialize())
 
 
 # The class attributes contains all the attributes of ad that has a boolean.
@@ -140,6 +142,9 @@ class Date(db.Model):
 
     def serialize(self):
         return dict(id=self.id, year=self.year, month=self.month, day=self.day)
+
+
+# WILL MAKE A IMAGE/PICTURE CLASS HERE EVENTUALLY
 
 
 ###################################################### APP.ROUTES ######################################################
@@ -210,6 +215,7 @@ def list_ad(ad_id):
     if request.method == 'GET':
         return jsonify(Ad.query.get_or_404(ad_id).serialize())
     elif request.method == 'PUT':
+        # NOT NECCESSARY TO IMPLEMENT YET
         return "NYI"
 
 
@@ -218,8 +224,15 @@ def list_ad(ad_id):
 @app.route('/ads', methods=['GET'])
 def ads():
     if request.method == 'GET':
+        sort = request.args.get('sort')
+        sort_parameter = request.args.get('sortparam')
         ad_list = []
-        all_ads = Ad.query.all()
+        if sort == "asc":
+            all_ads = Ad.query.order_by(
+                getattr(Ad, sort_parameter).asc()).all()
+        else:
+            all_ads = Ad.query.order_by(
+                getattr(Ad, sort_parameter).desc()).all()
         for ad in all_ads:
             ad_list.append(ad.serialize())
         return jsonify(ad_list)
