@@ -131,8 +131,9 @@ var host = 'http://localhost:5000';
 //Function for making a request for all ads from database
 function load_ads_request(search) {
     //TODO: use search parameters when making api request, witing for backend to finish as of 18/3
+    //TODO: add parameters to url with data tag (https://stackoverflow.com/questions/13242414/passing-a-list-of-objects-into-an-mvc-controller-method-using-jquery-ajax)
     $.ajax({
-        url: host + '/ads',
+        url: host + '/ads?sort=asc&sortparam=title',
         type: 'GET',
         success: function (ads) {
             $("#search_result").empty();
