@@ -213,7 +213,7 @@ def ads():
             all_ads = Ad.query.filter(Ad.startdate <= start, Ad.enddate >= end, Ad.neighbourhood == area).order_by(
                 getattr(Ad, sort_parameter).asc()).all()
         else:
-            all_ads = Ad.query.filter(Ad.startdate <= start, Ad.enddate >= end).order_by(
+            all_ads = Ad.query.filter(Ad.startdate <= start, Ad.enddate >= end, Ad.neighbourhood == area).order_by(
                 getattr(Ad, sort_parameter).desc()).all()
         for ad in all_ads:
             ad_list.append(ad.serialize())
