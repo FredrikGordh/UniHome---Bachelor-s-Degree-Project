@@ -67,6 +67,11 @@ $(document).ready(function () {
         e.preventDefault();
         submit_login_form();
     });
+
+    //Register update of search sort
+    $("#content").on("change", "#search_page_sort", function (e) {
+        update_search();
+    });
 })
 
 
@@ -129,12 +134,15 @@ var host = 'http://localhost:5000';
 //----Requests:
 
 //Function for making a request for all ads from database
-function load_ads_request(search) {
+function load_ads_request(search, sort = "asc", sort_param = "title") {
     //TODO: use search parameters when making api request, witing for backend to finish as of 18/3
-    //TODO: add parameters to url with data tag (https://stackoverflow.com/questions/13242414/passing-a-list-of-objects-into-an-mvc-controller-method-using-jquery-ajax)
     $.ajax({
-        url: host + '/ads?sort=asc&sortparam=title',
+        url: host + '/ads',
         type: 'GET',
+        data: {
+            sort: sort,
+            sortparam: sort_param
+        },
         success: function (ads) {
             $("#search_result").empty();
             ads.forEach(element => {
@@ -227,6 +235,7 @@ function load_search_dropdowns() {
     load_days("#home_select_length")
 }
 
+//Function for loading searchable years when searching for ads
 function load_searchable_years() {
     var year = new Date().getFullYear();
     for (i = 0; i < 5; i++) {
@@ -270,9 +279,32 @@ function submit_home_search_form() {
     var search = {
         //TODO: Names need to be updated to fit API
         area: $("#home_select_area").val(),
-        year: $("#home_select_start_year").val(),
-        month: $("#home_select_start_month").val(),
-        length: $("#home_select_length").val()
+        start: $("#home_select_start").val(),
+        end: $("#home_select_end").val(),
     }
     go_search(search);
+}
+
+function update_search() {
+    sort = $("#search_page_sort").val();
+    if (sort == "A-Ö") {
+        sort = "asc"
+        sort_param = "title";
+    } else if (sort == "Ö-A") {
+        sort = "desc";
+        sort_param = "title";
+    } else if (sort == "Pris ökande") {
+        sort = "asc";
+        sort_param = "price";
+    } else if (sort == "Pris sjunkande") {
+        sort = "desc";
+        sort_param = "price";
+    }
+    var search = {
+        //TODO: Names need to be updated to fit API
+        area: $("#search_page_select_area").val(),
+        start: $("#home_select_start").val(),
+        end: $("#home_select_end").val(),
+    }
+    load_ads_request(search, sort, sort_param);
 }
