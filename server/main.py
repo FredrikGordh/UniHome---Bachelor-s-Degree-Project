@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import (
     JWTManager, create_access_token, jwt_required, get_jwt_identity)
 from flask import abort
+import datetime
 
 app = Flask(__name__, static_folder='../client', static_url_path='/')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -28,7 +29,8 @@ class User(db.Model):
     telephone = db.Column(db.String, nullable=False)
 
     gender = db.Column(db.String, nullable=False)
-    birthdate = db.relationship("Date", backref='birthdate')
+    birthdate = db.Column(db.Date, nullable=False)
+
     hostads = db.relationship("Ad", backref="host", foreign_keys="Ad.host_id")
     bookedads = db.relationship(
         "Ad", backref="tenant", foreign_keys="Ad.tenant_id")
@@ -48,7 +50,7 @@ class User(db.Model):
     def serialize(self):
         return dict(id=self.id, name=self.name, email=self.email, telephone=self.telephone, gender=self.gender,
                     university=self.university, education=self.education, bio=self.bio, verified_student=self.verified_student,
-                    is_admin=self.is_admin, birthdate=Date.query.filter_by(user_id=self.id).first().serialize())
+                    is_admin=self.is_admin, birthdate=self.birthdate)
 
     def set_password(self, password):
         self.password_hash = bcrypt.generate_password_hash(
@@ -74,10 +76,8 @@ class Ad(db.Model):
     postalcode = db.Column(db.Integer, nullable=True)
     country = db.Column(db.String, nullable=True)
 
-    startdate = db.relationship(
-        "Date", backref='start', foreign_keys="Date.start_ad_id")
-    enddate = db.relationship("Date", backref='end',
-                              foreign_keys="Date.end_ad_id")
+    startdate = db.Column(db.Date, nullable=False)
+    enddate = db.Column(db.Date, nullable=False)
     attributes = db.relationship("Attributes", backref='ad_attribute')
 
     squaremetres = db.Column(db.Integer, nullable=True)
@@ -99,10 +99,8 @@ class Ad(db.Model):
                     postalcode=self.postalcode, country=self.country, squaremetres=self.squaremetres, price=self.price, beds=self.beds,
                     accommodationtype=self.accommodationtype, host=User.query.get(
                         self.host_id).serialize(),
-                    startdate=Date.query.filter_by(
-                        start_ad_id=self.id).first().serialize(),
-                    enddate=Date.query.filter_by(
-                        end_ad_id=self.id).first().serialize(),
+                    startdate=self.startdate,
+                    enddate=self.enddate,
                     attributes=Attributes.query.filter_by(ad_id=self.id).first().serialize())
 
 
@@ -130,22 +128,6 @@ class Attributes(db.Model):
 # Written by Jakob, Gustav, Joel
 
 
-class Date(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    year = db.Column(db.Integer, nullable=False)
-    month = db.Column(db.Integer, nullable=False)
-    day = db.Column(db.Integer, nullable=False)
-    start_ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable=True)
-    end_ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-
-    def __repr__(self):
-        return '<Date {} {} {} {}>'.format(self.id, self.year, self.month, self.day)
-
-    def serialize(self):
-        return dict(id=self.id, year=self.year, month=self.month, day=self.day)
-
-
 # WILL MAKE A IMAGE/PICTURE CLASS HERE EVENTUALLY
 
 
@@ -166,13 +148,9 @@ def signup():
     newuser = request.get_json(force=True)
     if not (User.query.filter_by(email=newuser.get('email')).first()):
         newuserDB = User(name=newuser.get('name'), email=newuser.get(
-            'email'), telephone=newuser.get('telephone'), gender=newuser.get('gender'))
+            'email'), telephone=newuser.get('telephone'), gender=newuser.get('gender'), birthdate=datetime.date(int(newuser.get('year')), int(newuser.get('month')), int(newuser.get('day'))))
         User.set_password(newuserDB, newuser.get('password'))
         db.session.add(newuserDB)
-        db.session.commit()
-        birthdateDB = Date(year=newuser.get('year'), month=newuser.get(
-            'month'), day=newuser.get('day'), user_id=newuserDB.id)
-        db.session.add(birthdateDB)
         db.session.commit()
         return "Created", 201
     else:
@@ -186,7 +164,6 @@ def signup():
 def login():
     user = request.get_json(force=True)
     found = User.query.filter_by(email=user['email']).first()
-    print(found.serialize())
     if found:
         if (bcrypt.check_password_hash(found.password_hash, user['password'])):
             access_token = create_access_token(identity=found.id)
@@ -228,12 +205,15 @@ def ads():
     if request.method == 'GET':
         sort = request.args.get('sort')
         sort_parameter = request.args.get('sortparam')
+        start = request.args.get('start')
+        end = request.args.get('end')
+        area = request.args.get('area')
         ad_list = []
         if sort == "asc":
-            all_ads = Ad.query.order_by(
+            all_ads = Ad.query.filter(Ad.startdate <= start, Ad.enddate >= end, Ad.neighbourhood == area).order_by(
                 getattr(Ad, sort_parameter).asc()).all()
         else:
-            all_ads = Ad.query.order_by(
+            all_ads = Ad.query.filter(Ad.startdate <= start, Ad.enddate >= end).order_by(
                 getattr(Ad, sort_parameter).desc()).all()
         for ad in all_ads:
             ad_list.append(ad.serialize())
@@ -249,20 +229,23 @@ def create_ad():
         current_user_id = get_jwt_identity()
         newad = request.get_json(force=True)
         newadDB = Ad(title=newad.get('title'), description=newad.get(
-            'description'), host_id=(current_user_id))
+            'description'), host_id=(current_user_id), startdate=newad.get('start'), enddate=newad.get('end'))
         db.session.add(newadDB)
         db.session.commit()
-        startdayDB = Date(year=newad.get('startyear'), month=newad.get(
-            'startmonth'), day=newad.get('startday'), start_ad_id=newadDB.id)
-        enddayDB = Date(year=newad.get('endyear'), month=newad.get(
-            'endmonth'), day=newad.get('endday'), end_ad_id=newadDB.id)
         attributesDB = Attributes(ad_id=newadDB.id)
-        db.session.add(startdayDB)
-        db.session.add(enddayDB)
         db.session.add(attributesDB)
         db.session.commit()
 
         return "success", 200
+
+
+@app.route('/areas', methods=['GET'])
+def areas():
+    area_list = []
+    all_areas = db.session.query(Ad.neighbourhood).distinct()
+    for area in all_areas:
+        area_list.append(area)
+    return jsonify(area_list)
 
 
 if __name__ == "__main__":

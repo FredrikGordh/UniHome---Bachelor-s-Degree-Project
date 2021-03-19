@@ -69,7 +69,7 @@ $(document).ready(function () {
     });
 
     //Register update of search sort
-    $("#content").on("change", "#search_page_sort", function (e) {
+    $("#content").on("change", "#search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort", function (e) {
         update_search();
     });
 })
@@ -82,7 +82,7 @@ $(document).ready(function () {
 //Function for going to view: Home_page
 function go_home() {
     $("#content").html($("#home_page").html());
-    load_search_dropdowns();
+    load_home_search_dropdowns();
     load_burger();
 }
 
@@ -101,6 +101,7 @@ function go_login() {
 function go_search(search) {
     $("#content").html($("#search_page").html());
     load_ads_request(search);
+    load_search_page_search_dropdowns(search);
 }
 
 //Function for going to view: My page
@@ -141,7 +142,10 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
         type: 'GET',
         data: {
             sort: sort,
-            sortparam: sort_param
+            sortparam: sort_param,
+            start: search.start,
+            end: search.end,
+            area: search.area
         },
         success: function (ads) {
             $("#search_result").empty();
@@ -177,6 +181,19 @@ function register_request(user) {
     })
 }
 
+//Function for making a request for all unique areas in database
+function load_areas(container) {
+    $.ajax({
+        url: host + '/areas',
+        type: 'GET',
+        async: false,
+        success: function (areas) {
+            areas.forEach(element => {
+                $(container).append("<option>" + element + "</option>");
+            });
+        }
+    })
+}
 
 //----Functional functions:
 
@@ -228,11 +245,20 @@ function load_days(container) {
 }
 
 //Function for loading data in dropdowns for search from home page
-function load_search_dropdowns() {
+function load_home_search_dropdowns() {
     //add request function for all available areas
     load_searchable_years();
     load_months("#home_select_start_month")
     load_days("#home_select_length")
+    load_areas("#home_select_area")
+}
+
+//Function for loading data in dropdowns for search on search page
+function load_search_page_search_dropdowns(search) {
+    load_areas("#search_page_select_area");
+    $("#search_page_select_area").val(search.area);
+    $("#search_page_select_start").val(search.start);
+    $("#search_page_select_end").val(search.end);
 }
 
 //Function for loading searchable years when searching for ads
@@ -303,8 +329,8 @@ function update_search() {
     var search = {
         //TODO: Names need to be updated to fit API
         area: $("#search_page_select_area").val(),
-        start: $("#home_select_start").val(),
-        end: $("#home_select_end").val(),
+        start: $("#search_page_select_start").val(),
+        end: $("#search_page_select_end").val(),
     }
     load_ads_request(search, sort, sort_param);
 }
