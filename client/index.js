@@ -67,6 +67,11 @@ $(document).ready(function () {
         e.preventDefault();
         submit_login_form();
     });
+
+    //Register update of search sort
+    $("#content").on("change", "#search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort", function (e) {
+        update_search();
+    });
 })
 
 
@@ -77,7 +82,7 @@ $(document).ready(function () {
 //Function for going to view: Home_page
 function go_home() {
     $("#content").html($("#home_page").html());
-    load_search_dropdowns();
+    load_home_search_dropdowns();
     load_burger();
 }
 
@@ -96,6 +101,7 @@ function go_login() {
 function go_search(search) {
     $("#content").html($("#search_page").html());
     load_ads_request(search);
+    load_search_page_search_dropdowns(search);
 }
 
 //Function for going to view: My page
@@ -129,12 +135,18 @@ var host = 'http://localhost:5000';
 //----Requests:
 
 //Function for making a request for all ads from database
-function load_ads_request(search) {
+function load_ads_request(search, sort = "asc", sort_param = "title") {
     //TODO: use search parameters when making api request, witing for backend to finish as of 18/3
-    //TODO: add parameters to url with data tag (https://stackoverflow.com/questions/13242414/passing-a-list-of-objects-into-an-mvc-controller-method-using-jquery-ajax)
     $.ajax({
-        url: host + '/ads?sort=asc&sortparam=title',
+        url: host + '/ads',
         type: 'GET',
+        data: {
+            sort: sort,
+            sortparam: sort_param,
+            start: search.start,
+            end: search.end,
+            area: search.area
+        },
         success: function (ads) {
             $("#search_result").empty();
             ads.forEach(element => {
@@ -169,6 +181,19 @@ function register_request(user) {
     })
 }
 
+//Function for making a request for all unique areas in database
+function load_areas(container) {
+    $.ajax({
+        url: host + '/areas',
+        type: 'GET',
+        async: false,
+        success: function (areas) {
+            areas.forEach(element => {
+                $(container).append("<option>" + element + "</option>");
+            });
+        }
+    })
+}
 
 //----Functional functions:
 
@@ -220,13 +245,23 @@ function load_days(container) {
 }
 
 //Function for loading data in dropdowns for search from home page
-function load_search_dropdowns() {
+function load_home_search_dropdowns() {
     //add request function for all available areas
     load_searchable_years();
     load_months("#home_select_start_month")
     load_days("#home_select_length")
+    load_areas("#home_select_area")
 }
 
+//Function for loading data in dropdowns for search on search page
+function load_search_page_search_dropdowns(search) {
+    load_areas("#search_page_select_area");
+    $("#search_page_select_area").val(search.area);
+    $("#search_page_select_start").val(search.start);
+    $("#search_page_select_end").val(search.end);
+}
+
+//Function for loading searchable years when searching for ads
 function load_searchable_years() {
     var year = new Date().getFullYear();
     for (i = 0; i < 5; i++) {
@@ -270,9 +305,32 @@ function submit_home_search_form() {
     var search = {
         //TODO: Names need to be updated to fit API
         area: $("#home_select_area").val(),
-        year: $("#home_select_start_year").val(),
-        month: $("#home_select_start_month").val(),
-        length: $("#home_select_length").val()
+        start: $("#home_select_start").val(),
+        end: $("#home_select_end").val(),
     }
     go_search(search);
+}
+
+function update_search() {
+    sort = $("#search_page_sort").val();
+    if (sort == "A-Ö") {
+        sort = "asc"
+        sort_param = "title";
+    } else if (sort == "Ö-A") {
+        sort = "desc";
+        sort_param = "title";
+    } else if (sort == "Pris ökande") {
+        sort = "asc";
+        sort_param = "price";
+    } else if (sort == "Pris sjunkande") {
+        sort = "desc";
+        sort_param = "price";
+    }
+    var search = {
+        //TODO: Names need to be updated to fit API
+        area: $("#search_page_select_area").val(),
+        start: $("#search_page_select_start").val(),
+        end: $("#search_page_select_end").val(),
+    }
+    load_ads_request(search, sort, sort_param);
 }
