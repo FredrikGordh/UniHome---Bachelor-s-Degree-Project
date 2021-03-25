@@ -19,52 +19,36 @@
 <body>
   <!-- Navbar: En hamburgarmeny + navbar -->
   <nav id="nav-bar" role="navigation">
+
+  </nav>
+
+  <nav class="navbar navbar-style">
+    <a href="" class="navbar-brand"><img id="navbar-logo" src="Media/Unihome-logga.png"></a>
     <div id="menuToggle">
       <!--
-        A fake / hidden checkbox is used as click reciever,
-        so you can use the :checked selector on it.-->
+            A fake / hidden checkbox is used as click reciever,
+            so you can use the :checked selector on it.-->
       <input type="checkbox" />
 
       <!--Some spans to act as a hamburger.
-        
-        They are acting like a real hamburger,
-        not that McDonalds stuff.
-        -->
+            
+            They are acting like a real hamburger,
+            not that McDonalds stuff.
+            -->
       <span></span>
       <span></span>
       <span></span>
 
       <!--
-        Too bad the menu has to be inside of the button
-        but hey, it's pure CSS magic.
-        -->
+            Too bad the menu has to be inside of the button
+            but hey, it's pure CSS magic.
+            -->
       <ul id="menu">
-        <a href="#">
-          <li>Bli medlem</li>
-        </a>
-        <a href="#">
-          <li>Logga in</li>
-        </a>
-        <a href="#">
-          <li>Vilka är vi</li>
-        </a>
-        <a href="#">
-          <li>Kontakta oss</li>
-        </a>
-        <a href="#" target="_blank">
-          <li>Hjälp</li>
-        </a>
       </ul>
     </div>
   </nav>
 
-  <!-- As a link -->
-  <nav class="navbar navbar-style">
-    <a class="navbar-brand"><img id="navbar-logo" src="Media/Unihome-logga.png"></a>
-  </nav>
 
-  <!-- En välkomnsheader-->
-  <div id="header"></div>
 
   <div id="content" class="container-fluid"></div>
 
@@ -104,52 +88,198 @@
     </div>
   </div>
 
-  <script id="home" type="text/html">
-        <div id="home-now-hot" class="section">
-            <h1> Hetaste boendena/Bäst reviews</h1>
-        </div>
-        <div id="home-areas" class="section">
-            <h1>Områden</h1>
-        </div>
-        <div id="home-types" class="section">
-            <h1>Typer av boenden</h1>
-        </div>
-        <div id="home-reviews" class="section">
-            <h1>Reviews</h1>
-        </div>
-    </script>
-
-  <script id="home_header" type="text/html">
+  <!-- Home page view -->
+  <script id="home_page" type="text/html">
+    <div id="home_container" class="container-fluid">
+      <div id="header">
         <div class="container">
-          <div class="row align-items-center justify-content-evenly" id="home_search">
-              <div class="col-3">  
-                <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="home_area_search" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown button
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="home_area_search">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
-                </div>              
+          <div class="row align-items-center justify-content-center" id="home_search">
+            <form class="col-12">
+              <div class="form-row align-items-center">
+                <div class="form-group col-8 col-lg-4">
+                  <select class="form-control no-border" id="home_select_area">
+                    <option>Område</option>
+                  </select>            
+                </div>
+                <div class="form-group col-3 d-none d-lg-block pt-1">
+                  <label for="home_select_start">Inflytt</label>
+                  <input type="date" id="home_select_start" class="no-border">
+                </div>
+                <div class="form-group col-3 d-none d-lg-block pt-1">
+                  <label for="home_select_end">Utflytt</label>
+                  <input type="date" id="home_select_end" class="no-border">
+                </div>
+                  <button type="button" id="home_search_submit" class="btn btn-primary col-3 offset-1 col-lg-1 offset-lg-1 search_button">Sök</button>
               </div>
-              <div class="col-3">Inflytt</div>
-              <div class="col-3">Utflytt</div>
+            </form>
           </div>
         </div>
-    </script>
+      </div>
+      <div id="home-now-hot" class="section">
+        <h1> Hetaste boendena/Bäst reviews</h1>
+      </div>
+      <div id="home-areas" class="section">
+        <h1>Områden</h1>
+      </div>
+      <div id="home-types" class="section">
+        <h1>Typer av boenden</h1>
+      </div>
+      <div id="home-reviews" class="section">
+        <h1>Reviews</h1>
+      </div>
+    </div>
+  </script>
 
+
+  <!-- Search page view -->
   <script id="search_page" type="text/html">
-      <div id="search_result"></div>
-    </script>
+    <div id="search_page_container" class="container-fluid">
+      <div class="col-12">
+        <div class="form-row align-items-center">
+          <div class="col-2 offset-1">
+            <select class="form-control no-border" id="search_page_select_area">
+              <option>Område</option>
+            </select>            
+          </div>
+          <div class="col-2 pt-1 offset-1">
+            <label for="search_page_select_start">Inflytt</label>
+            <input type="date" id="search_page_start" class="no-border">
+          </div>
+          <div class="col-2 pt-1">
+            <label for="search_page_select_end">Utflytt</label>
+            <input type="date" id="search_page_end" class="no-border">
+          </div>
+          <div class="col-2 offset-2">
+            <label for="search_page_sort" class="form-label">Sortera</label>
+              <select class="form-control no-border" id="search_page_sort">
+                <option>A-Ö</option>
+                <option>Ö-A</option>
+                <option>Pris ökande</option>
+                <option>Pris sjunkande</option>
+              </select> 
+            </div>
+        </div>
+      </div>
+      <div id="search_result" class="row justify-content-center align-items-start"></div>
+    </div>
+  </script>
 
+
+  <!-- Register view -->
+  <script id="register_page" type="text/html">
+    <div id="register_container" class="container">
+      <form>
+        <div class="form-group">
+          <label for="name_register">För och Efternamn</label>
+          <input type="text" class="form-control" id="name_register" placeholder="Per Johansson">
+        </div>
+        <div class="form-group">
+          <label for="gender_register">Kön</label>
+          <select class="form-control" id="gender_register">
+            <option>Välj en...</option>
+            <option>Kvinna</option>
+            <option>Man</option>
+            <option>Annat</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-4">
+            <label for="year_register">Födelseår</label>
+            <select class="form-control" id="year_register">
+              <option>Välj ett...</option>
+            </select>            
+          </div>
+          <div class="form-group col-4">
+            <label for="month_register">Månad</label>
+            <select class="form-control" id="month_register">
+              <option>Välj en...</option>
+            </select>  
+          </div>
+          <div class="form-group col-4">
+            <label for="day_register">Dag</label>
+            <select class="form-control" id="day_register">
+              <option>Välj en...</option>
+            </select>  
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="phone_register">Telefon</label>
+          <input type="text" class="form-control" id="phone_register" placeholder="0730502142">
+        </div>
+        <div class="form-group">
+          <label for="email_register">Email</label>
+          <input type="email" class="form-control" id="email_register" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label for="password_login">Password</label>
+          <input type="password" class="form-control" id="password_register" placeholder="Password">
+        </div>
+        <button type="button" id="register_form_button" class="btn btn-primary">Registrera</button>
+      </form>
+    </div>
+  </script>
+
+  <!-- Login view -->
+  <script id="login_page" type="text/html">
+    <div id="login_container" class="container">
+      <form>
+        <div class="form-group">
+          <label for="email_login">Email</label>
+          <input type="email" class="form-control" id="email_login" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label for="password_login">Password</label>
+          <input type="password" class="form-control" id="password_login" placeholder="Password">
+        </div>
+        <button type="button" id="login_form_button" class="btn btn-primary">Logga in</button>
+      </form>
+    </div>
+  </script>
+
+  <!-- My page view -->
+  <script id="my_page" type="text/html">
+    <div id="my_page_container" class="container-fluid">
+
+    </div>
+  </script>
+
+  <!-- About us view -->
+  <script id="about_us_page" type="text/html">
+    <div id="about_us_page_container" class="container-fluid">
+  
+    </div>
+  </script>
+
+  <!-- Contact view -->
+  <script id="contact_page" type="text/html">
+    <div id="contact_page_container" class="container">
+      <h1>Kontakt</h1>
+      <p>Här kan du hitta information för att kontakta oss</p>
+      <h2>Ekonomi</h2>
+      <ul>
+        <li>Telefon: 013 50 21 43</li>
+        <li>ekonomi@unihome.se</li>
+      </ul>    
+      <h2>Kundtjänst</h2>
+      <ul>
+        <li>Telefon: 013 50 21 44</li>
+        <li>help@unihome.se</li>
+      </ul> 
+    </div>
+  </script>
+
+  <!-- Help view -->
+  <script id="help_page" type="text/html">
+    <div id="help_page_container" class="container-fluid">
+      
+    </div>
+  </script>
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
     crossorigin="anonymous"></script>
