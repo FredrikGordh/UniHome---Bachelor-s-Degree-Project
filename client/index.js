@@ -1,5 +1,7 @@
-//-------------------------JQuery events-------------------------
+//Enum för att översätta attribut vid sökning
+const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Attribut": "Attribut" })
 
+//-------------------------JQuery events-------------------------
 
 $(document).ready(function () {
     go_home();
@@ -69,7 +71,7 @@ $(document).ready(function () {
     });
 
     //Register update of search sort
-    $("#content").on("change", "#search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort", function (e) {
+    $("#content").on("change", "#search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_page_select_attr", function (e) {
         update_search();
     });
 })
@@ -145,7 +147,9 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
             sortparam: sort_param,
             start: search.start,
             end: search.end,
-            area: search.area
+            area: search.area,
+            type: search.type,
+            attributes: search.attributes
         },
         success: function (ads) {
             $("#search_result").empty();
@@ -186,9 +190,21 @@ function load_areas(container) {
     $.ajax({
         url: host + '/areas',
         type: 'GET',
-        async: false,
         success: function (areas) {
             areas.forEach(element => {
+                $(container).append("<option>" + element + "</option>");
+            });
+        }
+    })
+}
+
+//Function for making a request for all unique accomodation types in database
+function load_types(container) {
+    $.ajax({
+        url: host + '/types',
+        type: 'GET',
+        success: function (types) {
+            types.forEach(element => {
                 $(container).append("<option>" + element + "</option>");
             });
         }
@@ -244,9 +260,15 @@ function load_days(container) {
     }
 }
 
+function load_attr(container) {
+    attributes = ["Cykel", "Wifi", "Diskmaskin", "Tvättmaskin", "Bastu"]
+    attributes.forEach(element => {
+        $(container).append("<option>" + element + "</option>");
+    });
+}
+
 //Function for loading data in dropdowns for search from home page
 function load_home_search_dropdowns() {
-    //add request function for all available areas
     load_searchable_years();
     load_months("#home_select_start_month")
     load_days("#home_select_length")
@@ -256,6 +278,8 @@ function load_home_search_dropdowns() {
 //Function for loading data in dropdowns for search on search page
 function load_search_page_search_dropdowns(search) {
     load_areas("#search_page_select_area");
+    load_types("#search_page_select_type");
+    load_attr("#search_page_select_attr");
     $("#search_page_select_area").val(search.area);
     $("#search_page_select_start").val(search.start);
     $("#search_page_select_end").val(search.end);
@@ -305,8 +329,11 @@ function submit_home_search_form() {
     var search = {
         //TODO: Names need to be updated to fit API
         area: $("#home_select_area").val(),
+        //Will change if type gets searchable from home view
+        type: "Typ av boende",
         start: $("#home_select_start").val(),
         end: $("#home_select_end").val(),
+        attributes: "Attribut",
     }
     go_search(search);
 }
@@ -329,8 +356,11 @@ function update_search() {
     var search = {
         //TODO: Names need to be updated to fit API
         area: $("#search_page_select_area").val(),
+        type: $("#search_page_select_type").val(),
         start: $("#search_page_select_start").val(),
         end: $("#search_page_select_end").val(),
+        attributes: Attr_Enum[$("#search_page_select_attr").val()],
     }
+
     load_ads_request(search, sort, sort_param);
 }
