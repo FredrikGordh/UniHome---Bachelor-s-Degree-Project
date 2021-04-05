@@ -38,8 +38,8 @@ $(document).ready(function () {
         go_help_page();
     });
 
-     //Burger menu: Log Out
-     $("#menu").on("click", "#logout_button", function (e) {
+    //Burger menu: Log Out
+    $("#menu").on("click", "#logout_button", function (e) {
         e.preventDefault();
         logout();
     });
@@ -85,9 +85,9 @@ $(document).ready(function () {
     });
 
     //Go to read more on an ad
-    $("#content").on("click", "#read_more_ad_button", function (e) {
+    $("#content").on("click", ".read_more_ad_button", function (e) {
         e.preventDefault();
-        go_read_more_ad_page();
+        go_read_more_ad_page($(this).data('id'));
     });
 })
 
@@ -143,11 +143,12 @@ function go_about_us_page() {
 }
 
 //Function for going to view: Read more ad
-function go_read_more_ad_page() {
+function go_read_more_ad_page(ad_id) {
     $("#content").html($("#read_more_ad_page").html());
+    load_read_more(ad_id);
 }
 
-function logout(){
+function logout() {
     sessionStorage.removeItem('auth');
     go_home();
 }
@@ -238,6 +239,16 @@ function load_types(container) {
     })
 }
 
+function load_read_more(ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id,
+        type: 'GET',
+        success: function (ad) {
+            $("#read_more_ad_title").html(ad.title);
+        }
+    })
+}
+
 //----Functional functions:
 
 
@@ -250,7 +261,7 @@ function load_burger() {
             + '<a href=""><li id="login_button" class="hide-menu" >Logga in</li></a>')
     } else {
         $("#menu").prepend('<a href=""><li id="my_page_button">Mina sidor</li></a>'
-        + '<a href=""><li id="logout_button" class="hide-menu" >Logga ut</li></a>')
+            + '<a href=""><li id="logout_button" class="hide-menu" >Logga ut</li></a>')
     }
 
     $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu" > Vilka är vi</li></a>'
