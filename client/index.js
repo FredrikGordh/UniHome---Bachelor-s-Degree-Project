@@ -40,6 +40,12 @@ $(document).ready(function () {
         go_help_page();
     });
 
+     //Burger menu: Log Out
+     $("#menu").on("click", "#logout_button", function (e) {
+        e.preventDefault();
+        logout();
+    });
+
     //Burger menu: Go to about us page
     $("#menu").on("click", "#about_us_button", function (e) {
         e.preventDefault();
@@ -136,6 +142,11 @@ function go_about_us_page() {
 //Function for going to view: Read more ad
 function go_read_more_ad_page() {
     $("#content").html($("#read_more_ad_page").html());
+}
+
+function logout(){
+    sessionStorage.removeItem('auth');
+    go_home();
 }
 
 
@@ -235,7 +246,8 @@ function load_burger() {
         $("#menu").prepend('<a href=""><li id="register_button">Bli medlem</li></a>'
             + '<a href=""><li id="login_button">Logga in</li></a>')
     } else {
-        $("#menu").prepend('<a href=""><li id="my_page_button">Mina sidor</li></a>')
+        $("#menu").prepend('<a href=""><li id="my_page_button">Mina sidor</li></a>'
+        + '<a href=""><li id="logout_button">Logga ut</li></a>')
     }
 
     $("#menu").append('<a href=""><li id="about_us_button"> Vilka är vi</li></a>'
