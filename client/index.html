@@ -113,6 +113,22 @@
               </div>
             </form>
           </div>
+          <div id="home_search_filters">
+            <form>
+              <div class="form-row align-items-center justify-content-center">
+                <div class="form-group col-12 col-lg-5">
+                  <select class="form-control no-border" id="home_select_type">
+                    <option>Typ av boende</option>
+                  </select>            
+                </div>
+                <div class="form-group col-12 col-lg-5">
+                  <select class="form-control no-border" id="home_select_attr">
+                    <option>Attribut</option>
+                  </select>            
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
       <div id="home-now-hot" class="section">
@@ -136,12 +152,22 @@
     <div id="search_page_container" class="container-fluid">
       <div class="col-12">
         <div class="form-row align-items-center">
-          <div class="col-2 offset-1">
+          <div class="col-2">
             <select class="form-control no-border" id="search_page_select_area">
               <option>Område</option>
             </select>            
           </div>
-          <div class="col-2 pt-1 offset-1">
+          <div class="col-2">
+            <select class="form-control no-border" id="search_page_select_type">
+              <option>Typ av boende</option>
+            </select>            
+          </div>
+          <div class="col-2">
+            <select class="form-control no-border" id="search_page_select_attr">
+              <option>Attribut</option>
+            </select>            
+          </div>
+          <div class="col-2 pt-1">
             <label for="search_page_select_start">Inflytt</label>
             <input type="date" id="search_page_select_start" class="no-border">
           </div>
@@ -149,7 +175,7 @@
             <label for="search_page_select_end">Utflytt</label>
             <input type="date" id="search_page_select_end" class="no-border">
           </div>
-          <div class="col-2 offset-2">
+          <div class="col-2">
             <label for="search_page_sort" class="form-label">Sortera</label>
               <select class="form-control no-border" id="search_page_sort">
                 <option>A-Ö</option>

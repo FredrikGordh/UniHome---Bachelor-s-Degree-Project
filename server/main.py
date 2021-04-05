@@ -208,12 +208,28 @@ def ads():
         start = request.args.get('start')
         end = request.args.get('end')
         area = request.args.get('area')
+        attrib = request.args.get('attributes')
+        type = request.args.get('type')
+        attrib2 = attrib.split('-')
+        filter = []
+        if start:
+            filter.append(Ad.startdate <= start)
+        if end:
+            filter.append(Ad.enddate >= end)
+        if area != "Område":
+            filter.append(Ad.neighbourhood == area)
+        if type != "Typ av boende":
+            filter.append(Ad.accommodationtype == type)
+        if attrib != "Attribut":
+            for a in attrib2:
+                filter.append(Ad.attributes.any(
+                    getattr(Attributes, a)) == True)
         ad_list = []
         if sort == "asc":
-            all_ads = Ad.query.filter(Ad.startdate <= start, Ad.enddate >= end, Ad.neighbourhood == area).order_by(
+            all_ads = Ad.query.filter(*filter).order_by(
                 getattr(Ad, sort_parameter).asc()).all()
         else:
-            all_ads = Ad.query.filter(Ad.startdate <= start, Ad.enddate >= end, Ad.neighbourhood == area).order_by(
+            all_ads = Ad.query.filter(*filter).order_by(
                 getattr(Ad, sort_parameter).desc()).all()
         for ad in all_ads:
             ad_list.append(ad.serialize())
@@ -239,6 +255,7 @@ def create_ad():
         return "success", 200
 
 
+# By Abbetabbe
 @app.route('/areas', methods=['GET'])
 def areas():
     area_list = []
@@ -246,6 +263,16 @@ def areas():
     for area in all_areas:
         area_list.append(area)
     return jsonify(area_list)
+
+
+# By Abbetabbe
+@app.route('/types', methods=['GET'])
+def types():
+    type_list = []
+    all_types = db.session.query(Ad.accommodationtype).distinct()
+    for type in all_types:
+        type_list.append(type)
+    return jsonify(type_list)
 
 
 if __name__ == "__main__":
