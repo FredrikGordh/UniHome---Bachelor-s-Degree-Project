@@ -19,12 +19,12 @@
 <body>
   <!-- Navbar: En hamburgarmeny + navbar -->
   <nav class="navbar navbar-style">
-    <a href="" class="navbar-brand"><img id="navbar-logo" src="Media/Unihome-logga.png"></a>
+    <a href="" class="navbar-brand hide-menu"><img id="navbar-logo" src="Media/Unihome-logga.png"></a>
     <div id="menuToggle">
       <!--
             A fake / hidden checkbox is used as click reciever,
             so you can use the :checked selector on it.-->
-      <input type="checkbox" />
+      <input type="checkbox" id="close-menu" />
 
       <!--Some spans to act as a hamburger.
             
@@ -46,10 +46,10 @@
 
 
 
-  <div id="content" class="container-fluid"></div>
+  <div id="content" class="container-fluid hide-menu"></div>
 
   <!-- Footern: Vi skriver ut en lista med kontaktuppgifter i vår container-->
-  <div class="footer container-fluid pt-5 pb-5">
+  <div class="footer container-fluid pt-5 pb-5 hide-menu">
     <div class="row justify-content-center">
       <div class="col-12 text-center mb-5 col-lg-3 offset-lg-2">
         <ul class="no-dot-list">

@@ -6,8 +6,6 @@ const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "
 $(document).ready(function () {
     go_home();
 
-
-
     //Click on logo to go home
     $("#navbar-logo").click(function (e) {
         e.preventDefault();
@@ -50,6 +48,7 @@ $(document).ready(function () {
     $("#menu").on("click", "#contact_button", function (e) {
         e.preventDefault();
         go_contact_page();
+        $("#close-menu").prop("checked", false);
     });
 
     //Go to search page
@@ -68,6 +67,10 @@ $(document).ready(function () {
     $("#content").on("click", "#login_form_button", function (e) {
         e.preventDefault();
         submit_login_form();
+    });
+
+    $(".hide-menu").click(function (e) {
+        $("#close-menu").prop("checked", false);
     });
 
     //Register update of search sort
@@ -232,15 +235,15 @@ function load_burger() {
     $("#menu").empty();
 
     if (sessionStorage.getItem('auth') == null) {
-        $("#menu").prepend('<a href=""><li id="register_button">Bli medlem</li></a>'
-            + '<a href=""><li id="login_button">Logga in</li></a>')
+        $("#menu").prepend('<a href=""><li id="register_button" class="hide-menu" >Bli medlem</li></a>'
+            + '<a href=""><li id="login_button" class="hide-menu" >Logga in</li></a>')
     } else {
-        $("#menu").prepend('<a href=""><li id="my_page_button">Mina sidor</li></a>')
+        $("#menu").prepend('<a href=""><li id="my_page_button" class="hide-menu" >Mina sidor</li></a>')
     }
 
-    $("#menu").append('<a href=""><li id="about_us_button"> Vilka är vi</li></a>'
-        + '<a href=""><li id="contact_button">Kontakta oss</li></a>'
-        + '<a href=""><li id="help_button">Hjälp</li></a>')
+    $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu" > Vilka är vi</li></a>'
+        + '<a href=""><li id="contact_button" class="hide-menu" >Kontakta oss</li></a>'
+        + '<a href=""><li id="help_button" class="hide-menu" >Hjälp</li></a>')
 }
 
 //Function for calling all date loaders
