@@ -74,6 +74,12 @@ $(document).ready(function () {
     $("#content").on("change", "#search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_page_select_attr", function (e) {
         update_search();
     });
+
+    //Go to read more on an ad
+    $("#content").on("click", "#read_more_ad_button", function (e) {
+        e.preventDefault();
+        go_read_more_ad_page();
+    });
 })
 
 
@@ -125,6 +131,11 @@ function go_help_page() {
 //Function for going to view: About us
 function go_about_us_page() {
     $("#content").html($("#about_us_page").html());
+}
+
+//Function for going to view: Read more ad
+function go_read_more_ad_page() {
+    $("#content").html($("#read_more_ad_page").html());
 }
 
 
