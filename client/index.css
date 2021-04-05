@@ -245,6 +245,10 @@ label {
   border-radius: 50px;
 }
 
+.read_more_button {
+  border-radius: 70px;
+}
+
 .footer{
   background-color: black;
   color:white;
@@ -312,3 +316,4 @@ a:hover{
   -moz-box-shadow: none !important;
   box-shadow: none !important;
 }
+
