@@ -61,10 +61,6 @@ label {
   
   transition: color 0.3s ease;
 }
-
-#menuToggle a:hover{
-  color: tomato;
-}
   
   
 #menuToggle input{
@@ -226,6 +222,11 @@ label {
 }
 
 #contact_page_container {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+}
+
+#my_page_container {
   margin-top: 10vh;
   margin-bottom: 10vh;
 }
