@@ -264,15 +264,31 @@
       <h1>Hejhej</h1>
       <button type="button">Skapa ny annons</button>
       <div id="my_page_menu" class="row align-items-center justify-content-center">
-        <div class="col-5 my_page_menuitem m-2 p-4"><a href=""><h3>Mitt konto ></h3><p>Se och redigera dina kontouppgifter.</p></a></div>
-        <div class="col-5 my_page_menuitem m-2 p-4"><a href=""><h3>Mina bokningar ></h3><p>Se och redigera dina kontouppgifter.</p></a></div>
-        <div class="col-5 my_page_menuitem m-2 p-4"><a href=""><h3>Mina annonser ></h3><p>Se och redigera dina kontouppgifter.</p></a></div>
-        <div class="col-5 my_page_menuitem m-2 p-4"><a href=""><h3>Historik ></h3><p>Se och redigera dina kontouppgifter.</p></a></div>
+        <div class="col-5 my_page_menuitem m-2 p-4"><a id="account_info_link" href=""><h3>Mitt konto ></h3><p>Se och redigera dina kontouppgifter.</p></a></div>
+        <div class="col-5 my_page_menuitem m-2 p-4"><a id="" href=""><h3>Mina bokningar ></h3><p>Se och redigera dina kontouppgifter.</p></a></div>
+        <div class="col-5 my_page_menuitem m-2 p-4"><a id="" href=""><h3>Mina annonser ></h3><p>Se och redigera dina kontouppgifter.</p></a></div>
+        <div class="col-5 my_page_menuitem m-2 p-4"><a id="" href=""><h3>Historik ></h3><p>Se och redigera dina kontouppgifter.</p></a></div>
       </div>
       <!--Container for loading in dynamic content in my page (ie. edit account, history etc.)-->
       <div id="my_page_content"></div>
+      
     </div>
   </script>
+
+  <!-- My page: account view -->
+  <script id="my_page_account_info" type="text/html">
+    <div id="my_page_account_info_container" class="container">
+      <h1 id="my_page_name"></h1>
+      <h3 id="my_page_email_and_tel"></h3>
+      <div id="my_page_bio">
+        <div id="my_page_placeholder_img"></div>
+        <h3 id="my_page_bio_header">Om mig:</h3>
+        Lorem ipsum
+      </div>
+      <button type="button">Redigera min profil</button>
+    </div>
+  </script>
+
 
   <!-- About us view -->
   <script id="about_us_page" type="text/html">

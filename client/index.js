@@ -38,8 +38,8 @@ $(document).ready(function () {
         go_help_page();
     });
 
-     //Burger menu: Log Out
-     $("#menu").on("click", "#logout_button", function (e) {
+    //Burger menu: Log Out
+    $("#menu").on("click", "#logout_button", function (e) {
         e.preventDefault();
         logout();
     });
@@ -89,6 +89,14 @@ $(document).ready(function () {
         e.preventDefault();
         go_read_more_ad_page();
     });
+
+    //My page menu
+
+    //My page menu: go to account
+    $("#content").on("click", "#account_info_link", function (e) {
+        e.preventDefault();
+        load_account_info();
+    });
 })
 
 
@@ -125,6 +133,9 @@ function go_search(search) {
 //Function for going to view: My page
 function go_my_page() {
     $("#content").html($("#my_page").html());
+    var user = JSON.parse(sessionStorage.getItem('auth')).user
+    $("#my_page_name").html(user.name);
+    $("#my_page_email_and_tel").html("Tel: " + user.telephone + "  Email: " + user.email);
 }
 
 //Function for going to view: Contact
@@ -147,7 +158,13 @@ function go_read_more_ad_page() {
     $("#content").html($("#read_more_ad_page").html());
 }
 
-function logout(){
+//Load account info in my page
+function load_account_info() {
+    $("#my_page_content").html($("#my_page_account_info").html());
+
+}
+
+function logout() {
     sessionStorage.removeItem('auth');
     go_home();
 }
@@ -250,7 +267,7 @@ function load_burger() {
             + '<a href=""><li id="login_button" class="hide-menu" >Logga in</li></a>')
     } else {
         $("#menu").prepend('<a href=""><li id="my_page_button">Mina sidor</li></a>'
-        + '<a href=""><li id="logout_button" class="hide-menu" >Logga ut</li></a>')
+            + '<a href=""><li id="logout_button" class="hide-menu" >Logga ut</li></a>')
     }
 
     $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu" > Vilka är vi</li></a>'

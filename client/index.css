@@ -1,6 +1,6 @@
 body{
   /* make it look decent enough */
-  background: white;
+  background: #333333;
   color: #cdcdcd;
   font-family: "Avenir Next", "Avenir", sans-serif;
   z-index: -2;
@@ -202,6 +202,22 @@ label {
   position: absolute;
   top: 0;
   padding-top: 35vh;
+}
+
+#my_page_name {
+
+  font-size: 50px;
+}
+
+#my_page_email_and_tel {
+
+  font-size: large;
+}
+
+#my_page_placeholder_img {
+  background-color:white;
+  height: 100px;
+  width: 100px;
 }
 
 #home_search {
