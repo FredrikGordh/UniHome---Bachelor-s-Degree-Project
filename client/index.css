@@ -1,5 +1,4 @@
 body{
-  
   /* make it look decent enough */
   background: #232323;
   color: #cdcdcd;
@@ -21,8 +20,6 @@ h1 {
 label {
   margin: 0;
 }
-
-
 
 /* ID */
 #home_area_search{
