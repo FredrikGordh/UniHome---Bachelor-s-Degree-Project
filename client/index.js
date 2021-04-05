@@ -97,8 +97,25 @@ $(document).ready(function () {
         e.preventDefault();
         load_account_info();
     });
-})
 
+    //My page menu: go to history
+    $("#content").on("click", "#history_link", function (e) {
+        e.preventDefault();
+        load_history();
+    });
+
+    //My page menu: go to bookings
+    $("#content").on("click", "#bookings_link", function (e) {
+        e.preventDefault();
+        load_bookings();
+    });
+
+    //My page menu: go to ads
+    $("#content").on("click", "#ads_link", function (e) {
+        e.preventDefault();
+        load_ads();
+    });
+})
 
 //-------------------------Functions-------------------------
 
@@ -161,6 +178,21 @@ function go_read_more_ad_page() {
 //Load account info in my page
 function load_account_info() {
     $("#my_page_content").html($("#my_page_account_info").html());
+
+}
+//Load account info in my page
+function load_history() {
+    $("#my_page_content").html($("#my_page_history").html());
+
+}
+//Load account info in my page
+function load_ads() {
+    $("#my_page_content").html($("#my_page_ads").html());
+
+}
+//Load account info in my page
+function load_bookings() {
+    $("#my_page_content").html($("#my_page_bookings").html());
 
 }
 
