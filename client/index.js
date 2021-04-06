@@ -69,6 +69,12 @@ $(document).ready(function () {
         submit_register_form();
     });
 
+     //Submit edit form
+     $("#content").on("click", "#edit_form_button", function (e) {
+        e.preventDefault();
+        submit_edit_form();
+    });
+
     //Submit login form
     $("#content").on("click", "#login_form_button", function (e) {
         e.preventDefault();
@@ -88,6 +94,19 @@ $(document).ready(function () {
     $("#content").on("click", "#read_more_ad_button", function (e) {
         e.preventDefault();
         go_read_more_ad_page();
+    });
+
+    //Edit bio
+    $("#content").on("click", "#my_page_change_bio_btn", function (e) {
+        e.preventDefault();
+        go_edit_bio_page();
+    });
+
+    //cancel edit bio
+    $("#content").on("click", "#cancel_edit_form_btn", function (e) {
+        e.preventDefault();
+        go_my_page();
+        load_account_info();
     });
 
     //My page menu
@@ -150,9 +169,9 @@ function go_search(search) {
 //Function for going to view: My page
 function go_my_page() {
     $("#content").html($("#my_page").html());
-    var user = JSON.parse(sessionStorage.getItem('auth')).user
-    $("#my_page_name").html(user.name);
-    $("#my_page_email_and_tel").html("Tel: " + user.telephone + "  Email: " + user.email);
+    var name = JSON.parse(sessionStorage.getItem('auth')).user.name
+    $("#my_page_greeting").html("Hej " + name + "!");
+    
 }
 
 //Function for going to view: Contact
@@ -175,9 +194,26 @@ function go_read_more_ad_page() {
     $("#content").html($("#read_more_ad_page").html());
 }
 
+//Function for going to view: Edit bio
+function go_edit_bio_page() {
+    $("#my_page_content").html($("#edit_bio_page").html());
+    var user = JSON.parse(sessionStorage.getItem('auth')).user
+    $("#name_edit").val(user.name);
+    $("#gender_edit").val(user.gender)
+    $("#phone_edit").val(user.telephone)
+    $("#email_edit").val(user.email)
+    $("#bio_edit").val(user.bio)
+
+
+}
+
 //Load account info in my page
 function load_account_info() {
     $("#my_page_content").html($("#my_page_account_info").html());
+    var user = JSON.parse(sessionStorage.getItem('auth')).user
+    $("#my_page_name").html("Fullt namn: " + user.name);
+    $("#my_page_email_and_tel").html("Tel: " + user.telephone + " <br>Email: " + user.email);
+    $("#my_page_bio_text").html(user.bio);
 
 }
 //Load account info in my page
@@ -258,6 +294,27 @@ function register_request(user) {
         }
     })
 }
+
+//Function for making a register request 
+function edit_user_request(user) {
+    $.ajax({
+        url: host + '/user/edit',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token }, 
+        type: 'PUT',
+        data: JSON.stringify(user),
+        success: function (response) {
+            var temp = sessionStorage.getItem('auth')
+            temp = JSON.parse(temp)
+            temp.user = user
+            temp = JSON.stringify(temp)
+            sessionStorage.setItem('auth', temp)
+            go_my_page();
+            load_account_info();
+        }
+    })
+    
+ }
+
 
 //Function for making a request for all unique areas in database
 function load_areas(container) {
@@ -397,6 +454,20 @@ function submit_register_form() {
         password: $("#password_register").val()
     }
     register_request(user);
+}
+
+function submit_edit_form() {
+    var user = {
+        name: $("#name_edit").val(),
+        gender: $("#gender_edit").val(),
+        year: $("#year_edit").val(),
+        month: $("#month_edit").val(),
+        day: $("#day_register").val(),
+        telephone: $("#phone_edit").val(),
+        email: $("#email_edit").val(),
+        bio: $("#bio_edit").val()
+    }
+    edit_user_request(user);
 }
 
 function submit_login_form() {
