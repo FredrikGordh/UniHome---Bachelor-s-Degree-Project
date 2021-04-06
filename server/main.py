@@ -127,6 +127,7 @@ class Attributes(db.Model):
 # The class date is used for managing dates. Both ad and user uses the date class.
 # Written by Jakob, Gustav, Joel
 
+class Image(db.Model): 
 
 # WILL MAKE A IMAGE/PICTURE CLASS HERE EVENTUALLY
 
