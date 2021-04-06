@@ -204,6 +204,22 @@ label {
   padding-top: 35vh;
 }
 
+#my_page_name {
+
+  font-size: 50px;
+}
+
+#my_page_email_and_tel {
+
+  font-size: large;
+}
+
+#my_page_placeholder_img {
+  background-color:white;
+  height: 100px;
+  width: 100px;
+}
+
 #home_search {
   background-color: white;
   border-radius: 37px;

@@ -125,6 +125,9 @@ function go_search(search) {
 //Function for going to view: My page
 function go_my_page() {
     $("#content").html($("#my_page").html());
+    var user = JSON.parse(sessionStorage.getItem('auth')).user
+    $("#my_page_name").html(user.name);
+    $("#my_page_email_and_tel").html("Tel: " + user.telephone + "  Email: " +user.email);
 }
 
 //Function for going to view: Contact
