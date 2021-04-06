@@ -36,6 +36,9 @@ $(document).ready(function () {
     $("#menu").on("click", "#help_button", function (e) {
         e.preventDefault();
         go_help_page();
+        var input = document.getElementById( 'upload' );
+        //var infoArea = document.getElementById( 'upload-label' );
+        input.addEventListener( 'change', showFileName );
     });
 
      //Burger menu: Log Out
@@ -152,6 +155,32 @@ function logout(){
     go_home();
 }
 
+//Function for showing the uploaded picture
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#imageResult')
+                .attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$(function () {
+    $('#upload').on('change', function () {
+        readURL(input);
+    });
+});
+
+//Function for showing the uploaded image name. 
+function showFileName( event ) {
+  var infoArea = document.getElementById( 'upload-label' );
+  var input = event.srcElement;
+  var fileName = input.files[0].name;
+  infoArea.textContent = 'Filnamn: ' + fileName;
+}
 
 //-------------------------REQUESTS-------------------------
 
