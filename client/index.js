@@ -36,9 +36,6 @@ $(document).ready(function () {
     $("#menu").on("click", "#help_button", function (e) {
         e.preventDefault();
         go_help_page();
-        var input = document.getElementById( 'upload' );
-        //var infoArea = document.getElementById( 'upload-label' );
-        input.addEventListener( 'change', showFileName );
     });
 
     //Burger menu: Log Out
@@ -131,6 +128,8 @@ $(document).ready(function () {
     $("#content").on("click", "#new_ad_button", function (e) {
         e.preventDefault();
         go_new_ad_page();
+        var input = document.getElementById( 'upload' );
+        input.addEventListener( 'change', showFileName );
     });
 
     //Edit bio
@@ -308,6 +307,7 @@ function showFileName( event ) {
   var infoArea = document.getElementById( 'upload-label' );
   var input = event.srcElement;
   var fileName = input.files[0].name;
+  print
   infoArea.textContent = 'Filnamn: ' + fileName;
 }
 
