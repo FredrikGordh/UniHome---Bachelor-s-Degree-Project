@@ -274,7 +274,9 @@ def create_ad():
             streetaddress=newad.get('streetaddress'), streetnumber=newad.get('streetnumber'), city=newad.get('city'),
             postalcode=newad.get('postalcode'), country=newad.get('country'), host_id=(current_user_id),
             startdate=datetime.datetime.strptime(newad.get('startdate'),'%Y-%m-%d').date(),
-            enddate=datetime.datetime.strptime(newad.get('enddate'),'%Y-%m-%d').date())
+            enddate=datetime.datetime.strptime(newad.get('enddate'),'%Y-%m-%d').date(), squaremetres=newad.get('squaremetres'),
+            price=newad.get('price'), beds=newad.get('beds'), accommodationtype=newad.get('accommodationtype'))
+            
         db.session.add(newadDB)
         db.session.flush()
         db.session.commit()
