@@ -1,5 +1,5 @@
 //Enum för att översätta attribut vid sökning
-const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Attribut": "Attribut" })
+const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Attribut": "Attribut" });
 
 //-------------------------JQuery events-------------------------
 
@@ -89,6 +89,12 @@ $(document).ready(function () {
         e.preventDefault();
         go_read_more_ad_page($(this).data('id'));
     });
+
+    //Go back from read more to search
+    $("#content").on("click", "#read_more_back", function (e) {
+        e.preventDefault();
+        go_search();
+    });
 })
 
 
@@ -115,8 +121,9 @@ function go_login() {
 }
 
 //Function for going to view: Search_result_page
-function go_search(search) {
+function go_search() {
     $("#content").html($("#search_page").html());
+    search = JSON.parse(sessionStorage.getItem('search'));
     load_search_page_search_dropdowns(search);
     load_ads_request(search);
 
@@ -245,6 +252,19 @@ function load_read_more(ad_id) {
         type: 'GET',
         success: function (ad) {
             $("#read_more_ad_title").html(ad.title);
+            $("#read_more_ad_bio").html(ad.bio);
+            $("#read_more_ad_neighbourhood").html(ad.neighbourhood);
+            $("#read_more_ad_studentcity").html(ad.studentcity);
+            $("#read_more_ad_address").html(ad.address);
+            $("#read_more_ad_city").html(ad.ciy);
+            $("#read_more_ad_postalcode").html(ad.postalcode);
+            $("#read_more_ad_startdate").html(ad.startdate);
+            $("#read_more_ad_enddate").html(ad.enddate);
+            $("#read_more_ad_squaremetres").html(ad.squaremetres + " m3");
+            $("#read_more_ad_price").html(ad.price + " kr");
+            $("#read_more_ad_beds").html("Antal sängar " + ad.beds + " st");
+            $("#read_more_ad_accommodationtype").html("Typ " + ad.accommodationtype);
+            $("#read_more_ad_attributes").html(ad.attributes);
         }
     })
 }
@@ -377,7 +397,8 @@ function submit_home_search_form() {
         type: $("#home_select_type").val(),
         attributes: $("#home_select_attr").val()
     }
-    go_search(search);
+    sessionStorage.setItem('search', JSON.stringify(search));
+    go_search();
 }
 
 function update_search() {
@@ -402,6 +423,9 @@ function update_search() {
         end: $("#search_page_select_end").val(),
         attributes: $("#search_page_select_attr").val(),
     }
+    sessionStorage.setItem('search', JSON.stringify(search));
+    sessionStorage.setItem('sort', JSON.stringify(sort));
+    sessionStorage.setItem('sort_param', JSON.stringify(sort_param));
 
     load_ads_request(search, sort, sort_param);
 }
