@@ -213,7 +213,14 @@ function load_account_info() {
     var user = JSON.parse(sessionStorage.getItem('auth')).user
     $("#my_page_name").html("Fullt namn: " + user.name);
     $("#my_page_email_and_tel").html("Tel: " + user.telephone + " <br>Email: " + user.email);
+    if (user.bio){
+    $("#my_page_bio_text").css('color', 'white');
     $("#my_page_bio_text").html(user.bio);
+    }
+    else {
+        $("#my_page_bio_text").css('color', 'red');
+        $("#my_page_bio_text").html("Du har inte lagt till någon text om dig själv än,<br> lägg till en personlig biografi genom att <br>klicka på \"Redigera min profil\" för större chans att få ditt önskade boende!");
+    }
 
 }
 //Load account info in my page
