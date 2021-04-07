@@ -265,6 +265,20 @@ label {
   color: black;
 }
 
+.my_accomodation {
+  background-color: white;
+  border-radius: 20px;
+  color: black;
+  padding: 10px;
+}
+
+.my_tenant {
+  background-color: white;
+  border-radius: 20px;
+  color: black;
+  padding: 10px;
+}
+
 .search_button {
   border-radius: 50px;
 }

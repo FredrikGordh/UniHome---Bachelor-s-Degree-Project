@@ -169,6 +169,20 @@ $(document).ready(function () {
         load_ads();
     });
 
+    //My page: approve tenant
+    $("#content").on("click", ".book_ad_button", function (e) {
+        e.preventDefault();
+        approve_tenant($(this).data("id"));
+        load_ads();
+    });
+
+    //My page: deny tenant
+    $("#content").on("click", ".deny_ad_button", function (e) {
+        e.preventDefault();
+        deny_tenant($(this).data("id"));
+        load_ads();
+    });
+
 })
 
 //-------------------------Functions-------------------------
@@ -266,11 +280,13 @@ function load_history() {
 //Load account info in my page
 function load_ads() {
     $("#my_page_content").html($("#my_page_ads").html());
+    load_my_ads_request();
 
 }
 //Load account info in my page
 function load_bookings() {
     $("#my_page_content").html($("#my_page_bookings").html());
+    load_my_bookings_request();
 
 }
 
@@ -308,6 +324,59 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
             ads.forEach(element => {
                 $("#search_result").append(Mustache.render(accomodation, element));
             });
+        }
+    })
+}
+
+function load_my_ads_request() {
+    $.ajax({
+        url: host + '/user/ads',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (ads) {
+            ads.forEach(element => {
+                $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
+                if (element.booked == true) {
+                    console.log("booked");
+                } else if (element.reserved == true) {
+                    get_tenant(element.id);
+                }
+            });
+        }
+    })
+}
+
+function load_my_bookings_request() {
+    $.ajax({
+        url: host + '/user/bookings',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (ads) {
+            ads.forEach(element => {
+                $("#my_page_bookings_container").append(Mustache.render(my_accomodation, element));
+            });
+        }
+    })
+}
+
+function set_tenant(ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/tenant',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'PUT',
+        success: function (result) {
+        }
+    })
+}
+
+function get_tenant(ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/tenant',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (result) {
+            result["ad_id"] = ad_id;
+            $("#my_page_ads_container").append(Mustache.render(tenant, result));
         }
     })
 }
@@ -354,7 +423,6 @@ function edit_user_request(user) {
             load_account_info();
         }
     })
-
 }
 
 
@@ -409,7 +477,7 @@ function load_read_more(ad_id) {
     })
 }
 
-function update_ad_status(status, ad_id) {
+function update_reserved_status(status, ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/reserved',
         type: 'PUT',
@@ -420,8 +488,18 @@ function update_ad_status(status, ad_id) {
     })
 }
 
-//----Functional functions:
+function update_booked_status(status, ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/booked',
+        type: 'PUT',
+        data: JSON.stringify(status),
+        success: function (ad) {
 
+        }
+    })
+}
+
+//----Functional functions:
 
 //Function for loading all content in hamburger menu
 function load_burger() {
@@ -500,8 +578,19 @@ function load_search_page_search_dropdowns(search) {
 
 //Function for reservring ad in database: update reserved status --> show ad to host for approval
 function reserve_ad(ad_id) {
-    update_ad_status(true, ad_id)
+    update_reserved_status(true, ad_id)
+    set_tenant(ad_id);
     go_search();
+}
+
+//Function for approving tenant and update status of ad in database
+function approve_tenant(ad_id) {
+    update_booked_status(true, ad_id)
+}
+
+//Function for denying tenant and update status of ad in database
+function deny_tenant(ad_id) {
+    update_reserved_status(false, ad_id)
 }
 
 //----Form functions:
