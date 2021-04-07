@@ -268,12 +268,26 @@ def create_ad():
     if request.method == 'POST':
         current_user_id = get_jwt_identity()
         newad = request.get_json(force=True)
-        newadDB = Ad(title=newad.get('title'), description=newad.get(
-            'description'), host_id=(current_user_id), startdate=newad.get('start'), enddate=newad.get('end'))
+        print(newad.get('startdate'))
+        newadDB = Ad(title=newad.get('title'), description=newad.get('description'),
+            neighbourhood=newad.get('neighbourhood'), studentcity=newad.get('studentcity'),
+            streetaddress=newad.get('streetaddress'), streetnumber=newad.get('streetnumber'), city=newad.get('city'),
+            postalcode=newad.get('postalcode'), country=newad.get('country'), host_id=(current_user_id),
+            startdate=datetime.datetime.strptime(newad.get('startdate'),'%Y-%m-%d').date(),
+            enddate=datetime.datetime.strptime(newad.get('enddate'),'%Y-%m-%d').date())
         db.session.add(newadDB)
+        db.session.flush()
         db.session.commit()
-        attributesDB = Attributes(ad_id=newadDB.id)
+
+        list = newad.get('attributes').split(' ') #list = ['bike', 'wifi'];
+    
+        attributesDB = Attributes()
+        setattr(attributesDB, 'ad_id', newadDB.id)
+        for x in list:
+            setattr(attributesDB, x, True)
+
         db.session.add(attributesDB)
+        db.session.flush()
         db.session.commit()
 
         return "success", 200
