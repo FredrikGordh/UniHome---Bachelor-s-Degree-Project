@@ -242,11 +242,12 @@ label {
   margin-bottom: 10vh;
 }
 
-<<<<<<< HEAD
 #new_ad_page_container {
-=======
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+}
+
 #help_page_container {
->>>>>>> 5062870fb1c5a90d9aac04ada844d5fab886d811
   margin-top: 10vh;
   margin-bottom: 10vh;
 }
@@ -345,12 +346,10 @@ a:hover{
   box-shadow: none !important;
 }
 
-<<<<<<< HEAD
 .required:after {
     content:" *";
     color: red;
 }
-=======
 .my_page_menuitem {
   border-radius: 10px;
   -webkit-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.05); 
@@ -364,4 +363,3 @@ a:hover{
   color: black;
   text-decoration: none;
 }
->>>>>>> 5062870fb1c5a90d9aac04ada844d5fab886d811

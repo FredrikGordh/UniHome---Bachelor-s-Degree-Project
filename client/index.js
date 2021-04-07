@@ -123,16 +123,12 @@ $(document).ready(function () {
         e.preventDefault();
         go_search();
     });
-<<<<<<< HEAD
 
     //Go to create new ad page
     $("#content").on("click", "#new_ad_button", function (e) {
         e.preventDefault();
         go_new_ad_page();
     });
-})
-=======
->>>>>>> 5062870fb1c5a90d9aac04ada844d5fab886d811
 
     //Edit bio
     $("#content").on("click", "#my_page_change_bio_btn", function (e) {
