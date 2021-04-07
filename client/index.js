@@ -130,46 +130,45 @@ $(document).ready(function () {
         reserve_ad();
     });
 
-})
+    //Edit bio
+    $("#content").on("click", "#my_page_change_bio_btn", function (e) {
+        e.preventDefault();
+        go_edit_bio_page();
+    });
 
-//Edit bio
-$("#content").on("click", "#my_page_change_bio_btn", function (e) {
-    e.preventDefault();
-    go_edit_bio_page();
-});
+    //cancel edit bio
+    $("#content").on("click", "#cancel_edit_form_btn", function (e) {
+        e.preventDefault();
+        go_my_page();
+        load_account_info();
+    });
 
-//cancel edit bio
-$("#content").on("click", "#cancel_edit_form_btn", function (e) {
-    e.preventDefault();
-    go_my_page();
-    load_account_info();
-});
+    //My page menu
 
-//My page menu
+    //My page menu: go to account
+    $("#content").on("click", "#account_info_link", function (e) {
+        e.preventDefault();
+        load_account_info();
+    });
 
-//My page menu: go to account
-$("#content").on("click", "#account_info_link", function (e) {
-    e.preventDefault();
-    load_account_info();
-});
+    //My page menu: go to history
+    $("#content").on("click", "#history_link", function (e) {
+        e.preventDefault();
+        load_history();
+    });
 
-//My page menu: go to history
-$("#content").on("click", "#history_link", function (e) {
-    e.preventDefault();
-    load_history();
-});
+    //My page menu: go to bookings
+    $("#content").on("click", "#bookings_link", function (e) {
+        e.preventDefault();
+        load_bookings();
+    });
 
-//My page menu: go to bookings
-$("#content").on("click", "#bookings_link", function (e) {
-    e.preventDefault();
-    load_bookings();
-});
+    //My page menu: go to ads
+    $("#content").on("click", "#ads_link", function (e) {
+        e.preventDefault();
+        load_ads();
+    });
 
-//My page menu: go to ads
-$("#content").on("click", "#ads_link", function (e) {
-    e.preventDefault();
-    load_ads();
-});
 })
 
 //-------------------------Functions-------------------------
@@ -208,7 +207,6 @@ function go_my_page() {
     $("#content").html($("#my_page").html());
     var name = JSON.parse(sessionStorage.getItem('auth')).user.name
     $("#my_page_greeting").html("Hej " + name + "!");
-
 }
 
 //Function for going to view: Contact
@@ -241,8 +239,6 @@ function go_edit_bio_page() {
     $("#phone_edit").val(user.telephone)
     $("#email_edit").val(user.email)
     $("#bio_edit").val(user.bio)
-
-
 }
 
 //Load account info in my page
