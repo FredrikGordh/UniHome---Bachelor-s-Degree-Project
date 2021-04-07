@@ -128,6 +128,8 @@ $(document).ready(function () {
     $("#content").on("click", "#new_ad_button", function (e) {
         e.preventDefault();
         go_new_ad_page();
+        var input = document.getElementById( 'upload' );
+        input.addEventListener( 'change', showFileName );
     });
 
     //Edit bio
@@ -280,9 +282,39 @@ function logout() {
     go_home();
 }
 
+
+//Function for showing the uploaded picture
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#imageResult')
+                .attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$(function () {
+    $('#upload').on('change', function () {
+        readURL(input);
+    });
+});
+
+//Function for showing the uploaded image name. 
+function showFileName( event ) {
+  var infoArea = document.getElementById( 'upload-label' );
+  var input = event.srcElement;
+  var fileName = input.files[0].name;
+  print
+  infoArea.textContent = 'Filnamn: ' + fileName;
+}
+
 function go_new_ad_page(){
     $("#content").html($("#new_ad_page").html()); 
 }
+
 
 
 //-------------------------REQUESTS-------------------------

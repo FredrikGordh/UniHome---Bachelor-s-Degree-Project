@@ -7,11 +7,20 @@ from flask_jwt_extended import (
     JWTManager, create_access_token, jwt_required, get_jwt_identity)
 from flask import abort
 import datetime
+import os
+##The imports down below handle images saved in the server.
+from flask import flash, redirect, url_for
+from werkzeug.utils import secure_filename
+
+
+UPLOAD_FOLDER = '/pictures'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__, static_folder='../client', static_url_path='/')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'LuSg31rsf76nGvMVjzeqV1R0vchtnxu6XTrhrOSLtek'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 jwt = JWTManager(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -91,6 +100,7 @@ class Ad(db.Model):
 
     host_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     tenant_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    image_id = db.relationship("Image", backref = 'ad')
 
     def __repr__(self):
         return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
@@ -128,11 +138,18 @@ class Attributes(db.Model):
         return dict(id=self.id, dishwasher=self.dishwasher, wifi=self.wifi,
                     washingmachine=self.washingmachine, sauna=self.sauna, bike=self.bike)
 
-# The class date is used for managing dates. Both ad and user uses the date class.
-# Written by Jakob, Gustav, Joel
 
+#Image class
+class Image(db.Model): 
+    ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable=False)
+    url = db.Column(db.String, nullable=False, primary_key=True)
 
-# WILL MAKE A IMAGE/PICTURE CLASS HERE EVENTUALLY
+    def __repr__(self):
+        return '<url: {}>'.format(self.url)
+
+    def serialize(self):
+        return dict(url=self.url)
+
 
 
 ###################################################### APP.ROUTES ######################################################
@@ -293,6 +310,12 @@ def create_ad():
         db.session.commit()
 
         return "success", 200
+
+#Löser så att man kan lägga till bilder
+#@app.route('/ad/addimage/<int:ad_id>', methods = ['POST'])
+#@jwt_required
+#def addimage(ad):
+    #newImage = Image(ad_id = ad.id, url= ...)
 
 
 # By Abbetabbe
