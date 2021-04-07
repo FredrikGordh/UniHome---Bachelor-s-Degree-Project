@@ -231,6 +231,11 @@ label {
   margin-bottom: 10vh;
 }
 
+#read_more_ad_container {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
 /* Klasser */
 
 .accomodation {
@@ -314,4 +319,3 @@ a:hover{
   -moz-box-shadow: none !important;
   box-shadow: none !important;
 }
-
