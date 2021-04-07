@@ -1,5 +1,5 @@
 //Enum för att översätta attribut vid sökning
-const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Attribut": "Attribut" })
+const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Attribut": "Attribut" });
 
 //-------------------------JQuery events-------------------------
 
@@ -83,11 +83,25 @@ $(document).ready(function () {
         submit_edit_form();
     });
 
+    //Submit register form by pressing ENTER
+    $("#content").keyup("#password_register", function(e) { 
+        if (e.keyCode === 13) { 
+            submit_register_form();
+        } 
+    }); 
+
     //Submit login form
     $("#content").on("click", "#login_form_button", function (e) {
         e.preventDefault();
         submit_login_form();
     });
+
+    //Submit login form by pressing ENTER
+    $("#content").keyup("#password_login", function(e) { 
+        if (e.keyCode === 13) { 
+            submit_login_form();
+        } 
+    }); 
 
     $(".hide-menu").click(function (e) {
         $("#close-menu").prop("checked", false);
@@ -99,10 +113,18 @@ $(document).ready(function () {
     });
 
     //Go to read more on an ad
-    $("#content").on("click", "#read_more_ad_button", function (e) {
+    $("#content").on("click", ".read_more_ad_button", function (e) {
         e.preventDefault();
-        go_read_more_ad_page();
+        go_read_more_ad_page($(this).data('id'));
     });
+
+    //Go back from read more to search
+    $("#content").on("click", "#read_more_back", function (e) {
+        e.preventDefault();
+        go_search();
+    });
+
+})
 
     //Edit bio
     $("#content").on("click", "#my_page_change_bio_btn", function (e) {
@@ -167,8 +189,9 @@ function go_login() {
 }
 
 //Function for going to view: Search_result_page
-function go_search(search) {
+function go_search() {
     $("#content").html($("#search_page").html());
+    search = JSON.parse(sessionStorage.getItem('search'));
     load_search_page_search_dropdowns(search);
     load_ads_request(search);
 
@@ -198,8 +221,9 @@ function go_about_us_page() {
 }
 
 //Function for going to view: Read more ad
-function go_read_more_ad_page() {
+function go_read_more_ad_page(ad_id) {
     $("#content").html($("#read_more_ad_page").html());
+    load_read_more(ad_id);
 }
 
 //Function for going to view: Edit bio
@@ -359,6 +383,29 @@ function load_types(container) {
     })
 }
 
+function load_read_more(ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id,
+        type: 'GET',
+        success: function (ad) {
+            $("#read_more_ad_title").html(ad.title);
+            $("#read_more_ad_bio").html(ad.bio);
+            $("#read_more_ad_neighbourhood").html(ad.neighbourhood);
+            $("#read_more_ad_studentcity").html(ad.studentcity);
+            $("#read_more_ad_address").html(ad.address);
+            $("#read_more_ad_city").html(ad.ciy);
+            $("#read_more_ad_postalcode").html(ad.postalcode);
+            $("#read_more_ad_startdate").html(ad.startdate);
+            $("#read_more_ad_enddate").html(ad.enddate);
+            $("#read_more_ad_squaremetres").html(ad.squaremetres + " m3");
+            $("#read_more_ad_price").html(ad.price + " kr");
+            $("#read_more_ad_beds").html("Antal sängar " + ad.beds + " st");
+            $("#read_more_ad_accommodationtype").html("Typ " + ad.accommodationtype);
+            $("#read_more_ad_attributes").html(ad.attributes);
+        }
+    })
+}
+
 //----Functional functions:
 
 
@@ -376,7 +423,7 @@ function load_burger() {
 
     $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu" > Vilka är vi</li></a>'
         + '<a href=""><li id="contact_button" class="hide-menu" >Kontakta oss</li></a>'
-        + '<a href=""><li id="help_button" class="hide-menu" >Hjälp</li></a>')
+        + '<a href=""><li id="help_button" class="hide-menu" >Hur funkar det</li></a>')
 }
 
 //Function for calling all date loaders
@@ -501,7 +548,8 @@ function submit_home_search_form() {
         type: $("#home_select_type").val(),
         attributes: $("#home_select_attr").val()
     }
-    go_search(search);
+    sessionStorage.setItem('search', JSON.stringify(search));
+    go_search();
 }
 
 function update_search() {
@@ -526,6 +574,9 @@ function update_search() {
         end: $("#search_page_select_end").val(),
         attributes: $("#search_page_select_attr").val(),
     }
+    sessionStorage.setItem('search', JSON.stringify(search));
+    sessionStorage.setItem('sort', JSON.stringify(sort));
+    sessionStorage.setItem('sort_param', JSON.stringify(sort_param));
 
     load_ads_request(search, sort, sort_param);
 }
