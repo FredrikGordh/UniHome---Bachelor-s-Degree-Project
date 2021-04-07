@@ -262,7 +262,7 @@
   <script id="my_page" type="text/html">
     <div id="my_page_container" class="container">
       <h1>Hejhej</h1>
-      <button type="button">Skapa ny annons</button>
+      <button type="button" id="new_ad_button">Skapa ny annons</button>
     </div>
   </script>
 
@@ -291,10 +291,101 @@
     </div>
   </script>
 
+    <!-- New ad view -->
+    <script id="new_ad_page" type="text/html">
+      <div id="new_ad_page_container" class="container">
+        <h1>Skapa din annons</h1>
+        <p>Fyll i fälten nedan med information om bostaden du vill hyra ut för att skapa din annons.</p>
+        <form id="wide" onsubmit= "submitForm(event)">
+            <div class="form-group">
+              <label class="required" for="exampleFormControlInput1">Rubrik</label>
+              <input type="title" class="form-control" id="exampleFormControlInput1" placeholder="Exempel: Korridorsrum 5 min från Campus" required>
+            </div>
+            <br>
+            <div class="form-group">
+              <label class="required" for="exampleFormControlTextarea1">Beskrivning</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+              <label class="required" for="exampleFormControlSelect1">Område</label>
+              <select class="form-control" id="exampleFormControlSelect1" required>
+                <option selected="selected"> Välj område </option>
+                <option>Ryd</option>
+                <option>Valla</option>
+                <option>Innerstaden</option>
+                <option>Vasastaden</option>
+                <option>Vallastaden</option>
+                <option>Lambohov</option>
+                <option>Skäggetorp</option>
+                <option>Colonia</option>
+                <option>Gottfridsberg</option>
+                <option>Tannefors</option>              
+              </select>
+            </div>
+            <br>
+            <div class="form-group">
+              <label class="required" for="exampleFormControlSelect1" >Adress</label>
+              <div class="row">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Gata" required>
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Gatunummer" required>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Postkod" required>
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Stad" required>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <label class="required" for="exampleFormControlSelect1">Inflyttningsdatum</label>
+                  <input type="date" id="ad_start_id" name="ad_start"
+                  value="Today"
+                  min="Today" max="2030-12-31" required>                
+                </div>
+                <div class="col">
+                  <label class="required" for="exampleFormControlSelect1" >Utflyttningsdatum</label>
+                  <input type="date" id="ad_end_id" name="ad_end"
+                  value="Today"
+                  min="Today" max="2030-12-31" required>                
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Lägg upp annons</button>
+          </form>
+<!--
+          <div class="form-group">
+              <label for="exampleFormControlInput1">Title</label>
+              <input type="title" class="form-control" id="formTitle" placeholder="Title">
+            </div>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Email address</label>
+          <input type="emailID" class="form-control" id="formEmail" placeholder="name@example.com">
+          <small id="emailHelp" class="form-text text muted ">Hello</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Message</label>
+          <textarea class="form-control" id="formMessage" rows="7"></textarea>
+        </div>
+        <button type="submit"id="formSubmitButton" class="btn btn-primary">Submit</button>
+-->
+      </form >
+      </div>
+    </script>
+
   <!-- Help view -->
   <script id="help_page" type="text/html">
     <div id="help_page_container" class="container-fluid">
-      
     </div>
   </script>
 

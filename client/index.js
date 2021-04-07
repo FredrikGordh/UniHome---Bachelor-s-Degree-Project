@@ -95,6 +95,12 @@ $(document).ready(function () {
         e.preventDefault();
         go_search();
     });
+
+    //Go to create new ad page
+    $("#content").on("click", "#new_ad_button", function (e) {
+        e.preventDefault();
+        go_new_ad_page();
+    });
 })
 
 
@@ -158,6 +164,10 @@ function go_read_more_ad_page(ad_id) {
 function logout() {
     sessionStorage.removeItem('auth');
     go_home();
+}
+
+function go_new_ad_page(){
+    $("#content").html($("#new_ad_page").html()); 
 }
 
 
