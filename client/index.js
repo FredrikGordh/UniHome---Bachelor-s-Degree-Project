@@ -68,6 +68,14 @@ $(document).ready(function () {
         e.preventDefault();
         submit_register_form();
     });
+    
+    //Submit register form by pressing ENTER
+    $("#content").keyup("#password_register", function(e) { 
+        if (e.keyCode === 13) { 
+            submit_register_form();
+        } 
+    }); 
+
 
      //Submit edit form
      $("#content").on("click", "#edit_form_button", function (e) {
