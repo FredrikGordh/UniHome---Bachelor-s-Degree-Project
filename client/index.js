@@ -255,7 +255,7 @@ function load_burger() {
 
     $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu" > Vilka är vi</li></a>'
         + '<a href=""><li id="contact_button" class="hide-menu" >Kontakta oss</li></a>'
-        + '<a href=""><li id="help_button" class="hide-menu" >Hjälp</li></a>')
+        + '<a href=""><li id="help_button" class="hide-menu" >Hur funkar det</li></a>')
 }
 
 //Function for calling all date loaders
