@@ -95,6 +95,13 @@ $(document).ready(function () {
         e.preventDefault();
         go_search();
     });
+
+    //Reserve ad
+    $("#content").on("click", "#reservation_button", function (e) {
+        e.preventDefault();
+        reserve_ad();
+    });
+
 })
 
 
@@ -349,20 +356,9 @@ function load_search_page_search_dropdowns(search) {
     $("#search_page_select_attr").val(search.attributes);
 }
 
-//Function for loading searchable years when searching for ads
-function load_searchable_years() {
-    var year = new Date().getFullYear();
-    for (i = 0; i < 5; i++) {
-        $("#home_select_start_year").append("<option>" + year + "</option>")
-        ++year;
-    }
-}
+//Function for reservring ad in database: update reserved status --> show ad to host for approval
+function reserve_ad() {
 
-//Temporary, depends on how we implement how we search.
-function load_days(container) {
-    for (i = 1; i < 32; i++) {
-        $(container).append("<option>" + i + "</option>")
-    }
 }
 
 //----Form functions:
