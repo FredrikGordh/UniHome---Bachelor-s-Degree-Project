@@ -69,11 +69,25 @@ $(document).ready(function () {
         submit_register_form();
     });
 
+    //Submit register form by pressing ENTER
+    $("#content").keyup("#password_register", function(e) { 
+        if (e.keyCode === 13) { 
+            submit_register_form();
+        } 
+    }); 
+
     //Submit login form
     $("#content").on("click", "#login_form_button", function (e) {
         e.preventDefault();
         submit_login_form();
     });
+
+    //Submit login form by pressing ENTER
+    $("#content").keyup("#password_login", function(e) { 
+        if (e.keyCode === 13) { 
+            submit_login_form();
+        } 
+    }); 
 
     $(".hide-menu").click(function (e) {
         $("#close-menu").prop("checked", false);
@@ -95,6 +109,7 @@ $(document).ready(function () {
         e.preventDefault();
         go_search();
     });
+
 })
 
 
