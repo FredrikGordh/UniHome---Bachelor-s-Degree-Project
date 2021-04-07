@@ -124,8 +124,6 @@ $(document).ready(function () {
         go_search();
     });
 
-})
-
     //Edit bio
     $("#content").on("click", "#my_page_change_bio_btn", function (e) {
         e.preventDefault();
