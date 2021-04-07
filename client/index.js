@@ -127,7 +127,7 @@ $(document).ready(function () {
     //Reserve ad
     $("#content").on("click", "#reservation_button", function (e) {
         e.preventDefault();
-        reserve_ad();
+        reserve_ad($(this).data('id'));
     });
 
     //Edit bio
@@ -228,6 +228,7 @@ function go_about_us_page() {
 function go_read_more_ad_page(ad_id) {
     $("#content").html($("#read_more_ad_page").html());
     load_read_more(ad_id);
+    $("#reservation_button").data('id', ad_id)
 }
 
 //Function for going to view: Edit bio
@@ -408,6 +409,17 @@ function load_read_more(ad_id) {
     })
 }
 
+function update_ad_status(status, ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/reserved',
+        type: 'PUT',
+        data: JSON.stringify(status),
+        success: function (ad) {
+
+        }
+    })
+}
+
 //----Functional functions:
 
 
@@ -467,7 +479,6 @@ function load_attr(container) {
 
 //Function for loading data in dropdowns for search from home page
 function load_home_search_dropdowns() {
-    load_searchable_years();
     load_months("#home_select_start_month");
     load_days("#home_select_length");
     load_areas("#home_select_area");
@@ -484,13 +495,13 @@ function load_search_page_search_dropdowns(search) {
     $("#search_page_select_start").val(search.start);
     $("#search_page_select_end").val(search.end);
     $("#search_page_select_type").val(search.type);
-
     $("#search_page_select_attr").val(search.attributes);
 }
 
 //Function for reservring ad in database: update reserved status --> show ad to host for approval
-function reserve_ad() {
-
+function reserve_ad(ad_id) {
+    update_ad_status(true, ad_id)
+    go_search();
 }
 
 //----Form functions:

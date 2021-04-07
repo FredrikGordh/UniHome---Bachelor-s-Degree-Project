@@ -70,6 +70,10 @@ class Ad(db.Model):
     neighbourhood = db.Column(db.String, nullable=True)
     studentcity = db.Column(db.String, nullable=True)
 
+    reserved = db.Column(db.Boolean, nullable=False, default=False)
+    booked = db.Column(db.Boolean, nullable=False, default=False)
+    paid = db.Column(db.Boolean, nullable=False, default=False)
+
     streetaddress = db.Column(db.String, nullable=True)
     streetnumber = db.Column(db.String, nullable=True)
     city = db.Column(db.String, nullable=True)
@@ -89,9 +93,9 @@ class Ad(db.Model):
     tenant_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
     def __repr__(self):
-        return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
-                                                                       self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode,
-                                                                       self.country, self.squaremetres, self.price, self.beds, self.accommodationtype)
+        return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
+                                                                                self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode,
+                                                                                self.country, self.squaremetres, self.price, self.beds, self.accommodationtype, self.reserved, self.booked, self.paid)
 
     def serialize(self):
         return dict(id=self.id, title=self.title, description=self.description, neighbourhood=self.neighbourhood,
@@ -175,6 +179,17 @@ def login():
         abort(401)
 
 
+@app.route('/user/ads', methods=['GET'])
+def my_ads():
+    current_user_id = get_jwt_identity()
+    if request.method == 'GET':
+        all_ads = Ad.query.filter(Ad.host_id == current_user_id).all()
+        ad_list = []
+        for ad in all_ads:
+            ad_list.append(ad.serialize())
+        return jsonify(ad_list)
+
+
 # /users has the method GET that is used when you want to retrieve all the users that are in the database. Not sure if we actually need it.
 # Written by Jakob, Gustav, Joel
 # KIND OF DONE
@@ -198,17 +213,34 @@ def list_ad(ad_id):
         return "NYI"
 
 
-@app.route('/ad/<int:ad_id>/setstatus', methods=['PUT'])
-def set_status(ad_id):
+@app.route('/ad/<int:ad_id>/reserved', methods=['PUT'])
+def set_reserved(ad_id):
+    if request.method == 'PUT':
+        print("ok")
+        reserved = request.get_json(force=True)
+        print(reserved)
+        current_ad = Ad.query.get_or_404(ad_id)
+        current_ad.reserved = reserved
+        db.session.commit()
+        return "success", 200
+
+
+@app.route('/ad/<int:ad_id>/paid', methods=['PUT'])
+def set_paid(ad_id):
     if request.method == 'PUT':
         temp_ad = request.get_json(force=True)
         current_ad = Ad.query.get_or_404(ad_id)
-        if temp_ad.get('reserved'):
-            current_ad.reserved = temp_ad.get('reserved')
-        if temp_ad.get('payedz'):
-            current_ad.reserved = temp_ad.get('reserved')
-        if temp_ad.get('reserved'):
-            current_ad.reserved = temp_ad.get('reserved')
+        current_ad.paid = temp_ad.get('paid')
+        db.session.commit()
+        return "success", 200
+
+
+@app.route('/ad/<int:ad_id>/booked', methods=['PUT'])
+def set_booked(ad_id):
+    if request.method == 'PUT':
+        temp_ad = request.get_json(force=True)
+        current_ad = Ad.query.get_or_404(ad_id)
+        current_ad.booked = temp_ad.get('booked')
         db.session.commit()
         return "success", 200
 
@@ -227,6 +259,7 @@ def ads():
         type = request.args.get('type')
         attrib2 = attrib.split('-')
         filter = []
+        filter.append(Ad.reserved != True)
         if start:
             filter.append(Ad.startdate <= start)
         if end:
