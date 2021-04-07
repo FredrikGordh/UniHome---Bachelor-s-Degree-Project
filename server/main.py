@@ -255,35 +255,16 @@ def create_ad():
         db.session.flush()
         db.session.commit()
 
-
-        
-
         list = newad.get('attributes').split(' ') #list = ['bike', 'wifi'];
     
         attributesDB = Attributes()
-
-        # setattr(attributesDB, 'dishwasher', False)
-        # setattr(attributesDB, 'wifi', False)
-        # setattr(attributesDB, 'washingmachine', False)
-        # setattr(attributesDB, 'sauna', False)
-        # setattr(attributesDB, 'bike', False)
-        
         setattr(attributesDB, 'ad_id', newadDB.id)
         for x in list:
             setattr(attributesDB, x, True)
 
-        print(newadDB)
-        print(attributesDB)
-        
-        # Behöver lägga till varje attribute, men behöver vara dy
-        #dynamiskt beroende på om attributen finns eller inte
-        # antagligen behövs en del if-satser exempelvis som i 
-        # ads ovan med filter, kanske något i form av append också
-
         db.session.add(attributesDB)
         db.session.flush()
         db.session.commit()
-
 
         return "success", 200
 
