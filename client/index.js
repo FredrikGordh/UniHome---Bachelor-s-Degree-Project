@@ -68,27 +68,27 @@ $(document).ready(function () {
         e.preventDefault();
         submit_register_form();
     });
-    
+
     //Submit register form by pressing ENTER
-    $("#content").keyup("#password_register", function(e) { 
-        if (e.keyCode === 13) { 
+    $("#content").keyup("#password_register", function (e) {
+        if (e.keyCode === 13) {
             submit_register_form();
-        } 
-    }); 
+        }
+    });
 
 
-     //Submit edit form
-     $("#content").on("click", "#edit_form_button", function (e) {
+    //Submit edit form
+    $("#content").on("click", "#edit_form_button", function (e) {
         e.preventDefault();
         submit_edit_form();
     });
 
     //Submit register form by pressing ENTER
-    $("#content").keyup("#password_register", function(e) { 
-        if (e.keyCode === 13) { 
+    $("#content").keyup("#password_register", function (e) {
+        if (e.keyCode === 13) {
             submit_register_form();
-        } 
-    }); 
+        }
+    });
 
     //Submit login form
     $("#content").on("click", "#login_form_button", function (e) {
@@ -97,11 +97,11 @@ $(document).ready(function () {
     });
 
     //Submit login form by pressing ENTER
-    $("#content").keyup("#password_login", function(e) { 
-        if (e.keyCode === 13) { 
+    $("#content").keyup("#password_login", function (e) {
+        if (e.keyCode === 13) {
             submit_login_form();
-        } 
-    }); 
+        }
+    });
 
     $(".hide-menu").click(function (e) {
         $("#close-menu").prop("checked", false);
@@ -123,7 +123,6 @@ $(document).ready(function () {
         e.preventDefault();
         go_search();
     });
-<<<<<<< HEAD
 
     //Reserve ad
     $("#content").on("click", "#reservation_button", function (e) {
@@ -132,47 +131,45 @@ $(document).ready(function () {
     });
 
 })
-=======
->>>>>>> master
 
-    //Edit bio
-    $("#content").on("click", "#my_page_change_bio_btn", function (e) {
-        e.preventDefault();
-        go_edit_bio_page();
-    });
+//Edit bio
+$("#content").on("click", "#my_page_change_bio_btn", function (e) {
+    e.preventDefault();
+    go_edit_bio_page();
+});
 
-    //cancel edit bio
-    $("#content").on("click", "#cancel_edit_form_btn", function (e) {
-        e.preventDefault();
-        go_my_page();
-        load_account_info();
-    });
+//cancel edit bio
+$("#content").on("click", "#cancel_edit_form_btn", function (e) {
+    e.preventDefault();
+    go_my_page();
+    load_account_info();
+});
 
-    //My page menu
+//My page menu
 
-    //My page menu: go to account
-    $("#content").on("click", "#account_info_link", function (e) {
-        e.preventDefault();
-        load_account_info();
-    });
+//My page menu: go to account
+$("#content").on("click", "#account_info_link", function (e) {
+    e.preventDefault();
+    load_account_info();
+});
 
-    //My page menu: go to history
-    $("#content").on("click", "#history_link", function (e) {
-        e.preventDefault();
-        load_history();
-    });
+//My page menu: go to history
+$("#content").on("click", "#history_link", function (e) {
+    e.preventDefault();
+    load_history();
+});
 
-    //My page menu: go to bookings
-    $("#content").on("click", "#bookings_link", function (e) {
-        e.preventDefault();
-        load_bookings();
-    });
+//My page menu: go to bookings
+$("#content").on("click", "#bookings_link", function (e) {
+    e.preventDefault();
+    load_bookings();
+});
 
-    //My page menu: go to ads
-    $("#content").on("click", "#ads_link", function (e) {
-        e.preventDefault();
-        load_ads();
-    });
+//My page menu: go to ads
+$("#content").on("click", "#ads_link", function (e) {
+    e.preventDefault();
+    load_ads();
+});
 })
 
 //-------------------------Functions-------------------------
@@ -211,7 +208,7 @@ function go_my_page() {
     $("#content").html($("#my_page").html());
     var name = JSON.parse(sessionStorage.getItem('auth')).user.name
     $("#my_page_greeting").html("Hej " + name + "!");
-    
+
 }
 
 //Function for going to view: Contact
@@ -254,9 +251,9 @@ function load_account_info() {
     var user = JSON.parse(sessionStorage.getItem('auth')).user
     $("#my_page_name").html("Fullt namn: " + user.name);
     $("#my_page_email_and_tel").html("Tel: " + user.telephone + " <br>Email: " + user.email);
-    if (user.bio){
-    $("#my_page_bio_text").css('color', 'white');
-    $("#my_page_bio_text").html(user.bio);
+    if (user.bio) {
+        $("#my_page_bio_text").css('color', 'white');
+        $("#my_page_bio_text").html(user.bio);
     }
     else {
         $("#my_page_bio_text").css('color', 'red');
@@ -347,7 +344,7 @@ function register_request(user) {
 function edit_user_request(user) {
     $.ajax({
         url: host + '/user/edit',
-        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token }, 
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'PUT',
         data: JSON.stringify(user),
         success: function (response) {
@@ -360,8 +357,8 @@ function edit_user_request(user) {
             load_account_info();
         }
     })
-    
- }
+
+}
 
 
 //Function for making a request for all unique areas in database
