@@ -79,6 +79,10 @@ class Ad(db.Model):
     neighbourhood = db.Column(db.String, nullable=True)
     studentcity = db.Column(db.String, nullable=True)
 
+    reserved = db.Column(db.Boolean, nullable=False, default=False)
+    booked = db.Column(db.Boolean, nullable=False, default=False)
+    paid = db.Column(db.Boolean, nullable=False, default=False)
+
     streetaddress = db.Column(db.String, nullable=True)
     streetnumber = db.Column(db.String, nullable=True)
     city = db.Column(db.String, nullable=True)
@@ -173,6 +177,26 @@ def signup():
     else:
         return "E-mail already in use", 409
 
+@app.route('/user/edit', methods=['PUT'])
+@jwt_required()
+def edit_user():
+    edituser = request.get_json(force=True)
+    editable_user = User.query.filter_by(id = get_jwt_identity()).first()
+  #  print(editable_user.get('name'))
+    if edituser.get('name') != None:
+        editable_user.name = edituser.get('name')
+    if edituser.get('email') != None:
+        editable_user.email = edituser.get('email')
+    if edituser.get('telephone') != None:
+        editable_user.telephone = edituser.get('telephone')
+    if edituser.get('gender') != None:
+        editable_user.gender = edituser.get('gender')
+    if edituser.get('bio') != None:
+        editable_user.bio = edituser.get('bio')
+    db.session.commit()
+    return "Changed"
+
+
 
 # /user/login has the method POST that is used when you want to log in with a user.
 # Written by Jakob, Gustav, Joel
@@ -261,12 +285,28 @@ def create_ad():
     if request.method == 'POST':
         current_user_id = get_jwt_identity()
         newad = request.get_json(force=True)
-        newadDB = Ad(title=newad.get('title'), description=newad.get(
-            'description'), host_id=(current_user_id), startdate=newad.get('start'), enddate=newad.get('end'))
+        print(newad.get('startdate'))
+        newadDB = Ad(title=newad.get('title'), description=newad.get('description'),
+            neighbourhood=newad.get('neighbourhood'), studentcity=newad.get('studentcity'),
+            streetaddress=newad.get('streetaddress'), streetnumber=newad.get('streetnumber'), city=newad.get('city'),
+            postalcode=newad.get('postalcode'), country=newad.get('country'), host_id=(current_user_id),
+            startdate=datetime.datetime.strptime(newad.get('startdate'),'%Y-%m-%d').date(),
+            enddate=datetime.datetime.strptime(newad.get('enddate'),'%Y-%m-%d').date(), squaremetres=newad.get('squaremetres'),
+            price=newad.get('price'), beds=newad.get('beds'), accommodationtype=newad.get('accommodationtype'))
+            
         db.session.add(newadDB)
+        db.session.flush()
         db.session.commit()
-        attributesDB = Attributes(ad_id=newadDB.id)
+
+        list = newad.get('attributes').split(' ') #list = ['bike', 'wifi'];
+    
+        attributesDB = Attributes()
+        setattr(attributesDB, 'ad_id', newadDB.id)
+        for x in list:
+            setattr(attributesDB, x, True)
+
         db.session.add(attributesDB)
+        db.session.flush()
         db.session.commit()
 
         return "success", 200

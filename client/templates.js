@@ -5,5 +5,5 @@ var accomodation = '<div class="accomodation col-10 col-lg-8 mt-3 p-2">'
     + '<p>{{description}}</p>'
     + '<p>{{squaremetres}}</p>'
     + '<p>{{price}} kr</p>'
-    + '<button id="read_more_ad_button" type="button" class="read_more_button">Läs mer</button>'
+    + '<button type="button" class="read_more_button read_more_ad_button" data-id="{{id}}">Läs mer</button>'
     + '</div>';
