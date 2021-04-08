@@ -400,7 +400,6 @@ var stripe = Stripe("pk_test_51IdXd9I1LSmMkwS01UZ3P15rGwgKS2FVNDj7puij4jKSK9qHTz
 var purchase = {
     items: [{ id: "xl-tshirt" }]
   };
-  
 
 // Disable the button until we have Stripe set up on the page
 document.querySelector("button").disabled = true;
@@ -440,7 +439,7 @@ fetch('/create-payment-intent', {
 
     card.on("change", function (event) {
         // Disable the Pay button if there are no card details in the Element
-        document.querySelector("button").disabled = event.empty;
+        $("button").attr("disabled", event.empty);
         document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
     });
 
@@ -487,6 +486,16 @@ var orderComplete = function(paymentIntentId) {
     document.querySelector(".result-message").classList.remove("hidden");
     document.querySelector("button").disabled = true;
   };
+
+// Show the customer the error from Stripe if their card fails to charge
+var showError = function(errorMsgText) {
+    loading(false);
+    var errorMsg = document.querySelector("#card-error");
+    errorMsg.textContent = errorMsgText;
+    setTimeout(function() {
+    errorMsg.textContent = "";
+    }, 4000);
+};
 
 // Show a spinner on payment submission
 var loading = function(isLoading) {
