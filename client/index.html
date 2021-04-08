@@ -237,6 +237,7 @@
           <input type="password" class="form-control" id="password_register" placeholder="Password">
         </div>
         <button type="button" id="register_form_button" class="btn btn-primary">Registrera</button>
+        <div>Har du redan ett konto? Logga in genom att klicka <span class = "clickable_class" id = "get_to_login">här</span></div>
       </form>
     </div>
   </script>
@@ -250,7 +251,7 @@
           <input type="text" class="form-control" id="name_edit" placeholder="Per Johansson">
         </div>
         <div class="form-group">
-          <label for="gender_register">Ändra kön</label>
+          <label for="gender_edit">Ändra kön</label>
           <select class="form-control" id="gender_edit">
             <option>Välj en...</option>
             <option>Kvinna</option>
@@ -258,28 +259,8 @@
             <option>Annat</option>
           </select>
         </div>
-        <div class="form-row">
-          <div class="form-group col-4">
-            <label for="year_edit">Ändra födelseår</label>
-            <select class="form-control" id="year_edit">
-              <option>Välj ett...</option>
-            </select>            
-          </div>
-          <div class="form-group col-4">
-            <label for="month_edit">Ändra månad</label>
-            <select class="form-control" id="month_edit">
-              <option>Välj en...</option>
-            </select>  
-          </div>
-          <div class="form-group col-4">
-            <label for="day_edit">Ändra födelsedag</label>
-            <select class="form-control" id="day_edit">
-              <option>Välj en...</option>
-            </select>  
-          </div>
-        </div>
         <div class="form-group">
-          <label for="phone_edit">Telefon</label>
+          <label for="phone_edit">Ändra telefonnummer</label>
           <input type="text" class="form-control" id="phone_edit">
         </div>
         <div class="form-group">
@@ -313,6 +294,7 @@
           <input type="password" class="form-control" id="password_login" placeholder="Password">
         </div>
         <button type="button" id="login_form_button" class="btn btn-primary">Logga in</button>
+        
       </form>
     </div>
   </script>
@@ -331,6 +313,15 @@
       <!--Container for loading in dynamic content in my page (ie. edit account, history etc.)-->
       <div id="my_page_content"></div>
       
+    </div>
+  </script>
+
+  <!-- Successfully Registered view -->
+  <script id="successfully_registered_page" type="text/html">
+    <div id="successfully_registered_page_container" class="container">
+       <h1>Du har registrerat dig!</h1>
+      <div id = "registered_page_content">Nu kan du logga in och hyra eller hyra ut ett boende</div>
+      <button type="button" class="btn btn-primary" id = "log_in_from_registered_view>" onclick = go_login()>Till logga in</button>
     </div>
   </script>
 
