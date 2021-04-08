@@ -8,7 +8,7 @@ from flask_jwt_extended import (
 from flask import abort
 import datetime
 import os
-##The imports down below handle images saved in the server.
+# The imports down below handle images saved in the server.
 from flask import flash, redirect, url_for
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
@@ -102,7 +102,7 @@ class Ad(db.Model):
 
     host_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     tenant_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    image_id = db.relationship("Image", backref = 'ad')
+    image_id = db.relationship("Image", backref='ad')
 
     def __repr__(self):
         return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
@@ -144,8 +144,8 @@ class Attributes(db.Model):
                     washingmachine=self.washingmachine, sauna=self.sauna, bike=self.bike)
 
 
-#Image class
-class Image(db.Model): 
+# Image class
+class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable=False)
     url = db.Column(db.String, nullable=False)
@@ -155,7 +155,6 @@ class Image(db.Model):
 
     def serialize(self):
         return dict(url=self.url)
-
 
 
 ###################################################### APP.ROUTES ######################################################
@@ -211,6 +210,8 @@ def my_ads():
         ad_list = []
         for ad in all_ads:
             ad_list.append(ad.serialize())
+        for ad in ad_list:
+            print("ok")
         return jsonify(ad_list)
 
 
@@ -341,10 +342,12 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
+
 
 @app.route('/ad/create', methods=['POST'])
 @jwt_required()
@@ -355,21 +358,21 @@ def create_ad():
         newad = request.form
 
         newadDB = Ad(title=newad.get('title'), description=newad.get('description'),
-            neighbourhood=newad.get('neighbourhood'), studentcity="Linköping",
-            streetaddress=newad.get('streetaddress'), streetnumber=newad.get('streetnumber'), city=newad.get('city'),
-            postalcode=newad.get('postalcode'), country="Sverige", host_id=(current_user_id),
-            startdate=datetime.datetime.strptime(newad.get('startdate'),'%Y-%m-%d').date(),
-            enddate=datetime.datetime.strptime(newad.get('enddate'),'%Y-%m-%d').date(), squaremetres=newad.get('squaremetres'),
-            price=newad.get('price'), beds=newad.get('beds'), accommodationtype=newad.get('accommodationtype'))
-            
+                     neighbourhood=newad.get('neighbourhood'), studentcity="Linköping",
+                     streetaddress=newad.get('streetaddress'), streetnumber=newad.get('streetnumber'), city=newad.get('city'),
+                     postalcode=newad.get('postalcode'), country="Sverige", host_id=(current_user_id),
+                     startdate=datetime.datetime.strptime(
+                         newad.get('startdate'), '%Y-%m-%d').date(),
+                     enddate=datetime.datetime.strptime(newad.get('enddate'), '%Y-%m-%d').date(), squaremetres=newad.get('squaremetres'),
+                     price=newad.get('price'), beds=newad.get('beds'), accommodationtype=newad.get('accommodationtype'))
+
         db.session.add(newadDB)
         db.session.flush()
         db.session.commit()
 
- 
-        
         if newad.get('attributes'):
-            list = newad.get('attributes').split(' ') #list = ['bike', 'wifi'];
+            list = newad.get('attributes').split(
+                ' ')  # list = ['bike', 'wifi'];
             attributesDB = Attributes()
             setattr(attributesDB, 'ad_id', newadDB.id)
             for x in list:
@@ -384,25 +387,27 @@ def create_ad():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            imageDB = Image(ad_id = newadDB.id, url = url_for('uploaded_file', filename=filename))
+            imageDB = Image(ad_id=newadDB.id, url=url_for(
+                'uploaded_file', filename=filename))
             db.session.add(imageDB)
             db.session.flush()
             db.session.commit()
 
         if file and not allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            
-            imageDB = Image(ad_id = newadDB.id, url = url_for('uploaded_file', filename=filename))
+
+            imageDB = Image(ad_id=newadDB.id, url=url_for(
+                'uploaded_file', filename=filename))
             db.session.add(imageDB)
             db.session.flush()
             db.session.commit()
 
         return "success", 200
 
-#Löser så att man kan lägga till bilder
-#@app.route('/ad/addimage/<int:ad_id>', methods = ['POST'])
-#@jwt_required
-#def addimage(ad):
+# Löser så att man kan lägga till bilder
+# @app.route('/ad/addimage/<int:ad_id>', methods = ['POST'])
+# @jwt_required
+# def addimage(ad):
     #newImage = Image(ad_id = ad.id, url= ...)
 
 

@@ -142,13 +142,15 @@ $(document).ready(function () {
     $("#content").on("click", "#new_ad_button", function (e) {
         e.preventDefault();
         go_new_ad_page();
-        var input = document.getElementById( 'upload' );
-        input.addEventListener( 'change', showFileName );
+        var input = document.getElementById('upload');
+        input.addEventListener('change', showFileName);
+    });
 
     //Reserve ad
     $("#content").on("click", "#reservation_button", function (e) {
         e.preventDefault();
         reserve_ad($(this).data('id'));
+        console.log("ok")
     });
 
     //Edit bio
@@ -164,48 +166,38 @@ $(document).ready(function () {
         load_account_info();
     });
 
-        //Edit bio
-        $("#content").on("click", "#my_page_change_bio_btn", function (e) {
-            e.preventDefault();
-            go_edit_bio_page();
-        });
-    
-        //cancel edit bio
-        $("#content").on("click", "#cancel_edit_form_btn", function (e) {
-            e.preventDefault();
-            go_my_page();
-            load_account_info();
-        });
-    
-        //My page menu
-    
-        //My page menu: go to account
-        $("#content").on("click", "#account_info_link", function (e) {
-            e.preventDefault();
-            load_account_info();
-        });
-    
-        //My page menu: go to history
-        $("#content").on("click", "#history_link", function (e) {
-            e.preventDefault();
-            load_history();
-        });
-    
-        //My page menu: go to bookings
-        $("#content").on("click", "#bookings_link", function (e) {
-            e.preventDefault();
-            load_bookings();
-        });
-    
-        //My page menu: go to ads
-        $("#content").on("click", "#ads_link", function (e) {
-            e.preventDefault();
-            load_ads();
-        });
+    //Edit bio
+    $("#content").on("click", "#my_page_change_bio_btn", function (e) {
+        e.preventDefault();
+        go_edit_bio_page();
+    });
 
-})
+    //cancel edit bio
+    $("#content").on("click", "#cancel_edit_form_btn", function (e) {
+        e.preventDefault();
+        go_my_page();
+        load_account_info();
+    });
 
+    //My page menu
 
+    //My page menu: go to account
+    $("#content").on("click", "#account_info_link", function (e) {
+        e.preventDefault();
+        load_account_info();
+    });
+
+    //My page menu: go to history
+    $("#content").on("click", "#history_link", function (e) {
+        e.preventDefault();
+        load_history();
+    });
+
+    //My page menu: go to bookings
+    $("#content").on("click", "#bookings_link", function (e) {
+        e.preventDefault();
+        load_bookings();
+    });
 
     //My page menu: go to ads
     $("#content").on("click", "#ads_link", function (e) {
@@ -232,12 +224,10 @@ $(document).ready(function () {
     $("#content").on("click", "#create_new_ad", function (e) {
         e.preventDefault();
         submitAdForm();
-        
-        
     });
 
-    
-})
+
+});
 
 //-------------------------Functions-------------------------
 
@@ -316,7 +306,7 @@ function go_edit_bio_page() {
 
 }
 
-function go_confirmation_page(){
+function go_confirmation_page() {
 
 }
 
@@ -336,17 +326,20 @@ function load_account_info() {
     }
 
 }
+
 //Load account info in my page
 function load_history() {
     $("#my_page_content").html($("#my_page_history").html());
 
 }
+
 //Load account info in my page
 function load_ads() {
     $("#my_page_content").html($("#my_page_ads").html());
     load_my_ads_request();
 
 }
+
 //Load account info in my page
 function load_bookings() {
     $("#my_page_content").html($("#my_page_bookings").html());
@@ -363,7 +356,7 @@ function logout() {
 //Function for showing the uploaded picture
 function readURL(input) {
 
-saved_input = input.files[0];
+    saved_input = input.files[0];
 
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -383,16 +376,16 @@ $(function () {
 });
 
 //Function for showing the uploaded image name. 
-function showFileName( event ) {
-  var infoArea = document.getElementById( 'upload-label' );
-  var input = event.srcElement;
-  var fileName = input.files[0].name;
-  print
-  infoArea.textContent = 'Filnamn: ' + fileName;
+function showFileName(event) {
+    var infoArea = document.getElementById('upload-label');
+    var input = event.srcElement;
+    var fileName = input.files[0].name;
+    print
+    infoArea.textContent = 'Filnamn: ' + fileName;
 }
 
-function go_new_ad_page(){
-    $("#content").html($("#new_ad_page").html()); 
+function go_new_ad_page() {
+    $("#content").html($("#new_ad_page").html());
 }
 
 
@@ -707,7 +700,7 @@ function submit_register_form() {
         password: $("#password_register").val()
     }
     register_request(user);
-    
+
 }
 
 function submit_edit_form() {
@@ -774,7 +767,7 @@ function update_search() {
 }
 
 
-function submitAdForm(){
+function submitAdForm() {
     var formData = new FormData();
 
     formData.append("title", $("#titleInput_id").val());
@@ -796,46 +789,46 @@ function submitAdForm(){
 
 
 
-    var bike= $("#create_ad_bike_id").prop("checked");
-    var dishwasher= $("#create_ad_dishwasher_id").prop("checked");
-    var wifi= $("#create_ad_wifi_id").prop("checked");
-    var sauna= $("#create_ad_sauna_id").prop("checked");
-    var washingmachine= $("#create_ad_washingmachine_id").prop("checked");
+    var bike = $("#create_ad_bike_id").prop("checked");
+    var dishwasher = $("#create_ad_dishwasher_id").prop("checked");
+    var wifi = $("#create_ad_wifi_id").prop("checked");
+    var sauna = $("#create_ad_sauna_id").prop("checked");
+    var washingmachine = $("#create_ad_washingmachine_id").prop("checked");
 
     var attributes = "";
 
-    if (bike != false){
-        attributes=attributes+"'bike' ";
+    if (bike != false) {
+        attributes = attributes + "'bike' ";
     }
-    if (dishwasher != false){
-        attributes=attributes+"''dishwasher' ";
+    if (dishwasher != false) {
+        attributes = attributes + "''dishwasher' ";
     }
-    if (wifi != false){
-        attributes=attributes+"'wifi' ";
+    if (wifi != false) {
+        attributes = attributes + "'wifi' ";
     }
-    if (sauna != false){
-        attributes=attributes+"'sauna' ";
+    if (sauna != false) {
+        attributes = attributes + "'sauna' ";
     }
-    if (washingmachine != false){
-        attributes=attributes+"'washingmachine' ";
+    if (washingmachine != false) {
+        attributes = attributes + "'washingmachine' ";
     }
 
     formData.append("attributes", attributes);
 
-    
+
     formData.append("file", saved_input);
     saved_input = null;
-    
+
     $.ajax({
         url: host + '/ad/create',
         type: 'POST',
         headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         data: formData,
         processData: false,
-        contentType: false,         
-            success: function(successMessage){
-               go_my_page();
-            } 
+        contentType: false,
+        success: function (successMessage) {
+            go_my_page();
+        }
     })
 
 }
