@@ -63,32 +63,45 @@ $(document).ready(function () {
         submit_home_search_form();
     });
 
+    //Go to login page
+    $("#content").on("click", "#get_to_login", function (e) {
+        e.preventDefault();
+        go_login();
+    });
+
+    //Go to login page from registered 
+    // $("#registered_page_content").on("click", "#log_in_from_registered_view", function (e) {
+    //     e.preventDefault();
+    //     alert("hej")
+    //     go_login();
+    // });
+
     //Submit register form
     $("#content").on("click", "#register_form_button", function (e) {
         e.preventDefault();
         submit_register_form();
     });
-    
+
     //Submit register form by pressing ENTER
-    $("#content").keyup("#password_register", function(e) { 
-        if (e.keyCode === 13) { 
+    $("#content").keyup("#password_register", function (e) {
+        if (e.keyCode === 13) {
             submit_register_form();
-        } 
-    }); 
+        }
+    });
 
 
-     //Submit edit form
-     $("#content").on("click", "#edit_form_button", function (e) {
+    //Submit edit form
+    $("#content").on("click", "#edit_form_button", function (e) {
         e.preventDefault();
         submit_edit_form();
     });
 
     //Submit register form by pressing ENTER
-    $("#content").keyup("#password_register", function(e) { 
-        if (e.keyCode === 13) { 
+    $("#content").keyup("#password_register", function (e) {
+        if (e.keyCode === 13) {
             submit_register_form();
-        } 
-    }); 
+        }
+    });
 
     //Submit login form
     $("#content").on("click", "#login_form_button", function (e) {
@@ -97,11 +110,11 @@ $(document).ready(function () {
     });
 
     //Submit login form by pressing ENTER
-    $("#content").keyup("#password_login", function(e) { 
-        if (e.keyCode === 13) { 
+    $("#content").keyup("#password_login", function (e) {
+        if (e.keyCode === 13) {
             submit_login_form();
-        } 
-    }); 
+        }
+    });
 
     $(".hide-menu").click(function (e) {
         $("#close-menu").prop("checked", false);
@@ -124,12 +137,18 @@ $(document).ready(function () {
         go_search();
     });
 
+
     //Go to create new ad page
     $("#content").on("click", "#new_ad_button", function (e) {
         e.preventDefault();
         go_new_ad_page();
         var input = document.getElementById( 'upload' );
         input.addEventListener( 'change', showFileName );
+
+    //Reserve ad
+    $("#content").on("click", "#reservation_button", function (e) {
+        e.preventDefault();
+        reserve_ad($(this).data('id'));
     });
 
     //Edit bio
@@ -145,31 +164,69 @@ $(document).ready(function () {
         load_account_info();
     });
 
-    //My page menu
+        //Edit bio
+        $("#content").on("click", "#my_page_change_bio_btn", function (e) {
+            e.preventDefault();
+            go_edit_bio_page();
+        });
+    
+        //cancel edit bio
+        $("#content").on("click", "#cancel_edit_form_btn", function (e) {
+            e.preventDefault();
+            go_my_page();
+            load_account_info();
+        });
+    
+        //My page menu
+    
+        //My page menu: go to account
+        $("#content").on("click", "#account_info_link", function (e) {
+            e.preventDefault();
+            load_account_info();
+        });
+    
+        //My page menu: go to history
+        $("#content").on("click", "#history_link", function (e) {
+            e.preventDefault();
+            load_history();
+        });
+    
+        //My page menu: go to bookings
+        $("#content").on("click", "#bookings_link", function (e) {
+            e.preventDefault();
+            load_bookings();
+        });
+    
+        //My page menu: go to ads
+        $("#content").on("click", "#ads_link", function (e) {
+            e.preventDefault();
+            load_ads();
+        });
 
-    //My page menu: go to account
-    $("#content").on("click", "#account_info_link", function (e) {
-        e.preventDefault();
-        load_account_info();
-    });
+})
 
-    //My page menu: go to history
-    $("#content").on("click", "#history_link", function (e) {
-        e.preventDefault();
-        load_history();
-    });
 
-    //My page menu: go to bookings
-    $("#content").on("click", "#bookings_link", function (e) {
-        e.preventDefault();
-        load_bookings();
-    });
 
     //My page menu: go to ads
     $("#content").on("click", "#ads_link", function (e) {
         e.preventDefault();
         load_ads();
     });
+
+    //My page: approve tenant
+    $("#content").on("click", ".book_ad_button", function (e) {
+        e.preventDefault();
+        approve_tenant($(this).data("id"));
+        load_ads();
+    });
+
+    //My page: deny tenant
+    $("#content").on("click", ".deny_ad_button", function (e) {
+        e.preventDefault();
+        deny_tenant($(this).data("id"));
+        load_ads();
+    });
+
 
     //Submit form create new ad
     $("#content").on("click", "#create_new_ad", function (e) {
@@ -218,7 +275,6 @@ function go_my_page() {
     $("#content").html($("#my_page").html());
     var name = JSON.parse(sessionStorage.getItem('auth')).user.name
     $("#my_page_greeting").html("Hej " + name + "!");
-    
 }
 
 //Function for going to view: Contact
@@ -236,10 +292,16 @@ function go_about_us_page() {
     $("#content").html($("#about_us_page").html());
 }
 
+//Function for going to view: Registered
+function go_registered_page() {
+    $("#content").html($("#successfully_registered_page").html());
+}
+
 //Function for going to view: Read more ad
 function go_read_more_ad_page(ad_id) {
     $("#content").html($("#read_more_ad_page").html());
     load_read_more(ad_id);
+    $("#reservation_button").data('id', ad_id)
 }
 
 //Function for going to view: Edit bio
@@ -251,6 +313,7 @@ function go_edit_bio_page() {
     $("#phone_edit").val(user.telephone)
     $("#email_edit").val(user.email)
     $("#bio_edit").val(user.bio)
+
 }
 
 function go_confirmation_page(){
@@ -263,9 +326,9 @@ function load_account_info() {
     var user = JSON.parse(sessionStorage.getItem('auth')).user
     $("#my_page_name").html("Fullt namn: " + user.name);
     $("#my_page_email_and_tel").html("Tel: " + user.telephone + " <br>Email: " + user.email);
-    if (user.bio){
-    $("#my_page_bio_text").css('color', 'white');
-    $("#my_page_bio_text").html(user.bio);
+    if (user.bio) {
+        $("#my_page_bio_text").css('color', 'white');
+        $("#my_page_bio_text").html(user.bio);
     }
     else {
         $("#my_page_bio_text").css('color', 'red');
@@ -281,11 +344,13 @@ function load_history() {
 //Load account info in my page
 function load_ads() {
     $("#my_page_content").html($("#my_page_ads").html());
+    load_my_ads_request();
 
 }
 //Load account info in my page
 function load_bookings() {
     $("#my_page_content").html($("#my_page_bookings").html());
+    load_my_bookings_request();
 
 }
 
@@ -363,6 +428,59 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
     })
 }
 
+function load_my_ads_request() {
+    $.ajax({
+        url: host + '/user/ads',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (ads) {
+            ads.forEach(element => {
+                $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
+                if (element.booked == true) {
+                    console.log("booked");
+                } else if (element.reserved == true) {
+                    get_tenant(element.id);
+                }
+            });
+        }
+    })
+}
+
+function load_my_bookings_request() {
+    $.ajax({
+        url: host + '/user/bookings',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (ads) {
+            ads.forEach(element => {
+                $("#my_page_bookings_container").append(Mustache.render(my_accomodation, element));
+            });
+        }
+    })
+}
+
+function set_tenant(ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/tenant',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'PUT',
+        success: function (result) {
+        }
+    })
+}
+
+function get_tenant(ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/tenant',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (result) {
+            result["ad_id"] = ad_id;
+            $("#my_page_ads_container").append(Mustache.render(tenant, result));
+        }
+    })
+}
+
 //Function for making a login request 
 function login_request(user) {
     $.ajax({
@@ -383,7 +501,7 @@ function register_request(user) {
         type: 'POST',
         data: JSON.stringify(user),
         success: function (response) {
-            go_home();
+            go_registered_page();
         }
     })
 }
@@ -392,7 +510,7 @@ function register_request(user) {
 function edit_user_request(user) {
     $.ajax({
         url: host + '/user/edit',
-        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token }, 
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'PUT',
         data: JSON.stringify(user),
         success: function (response) {
@@ -405,8 +523,7 @@ function edit_user_request(user) {
             load_account_info();
         }
     })
-    
- }
+}
 
 
 //Function for making a request for all unique areas in database
@@ -460,8 +577,29 @@ function load_read_more(ad_id) {
     })
 }
 
-//----Functional functions:
+function update_reserved_status(status, ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/reserved',
+        type: 'PUT',
+        data: JSON.stringify(status),
+        success: function (ad) {
 
+        }
+    })
+}
+
+function update_booked_status(status, ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/booked',
+        type: 'PUT',
+        data: JSON.stringify(status),
+        success: function (ad) {
+
+        }
+    })
+}
+
+//----Functional functions:
 
 //Function for loading all content in hamburger menu
 function load_burger() {
@@ -519,7 +657,6 @@ function load_attr(container) {
 
 //Function for loading data in dropdowns for search from home page
 function load_home_search_dropdowns() {
-    load_searchable_years();
     load_months("#home_select_start_month");
     load_days("#home_select_length");
     load_areas("#home_select_area");
@@ -536,24 +673,24 @@ function load_search_page_search_dropdowns(search) {
     $("#search_page_select_start").val(search.start);
     $("#search_page_select_end").val(search.end);
     $("#search_page_select_type").val(search.type);
-
     $("#search_page_select_attr").val(search.attributes);
 }
 
-//Function for loading searchable years when searching for ads
-function load_searchable_years() {
-    var year = new Date().getFullYear();
-    for (i = 0; i < 5; i++) {
-        $("#home_select_start_year").append("<option>" + year + "</option>")
-        ++year;
-    }
+//Function for reservring ad in database: update reserved status --> show ad to host for approval
+function reserve_ad(ad_id) {
+    update_reserved_status(true, ad_id)
+    set_tenant(ad_id);
+    go_search();
 }
 
-//Temporary, depends on how we implement how we search.
-function load_days(container) {
-    for (i = 1; i < 32; i++) {
-        $(container).append("<option>" + i + "</option>")
-    }
+//Function for approving tenant and update status of ad in database
+function approve_tenant(ad_id) {
+    update_booked_status(true, ad_id)
+}
+
+//Function for denying tenant and update status of ad in database
+function deny_tenant(ad_id) {
+    update_reserved_status(false, ad_id)
 }
 
 //----Form functions:
@@ -570,6 +707,7 @@ function submit_register_form() {
         password: $("#password_register").val()
     }
     register_request(user);
+    
 }
 
 function submit_edit_form() {

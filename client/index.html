@@ -237,9 +237,51 @@
           <input type="password" class="form-control" id="password_register" placeholder="Password">
         </div>
         <button type="button" id="register_form_button" class="btn btn-primary">Registrera</button>
+        <div>Har du redan ett konto? Logga in genom att klicka <span class = "clickable_class" id = "get_to_login">här</span></div>
       </form>
     </div>
   </script>
+
+
+  <!-- Edit bio view -->
+  <script id="edit_bio_page" type="text/html">
+    <div id="edit_bio_container" class="container">
+      <form>
+        <div class="form-group">
+          <label for="edit_name">Ändra för- och efternamn</label>
+          <input type="text" class="form-control" id="name_edit" placeholder="Per Johansson">
+        </div>
+        <div class="form-group">
+          <label for="gender_edit">Ändra kön</label>
+          <select class="form-control" id="gender_edit">
+            <option>Välj en...</option>
+            <option>Kvinna</option>
+            <option>Man</option>
+            <option>Annat</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="phone_edit">Ändra telefonnummer</label>
+          <input type="text" class="form-control" id="phone_edit">
+        </div>
+        <div class="form-group">
+          <label for="email_edit">Ändra email</label>
+          <input type="email" class="form-control" id="email_edit">
+        </div>
+        <!-- <div class="form-group"> NYI
+          <label for="password_login">Ändra lösenord</label>
+          <input type="password" class="form-control" id="password_edit" placeholder="Password">
+        </div> -->
+        <div class="form-group">
+          <label for="bio_edit">Ändra biografi</label>
+          <textarea rows=3 class="form-control" id="bio_edit"></textarea>
+        </div>
+        <button type="button" id="edit_form_button" class="btn btn-primary">Ändra!</button>
+        <button type="button" id="cancel_edit_form_btn" class="btn btn-primary">Avbryt!</button>
+      </form>
+    </div>
+  </script>
+
 
   <!-- Login view -->
   <script id="login_page" type="text/html">
@@ -254,6 +296,7 @@
           <input type="password" class="form-control" id="password_login" placeholder="Password">
         </div>
         <button type="button" id="login_form_button" class="btn btn-primary">Logga in</button>
+        
       </form>
     </div>
   </script>
@@ -261,10 +304,73 @@
   <!-- My page view -->
   <script id="my_page" type="text/html">
     <div id="my_page_container" class="container">
+
+
       <h1>Hejhej</h1>
       <button type="button" id="new_ad_button">Skapa ny annons</button>
     </div>
   </script>
+
+
+      <h1 id = "my_page_greeting"></h1>
+      <button type="button">Skapa ny annons</button>
+      <div id="my_page_menu" class="row align-items-center justify-content-center">
+        <div class="col-11 col-lg-5 my_page_menuitem m-2 p-4"><a id="account_info_link" href=""><h3>Mitt konto ></h3><p>Se och redigera dina kontouppgifter.</p></a></div>
+        <div class="col-11 col-lg-5 my_page_menuitem m-2 p-4"><a id="bookings_link" href=""><h3>Mina bokningar ></h3><p>Se och redigera dina bokningar.</p></a></div>
+        <div class="col-11 col-lg-5 my_page_menuitem m-2 p-4"><a id="ads_link" href=""><h3>Mina annonser ></h3><p>Se och redigera dina annonser.</p></a></div>
+        <div class="col-11 col-lg-5 my_page_menuitem m-2 p-4"><a id="history_link" href=""><h3>Historik ></h3><p>Se och kontrollera din bokningshistorik.</p></a></div>
+      </div>
+      <!--Container for loading in dynamic content in my page (ie. edit account, history etc.)-->
+      <div id="my_page_content"></div>
+      
+    </div>
+  </script>
+
+  <!-- Successfully Registered view -->
+  <script id="successfully_registered_page" type="text/html">
+    <div id="successfully_registered_page_container" class="container">
+       <h1>Du har registrerat dig!</h1>
+      <div id = "registered_page_content">Nu kan du logga in och hyra eller hyra ut ett boende</div>
+      <button type="button" class="btn btn-primary" id = "log_in_from_registered_view>" onclick = go_login()>Till logga in</button>
+    </div>
+  </script>
+
+  <!-- My page: account view -->
+  <script id="my_page_account_info" type="text/html">
+    <div id="my_page_account_info_container" class="container">
+      <h1 id="my_page_name"></h1>
+      <h3 id="my_page_email_and_tel"></h3>
+      <div id="my_page_bio">
+        <div id="my_page_placeholder_img"></div>
+        <h3 id="my_page_bio_header">Om mig:</h3>
+        <div id="my_page_bio_text"></div>
+      </div>
+      <button type="button" id = "my_page_change_bio_btn">Redigera min profil</button>
+    </div>
+  </script>
+
+  <!-- My page: history view -->
+  <script id="my_page_history" type="text/html">
+    <div id="my_page_history_container" class="container">
+
+    </div>
+  </script>
+
+  <!-- My page: my bookings view -->
+  <script id="my_page_bookings" type="text/html">
+    <div id="my_page_bookings_container" class="container row justify-content-center">
+
+    </div>
+  </script>
+
+  <!-- My page: my ads view -->
+  <script id="my_page_ads" type="text/html">
+    <div id="my_page_ads_container" class="container row justify-content-center">
+      
+    </div>
+  </script>
+
+
 
   <!-- About us view -->
   <script id="about_us_page" type="text/html">
@@ -498,6 +604,7 @@
       <h1 id="read_more_ad_beds"></h1>
       <h1 id="read_more_ad_accommodationtype"></h1>
       <h1 id="read_more_ad_attributes"></h1>
+      <button id="reservation_button">Reservera</button>
     </div>
   </script>
 

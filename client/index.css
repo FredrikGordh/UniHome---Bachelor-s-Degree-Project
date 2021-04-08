@@ -261,6 +261,11 @@ label {
   margin-top: 100px;
   margin-bottom: 100px;
 }
+#successfully_registered_page_container {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
 
 /* Klasser */
 
@@ -268,6 +273,20 @@ label {
   background-color: white;
   border-radius: 20px;
   color: black;
+}
+
+.my_accomodation {
+  background-color: white;
+  border-radius: 20px;
+  color: black;
+  padding: 10px;
+}
+
+.my_tenant {
+  background-color: white;
+  border-radius: 20px;
+  color: black;
+  padding: 10px;
 }
 
 .search_button {
@@ -327,6 +346,10 @@ a:hover{
   padding: 0;
 }  
 
+.clickable_class{
+  color:red;
+  cursor: pointer;
+}  
 .navbar-style{
   background-color: rgba(0,0,0,0);
   position: fixed;
