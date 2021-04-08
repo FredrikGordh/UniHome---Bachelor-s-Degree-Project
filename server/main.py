@@ -334,7 +334,14 @@ def create_ad():
             db.session.add(imageDB)
             db.session.flush()
             db.session.commit()
+
+        if file and not allowed_file(file.filename):
+            filename = secure_filename(file.filename)
             
+            imageDB = Image(ad_id = newadDB.id, url = url_for('uploaded_file', filename=filename))
+            db.session.add(imageDB)
+            db.session.flush()
+            db.session.commit()
 
         return "success", 200
 
