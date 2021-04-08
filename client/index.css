@@ -256,6 +256,11 @@ label {
   margin-top: 100px;
   margin-bottom: 100px;
 }
+#successfully_registered_page_container {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
 
 /* Klasser */
 
@@ -336,6 +341,10 @@ a:hover{
   padding: 0;
 }  
 
+.clickable_class{
+  color:red;
+  cursor: pointer;
+}  
 .navbar-style{
   background-color: rgba(0,0,0,0);
   position: fixed;

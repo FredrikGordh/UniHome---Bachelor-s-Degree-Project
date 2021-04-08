@@ -63,6 +63,19 @@ $(document).ready(function () {
         submit_home_search_form();
     });
 
+    //Go to login page
+    $("#content").on("click", "#get_to_login", function (e) {
+        e.preventDefault();
+        go_login();
+    });
+
+    //Go to login page from registered 
+    // $("#registered_page_content").on("click", "#log_in_from_registered_view", function (e) {
+    //     e.preventDefault();
+    //     alert("hej")
+    //     go_login();
+    // });
+
     //Submit register form
     $("#content").on("click", "#register_form_button", function (e) {
         e.preventDefault();
@@ -143,25 +156,48 @@ $(document).ready(function () {
         load_account_info();
     });
 
-    //My page menu
+        //Edit bio
+        $("#content").on("click", "#my_page_change_bio_btn", function (e) {
+            e.preventDefault();
+            go_edit_bio_page();
+        });
+    
+        //cancel edit bio
+        $("#content").on("click", "#cancel_edit_form_btn", function (e) {
+            e.preventDefault();
+            go_my_page();
+            load_account_info();
+        });
+    
+        //My page menu
+    
+        //My page menu: go to account
+        $("#content").on("click", "#account_info_link", function (e) {
+            e.preventDefault();
+            load_account_info();
+        });
+    
+        //My page menu: go to history
+        $("#content").on("click", "#history_link", function (e) {
+            e.preventDefault();
+            load_history();
+        });
+    
+        //My page menu: go to bookings
+        $("#content").on("click", "#bookings_link", function (e) {
+            e.preventDefault();
+            load_bookings();
+        });
+    
+        //My page menu: go to ads
+        $("#content").on("click", "#ads_link", function (e) {
+            e.preventDefault();
+            load_ads();
+        });
 
-    //My page menu: go to account
-    $("#content").on("click", "#account_info_link", function (e) {
-        e.preventDefault();
-        load_account_info();
-    });
+})
 
-    //My page menu: go to history
-    $("#content").on("click", "#history_link", function (e) {
-        e.preventDefault();
-        load_history();
-    });
 
-    //My page menu: go to bookings
-    $("#content").on("click", "#bookings_link", function (e) {
-        e.preventDefault();
-        load_bookings();
-    });
 
     //My page menu: go to ads
     $("#content").on("click", "#ads_link", function (e) {
@@ -236,6 +272,11 @@ function go_help_page() {
 //Function for going to view: About us
 function go_about_us_page() {
     $("#content").html($("#about_us_page").html());
+}
+
+//Function for going to view: Registered
+function go_registered_page() {
+    $("#content").html($("#successfully_registered_page").html());
 }
 
 //Function for going to view: Read more ad
@@ -401,7 +442,7 @@ function register_request(user) {
         type: 'POST',
         data: JSON.stringify(user),
         success: function (response) {
-            go_home();
+            go_registered_page();
         }
     })
 }
@@ -607,6 +648,7 @@ function submit_register_form() {
         password: $("#password_register").val()
     }
     register_request(user);
+    
 }
 
 function submit_edit_form() {
