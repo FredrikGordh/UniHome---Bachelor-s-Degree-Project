@@ -259,10 +259,34 @@ label {
 }
 
 #map {
-  height: 100%;
+  height: 75vh;
 }
 
 /* Klasser */
+
+.popup-bubble {
+  /* Position the bubble centred-above its parent. */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  /* Style the bubble. */
+  padding: 5px;
+  font-weight: bolder;
+  overflow-y: auto;
+  max-height: 60px;
+  color: black;
+}
+
+/* JavaScript will position this div at the bottom of the popup tip. */
+.popup-container {
+  cursor: auto;
+  height: 0;
+  position: absolute;
+  /* The max width of the info window. */
+  width: 200px;
+}
+
 
 .accomodation {
   background-color: white;
@@ -273,13 +297,24 @@ label {
 .map_text{
   position: absolute;
   top: 100px;
-  left: 100px;
+  left: 50%;
+  transform: translate(-50%,0);
   z-index: 1;
   color: black;
+  width: 100%;
 }
 
 .map_text h1{
     font-size: 80px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+@media (max-width: 991px) {
+  .map_text h1{
+    font-size: 25px;
+    text-align: center;
+}
 }
 
 .search_button {
