@@ -7,7 +7,8 @@ from flask_jwt_extended import (
     JWTManager, create_access_token, jwt_required, get_jwt_identity)
 from flask import abort
 import datetime
-import os
+import stripe
+import json
 # The imports down below handle images saved in the server.
 from flask import flash, redirect, url_for
 from werkzeug.utils import secure_filename
@@ -17,8 +18,8 @@ from flask import send_from_directory
 UPLOAD_FOLDER = './pictures'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
-
 app = Flask(__name__, static_folder='../client', static_url_path='/')
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'LuSg31rsf76nGvMVjzeqV1R0vchtnxu6XTrhrOSLtek'
@@ -32,6 +33,25 @@ bcrypt = Bcrypt(app)
 # The class user contains all information about the user.
 # Written by Jakob, Gustav, Joel & Fredrik
 
+# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/account/apikeys
+
+#BETALNING_______________________creat
+stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfFOz1e8wgFJduwU1uJCvtrspqIeelpu7RuJjZ00j0qjVnl8"
+
+def calculate_order_amount(items):
+    # Replace this constant with a calculation of the order's amount
+    # Calculate the order total on the server to prevent
+    # people from directly manipulating the amount on the client
+    return 1400
+
+# stripe.PaymentIntent.create(
+#   amount=1000,
+#   currency='usd',
+#   payment_method_types=['card'],
+#   receipt_email='jenny.rosen@example.com',
+# )
+#__________________________________
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -430,6 +450,24 @@ def types():
         type_list.append(type)
     return jsonify(type_list)
 
+#BETALNING__________________________________
+
+@app.route('/create-payment-intent', methods=['POST'])
+def create_payment():
+    try:
+        data = json.loads(request.data)
+        print("123")
+        intent = stripe.PaymentIntent.create(
+            amount=calculate_order_amount(data['items']),
+            currency='usd'
+        )
+        return jsonify({
+          'clientSecret': intent['client_secret']
+        })
+    except Exception as e:
+        return jsonify(error=str(e)), 403
+
+#___________________________________________
 
 exec(open('script.py').read())
 

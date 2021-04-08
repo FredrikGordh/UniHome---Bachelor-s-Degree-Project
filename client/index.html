@@ -13,7 +13,7 @@
 
   <title>Unihome</title>
 
-
+  
 </head>
 
 <body>
@@ -44,9 +44,7 @@
     </div>
   </nav>
 
-  
-
-  <div id="content" class="container-fluid hide-menu"></div>
+  <div id="content" class="container-fluid"></div>
 
   <!-- Footern: Vi skriver ut en lista med kontaktuppgifter i vår container-->
   <div class="footer container-fluid pt-5 pb-5 hide-menu">
@@ -578,6 +576,24 @@
 
   </script>
 
+  <!-- Payment view -->
+  <script id="payment-page" type="text/html">
+    <div class="body1">
+      <form id="payment-form" class="form1">
+        <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+        <button id="submit">
+          <div class="spinner hidden" id="spinner"></div>
+          <span id="button-text">Pay now</span>
+        </button>
+        <p id="card-error" role="alert"></p>
+        <p class="result-message hidden">
+          Payment succeeded, see the result in your
+          <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+        </p>
+      </form>
+    </div>
+  </script>
+
   <!-- Read more about the housing ad-->
   <script id="read_more_ad_page" type="text/html">
     <div id="read_more_ad_container" class="container">
@@ -601,6 +617,7 @@
     </div>
   </script>
 
+
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -612,8 +629,11 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
+  <script src="https://js.stripe.com/v3/"></script>
   <script src="index.js"></script>
   <script src="templates.js"></script>
+  <!-- Eventuellt ta bort nedanstående rad -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
   <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"></script>
 </body>
 
