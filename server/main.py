@@ -7,12 +7,22 @@ from flask_jwt_extended import (
     JWTManager, create_access_token, jwt_required, get_jwt_identity)
 from flask import abort
 import datetime
+import os
+##The imports down below handle images saved in the server.
+from flask import flash, redirect, url_for
+from werkzeug.utils import secure_filename
+from flask import send_from_directory
+
+
+UPLOAD_FOLDER = './pictures'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 
 app = Flask(__name__, static_folder='../client', static_url_path='/')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'LuSg31rsf76nGvMVjzeqV1R0vchtnxu6XTrhrOSLtek'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 jwt = JWTManager(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -92,6 +102,7 @@ class Ad(db.Model):
 
     host_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     tenant_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    image_id = db.relationship("Image", backref = 'ad')
 
     def __repr__(self):
         return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
@@ -132,11 +143,19 @@ class Attributes(db.Model):
         return dict(id=self.id, dishwasher=self.dishwasher, wifi=self.wifi,
                     washingmachine=self.washingmachine, sauna=self.sauna, bike=self.bike)
 
-# The class date is used for managing dates. Both ad and user uses the date class.
-# Written by Jakob, Gustav, Joel
 
+#Image class
+class Image(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable=False)
+    url = db.Column(db.String, nullable=False)
 
-# WILL MAKE A IMAGE/PICTURE CLASS HERE EVENTUALLY
+    def __repr__(self):
+        return '<url: {}>'.format(self.url)
+
+    def serialize(self):
+        return dict(url=self.url)
+
 
 
 ###################################################### APP.ROUTES ######################################################
@@ -310,27 +329,81 @@ def ads():
             all_ads = Ad.query.filter(*filter).order_by(
                 getattr(Ad, sort_parameter).desc()).all()
         for ad in all_ads:
+            print(ad)
             ad_list.append(ad.serialize())
         return jsonify(ad_list)
 
 
 # /ad/create has the method POST, it is used to make an ad that is connected to the specifik user that created it.
 # Written by Jakob, Gustav, Joel & Fredrik
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
+
 @app.route('/ad/create', methods=['POST'])
 @jwt_required()
 def create_ad():
+    print('test')
     if request.method == 'POST':
         current_user_id = get_jwt_identity()
-        newad = request.get_json(force=True)
-        newadDB = Ad(title=newad.get('title'), description=newad.get(
-            'description'), host_id=(current_user_id), startdate=newad.get('start'), enddate=newad.get('end'))
+        newad = request.form
+
+        newadDB = Ad(title=newad.get('title'), description=newad.get('description'),
+            neighbourhood=newad.get('neighbourhood'), studentcity="Linköping",
+            streetaddress=newad.get('streetaddress'), streetnumber=newad.get('streetnumber'), city=newad.get('city'),
+            postalcode=newad.get('postalcode'), country="Sverige", host_id=(current_user_id),
+            startdate=datetime.datetime.strptime(newad.get('startdate'),'%Y-%m-%d').date(),
+            enddate=datetime.datetime.strptime(newad.get('enddate'),'%Y-%m-%d').date(), squaremetres=newad.get('squaremetres'),
+            price=newad.get('price'), beds=newad.get('beds'), accommodationtype=newad.get('accommodationtype'))
+            
         db.session.add(newadDB)
-        db.session.commit()
-        attributesDB = Attributes(ad_id=newadDB.id)
-        db.session.add(attributesDB)
+        db.session.flush()
         db.session.commit()
 
+ 
+        
+        if newad.get('attributes'):
+            list = newad.get('attributes').split(' ') #list = ['bike', 'wifi'];
+            attributesDB = Attributes()
+            setattr(attributesDB, 'ad_id', newadDB.id)
+            for x in list:
+                setattr(attributesDB, x, True)
+
+            db.session.add(attributesDB)
+            db.session.flush()
+            db.session.commit()
+
+        file = request.files.get('file')
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            imageDB = Image(ad_id = newadDB.id, url = url_for('uploaded_file', filename=filename))
+            db.session.add(imageDB)
+            db.session.flush()
+            db.session.commit()
+
+        if file and not allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            
+            imageDB = Image(ad_id = newadDB.id, url = url_for('uploaded_file', filename=filename))
+            db.session.add(imageDB)
+            db.session.flush()
+            db.session.commit()
+
         return "success", 200
+
+#Löser så att man kan lägga till bilder
+#@app.route('/ad/addimage/<int:ad_id>', methods = ['POST'])
+#@jwt_required
+#def addimage(ad):
+    #newImage = Image(ad_id = ad.id, url= ...)
 
 
 # By Abbetabbe

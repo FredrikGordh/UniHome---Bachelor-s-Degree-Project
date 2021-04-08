@@ -1,6 +1,6 @@
 //Enum för att översätta attribut vid sökning
 const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Attribut": "Attribut" });
-
+var saved_input;
 //-------------------------JQuery events-------------------------
 
 $(document).ready(function () {
@@ -137,6 +137,14 @@ $(document).ready(function () {
         go_search();
     });
 
+
+    //Go to create new ad page
+    $("#content").on("click", "#new_ad_button", function (e) {
+        e.preventDefault();
+        go_new_ad_page();
+        var input = document.getElementById( 'upload' );
+        input.addEventListener( 'change', showFileName );
+
     //Reserve ad
     $("#content").on("click", "#reservation_button", function (e) {
         e.preventDefault();
@@ -219,6 +227,16 @@ $(document).ready(function () {
         load_ads();
     });
 
+
+    //Submit form create new ad
+    $("#content").on("click", "#create_new_ad", function (e) {
+        e.preventDefault();
+        submitAdForm();
+        
+        
+    });
+
+    
 })
 
 //-------------------------Functions-------------------------
@@ -295,6 +313,11 @@ function go_edit_bio_page() {
     $("#phone_edit").val(user.telephone)
     $("#email_edit").val(user.email)
     $("#bio_edit").val(user.bio)
+
+}
+
+function go_confirmation_page(){
+
 }
 
 //Load account info in my page
@@ -334,6 +357,42 @@ function load_bookings() {
 function logout() {
     sessionStorage.removeItem('auth');
     go_home();
+}
+
+
+//Function for showing the uploaded picture
+function readURL(input) {
+
+saved_input = input.files[0];
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#imageResult')
+                .attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$(function () {
+    $('#upload').on('change', function () {
+        readURL(input);
+    });
+});
+
+//Function for showing the uploaded image name. 
+function showFileName( event ) {
+  var infoArea = document.getElementById( 'upload-label' );
+  var input = event.srcElement;
+  var fileName = input.files[0].name;
+  print
+  infoArea.textContent = 'Filnamn: ' + fileName;
+}
+
+function go_new_ad_page(){
+    $("#content").html($("#new_ad_page").html()); 
 }
 
 
@@ -713,3 +772,72 @@ function update_search() {
 
     load_ads_request(search, sort, sort_param);
 }
+
+
+function submitAdForm(){
+    var formData = new FormData();
+
+    formData.append("title", $("#titleInput_id").val());
+    formData.append("description", $("#descriptionInput_id").val());
+    formData.append("neighbourhood", $("#areaInput_id").val());
+
+    formData.append("streetadress", $("#create_ad_street_id").val());
+    formData.append("streetnumber", $("#create_ad_streetnumber_id").val());
+    formData.append("postalcode", $("#create_ad_postalcode_id").val());
+    formData.append("city", $("#create_ad_city_id").val());
+
+    formData.append("startdate", $("#ad_start_id").val());
+    formData.append("enddate", $("#ad_end_id").val());
+
+    formData.append("squaremetres", $("#create_ad_kvm_id").val());
+    formData.append("price", $("#create_ad_price_id").val());
+    formData.append("beds", $("#create_ad_beds_id").val());
+    formData.append("accommodationtype", $("#accomodation_Type_Select_id").val());
+
+
+
+    var bike= $("#create_ad_bike_id").prop("checked");
+    var dishwasher= $("#create_ad_dishwasher_id").prop("checked");
+    var wifi= $("#create_ad_wifi_id").prop("checked");
+    var sauna= $("#create_ad_sauna_id").prop("checked");
+    var washingmachine= $("#create_ad_washingmachine_id").prop("checked");
+
+    var attributes = "";
+
+    if (bike != false){
+        attributes=attributes+"'bike' ";
+    }
+    if (dishwasher != false){
+        attributes=attributes+"''dishwasher' ";
+    }
+    if (wifi != false){
+        attributes=attributes+"'wifi' ";
+    }
+    if (sauna != false){
+        attributes=attributes+"'sauna' ";
+    }
+    if (washingmachine != false){
+        attributes=attributes+"'washingmachine' ";
+    }
+
+    formData.append("attributes", attributes);
+
+    
+    formData.append("file", saved_input);
+    saved_input = null;
+    
+    $.ajax({
+        url: host + '/ad/create',
+        type: 'POST',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        data: formData,
+        processData: false,
+        contentType: false,         
+            success: function(successMessage){
+               go_my_page();
+            } 
+    })
+
+}
+
+
