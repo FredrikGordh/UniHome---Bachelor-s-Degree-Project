@@ -27,44 +27,44 @@ bcrypt = Bcrypt(app)
 stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfFOz1e8wgFJduwU1uJCvtrspqIeelpu7RuJjZ00j0qjVnl8"
 
 
-#! /usr/bin/env python3.6
-"""
-Python 3.6 or newer required.
-"""
-import json
-import os
-import stripe
-# This is a sample test API key. Sign in to see examples pre-filled with your key.
-stripe.api_key = "sk_test_4eC39HqLyjWDarjtT1zdp7dc"
+# #! /usr/bin/env python3.6
+# """
+# Python 3.6 or newer required.
+# """
+# import json
+# import os
+# import stripe
+# # This is a sample test API key. Sign in to see examples pre-filled with your key.
+# stripe.api_key = "sk_test_4eC39HqLyjWDarjtT1zdp7dc"
 
-from flask import Flask, render_template, jsonify, request
-
-
-app = Flask(__name__, static_folder=".",
-            static_url_path="", template_folder=".")
+# from flask import Flask, render_template, jsonify, request
 
 
-def calculate_order_amount(items):
-    # Replace this constant with a calculation of the order's amount
-    # Calculate the order total on the server to prevent
-    # people from directly manipulating the amount on the client
-    return 1400
+# app = Flask(__name__, static_folder=".",
+#             static_url_path="", template_folder=".")
 
 
-@app.route('/create-payment-intent', methods=['POST'])
-def create_payment():
-    try:
-        data = json.loads(request.data)
-        intent = stripe.PaymentIntent.create(
-            amount=calculate_order_amount(data['items']),
-            currency='usd'
-        )
+# def calculate_order_amount(items):
+#     # Replace this constant with a calculation of the order's amount
+#     # Calculate the order total on the server to prevent
+#     # people from directly manipulating the amount on the client
+#     return 1400
 
-        return jsonify({
-          'clientSecret': intent['client_secret']
-        })
-    except Exception as e:
-        return jsonify(error=str(e)), 403
+
+# @app.route('/create-payment-intent', methods=['POST'])
+# def create_payment():
+#     try:
+#         data = json.loads(request.data)
+#         intent = stripe.PaymentIntent.create(
+#             amount=calculate_order_amount(data['items']),
+#             currency='usd'
+#         )
+
+#         return jsonify({
+#           'clientSecret': intent['client_secret']
+#         })
+#     except Exception as e:
+#         return jsonify(error=str(e)), 403
 
 stripe.PaymentIntent.create(
   amount=1000,
