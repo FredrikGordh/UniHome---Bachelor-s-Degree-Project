@@ -48,7 +48,8 @@ label {
   background-color: red;
 }
 #home-areas {
-  background-color: pink;
+  height: 100vh;
+  position: relative;
 }
 
 #home-types {
@@ -257,12 +258,28 @@ label {
   margin-bottom: 100px;
 }
 
+#map {
+  height: 100%;
+}
+
 /* Klasser */
 
 .accomodation {
   background-color: white;
   border-radius: 20px;
   color: black;
+}
+
+.map_text{
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  z-index: 1;
+  color: black;
+}
+
+.map_text h1{
+    font-size: 80px;
 }
 
 .search_button {

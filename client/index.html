@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -127,14 +127,10 @@
           </div>
         </div>
       </div>
-      <div id="home-now-hot" class="section">
-        <h1> Hetaste boendena/Bäst reviews</h1>
-      </div>
       <div id="home-areas" class="section">
-        <h1>Områden</h1>
-      </div>
-      <div id="home-types" class="section">
-        <h1>Typer av boenden</h1>
+        <div class="map_text"><h1>Våra bostadsområden</h1></div>
+        <div id="map"></div>
+
       </div>
       <div id="home-reviews" class="section">
         <h1>Reviews</h1>
@@ -444,6 +440,8 @@
   <script src="index.js"></script>
   <script src="templates.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"></script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs">
+  </script>
 </body>
 
 </html>

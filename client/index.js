@@ -68,27 +68,27 @@ $(document).ready(function () {
         e.preventDefault();
         submit_register_form();
     });
-    
+
     //Submit register form by pressing ENTER
-    $("#content").keyup("#password_register", function(e) { 
-        if (e.keyCode === 13) { 
+    $("#content").keyup("#password_register", function (e) {
+        if (e.keyCode === 13) {
             submit_register_form();
-        } 
-    }); 
+        }
+    });
 
 
-     //Submit edit form
-     $("#content").on("click", "#edit_form_button", function (e) {
+    //Submit edit form
+    $("#content").on("click", "#edit_form_button", function (e) {
         e.preventDefault();
         submit_edit_form();
     });
 
     //Submit register form by pressing ENTER
-    $("#content").keyup("#password_register", function(e) { 
-        if (e.keyCode === 13) { 
+    $("#content").keyup("#password_register", function (e) {
+        if (e.keyCode === 13) {
             submit_register_form();
-        } 
-    }); 
+        }
+    });
 
     //Submit login form
     $("#content").on("click", "#login_form_button", function (e) {
@@ -97,11 +97,11 @@ $(document).ready(function () {
     });
 
     //Submit login form by pressing ENTER
-    $("#content").keyup("#password_login", function(e) { 
-        if (e.keyCode === 13) { 
+    $("#content").keyup("#password_login", function (e) {
+        if (e.keyCode === 13) {
             submit_login_form();
-        } 
-    }); 
+        }
+    });
 
     $(".hide-menu").click(function (e) {
         $("#close-menu").prop("checked", false);
@@ -173,6 +173,46 @@ function go_home() {
     $("#content").html($("#home_page").html());
     load_home_search_dropdowns();
     load_burger();
+    let map;
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 58.41241681113258, lng: 15.621244664416542 },
+        zoom: 13,
+        disableDefaultUI: true,
+    });
+    const citymap = {
+        ryd: {
+            center: { lat: 58.41320706527976, lng: 15.566379297129107 },
+            size: 50,
+        },
+        valla: {
+            center: { lat: 58.405844557880265, lng: 15.5949486961521 },
+            size: 50,
+        },
+        vasastaden: {
+            center: { lat: 58.418598933014735, lng: 15.612839650705164 },
+            size: 50,
+        },
+        gotfridsberg: {
+            center: { lat: 58.414188119723406, lng: 15.596067756828468 },
+            size: 50,
+        },
+        lambohov: {
+            center: { lat: 58.382892422235216, lng: 15.561087706177256 },
+            size: 50,
+        },
+    };
+    for (const city in citymap) {
+        const cityCircle = new google.maps.Circle({
+            strokeColor: "#6be0e0",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#AFEEEE",
+            fillOpacity: 0.35,
+            map,
+            center: citymap[city].center,
+            radius: Math.sqrt(citymap[city].size) * 100,
+        });
+    }
 }
 
 //Function for going to view: Register_page
@@ -200,7 +240,7 @@ function go_my_page() {
     $("#content").html($("#my_page").html());
     var name = JSON.parse(sessionStorage.getItem('auth')).user.name
     $("#my_page_greeting").html("Hej " + name + "!");
-    
+
 }
 
 //Function for going to view: Contact
@@ -243,9 +283,9 @@ function load_account_info() {
     var user = JSON.parse(sessionStorage.getItem('auth')).user
     $("#my_page_name").html("Fullt namn: " + user.name);
     $("#my_page_email_and_tel").html("Tel: " + user.telephone + " <br>Email: " + user.email);
-    if (user.bio){
-    $("#my_page_bio_text").css('color', 'white');
-    $("#my_page_bio_text").html(user.bio);
+    if (user.bio) {
+        $("#my_page_bio_text").css('color', 'white');
+        $("#my_page_bio_text").html(user.bio);
     }
     else {
         $("#my_page_bio_text").css('color', 'red');
@@ -253,6 +293,8 @@ function load_account_info() {
     }
 
 }
+
+
 //Load account info in my page
 function load_history() {
     $("#my_page_content").html($("#my_page_history").html());
@@ -336,7 +378,7 @@ function register_request(user) {
 function edit_user_request(user) {
     $.ajax({
         url: host + '/user/edit',
-        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token }, 
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'PUT',
         data: JSON.stringify(user),
         success: function (response) {
@@ -349,8 +391,8 @@ function edit_user_request(user) {
             load_account_info();
         }
     })
-    
- }
+
+}
 
 
 //Function for making a request for all unique areas in database
