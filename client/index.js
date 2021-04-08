@@ -137,6 +137,18 @@ $(document).ready(function () {
         go_search();
     });
 
+    //Edit bio
+    $("#content").on("click", "#my_page_change_bio_btn", function (e) {
+        e.preventDefault();
+        go_edit_bio_page();
+    });
+
+    //cancel edit bio
+    $("#content").on("click", "#cancel_edit_form_btn", function (e) {
+        e.preventDefault();
+        go_my_page();
+        load_account_info();
+    });
 
         //Edit bio
         $("#content").on("click", "#my_page_change_bio_btn", function (e) {
