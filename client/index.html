@@ -50,9 +50,9 @@
 
 
   <div id="content" class="container-fluid"></div>
- <!-- BETALNING-->
 
- <div class="body1">
+  <!-- BETALNING-->
+  <div class="body1">
     <form id="payment-form" class="form1">
       <div id="card-element"><!--Stripe.js injects the Card Element--></div>
       <button id="submit">
@@ -66,6 +66,7 @@
       </p>
     </form>
   </div>
+
 
   <!-- Footern: Vi skriver ut en lista med kontaktuppgifter i vår container-->
   <div class="footer container-fluid pt-5 pb-5">
@@ -313,6 +314,25 @@
   <script id="help_page" type="text/html">
     <div id="help_page_container" class="container-fluid">
       
+    </div>
+  </script>
+
+  <!-- Payment view -->
+  <script id="payment-page" type="text/html">
+       <!-- BETALNING-->
+    <div class="body1">
+      <form id="payment-form" class="form1">
+        <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+        <button id="submit">
+          <div class="spinner hidden" id="spinner"></div>
+          <span id="button-text">Pay now</span>
+        </button>
+        <p id="card-error" role="alert"></p>
+        <p class="result-message hidden">
+          Payment succeeded, see the result in your
+          <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+        </p>
+      </form>
     </div>
   </script>
 
