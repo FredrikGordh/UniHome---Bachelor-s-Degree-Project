@@ -18,11 +18,9 @@ db.session.commit()
 user2 = User(name="albin", email="albin@google.com",
              telephone="0152-15215", gender="male", birthdate=datetime.date(2000, 1, 1))
 User.set_password(user2, "albin")
-db.session.add(user2)
-db.session.commit()
-
-user3 = User(name="ines", email="ines@google.com",
-             telephone="112", gender="female", birthdate=datetime.date(2000, 1, 1))
+dbpython script.py
+You have now cleared everything that was in the database and created 5 users and 4 ads
+(venv) Jakobs-MacBook-Pro-2:server jakobfogelberg$ .date(2000, 1, 1))
 User.set_password(user3, "ines")
 db.session.add(user3)
 db.session.commit()

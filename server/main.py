@@ -11,9 +11,10 @@ import os
 ##The imports down below handle images saved in the server.
 from flask import flash, redirect, url_for
 from werkzeug.utils import secure_filename
+from flask import send_from_directory
 
 
-UPLOAD_FOLDER = '/pictures'
+UPLOAD_FOLDER = './pictures'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__, static_folder='../client', static_url_path='/')
@@ -141,8 +142,9 @@ class Attributes(db.Model):
 
 #Image class
 class Image(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
     ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable=False)
-    url = db.Column(db.String, nullable=False, primary_key=True)
+    url = db.Column(db.String, nullable=False)
 
     def __repr__(self):
         return '<url: {}>'.format(self.url)
@@ -279,13 +281,23 @@ def ads():
 
 # /ad/create has the method POST, it is used to make an ad that is connected to the specifik user that created it.
 # Written by Jakob, Gustav, Joel & Fredrik
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
+
 @app.route('/ad/create', methods=['POST'])
 @jwt_required()
 def create_ad():
     if request.method == 'POST':
         current_user_id = get_jwt_identity()
-        newad = request.get_json(force=True)
-        print(newad.get('startdate'))
+        newad = request.form
+
         newadDB = Ad(title=newad.get('title'), description=newad.get('description'),
             neighbourhood=newad.get('neighbourhood'), studentcity=newad.get('studentcity'),
             streetaddress=newad.get('streetaddress'), streetnumber=newad.get('streetnumber'), city=newad.get('city'),
@@ -308,6 +320,16 @@ def create_ad():
         db.session.add(attributesDB)
         db.session.flush()
         db.session.commit()
+
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            imageDB = Image(ad_id = newadDB.id, url = url_for('uploaded_file', filename=filename))
+            db.session.add(imageDB)
+            db.session.flush()
+            db.session.commit()
 
         return "success", 200
 
