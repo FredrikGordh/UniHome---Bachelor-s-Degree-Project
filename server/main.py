@@ -273,6 +273,7 @@ def ads():
             all_ads = Ad.query.filter(*filter).order_by(
                 getattr(Ad, sort_parameter).desc()).all()
         for ad in all_ads:
+            print(ad)
             ad_list.append(ad.serialize())
         return jsonify(ad_list)
 
@@ -282,14 +283,15 @@ def ads():
 @app.route('/ad/create', methods=['POST'])
 @jwt_required()
 def create_ad():
+    print('test')
     if request.method == 'POST':
         current_user_id = get_jwt_identity()
         newad = request.get_json(force=True)
         print(newad.get('startdate'))
         newadDB = Ad(title=newad.get('title'), description=newad.get('description'),
-            neighbourhood=newad.get('neighbourhood'), studentcity=newad.get('studentcity'),
+            neighbourhood=newad.get('neighbourhood'), studentcity="Linköping",
             streetaddress=newad.get('streetaddress'), streetnumber=newad.get('streetnumber'), city=newad.get('city'),
-            postalcode=newad.get('postalcode'), country=newad.get('country'), host_id=(current_user_id),
+            postalcode=newad.get('postalcode'), country="Sverige", host_id=(current_user_id),
             startdate=datetime.datetime.strptime(newad.get('startdate'),'%Y-%m-%d').date(),
             enddate=datetime.datetime.strptime(newad.get('enddate'),'%Y-%m-%d').date(), squaremetres=newad.get('squaremetres'),
             price=newad.get('price'), beds=newad.get('beds'), accommodationtype=newad.get('accommodationtype'))
@@ -298,16 +300,18 @@ def create_ad():
         db.session.flush()
         db.session.commit()
 
-        list = newad.get('attributes').split(' ') #list = ['bike', 'wifi'];
-    
-        attributesDB = Attributes()
-        setattr(attributesDB, 'ad_id', newadDB.id)
-        for x in list:
-            setattr(attributesDB, x, True)
+ 
+        
+        if newad.get('attributes'):
+            list = newad.get('attributes').split(' ') #list = ['bike', 'wifi'];
+            attributesDB = Attributes()
+            setattr(attributesDB, 'ad_id', newadDB.id)
+            for x in list:
+                setattr(attributesDB, x, True)
 
-        db.session.add(attributesDB)
-        db.session.flush()
-        db.session.commit()
+            db.session.add(attributesDB)
+            db.session.flush()
+            db.session.commit()
 
         return "success", 200
 
