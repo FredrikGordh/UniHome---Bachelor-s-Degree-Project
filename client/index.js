@@ -1,6 +1,6 @@
 //Enum för att översätta attribut vid sökning
 const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Attribut": "Attribut" });
-
+var saved_input;
 //-------------------------JQuery events-------------------------
 
 $(document).ready(function () {
@@ -174,7 +174,9 @@ $(document).ready(function () {
     //Submit form create new ad
     $("#content").on("click", "#create_new_ad", function (e) {
         e.preventDefault();
-        submitAdForm()
+        submitAdForm();
+        
+        
     });
 
     
@@ -295,6 +297,9 @@ function logout() {
 
 //Function for showing the uploaded picture
 function readURL(input) {
+
+saved_input = input.files[0];
+
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
@@ -324,7 +329,6 @@ function showFileName( event ) {
 function go_new_ad_page(){
     $("#content").html($("#new_ad_page").html()); 
 }
-
 
 
 //-------------------------REQUESTS-------------------------
@@ -633,63 +637,68 @@ function update_search() {
 
 
 function submitAdForm(){
+    var formData = new FormData();
 
-    var title= $("#titleInput_id").val();
-    var description= $("#descriptionInput_id").val();
-    var area= $("#areaInput_id").val(); 
+    formData.append("title", $("#titleInput_id").val());
+    formData.append("description", $("#descriptionInput_id").val());
+    formData.append("neighbourhood", $("#areaInput_id").val());
 
-    var street= $("#create_ad_street_id").val();
-    var streetNumber= $("#create_ad_streetnumber_id").val();
-    var postalCode= $("#create_ad_postalcode_id").val();
-    var city= $("#create_ad_city_id").val();
+    formData.append("streetadress", $("#create_ad_street_id").val());
+    formData.append("streetnumber", $("#create_ad_streetnumber_id").val());
+    formData.append("postalcode", $("#create_ad_postalcode_id").val());
+    formData.append("city", $("#create_ad_city_id").val());
 
-    var adStart= $("#ad_start_id").val();
-    var adEnd= $("#ad_end_id").val();
+    formData.append("startdate", $("#ad_start_id").val());
+    formData.append("enddate", $("#ad_end_id").val());
 
-    var kvm= $("#create_ad_kvm_id").val();
-    var price= $("#create_ad_price_id").val();
-    var beds= $("#create_ad_beds_id").val();
-    var accomodationType= $("#accomodation_Type_Select_id").val();
+    formData.append("squaremetres", $("#create_ad_kvm_id").val());
+    formData.append("price", $("#create_ad_price_id").val());
+    formData.append("beds", $("#create_ad_beds_id").val());
+    formData.append("accommodationtype", $("#accomodation_Type_Select_id").val());
 
-    var bike= $("#create_ad_bike_id").val();
-    var dishwasher= $("#create_ad_dishwasher_id").val();
-    var wifi= $("#create_ad_wifi_id").val();
-    var sauna= $("#create_ad_sauna_id").val();
-    var washingmachine= $("#create_ad_washingmachine_id").val();
+
+
+    var bike= $("#create_ad_bike_id").prop("checked");
+    var dishwasher= $("#create_ad_dishwasher_id").prop("checked");
+    var wifi= $("#create_ad_wifi_id").prop("checked");
+    var sauna= $("#create_ad_sauna_id").prop("checked");
+    var washingmachine= $("#create_ad_washingmachine_id").prop("checked");
 
     var attributes = "";
 
     if (bike != false){
-        attributes=attributes+"bike ";
+        attributes=attributes+"'bike' ";
     }
     if (dishwasher != false){
-        attributes=attributes+"dishwasher ";
+        attributes=attributes+"''dishwasher' ";
     }
     if (wifi != false){
-        attributes=attributes+"wifi ";
+        attributes=attributes+"'wifi' ";
     }
     if (sauna != false){
-        attributes=attributes+"sauna ";
+        attributes=attributes+"'sauna' ";
     }
     if (washingmachine != false){
-        attributes=attributes+"washingmachine ";
+        attributes=attributes+"'washingmachine' ";
     }
 
-    console.log(attributes);
+    formData.append("attributes", attributes);
 
+    
+    formData.append("file", saved_input);
+    saved_input = null;
+    
     $.ajax({
         url: host + '/ad/create',
         type: 'POST',
         headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
-        data: JSON.stringify({title: title, description: description, neighbourhood: area, streetaddress: street, streetnumber: streetNumber, city: city, postalcode: postalCode, startdate: adStart, enddate: adEnd, squaremetres: kvm, price: price, beds: beds, accommodationtype: accomodationType, attributes:attributes}),         
+        data: formData,
+        processData: false,
+        contentType: false,         
             success: function(successMessage){
-               console.log(successMessage)
-                   console.log("Hej");
+               go_my_page();
             } 
     })
-
-    go_my_page();
-
 
 }
 

@@ -325,7 +325,7 @@ def create_ad():
             db.session.flush()
             db.session.commit()
 
-        file = request.files['file']
+        file = request.files.get('file')
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -334,6 +334,7 @@ def create_ad():
             db.session.add(imageDB)
             db.session.flush()
             db.session.commit()
+            
 
         return "success", 200
 
