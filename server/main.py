@@ -8,8 +8,10 @@ from flask_jwt_extended import (
 from flask import abort
 import datetime
 import stripe
+import json
 
 app = Flask(__name__, static_folder='../client', static_url_path='/')
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'LuSg31rsf76nGvMVjzeqV1R0vchtnxu6XTrhrOSLtek'
@@ -25,7 +27,7 @@ bcrypt = Bcrypt(app)
 # Set your secret key. Remember to switch to your live secret key in production.
 # See your keys here: https://dashboard.stripe.com/account/apikeys
 
-#BETALNING_______________________
+#BETALNING_______________________creat
 stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfFOz1e8wgFJduwU1uJCvtrspqIeelpu7RuJjZ00j0qjVnl8"
 
 def calculate_order_amount(items):
@@ -33,7 +35,6 @@ def calculate_order_amount(items):
     # Calculate the order total on the server to prevent
     # people from directly manipulating the amount on the client
     return 1400
-
 
 # stripe.PaymentIntent.create(
 #   amount=1000,
@@ -302,6 +303,7 @@ def types():
 def create_payment():
     try:
         data = json.loads(request.data)
+        print("123")
         intent = stripe.PaymentIntent.create(
             amount=calculate_order_amount(data['items']),
             currency='usd'

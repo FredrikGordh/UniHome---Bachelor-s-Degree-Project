@@ -404,7 +404,8 @@ var purchase = {
 
 // Disable the button until we have Stripe set up on the page
 document.querySelector("button").disabled = true;
-fetch("/create-payment-intent", {
+
+fetch('/create-payment-intent', {
   method: "POST",
   headers: {
     "Content-Type": "application/json"
@@ -432,9 +433,16 @@ fetch("/create-payment-intent", {
         iconColor: "#fa755a"
       }
     };
+
     var card = elements.create("card", { style: style });
     // Stripe injects an iframe into the DOM
     card.mount("#card-element");
+
+    card.on("change", function (event) {
+        // Disable the Pay button if there are no card details in the Element
+        document.querySelector("button").disabled = event.empty;
+        document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+    });
 
     var form = document.getElementById("payment-form");
     form.addEventListener("submit", function(event) {
@@ -466,77 +474,30 @@ var payWithCard = function(stripe, card, clientSecret) {
       });
 };
 
-// ----- funktionalitet för betalningselementet -----//
-// (function() {
-//     'use strict';
-  
-//     var elements = stripe.elements({
-//       fonts: [
-//         {
-//           cssSrc: 'https://fonts.googleapis.com/css?family=Quicksand',
-//         },
-//       ],
-//       // Stripe's examples are localized to specific languages, but if
-//       // you wish to have Elements automatically detect your user's locale,
-//       // use `locale: 'auto'` instead.
-//       locale: window.__exampleLocale,
-//     });
-  
-//     var elementStyles = {
-//       base: {
-//         color: '#fff',
-//         fontWeight: 600,
-//         fontFamily: 'Quicksand, Open Sans, Segoe UI, sans-serif',
-//         fontSize: '16px',
-//         fontSmoothing: 'antialiased',
-  
-//         ':focus': {
-//           color: '#424770',
-//         },
-  
-//         '::placeholder': {
-//           color: '#9BACC8',
-//         },
-  
-//         ':focus::placeholder': {
-//           color: '#CFD7DF',
-//         },
-//       },
-//       invalid: {
-//         color: '#fff',
-//         ':focus': {
-//           color: '#FA755A',
-//         },
-//         '::placeholder': {
-//           color: '#FFCCA5',
-//         },
-//       },
-//     };
-  
-//     var elementClasses = {
-//       focus: 'focus',
-//       empty: 'empty',
-//       invalid: 'invalid',
-//     };
-  
-//     var cardNumber = elements.create('cardNumber', {
-//       style: elementStyles,
-//       classes: elementClasses,
-//     });
-//     cardNumber.mount('#example3-card-number');
-  
-//     var cardExpiry = elements.create('cardExpiry', {
-//       style: elementStyles,
-//       classes: elementClasses,
-//     });
-//     cardExpiry.mount('#example3-card-expiry');
-  
-//     var cardCvc = elements.create('cardCvc', {
-//       style: elementStyles,
-//       classes: elementClasses,
-//     });
-//     cardCvc.mount('#example3-card-cvc');
-  
-//     registerElements([cardNumber, cardExpiry, cardCvc], 'example3');
-//   })();
-  
+  /* ------- UI helpers ------- */
+// Shows a success message when the payment is complete
+var orderComplete = function(paymentIntentId) {
+    loading(false);
+    document
+      .querySelector(".result-message a")
+      .setAttribute(
+        "href",
+        "https://dashboard.stripe.com/test/payments/" + paymentIntentId
+      );
+    document.querySelector(".result-message").classList.remove("hidden");
+    document.querySelector("button").disabled = true;
+  };
+
+// Show a spinner on payment submission
+var loading = function(isLoading) {
+    if (isLoading) {
+      // Disable the button and show a spinner
+      document.querySelector("button").disabled = true;
+      document.querySelector("#spinner").classList.remove("hidden");
+      document.querySelector("#button-text").classList.add("hidden");
+    } else {
+      document.querySelector("button").disabled = false;
+      document.querySelector("#spinner").classList.add("hidden");
+      document.querySelector("#button-text").classList.remove("hidden");
+    }
+  };
