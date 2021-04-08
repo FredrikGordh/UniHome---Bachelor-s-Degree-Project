@@ -392,10 +392,10 @@ function load_read_more(ad_id) {
         type: 'GET',
         success: function (ad) {
             $("#read_more_ad_title").html(ad.title);
-            $("#read_more_ad_bio").html(ad.bio);
-            $("#read_more_ad_neighbourhood").html(ad.neighbourhood);
-            $("#read_more_ad_studentcity").html(ad.studentcity);
-            $("#read_more_ad_address").html(ad.address);
+            $("#read_more_ad_description").html(ad.description);
+            $("#read_more_ad_neighbourhood").html(ad.neighbourhood + ", " + ad.studentcity)
+            // $("#read_more_ad_studentcity").html(ad.studentcity);
+            $("#read_more_ad_streetaddress").html(ad.streetaddress);
             $("#read_more_ad_city").html(ad.ciy);
             $("#read_more_ad_postalcode").html(ad.postalcode);
             $("#read_more_ad_startdate").html(ad.startdate);

@@ -273,6 +273,14 @@ label {
   border-radius: 70px;
 }
 
+.read_more_description{
+  background-color: white;
+  border-radius: 20px;
+  color: black;   
+}
+
+
+
 .footer{
   background-color: black;
   color:white;
