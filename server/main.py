@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, json
 from flask_sqlalchemy import SQLAlchemy
 from flask import jsonify
 from flask import request
@@ -7,6 +7,7 @@ from flask_jwt_extended import (
     JWTManager, create_access_token, jwt_required, get_jwt_identity)
 from flask import abort
 import datetime
+
 
 app = Flask(__name__, static_folder='../client', static_url_path='/')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -93,9 +94,9 @@ class Ad(db.Model):
     tenant_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
     def __repr__(self):
-        return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
-                                                                       self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode,
-                                                                       self.country, self.squaremetres, self.price, self.beds, self.accommodationtype)
+        return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
+                                                                                   self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode,
+                                                                                   self.country, self.squaremetres, self.price, self.beds, self.accommodationtype, self.reserved, self.booked, self.paid, self.tenant_id)
 
     def serialize(self):
         return dict(id=self.id, title=self.title, description=self.description, neighbourhood=self.neighbourhood,
@@ -105,6 +106,9 @@ class Ad(db.Model):
                         self.host_id).serialize(),
                     startdate=self.startdate,
                     enddate=self.enddate,
+                    reserved=self.reserved,
+                    booked=self.booked,
+                    paid=self.paid,
                     attributes=Attributes.query.filter_by(ad_id=self.id).first().serialize())
 
 
@@ -160,26 +164,6 @@ def signup():
     else:
         return "E-mail already in use", 409
 
-@app.route('/user/edit', methods=['PUT'])
-@jwt_required()
-def edit_user():
-    edituser = request.get_json(force=True)
-    editable_user = User.query.filter_by(id = get_jwt_identity()).first()
-  #  print(editable_user.get('name'))
-    if edituser.get('name') != None:
-        editable_user.name = edituser.get('name')
-    if edituser.get('email') != None:
-        editable_user.email = edituser.get('email')
-    if edituser.get('telephone') != None:
-        editable_user.telephone = edituser.get('telephone')
-    if edituser.get('gender') != None:
-        editable_user.gender = edituser.get('gender')
-    if edituser.get('bio') != None:
-        editable_user.bio = edituser.get('bio')
-    db.session.commit()
-    return "Changed"
-
-
 
 # /user/login has the method POST that is used when you want to log in with a user.
 # Written by Jakob, Gustav, Joel
@@ -197,6 +181,31 @@ def login():
             abort(401)
     else:
         abort(401)
+
+
+@app.route('/user/ads', methods=['GET'])
+@jwt_required()
+def my_ads():
+    current_user_id = get_jwt_identity()
+    if request.method == 'GET':
+        all_ads = Ad.query.filter(Ad.host_id == current_user_id).all()
+        ad_list = []
+        for ad in all_ads:
+            ad_list.append(ad.serialize())
+        return jsonify(ad_list)
+
+
+@app.route('/user/bookings', methods=['GET'])
+@jwt_required()
+def my_bookings():
+    current_user_id = get_jwt_identity()
+    if request.method == 'GET':
+        all_ads = Ad.query.filter(
+            Ad.tenant_id == current_user_id, Ad.booked == True).all()
+        ad_list = []
+        for ad in all_ads:
+            ad_list.append(ad.serialize())
+        return jsonify(ad_list)
 
 
 # /users has the method GET that is used when you want to retrieve all the users that are in the database. Not sure if we actually need it.
@@ -222,6 +231,50 @@ def list_ad(ad_id):
         return "NYI"
 
 
+@app.route('/ad/<int:ad_id>/reserved', methods=['PUT'])
+def set_reserved(ad_id):
+    if request.method == 'PUT':
+        reserved = request.get_json(force=True)
+        current_ad = Ad.query.get_or_404(ad_id)
+        current_ad.reserved = reserved
+        db.session.commit()
+        return "success", 200
+
+
+@app.route('/ad/<int:ad_id>/paid', methods=['PUT'])
+def set_paid(ad_id):
+    if request.method == 'PUT':
+        paid = request.get_json(force=True)
+        current_ad = Ad.query.get_or_404(ad_id)
+        current_ad.paid = paid
+        db.session.commit()
+        return "success", 200
+
+
+@app.route('/ad/<int:ad_id>/booked', methods=['PUT'])
+def set_booked(ad_id):
+    if request.method == 'PUT':
+        booked = request.get_json(force=True)
+        current_ad = Ad.query.get_or_404(ad_id)
+        current_ad.booked = booked
+        db.session.commit()
+        return "success", 200
+
+
+@app.route('/ad/<int:ad_id>/tenant', methods=['PUT', 'GET'])
+@jwt_required()
+def tenant(ad_id):
+    if request.method == 'PUT':
+        tenant_id = get_jwt_identity()
+        current_ad = Ad.query.get_or_404(ad_id)
+        current_ad.tenant_id = tenant_id
+        db.session.commit()
+        return "success", 200
+    if request.method == 'GET':
+        current_ad = Ad.query.get_or_404(ad_id)
+        return jsonify(User.query.get_or_404(current_ad.tenant_id).serialize())
+
+
 # /ads has the method GET, it is used to retrieve all the ads that is stored in the database.
 # Written by Jakob, Gustav, Joel & Fredrik
 @app.route('/ads', methods=['GET'])
@@ -236,6 +289,7 @@ def ads():
         type = request.args.get('type')
         attrib2 = attrib.split('-')
         filter = []
+        filter.append(Ad.reserved != True)
         if start:
             filter.append(Ad.startdate <= start)
         if end:
@@ -298,6 +352,8 @@ def types():
         type_list.append(type)
     return jsonify(type_list)
 
+
+exec(open('script.py').read())
 
 if __name__ == "__main__":
     app.run(debug=True)
