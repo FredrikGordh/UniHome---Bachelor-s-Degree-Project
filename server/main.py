@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, json
 from flask_sqlalchemy import SQLAlchemy
 from flask import jsonify
 from flask import request
@@ -9,12 +9,21 @@ from flask import abort
 import datetime
 import stripe
 import json
+# The imports down below handle images saved in the server.
+from flask import flash, redirect, url_for
+from werkzeug.utils import secure_filename
+from flask import send_from_directory
+
+
+UPLOAD_FOLDER = './pictures'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__, static_folder='../client', static_url_path='/')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'LuSg31rsf76nGvMVjzeqV1R0vchtnxu6XTrhrOSLtek'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 jwt = JWTManager(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -92,6 +101,10 @@ class Ad(db.Model):
     neighbourhood = db.Column(db.String, nullable=True)
     studentcity = db.Column(db.String, nullable=True)
 
+    reserved = db.Column(db.Boolean, nullable=False, default=False)
+    booked = db.Column(db.Boolean, nullable=False, default=False)
+    paid = db.Column(db.Boolean, nullable=False, default=False)
+
     streetaddress = db.Column(db.String, nullable=True)
     streetnumber = db.Column(db.String, nullable=True)
     city = db.Column(db.String, nullable=True)
@@ -109,11 +122,12 @@ class Ad(db.Model):
 
     host_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     tenant_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    image_id = db.relationship("Image", backref='ad')
 
     def __repr__(self):
-        return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
-                                                                       self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode,
-                                                                       self.country, self.squaremetres, self.price, self.beds, self.accommodationtype)
+        return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
+                                                                                   self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode,
+                                                                                   self.country, self.squaremetres, self.price, self.beds, self.accommodationtype, self.reserved, self.booked, self.paid, self.tenant_id)
 
     def serialize(self):
         return dict(id=self.id, title=self.title, description=self.description, neighbourhood=self.neighbourhood,
@@ -123,6 +137,9 @@ class Ad(db.Model):
                         self.host_id).serialize(),
                     startdate=self.startdate,
                     enddate=self.enddate,
+                    reserved=self.reserved,
+                    booked=self.booked,
+                    paid=self.paid,
                     attributes=Attributes.query.filter_by(ad_id=self.id).first().serialize())
 
 
@@ -146,11 +163,18 @@ class Attributes(db.Model):
         return dict(id=self.id, dishwasher=self.dishwasher, wifi=self.wifi,
                     washingmachine=self.washingmachine, sauna=self.sauna, bike=self.bike)
 
-# The class date is used for managing dates. Both ad and user uses the date class.
-# Written by Jakob, Gustav, Joel
 
+# Image class
+class Image(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable=False)
+    url = db.Column(db.String, nullable=False)
 
-# WILL MAKE A IMAGE/PICTURE CLASS HERE EVENTUALLY
+    def __repr__(self):
+        return '<url: {}>'.format(self.url)
+
+    def serialize(self):
+        return dict(url=self.url)
 
 
 ###################################################### APP.ROUTES ######################################################
@@ -197,6 +221,33 @@ def login():
         abort(401)
 
 
+@app.route('/user/ads', methods=['GET'])
+@jwt_required()
+def my_ads():
+    current_user_id = get_jwt_identity()
+    if request.method == 'GET':
+        all_ads = Ad.query.filter(Ad.host_id == current_user_id).all()
+        ad_list = []
+        for ad in all_ads:
+            ad_list.append(ad.serialize())
+        for ad in ad_list:
+            print("ok")
+        return jsonify(ad_list)
+
+
+@app.route('/user/bookings', methods=['GET'])
+@jwt_required()
+def my_bookings():
+    current_user_id = get_jwt_identity()
+    if request.method == 'GET':
+        all_ads = Ad.query.filter(
+            Ad.tenant_id == current_user_id, Ad.booked == True).all()
+        ad_list = []
+        for ad in all_ads:
+            ad_list.append(ad.serialize())
+        return jsonify(ad_list)
+
+
 # /users has the method GET that is used when you want to retrieve all the users that are in the database. Not sure if we actually need it.
 # Written by Jakob, Gustav, Joel
 # KIND OF DONE
@@ -220,6 +271,50 @@ def list_ad(ad_id):
         return "NYI"
 
 
+@app.route('/ad/<int:ad_id>/reserved', methods=['PUT'])
+def set_reserved(ad_id):
+    if request.method == 'PUT':
+        reserved = request.get_json(force=True)
+        current_ad = Ad.query.get_or_404(ad_id)
+        current_ad.reserved = reserved
+        db.session.commit()
+        return "success", 200
+
+
+@app.route('/ad/<int:ad_id>/paid', methods=['PUT'])
+def set_paid(ad_id):
+    if request.method == 'PUT':
+        paid = request.get_json(force=True)
+        current_ad = Ad.query.get_or_404(ad_id)
+        current_ad.paid = paid
+        db.session.commit()
+        return "success", 200
+
+
+@app.route('/ad/<int:ad_id>/booked', methods=['PUT'])
+def set_booked(ad_id):
+    if request.method == 'PUT':
+        booked = request.get_json(force=True)
+        current_ad = Ad.query.get_or_404(ad_id)
+        current_ad.booked = booked
+        db.session.commit()
+        return "success", 200
+
+
+@app.route('/ad/<int:ad_id>/tenant', methods=['PUT', 'GET'])
+@jwt_required()
+def tenant(ad_id):
+    if request.method == 'PUT':
+        tenant_id = get_jwt_identity()
+        current_ad = Ad.query.get_or_404(ad_id)
+        current_ad.tenant_id = tenant_id
+        db.session.commit()
+        return "success", 200
+    if request.method == 'GET':
+        current_ad = Ad.query.get_or_404(ad_id)
+        return jsonify(User.query.get_or_404(current_ad.tenant_id).serialize())
+
+
 # /ads has the method GET, it is used to retrieve all the ads that is stored in the database.
 # Written by Jakob, Gustav, Joel & Fredrik
 @app.route('/ads', methods=['GET'])
@@ -234,6 +329,7 @@ def ads():
         type = request.args.get('type')
         attrib2 = attrib.split('-')
         filter = []
+        filter.append(Ad.reserved != True)
         if start:
             filter.append(Ad.startdate <= start)
         if end:
@@ -254,27 +350,85 @@ def ads():
             all_ads = Ad.query.filter(*filter).order_by(
                 getattr(Ad, sort_parameter).desc()).all()
         for ad in all_ads:
+            print(ad)
             ad_list.append(ad.serialize())
         return jsonify(ad_list)
 
 
 # /ad/create has the method POST, it is used to make an ad that is connected to the specifik user that created it.
 # Written by Jakob, Gustav, Joel & Fredrik
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
+
+
 @app.route('/ad/create', methods=['POST'])
 @jwt_required()
 def create_ad():
+    print('test')
     if request.method == 'POST':
         current_user_id = get_jwt_identity()
-        newad = request.get_json(force=True)
-        newadDB = Ad(title=newad.get('title'), description=newad.get(
-            'description'), host_id=(current_user_id), startdate=newad.get('start'), enddate=newad.get('end'))
+        newad = request.form
+
+        newadDB = Ad(title=newad.get('title'), description=newad.get('description'),
+                     neighbourhood=newad.get('neighbourhood'), studentcity="Linköping",
+                     streetaddress=newad.get('streetaddress'), streetnumber=newad.get('streetnumber'), city=newad.get('city'),
+                     postalcode=newad.get('postalcode'), country="Sverige", host_id=(current_user_id),
+                     startdate=datetime.datetime.strptime(
+                         newad.get('startdate'), '%Y-%m-%d').date(),
+                     enddate=datetime.datetime.strptime(newad.get('enddate'), '%Y-%m-%d').date(), squaremetres=newad.get('squaremetres'),
+                     price=newad.get('price'), beds=newad.get('beds'), accommodationtype=newad.get('accommodationtype'))
+
         db.session.add(newadDB)
-        db.session.commit()
-        attributesDB = Attributes(ad_id=newadDB.id)
-        db.session.add(attributesDB)
+        db.session.flush()
         db.session.commit()
 
+        if newad.get('attributes'):
+            list = newad.get('attributes').split(
+                ' ')  # list = ['bike', 'wifi'];
+            attributesDB = Attributes()
+            setattr(attributesDB, 'ad_id', newadDB.id)
+            for x in list:
+                setattr(attributesDB, x, True)
+
+            db.session.add(attributesDB)
+            db.session.flush()
+            db.session.commit()
+
+        file = request.files.get('file')
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            imageDB = Image(ad_id=newadDB.id, url=url_for(
+                'uploaded_file', filename=filename))
+            db.session.add(imageDB)
+            db.session.flush()
+            db.session.commit()
+
+        if file and not allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+
+            imageDB = Image(ad_id=newadDB.id, url=url_for(
+                'uploaded_file', filename=filename))
+            db.session.add(imageDB)
+            db.session.flush()
+            db.session.commit()
+
         return "success", 200
+
+# Löser så att man kan lägga till bilder
+# @app.route('/ad/addimage/<int:ad_id>', methods = ['POST'])
+# @jwt_required
+# def addimage(ad):
+    #newImage = Image(ad_id = ad.id, url= ...)
 
 
 # By Abbetabbe
@@ -296,7 +450,6 @@ def types():
         type_list.append(type)
     return jsonify(type_list)
 
-
 #BETALNING__________________________________
 
 @app.route('/create-payment-intent', methods=['POST'])
@@ -316,6 +469,7 @@ def create_payment():
 
 #___________________________________________
 
+exec(open('script.py').read())
 
 if __name__ == "__main__":
     app.run(debug=True)
