@@ -3,6 +3,7 @@ const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "
 
 //-------------------------JQuery events-------------------------
 
+
 $(document).ready(function () {
     go_home();
 
@@ -390,81 +391,152 @@ function update_search() {
 }
 
 // ------- BETALNING -----------
-var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+//var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+var stripe = Stripe("pk_test_51IdXd9I1LSmMkwS01UZ3P15rGwgKS2FVNDj7puij4jKSK9qHTzpT6RXuoxwT7R3W2egc2WdFbp31gMXAp2RsqpJO003rUKAs23");
 
 // ---------PaymentIntent ----------- //
 
-// ----- funktionalitet för betalningselementet -----//
-(function() {
-    'use strict';
+// The items the customer wants to buy
+var purchase = {
+    items: [{ id: "xl-tshirt" }]
+  };
   
-    var elements = stripe.elements({
-      fonts: [
-        {
-          cssSrc: 'https://fonts.googleapis.com/css?family=Quicksand',
-        },
-      ],
-      // Stripe's examples are localized to specific languages, but if
-      // you wish to have Elements automatically detect your user's locale,
-      // use `locale: 'auto'` instead.
-      locale: window.__exampleLocale,
-    });
-  
-    var elementStyles = {
+
+// Disable the button until we have Stripe set up on the page
+document.querySelector("button").disabled = true;
+fetch("/create-payment-intent", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(purchase)
+})
+  .then(function(result) {
+    return result.json();
+  })
+  .then(function(data) {
+    var elements = stripe.elements();
+    var style = {
       base: {
-        color: '#fff',
-        fontWeight: 600,
-        fontFamily: 'Quicksand, Open Sans, Segoe UI, sans-serif',
-        fontSize: '16px',
-        fontSmoothing: 'antialiased',
-  
-        ':focus': {
-          color: '#424770',
-        },
-  
-        '::placeholder': {
-          color: '#9BACC8',
-        },
-  
-        ':focus::placeholder': {
-          color: '#CFD7DF',
-        },
+        color: "#32325d",
+        fontFamily: 'Arial, sans-serif',
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+          color: "#32325d"
+        }
       },
       invalid: {
-        color: '#fff',
-        ':focus': {
-          color: '#FA755A',
-        },
-        '::placeholder': {
-          color: '#FFCCA5',
-        },
-      },
+        fontFamily: 'Arial, sans-serif',
+        color: "#fa755a",
+        iconColor: "#fa755a"
+      }
     };
-  
-    var elementClasses = {
-      focus: 'focus',
-      empty: 'empty',
-      invalid: 'invalid',
-    };
-  
-    var cardNumber = elements.create('cardNumber', {
-      style: elementStyles,
-      classes: elementClasses,
+    var card = elements.create("card", { style: style });
+    // Stripe injects an iframe into the DOM
+    card.mount("#card-element");
+
+    var form = document.getElementById("payment-form");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      // Complete payment when the submit button is clicked
+      payWithCard(stripe, card, data.clientSecret);
     });
-    cardNumber.mount('#example3-card-number');
+  });
+
+// Calls stripe.confirmCardPayment
+// If the card requires authentication Stripe shows a pop-up modal to
+// prompt the user to enter authentication details without leaving your page.
+var payWithCard = function(stripe, card, clientSecret) {
+    loading(true);
+    stripe
+      .confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card
+        }
+      })
+      .then(function(result) {
+        if (result.error) {
+          // Show error to your customer
+          showError(result.error.message);
+        } else {
+          // The payment succeeded!
+          orderComplete(result.paymentIntent.id);
+        }
+      });
+};
+
+// ----- funktionalitet för betalningselementet -----//
+// (function() {
+//     'use strict';
   
-    var cardExpiry = elements.create('cardExpiry', {
-      style: elementStyles,
-      classes: elementClasses,
-    });
-    cardExpiry.mount('#example3-card-expiry');
+//     var elements = stripe.elements({
+//       fonts: [
+//         {
+//           cssSrc: 'https://fonts.googleapis.com/css?family=Quicksand',
+//         },
+//       ],
+//       // Stripe's examples are localized to specific languages, but if
+//       // you wish to have Elements automatically detect your user's locale,
+//       // use `locale: 'auto'` instead.
+//       locale: window.__exampleLocale,
+//     });
   
-    var cardCvc = elements.create('cardCvc', {
-      style: elementStyles,
-      classes: elementClasses,
-    });
-    cardCvc.mount('#example3-card-cvc');
+//     var elementStyles = {
+//       base: {
+//         color: '#fff',
+//         fontWeight: 600,
+//         fontFamily: 'Quicksand, Open Sans, Segoe UI, sans-serif',
+//         fontSize: '16px',
+//         fontSmoothing: 'antialiased',
   
-    registerElements([cardNumber, cardExpiry, cardCvc], 'example3');
-  })();
+//         ':focus': {
+//           color: '#424770',
+//         },
+  
+//         '::placeholder': {
+//           color: '#9BACC8',
+//         },
+  
+//         ':focus::placeholder': {
+//           color: '#CFD7DF',
+//         },
+//       },
+//       invalid: {
+//         color: '#fff',
+//         ':focus': {
+//           color: '#FA755A',
+//         },
+//         '::placeholder': {
+//           color: '#FFCCA5',
+//         },
+//       },
+//     };
+  
+//     var elementClasses = {
+//       focus: 'focus',
+//       empty: 'empty',
+//       invalid: 'invalid',
+//     };
+  
+//     var cardNumber = elements.create('cardNumber', {
+//       style: elementStyles,
+//       classes: elementClasses,
+//     });
+//     cardNumber.mount('#example3-card-number');
+  
+//     var cardExpiry = elements.create('cardExpiry', {
+//       style: elementStyles,
+//       classes: elementClasses,
+//     });
+//     cardExpiry.mount('#example3-card-expiry');
+  
+//     var cardCvc = elements.create('cardCvc', {
+//       style: elementStyles,
+//       classes: elementClasses,
+//     });
+//     cardCvc.mount('#example3-card-cvc');
+  
+//     registerElements([cardNumber, cardExpiry, cardCvc], 'example3');
+//   })();
   

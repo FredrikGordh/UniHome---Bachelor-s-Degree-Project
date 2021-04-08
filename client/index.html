@@ -13,7 +13,7 @@
 
   <title>Unihome</title>
 
-
+  
 </head>
 
 <body>
@@ -50,8 +50,22 @@
 
 
   <div id="content" class="container-fluid"></div>
- <!-- betalning-->
-  <div class="cell example example3 container" id="example-3">
+ <!-- BETALNING-->
+    <form id="payment-form">
+      <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+      <button id="submit">
+        <div class="spinner hidden" id="spinner"></div>
+        <span id="button-text">Pay now</span>
+      </button>
+      <p id="card-error" role="alert"></p>
+      <p class="result-message hidden">
+        Payment succeeded, see the result in your
+        <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+      </p>
+    </form>
+
+
+  <!-- <div class="cell example example3 container" id="example-3">
     <form>
       <div class="fieldset">
         <input id="example3-name" data-tid="elements_examples.form.name_label" class="field" type="text" placeholder="Name" required="" autocomplete="name">
@@ -96,7 +110,7 @@
         <span data-tid="elements_examples.caption.view_source">View source on GitHub</span>
       </a>
     </div>
-  </div>
+  </div> -->
 
   <!-- Footern: Vi skriver ut en lista med kontaktuppgifter i vår container-->
   <div class="footer container-fluid pt-5 pb-5">
@@ -370,6 +384,8 @@
   <script src="templates.js"></script>
   <script src="https://cdn.rawgit.com/janl/mustache.js/master/mustache.min.js"></script>
   <script src="https://js.stripe.com/v3/"></script>
+  <!-- Eventuellt ta bort nedanstående rad -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
 </body>
 
 </html>

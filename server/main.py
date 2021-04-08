@@ -24,55 +24,24 @@ bcrypt = Bcrypt(app)
 
 # Set your secret key. Remember to switch to your live secret key in production.
 # See your keys here: https://dashboard.stripe.com/account/apikeys
+
+#BETALNING_______________________
 stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfFOz1e8wgFJduwU1uJCvtrspqIeelpu7RuJjZ00j0qjVnl8"
 
-
-# #! /usr/bin/env python3.6
-# """
-# Python 3.6 or newer required.
-# """
-# import json
-# import os
-# import stripe
-# # This is a sample test API key. Sign in to see examples pre-filled with your key.
-# stripe.api_key = "sk_test_4eC39HqLyjWDarjtT1zdp7dc"
-
-# from flask import Flask, render_template, jsonify, request
+def calculate_order_amount(items):
+    # Replace this constant with a calculation of the order's amount
+    # Calculate the order total on the server to prevent
+    # people from directly manipulating the amount on the client
+    return 1400
 
 
-# app = Flask(__name__, static_folder=".",
-#             static_url_path="", template_folder=".")
-
-
-# def calculate_order_amount(items):
-#     # Replace this constant with a calculation of the order's amount
-#     # Calculate the order total on the server to prevent
-#     # people from directly manipulating the amount on the client
-#     return 1400
-
-
-# @app.route('/create-payment-intent', methods=['POST'])
-# def create_payment():
-#     try:
-#         data = json.loads(request.data)
-#         intent = stripe.PaymentIntent.create(
-#             amount=calculate_order_amount(data['items']),
-#             currency='usd'
-#         )
-
-#         return jsonify({
-#           'clientSecret': intent['client_secret']
-#         })
-#     except Exception as e:
-#         return jsonify(error=str(e)), 403
-
-stripe.PaymentIntent.create(
-  amount=1000,
-  currency='usd',
-  payment_method_types=['card'],
-  receipt_email='jenny.rosen@example.com',
-)
-
+# stripe.PaymentIntent.create(
+#   amount=1000,
+#   currency='usd',
+#   payment_method_types=['card'],
+#   receipt_email='jenny.rosen@example.com',
+# )
+#__________________________________
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -325,6 +294,25 @@ def types():
     for type in all_types:
         type_list.append(type)
     return jsonify(type_list)
+
+
+#BETALNING__________________________________
+
+@app.route('/create-payment-intent', methods=['POST'])
+def create_payment():
+    try:
+        data = json.loads(request.data)
+        intent = stripe.PaymentIntent.create(
+            amount=calculate_order_amount(data['items']),
+            currency='usd'
+        )
+        return jsonify({
+          'clientSecret': intent['client_secret']
+        })
+    except Exception as e:
+        return jsonify(error=str(e)), 403
+
+#___________________________________________
 
 
 if __name__ == "__main__":
