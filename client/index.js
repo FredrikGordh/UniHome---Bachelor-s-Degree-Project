@@ -3,6 +3,7 @@ const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "
 
 //-------------------------JQuery events-------------------------
 
+
 $(document).ready(function () {
     go_home();
 
