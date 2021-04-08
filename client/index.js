@@ -174,6 +174,7 @@ function go_home() {
     $("#content").html($("#home_page").html());
     load_home_search_dropdowns();
     load_burger();
+
     let map, popup;
     map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 58.40241681113258, lng: 15.621244664416542 },
