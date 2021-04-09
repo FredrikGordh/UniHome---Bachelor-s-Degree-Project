@@ -83,12 +83,6 @@ $(document).ready(function () {
         submit_register_form();
     });
 
-    //Submit register form by pressing ENTER
-    $("#content").keyup("#password_register", function (e) {
-        if (e.keyCode === 13) {
-            submit_register_form();
-        }
-    });
 
 
     //Submit edit form
@@ -98,8 +92,8 @@ $(document).ready(function () {
     });
 
     //Submit register form by pressing ENTER
-    $("#content").keyup("#password_register", function (e) {
-        if (e.keyCode === 13) {
+    $("#content").on("keyup", "#password_register", function (e) {
+        if (e.keyCode === 13 && $("#content")) {
             submit_register_form();
         }
     });
@@ -111,7 +105,7 @@ $(document).ready(function () {
     });
 
     //Submit login form by pressing ENTER
-    $("#content").keyup("#password_login", function (e) {
+    $("#content").on("keyup", "#password_login", function (e) {
         if (e.keyCode === 13) {
             submit_login_form();
         }
