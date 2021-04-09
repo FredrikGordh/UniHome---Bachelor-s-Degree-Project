@@ -239,6 +239,118 @@ function go_home() {
     $("#content").html($("#home_page").html());
     load_home_search_dropdowns();
     load_burger();
+    let map, popup;
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 58.40241681113258, lng: 15.621244664416542 },
+        zoom: 13.2,
+        disableDefaultUI: true,
+    });
+    const citymap = {
+        ryd: {
+            center: { lat: 58.41320706527976, lng: 15.566379297129107 },
+            size: 50,
+        },
+        valla: {
+            center: { lat: 58.405844557880265, lng: 15.5949486961521 },
+            size: 50,
+        },
+        vasastaden: {
+            center: { lat: 58.418598933014735, lng: 15.612839650705164 },
+            size: 50,
+        },
+        gotfridsberg: {
+            center: { lat: 58.414188119723406, lng: 15.596067756828468 },
+            size: 50,
+        },
+        lambohov: {
+            center: { lat: 58.382892422235216, lng: 15.561087706177256 },
+            size: 50,
+        },
+    };
+    for (const city in citymap) {
+        const cityCircle = new google.maps.Circle({
+            strokeColor: "#6be0e0",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#AFEEEE",
+            fillOpacity: 0.35,
+            map,
+            center: citymap[city].center,
+            radius: Math.sqrt(citymap[city].size) * 100,
+        });
+    }
+    class Popup extends google.maps.OverlayView {
+        constructor(position, content) {
+            super();
+            this.position = position;
+            content.classList.add("popup-bubble");
+            // This zero-height div is positioned at the bottom of the bubble.
+            const bubbleAnchor = document.createElement("div");
+            bubbleAnchor.classList.add("popup-bubble-anchor");
+            bubbleAnchor.appendChild(content);
+            // This zero-height div is positioned at the bottom of the tip.
+            this.containerDiv = document.createElement("div");
+            this.containerDiv.classList.add("popup-container");
+            this.containerDiv.appendChild(bubbleAnchor);
+            // Optionally stop clicks, etc., from bubbling up to the map.
+            Popup.preventMapHitsAndGesturesFrom(this.containerDiv);
+        }
+        /** Called when the popup is added to the map. */
+        onAdd() {
+            this.getPanes().floatPane.appendChild(this.containerDiv);
+        }
+        /** Called when the popup is removed from the map. */
+        onRemove() {
+            if (this.containerDiv.parentElement) {
+                this.containerDiv.parentElement.removeChild(this.containerDiv);
+            }
+        }
+        /** Called each frame when the popup needs to draw itself. */
+        draw() {
+            const divPosition = this.getProjection().fromLatLngToDivPixel(
+                this.position
+            );
+            // Hide the popup when it is far out of view.
+            const display =
+                Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000
+                    ? "block"
+                    : "none";
+
+            if (display === "block") {
+                this.containerDiv.style.left = divPosition.x + "px";
+                this.containerDiv.style.top = divPosition.y + "px";
+            }
+
+            if (this.containerDiv.style.display !== display) {
+                this.containerDiv.style.display = display;
+            }
+        }
+    }
+    popup1 = new Popup(
+        new google.maps.LatLng(58.41320706527976, 15.566379297129107),
+        document.getElementById("ryd")
+    );
+    popup2 = new Popup(
+        new google.maps.LatLng(58.405844557880265, 15.5949486961521),
+        document.getElementById("valla")
+    );
+    popup3 = new Popup(
+        new google.maps.LatLng(58.418598933014735, 15.612839650705164),
+        document.getElementById("vasastaden")
+    );
+    popup4 = new Popup(
+        new google.maps.LatLng(58.414188119723406, 15.596067756828468),
+        document.getElementById("gotfridsberg")
+    );
+    popup5 = new Popup(
+        new google.maps.LatLng(58.382892422235216, 15.561087706177256),
+        document.getElementById("lambohov")
+    );
+    popup1.setMap(map);
+    popup2.setMap(map);
+    popup3.setMap(map);
+    popup4.setMap(map);
+    popup5.setMap(map);
 }
 
 //Function for going to view: Register_page
@@ -415,6 +527,7 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
         success: function (ads) {
             $("#search_result").empty();
             ads.forEach(element => {
+                element.image = element.image.url;
                 $("#search_result").append(Mustache.render(accomodation, element));
             });
         }
@@ -484,7 +597,11 @@ function login_request(user) {
             sessionStorage.setItem('auth', JSON.stringify(response));
             go_home();
         }
+        ,error: function(){
+            $("#login_failed_container").html("Dina inloggningsuppgifter är felaktiga.");
+        }
     })
+    
 }
 
 //Function for making a register request 
@@ -495,7 +612,16 @@ function register_request(user) {
         data: JSON.stringify(user),
         success: function (response) {
             go_registered_page();
+        },
+        statusCode: {
+            500: function() {
+               alert('fyll i alla fält horunge');
+            },
+            409 : function(){
+                $("#register_failed_container").html("Den här email-adressen används redan!");
+            }
         }
+            
     })
 }
 
@@ -553,19 +679,18 @@ function load_read_more(ad_id) {
         type: 'GET',
         success: function (ad) {
             $("#read_more_ad_title").html(ad.title);
-            $("#read_more_ad_bio").html(ad.bio);
-            $("#read_more_ad_neighbourhood").html(ad.neighbourhood);
-            $("#read_more_ad_studentcity").html(ad.studentcity);
-            $("#read_more_ad_address").html(ad.address);
-            $("#read_more_ad_city").html(ad.ciy);
-            $("#read_more_ad_postalcode").html(ad.postalcode);
+            $("#read_more_ad_description").html(ad.description);
+            $("#read_more_ad_neighbourhood").html(ad.neighbourhood)
+            // $("#read_more_ad_studentcity").html(ad.studentcity);
+            $("#read_more_ad_streetaddress").html(ad.streetaddress + ", " + ad.postalcode + ", " + ad.city);
             $("#read_more_ad_startdate").html(ad.startdate);
             $("#read_more_ad_enddate").html(ad.enddate);
-            $("#read_more_ad_squaremetres").html(ad.squaremetres + " m3");
-            $("#read_more_ad_price").html(ad.price + " kr");
-            $("#read_more_ad_beds").html("Antal sängar " + ad.beds + " st");
-            $("#read_more_ad_accommodationtype").html("Typ " + ad.accommodationtype);
+            $("#read_more_ad_squaremetres").html(ad.squaremetres + " kvm");
+            $("#read_more_ad_price").html( ad.price + " kr");
+            $("#read_more_ad_beds").html(ad.beds + " st");
+            $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
+            $("#readmore_img").attr("src", ad.image.url);
         }
     })
 }

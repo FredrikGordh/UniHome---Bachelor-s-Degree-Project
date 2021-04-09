@@ -16,7 +16,7 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 
 
-UPLOAD_FOLDER = './pictures'
+UPLOAD_FOLDER = '../client/Media'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__, static_folder='../client', static_url_path='/')
@@ -128,7 +128,7 @@ class Ad(db.Model):
     def __repr__(self):
         return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
                                                                                    self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode,
-                                                                                   self.country, self.squaremetres, self.price, self.beds, self.accommodationtype, self.reserved, self.booked, self.paid, self.tenant_id)
+                                                                                   self.country, self.squaremetres, self.price, self.beds, self.accommodationtype, self.reserved, self.booked, self.paid, self.tenant_id, self.image_id)
 
     def serialize(self):
         return dict(id=self.id, title=self.title, description=self.description, neighbourhood=self.neighbourhood,
@@ -136,12 +136,13 @@ class Ad(db.Model):
                     postalcode=self.postalcode, country=self.country, squaremetres=self.squaremetres, price=self.price, beds=self.beds,
                     accommodationtype=self.accommodationtype, host=User.query.get(
                         self.host_id).serialize(),
-                    startdate=self.startdate,
-                    enddate=self.enddate,
+                    startdate=self.startdate.strftime('%Y-%m-%d'),
+                    enddate=self.enddate.strftime('%Y-%m-%d'),
                     reserved=self.reserved,
                     booked=self.booked,
                     paid=self.paid,
-                    attributes=Attributes.query.filter_by(ad_id=self.id).first().serialize())
+                    attributes=Attributes.query.filter_by(ad_id=self.id).first().serialize(),
+                    image = Image.query.filter_by(ad_id=self.id).first().serialize())
 
 
 # The class attributes contains all the attributes of ad that has a boolean.
@@ -201,7 +202,7 @@ def signup():
         db.session.commit()
         return "Created", 201
     else:
-        return "E-mail already in use", 409
+        return "email_in_use", 409
 
 
 # /user/login has the method POST that is used when you want to log in with a user.
