@@ -565,6 +565,7 @@ function load_read_more(ad_id) {
             $("#read_more_ad_beds").html(ad.beds + " st");
             $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
+            $("#readmore_img").attr("src", ad.image.url);
         }
     })
 }

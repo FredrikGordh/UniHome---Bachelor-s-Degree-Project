@@ -256,6 +256,10 @@ label {
   margin-top: 10vh;
   margin-bottom: 10vh;
 }
+#readmore_img {
+  width: 300px;
+  border-radius: 20px;
+}
 
 #read_more_ad_container {
   margin-top: 100px;
