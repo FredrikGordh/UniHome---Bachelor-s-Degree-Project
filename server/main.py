@@ -202,7 +202,7 @@ def signup():
         db.session.commit()
         return "Created", 201
     else:
-        return "E-mail already in use", 409
+        return "email_in_use", 409
 
 
 # /user/login has the method POST that is used when you want to log in with a user.
@@ -474,7 +474,7 @@ def create_payment():
 exec(open('script.py').read())
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5008)
 
 # API:
 # Anvandare
