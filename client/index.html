@@ -46,6 +46,22 @@
 
   <div id="content" class="container-fluid"></div>
 
+  <!-- Test betalning, ska tas bort -->
+  <!-- <div class="body1">
+    <form id="payment-form" class="form1">
+      <div id="card-element"></div>
+      <button id="submit">
+        <div class="spinner hidden" id="spinner"></div>
+        <span id="button-text">Pay now</span>
+      </button>
+      <p id="card-error" role="alert"></p>
+      <p class="result-message hidden">
+        Payment succeeded, see the result in your
+        <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+      </p>
+    </form>
+  </div> -->
+
   <!-- Footern: Vi skriver ut en lista med kontaktuppgifter i vår container-->
   <div class="footer container-fluid pt-5 pb-5 hide-menu">
     <div class="row justify-content-center">
@@ -326,6 +342,15 @@
     </div>
   </script>
 
+  <!-- Successful Payment view -->
+  <script id="successful_payment_page" type="text/html">
+    <div id="successful_payment_page_container" class="container">
+      <h1>Din betalning gick igenom!</h1>
+      <div id = "payment_page_content">Kul! Nu är allt klart och betalt. Ditt boende är redo för dig, tagga!</div>
+      <!-- <button type="button" class="btn btn-primary" id = "log_in_from_registered_view>" onclick = go_login()>Till logga in</button> -->
+    </div>
+  </script>
+
   <!-- My page: account view -->
   <script id="my_page_account_info" type="text/html">
     <div id="my_page_account_info_container" class="container">
@@ -577,7 +602,7 @@
   </script>
 
   <!-- Payment view -->
-  <script id="payment-page" type="text/html">
+  <script id="payment_page" type="text/html">
     <div class="body1">
       <form id="payment-form" class="form1">
         <div id="card-element"><!--Stripe.js injects the Card Element--></div>
