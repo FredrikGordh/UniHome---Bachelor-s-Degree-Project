@@ -127,7 +127,7 @@ $(document).ready(function () {
     });
 
     //Go to read more on an ad
-    $("#content").on("click", ".read_more_ad_button", function (e) {
+    $("#content").on("click", ".read_more_ad_button, .title_id", function (e) {
         e.preventDefault();
         go_read_more_ad_page($(this).data('id'));
     });
