@@ -474,7 +474,7 @@ def create_payment():
 exec(open('script.py').read())
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5008)
+    app.run(debug=True)
 
 # API:
 # Anvandare
