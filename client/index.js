@@ -527,6 +527,7 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
         success: function (ads) {
             $("#search_result").empty();
             ads.forEach(element => {
+                element.image = element.image.url;
                 $("#search_result").append(Mustache.render(accomodation, element));
             });
         }
@@ -665,19 +666,18 @@ function load_read_more(ad_id) {
         type: 'GET',
         success: function (ad) {
             $("#read_more_ad_title").html(ad.title);
-            $("#read_more_ad_bio").html(ad.bio);
-            $("#read_more_ad_neighbourhood").html(ad.neighbourhood);
-            $("#read_more_ad_studentcity").html(ad.studentcity);
-            $("#read_more_ad_address").html(ad.address);
-            $("#read_more_ad_city").html(ad.ciy);
-            $("#read_more_ad_postalcode").html(ad.postalcode);
+            $("#read_more_ad_description").html(ad.description);
+            $("#read_more_ad_neighbourhood").html(ad.neighbourhood)
+            // $("#read_more_ad_studentcity").html(ad.studentcity);
+            $("#read_more_ad_streetaddress").html(ad.streetaddress + ", " + ad.postalcode + ", " + ad.city);
             $("#read_more_ad_startdate").html(ad.startdate);
             $("#read_more_ad_enddate").html(ad.enddate);
-            $("#read_more_ad_squaremetres").html(ad.squaremetres + " m3");
-            $("#read_more_ad_price").html(ad.price + " kr");
-            $("#read_more_ad_beds").html("Antal sängar " + ad.beds + " st");
-            $("#read_more_ad_accommodationtype").html("Typ " + ad.accommodationtype);
+            $("#read_more_ad_squaremetres").html(ad.squaremetres + " kvm");
+            $("#read_more_ad_price").html( ad.price + " kr");
+            $("#read_more_ad_beds").html(ad.beds + " st");
+            $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
+            $("#readmore_img").attr("src", ad.image.url);
         }
     })
 }

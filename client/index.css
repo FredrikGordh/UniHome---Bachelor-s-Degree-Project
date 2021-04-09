@@ -257,6 +257,14 @@ label {
   margin-top: 10vh;
   margin-bottom: 10vh;
 }
+#readmore_img {
+  /* width: 500px; */
+  border-radius: 20px;
+}
+
+#read_more_ad_price{
+  font-weight: bolder;
+}
 
 #read_more_ad_container {
   margin-top: 100px;
@@ -304,6 +312,22 @@ label {
   color: black;
 }
 
+.accomodation h1 {
+  
+}
+
+.accomodation img {
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 20px;
+  margin: 20px;
+}
+
+.accomodation button {
+  border-radius: 10px;
+}
+
 .map_text{
   position: absolute;
   top: 100px;
@@ -325,12 +349,14 @@ label {
     font-size: 25px;
     text-align: center;
 }
+}
 .my_accomodation {
   background-color: white;
   border-radius: 20px;
   color: black;
   padding: 10px;
 }
+
 
 .my_tenant {
   background-color: white;
@@ -345,6 +371,72 @@ label {
 
 .read_more_button {
   border-radius: 70px;
+}
+
+
+
+.read_more_description{
+  background-color: white;
+  border-radius: 20px;
+  color: black;   
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.headline_startdate{
+  text-align: center;
+}
+
+.headline_enddate{
+  text-align: center;
+}
+
+.read_more_startdate{
+  text-align: center;
+  border-right: olive solid 1px;
+  
+}
+
+.read_more_enddate{
+  text-align: center;
+}
+
+.attributes {
+clear: both;}
+
+.read_more_squaremeters{
+  border-right: olive solid 1px;
+  text-align: center;
+}
+
+.read_more_beds{
+  border-right: olive solid 1px;
+  text-align: center;
+}
+
+.read_more_accomodationtype{
+  text-align: center;
+}
+
+.read_more_adress{
+  text-align: center;
+}
+
+.read_more_price_date{
+  height: 200px;
+  background-color: white;
+  border-radius: 20px;
+  color: black;   
+  padding: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.read_more_price{
+  text-align: center;
+  /* font-weight: bolder; */
+
 }
 
 .footer{
@@ -580,6 +672,7 @@ button:disabled {
     width: 80vw;
   }
 }
+
 
 .body1 {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
