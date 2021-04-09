@@ -415,6 +415,7 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
         success: function (ads) {
             $("#search_result").empty();
             ads.forEach(element => {
+                element.image = element.image.url;
                 $("#search_result").append(Mustache.render(accomodation, element));
             });
         }
