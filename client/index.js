@@ -506,7 +506,7 @@ function go_new_ad_page() {
 //----Request variables:
 
 //Global request variable: host
-var host = 'http://localhost:5008';
+var host = 'http://localhost:5000';
 
 //----Requests:
 
