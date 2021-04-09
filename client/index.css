@@ -321,8 +321,12 @@ label {
   color: black;
 }
 
-.accomodation h1 {
-  
+.accomodation div {
+  margin: 20px;
+}
+
+.accomodation button {
+  margin: 20px;
 }
 
 .accomodation img {
@@ -330,7 +334,6 @@ label {
   height: 300px;
   overflow: hidden;
   border-radius: 20px;
-  margin: 20px;
 }
 
 .accomodation button {
