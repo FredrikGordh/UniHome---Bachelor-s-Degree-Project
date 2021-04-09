@@ -277,7 +277,37 @@ label {
   background-color: white;
   border-radius: 20px;
   color: black;   
+  padding: 20px;
+  margin-bottom: 20px;
 }
+
+.read_more_startdate{
+  position: relative;
+  left: 50px;
+  float:left;
+}
+
+.read_more_enddate{
+  float:left;
+  left: 70px;
+}
+.attributes {
+clear: both;}
+
+.read_more_squaremeters{
+  border-right: olive solid 1px;
+  text-align: center;
+}
+
+.read_more_beds{
+  border-right: olive solid 1px;
+  text-align: center;
+}
+
+.read_more_accomodationtype{
+  text-align: center;
+}
+
 
 
 
