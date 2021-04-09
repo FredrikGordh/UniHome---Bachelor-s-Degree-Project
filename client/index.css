@@ -297,23 +297,35 @@ label {
   border-radius: 70px;
 }
 
+
+
 .read_more_description{
   background-color: white;
   border-radius: 20px;
   color: black;   
   padding: 20px;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
+.headline_startdate{
+  text-align: center;
+}
+
+.headline_enddate{
+  text-align: center;
+}
+
 .read_more_startdate{
-  position: relative;
+  border-right: olive solid 1px;
   left: 50px;
-  float:left;
+  text-align: center;
+  
 }
 
 .read_more_enddate{
-  float:left;
   left: 70px;
+  text-align: center;
 }
 .attributes {
 clear: both;}
@@ -330,6 +342,15 @@ clear: both;}
 
 .read_more_accomodationtype{
   text-align: center;
+}
+
+.read_more_adress{
+  text-align: center;
+}
+
+.read_more_price{
+  text-align: center;
+
 }
 
 

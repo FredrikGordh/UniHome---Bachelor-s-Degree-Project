@@ -13,7 +13,7 @@
 
   <title>Unihome</title>
 
-  
+
 </head>
 
 <body>
@@ -44,7 +44,9 @@
     </div>
   </nav>
 
-  <div id="content" class="container-fluid"></div>
+
+
+  <div id="content" class="container-fluid hide-menu"></div>
 
   <!-- Footern: Vi skriver ut en lista med kontaktuppgifter i vår container-->
   <div class="footer container-fluid pt-5 pb-5 hide-menu">
@@ -235,11 +237,9 @@
           <input type="password" class="form-control" id="password_register" placeholder="Password">
         </div>
         <button type="button" id="register_form_button" class="btn btn-primary">Registrera</button>
-        <div>Har du redan ett konto? Logga in genom att klicka <span class = "clickable_class" id = "get_to_login">här</span></div>
       </form>
     </div>
   </script>
-
 
   <!-- Edit bio view -->
   <script id="edit_bio_page" type="text/html">
@@ -250,7 +250,7 @@
           <input type="text" class="form-control" id="name_edit" placeholder="Per Johansson">
         </div>
         <div class="form-group">
-          <label for="gender_edit">Ändra kön</label>
+          <label for="gender_register">Ändra kön</label>
           <select class="form-control" id="gender_edit">
             <option>Välj en...</option>
             <option>Kvinna</option>
@@ -258,8 +258,28 @@
             <option>Annat</option>
           </select>
         </div>
+        <div class="form-row">
+          <div class="form-group col-4">
+            <label for="year_edit">Ändra födelseår</label>
+            <select class="form-control" id="year_edit">
+              <option>Välj ett...</option>
+            </select>            
+          </div>
+          <div class="form-group col-4">
+            <label for="month_edit">Ändra månad</label>
+            <select class="form-control" id="month_edit">
+              <option>Välj en...</option>
+            </select>  
+          </div>
+          <div class="form-group col-4">
+            <label for="day_edit">Ändra födelsedag</label>
+            <select class="form-control" id="day_edit">
+              <option>Välj en...</option>
+            </select>  
+          </div>
+        </div>
         <div class="form-group">
-          <label for="phone_edit">Ändra telefonnummer</label>
+          <label for="phone_edit">Telefon</label>
           <input type="text" class="form-control" id="phone_edit">
         </div>
         <div class="form-group">
@@ -280,7 +300,6 @@
     </div>
   </script>
 
-
   <!-- Login view -->
   <script id="login_page" type="text/html">
     <div id="login_container" class="container">
@@ -294,7 +313,6 @@
           <input type="password" class="form-control" id="password_login" placeholder="Password">
         </div>
         <button type="button" id="login_form_button" class="btn btn-primary">Logga in</button>
-        
       </form>
     </div>
   </script>
@@ -302,9 +320,8 @@
   <!-- My page view -->
   <script id="my_page" type="text/html">
     <div id="my_page_container" class="container">
-
       <h1 id = "my_page_greeting"></h1>
-      <button type="button" id="new_ad_button">Skapa ny annons</button>
+      <button type="button">Skapa ny annons</button>
       <div id="my_page_menu" class="row align-items-center justify-content-center">
         <div class="col-11 col-lg-5 my_page_menuitem m-2 p-4"><a id="account_info_link" href=""><h3>Mitt konto ></h3><p>Se och redigera dina kontouppgifter.</p></a></div>
         <div class="col-11 col-lg-5 my_page_menuitem m-2 p-4"><a id="bookings_link" href=""><h3>Mina bokningar ></h3><p>Se och redigera dina bokningar.</p></a></div>
@@ -314,15 +331,6 @@
       <!--Container for loading in dynamic content in my page (ie. edit account, history etc.)-->
       <div id="my_page_content"></div>
       
-    </div>
-  </script>
-
-  <!-- Successfully Registered view -->
-  <script id="successfully_registered_page" type="text/html">
-    <div id="successfully_registered_page_container" class="container">
-       <h1>Du har registrerat dig!</h1>
-      <div id = "registered_page_content">Nu kan du logga in och hyra eller hyra ut ett boende</div>
-      <button type="button" class="btn btn-primary" id = "log_in_from_registered_view>" onclick = go_login()>Till logga in</button>
     </div>
   </script>
 
@@ -349,18 +357,17 @@
 
   <!-- My page: my bookings view -->
   <script id="my_page_bookings" type="text/html">
-    <div id="my_page_bookings_container" class="container row justify-content-center">
+    <div id="my_page_bookings_container" class="container">
 
     </div>
   </script>
 
   <!-- My page: my ads view -->
   <script id="my_page_ads" type="text/html">
-    <div id="my_page_ads_container" class="container row justify-content-center">
+    <div id="my_page_ads_container" class="container">
       
     </div>
   </script>
-
 
 
   <!-- About us view -->
@@ -388,257 +395,98 @@
     </div>
   </script>
 
-    <!-- New ad view -->
-    <script id="new_ad_page" type="text/html">
-      <div id="new_ad_page_container" class="container">
-        <h1>Skapa din annons</h1>
-        <p>Fyll i fälten nedan med information om bostaden du vill hyra ut för att skapa din annons.</p>
-        <form id="wide">
-            <div class="form-group">
-              <label class="required" for="titleInput_id">Rubrik</label>
-              <input type="title" class="form-control" id="titleInput_id" placeholder="Exempel: Korridorsrum 5 min från Campus" required>
-            </div>
-            <br>
-            <div class="form-group">
-              <label class="required" for="descriptionInput_id">Beskrivning</label>
-              <textarea class="form-control" id="descriptionInput_id" rows="3" required></textarea>
-            </div>
-            <br>
-            <div class="form-group">
-              <label class="required" for="areaInput_id">Område</label>
-              <select class="form-control" id="areaInput_id" required>
-                <option selected="selected"> Välj område </option>
-                <option>Ryd</option>
-                <option>Valla</option>
-                <option>Innerstaden</option>
-                <option>Vasastaden</option>
-                <option>Vallastaden</option>
-                <option>Lambohov</option>
-                <option>Skäggetorp</option>
-                <option>Colonia</option>
-                <option>Gottfridsberg</option>
-                <option>Tannefors</option>              
-              </select>
-            </div>
-            <br>
-            <div class="form-group">
-              <label class="required" for="addressInput" >Adress</label>
-              <div class="row">
-                <div class="col">
-                  <input id="create_ad_street_id" type="text" class="form-control" placeholder="Gata" required>
-                </div>
-                <div class="col">
-                  <input id="create_ad_streetnumber_id" type="text" class="form-control" placeholder="Gatunummer" required>
-                </div>
-              </div>
-              <br>
-              <div class="row">
-                <div class="col">
-                  <input id="create_ad_postalcode_id" type="text" class="form-control" placeholder="Postkod" required>
-                </div>
-                <div class="col">
-                  <input id="create_ad_city_id" type="text" class="form-control" placeholder="Stad" required>
-                </div>
-              </div>
-            </div>
-            <br>
-            <br>
-            <div class="form-group">
-              <div class="row">
-                <div class="col">
-                  <label class="required" for="ad_start_id">Inflyttningsdatum</label>
-                  <input type="date" id="ad_start_id" name="ad_start"
-                  value="2021-04-08"
-                  min="Today" max="2030-12-31" required>                
-                </div>
-                <div class="col">
-                  <label class="required" for="ad_end_id">Utflyttningsdatum</label>
-                  <input type="date" id="ad_end_id" name="ad_end"
-                  value="2021-04-08"
-                  min="Today" max="2030-12-31" required>                
-                </div>
-              </div>
-            </div>
-            <br>
-            <br>
-            <br>
-            <h3>Om bostaden</h3>
-            <br>
-            <div class="row">
-              <div class="col">
-                <input id="create_ad_kvm_id" type="text" class="form-control" placeholder="Kvadratmeter" required>
-              </div>
-              <div class="col">
-                <input id="create_ad_price_id" type="text" class="form-control" placeholder="Pris" required>
-              </div>
-              <div class="col">
-                <input id="create_ad_beds_id" type="text" class="form-control" placeholder="Antal bäddar" required>
-              </div>
-            </div>
-            <br>
-            <div class="form-group">
-              <label class="required" for="accomodation_Type_Select_id">Typ av boende</label>
-              <select class="form-control" id="accomodation_Type_Select_id" required>
-                <option selected="selected"> Välj bostadstyp </option>
-                <option>Lägenhet</option>
-                <option>Korridorsrum</option>
-                <option>Hus</option>
-                <option>Ett rum i delad lägenhet/hus</option>
-                <option>En säng i delat rum</option>
-                <option>Soffa</option>            
-              </select>
-            </div>
-            <br>
-            <div class="form-group">
-              <label class="required" for="">Bekvämligheter</label>
-              <div class="row">
-                <div class="col">
-                  <input class="form-check-input" type="checkbox" value="" id="create_ad_bike_id">
-                  <label class="form-check-label" for="create_ad_bike_id">
-                    Cykel
-                  </label>            
-                </div>
-                <div class="col">
-                  <input class="form-check-input" type="checkbox" value="" id="create_ad_dishwasher_id">
-                  <label class="form-check-label" for="create_ad_dishwasher_id">
-                    Diskmaskin           
-                </div>
-                <div class="col">
-                  <input class="form-check-input" type="checkbox" value="" id="create_ad_washingmachine_id">
-                  <label class="form-check-label" for="create_ad_washingmachine_id">
-                    Tvättmaskin           
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <input class="form-check-input" type="checkbox" value="" id="create_ad_wifi_id">
-                  <label class="form-check-label" for="create_ad_wifi_id">
-                    Wifi
-                  </label>            
-                </div>
-                <div class="col">
-                  <input class="form-check-input" type="checkbox" value="" id="create_ad_sauna_id">
-                  <label class="form-check-label" for="create_ad_sauna_id">
-                    Bastu           
-                </div>
-              </div>
-            </div>
-
-            <div class="container py-5">
-          
-              <div class="row py-4">
-                  <div class="col-lg-6 mx-auto">
-          
-                      <!-- Upload image input-->
-                      <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
-                          <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0">
-                          <label id="upload-label" for="upload" class="font-weight-light text-muted">Ingen fil vald ännu</label>
-                          <div class="input-group-append">
-                              <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Välj bildfil</small></label>
-                          </div>
-                      </div>
-          
-                      <!-- Uploaded image area-->
-                      <div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
-          
-                  </div>
-              </div>
-              <br>
-            <button id="create_new_ad" class="btn btn-primary" type="button">Lägg upp annons</button>
-          </form>
-<!--
-          <div class="form-group">
-              <label for="exampleFormControlInput1">Title</label>
-              <input type="title" class="form-control" id="formTitle" placeholder="Title">
-            </div>
-        <div class="form-group">
-          <label for="exampleFormControlInput1">Email address</label>
-          <input type="emailID" class="form-control" id="formEmail" placeholder="name@example.com">
-          <small id="emailHelp" class="form-text text muted ">Hello</small>
-        </div>
-        <div class="form-group">
-          <label for="exampleFormControlInput1">Message</label>
-          <textarea class="form-control" id="formMessage" rows="7"></textarea>
-        </div>
-        <button type="submit"id="formSubmitButton" class="btn btn-primary">Submit</button>
--->
-      </form >
-      </div>
-    </script>
-
   <!-- Help view -->
   <script id="help_page" type="text/html">
-    <div id="help_page_container" class="container-fluid">
-
-      
-
-    </div>
-
-  </script>
-
-  <!-- Payment view -->
-  <script id="payment-page" type="text/html">
-    <div class="body1">
-      <form id="payment-form" class="form1">
-        <div id="card-element"><!--Stripe.js injects the Card Element--></div>
-        <button id="submit">
-          <div class="spinner hidden" id="spinner"></div>
-          <span id="button-text">Pay now</span>
-        </button>
-        <p id="card-error" role="alert"></p>
-        <p class="result-message hidden">
-          Payment succeeded, see the result in your
-          <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
-        </p>
-      </form>
+    <div id="help_page_container" class="container">
+      <h1>Hur funkar det?</h1>
+      <p> Unihome är en plattform där du som student kan hyra ut din bostad till andra studenter och hyra en bostad av andra studenter. Tjänsten är anpassade till studenters behov vid bostadsuthyrning. Med en UniHomekonto kan du både bli hyresvärd och hyresgäst. 
+      <br>
+      <h3>Bli hyresvärd</h3>
+       <p>Som student kan du med hjälp av vår tjänst hyra ut ditt studentboende kortsitkigt, från en helg upp till sex månader. Vår plattform är enbart för studenter till studenter. Registrera dig och välj "Skapa ny annons" för att skapa och publicera en annons för din bostad. </p> 
+      <h3>Bli hyresgäst</h3>
+      <p>Hyr ett boende av en annan student, för en helg, en vecka eller kanske ett halvår. Registrera dig och sök efter det du behöver genom att filtrera bostäderna efter dina behov. 
     </div>
   </script>
 
   <!-- Read more about the housing ad-->
-  <script id="read_more_ad_page" type="text/html">
+  <script  id="read_more_ad_page" type="text/html">
     <div id="read_more_ad_container" class="container">
       <button id="read_more_back">Tillbaka</button>
       <!--Dessa är bara flytta omkring och ändra font mm. Data laddas in i taggarna med javascript baserat på id-->
-      <h1 id="read_more_ad_neighbourhood"></h1>
-      <h1 id="read_more_ad_studentcity"></h1>
+      <h1 id="read_more_ad_title"></h1>
+      <h4 id="read_more_ad_neighbourhood"></h4>
       <img src="Media/generic_home.jpg" style="width: 55vw; min-width: 330px">
-
-      <h4 id="read_more_ad_title"></h4>
+      
+      
+     
       <div class="read_more_description">
+        <div class="row justify-content-center attributes">
+            
+          <div class="col-3">
+            <div class="read_more_squaremeters">
+              <i class="fas fa-home"></i>
+              <h5 id="read_more_ad_squaremetres"></h5>
+            </div>
+          </div>
+
+          <div class="col-3">
+              <div class= "read_more_beds">
+                <i class="fas fa-bed"></i>
+                <h5 id="read_more_ad_beds"></h5>
+             </div>
+          </div>
+
+          <div class="col-3">
+            <div class= "read_more_accomodationtype">
+              <i class="fas fa-building"></i>
+              <h5 id="read_more_ad_accommodationtype"></h5>
+            </div>
+          </div>   
+        </div>
+        <br>
+        <br>
         <h5 id="read_more_ad_description"></h5>
-        <h5 id="read_more_ad_streetaddress"></h5>
-          <div class= "read_more_startdate">
-            <h5 id="read_more_ad_startdate"></h5>
+        <br>
+        
+
+          <div class = "read_more_adress">
+            <i class="fas fa-map-marker-alt"></i>
+            <h5 id="read_more_ad_streetaddress"></h5>
+          </div>
+
+          <div class="row justify-content-center attributes">
+              <div class="col-6 headline_startdate">
+                <b>Tidigast inflytt</b> 
+              </div>
+              <div class="col-6 headline_enddate">
+                <b>Tidigast utflytt</b> 
+              </div>
           </div>
         
-          <div class="read_more_enddate" >
-            <h5 id="read_more_ad_enddate"></h5>
-          </div>
-          
+      
           <div class="row justify-content-center attributes">
-            <div class="col-3">
-              <div class="read_more_squaremeters">
-                <h5 id="read_more_ad_squaremetres"></h5>
+                <div class="col-6">
+                  <div class= "read_more_startdate">
+                    <h5 id="read_more_ad_startdate"></h5>
+                  </div>
+                </div>
+              
+              
+                <div class="col-6">
+                  <div class="read_more_enddate" >
+                    <h5 id="read_more_ad_enddate"></h5>
+                  </div>
+                </div>
               </div>
-            </div>
+              
+                <h5 id="read_more_ad_attributes"></h5>
 
-            <div class="col-3">
-              <div class= "read_more_beds">s
-                <h5 id="read_more_ad_beds"></h5>
-              </div>
-            </div>
-
-            <div class="col-3">
-              <div class= "read_more_accomodationtype">
-                <h5 id="read_more_ad_accommodationtype"></h5>
-              </div>
-            </div>          
+                <div class= "read_more_price">
+                <b> <h5 id="read_more_ad_price"></h5> </b>
+                </div>
           </div>
-          
-          
-            <h5 id="read_more_ad_attributes"></h5>
-            <h5 id="read_more_ad_price"></h5>
-      </div>
+    
+
       
       <!-- <h1 id="read_more_ad_city"></h1> -->
       
@@ -648,7 +496,6 @@
       <button id="reservation_button" class="btn btn-success">Reservera</button>
     </div>
   </script>
-
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -661,12 +508,10 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
-  <script src="https://js.stripe.com/v3/"></script>
   <script src="index.js"></script>
   <script src="templates.js"></script>
-  <!-- Eventuellt ta bort nedanstående rad -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
   <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"></script>
+  <script src="https://kit.fontawesome.com/dbf101f92c.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

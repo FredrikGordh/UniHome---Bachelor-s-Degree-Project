@@ -554,15 +554,15 @@ function load_read_more(ad_id) {
         success: function (ad) {
             $("#read_more_ad_title").html(ad.title);
             $("#read_more_ad_description").html(ad.description);
-            $("#read_more_ad_neighbourhood").html(ad.neighbourhood + ", " + ad.studentcity)
+            $("#read_more_ad_neighbourhood").html(ad.neighbourhood)
             // $("#read_more_ad_studentcity").html(ad.studentcity);
             $("#read_more_ad_streetaddress").html(ad.streetaddress + ", " + ad.postalcode + ", " + ad.city);
-            $("#read_more_ad_startdate").html("Inflytt: " + ad.startdate + "   Utflytt: " + ad.enddate);
-            // $("#read_more_ad_enddate").html(ad.enddate);
-            $("#read_more_ad_squaremetres").html(ad.squaremetres + " m3");
+            $("#read_more_ad_startdate").html("Inflytt: " + ad.startdate);
+            $("#read_more_ad_enddate").html(ad.enddate);
+            $("#read_more_ad_squaremetres").html(ad.squaremetres + " kvm");
             $("#read_more_ad_price").html(ad.price + " kr");
-            $("#read_more_ad_beds").html("Antal sängar " + ad.beds + " st");
-            $("#read_more_ad_accommodationtype").html("Typ " + ad.accommodationtype);
+            $("#read_more_ad_beds").html(ad.beds + " st");
+            $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
         }
     })
