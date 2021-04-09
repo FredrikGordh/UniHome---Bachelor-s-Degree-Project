@@ -24,7 +24,7 @@ var my_bookings = '<div class="my_bookings col-9 mt-3 p-2">'
     + '<p>{{description}}</p>'
     + '<p>{{squaremetres}}</p>'
     + '<p>{{price}} kr</p>'
-    + '<button type="button" class="payment_button" data-id="{{id}}">Betala nu</button>'
+    + '<button type="button" class="payment_button" data-id="{{id}}" data-price={{price}} >Betala nu</button>'
     + '</div>';
 
 var tenant = '<div class="my_tenant col-2 offset-1 mt-3 p-2">'
