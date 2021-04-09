@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -127,14 +127,20 @@
           </div>
         </div>
       </div>
-      <div id="home-now-hot" class="section">
-        <h1> Hetaste boendena/Bäst reviews</h1>
-      </div>
       <div id="home-areas" class="section">
-        <h1>Områden</h1>
-      </div>
-      <div id="home-types" class="section">
-        <h1>Typer av boenden</h1>
+        <div class="map_text">
+          <div class="row justify-content-center">
+            <div class="col-12"><h1>Våra bostadsområden</h1></div>
+          </div>
+        </div>
+        <div id="map"></div>
+        <div id="ryd"><h3>Ryd</h3></div>
+        <div id="valla"><h3>Valla</h3></div>
+        <div id="gotfridsberg"><h3>Gotfridsberg</h3></div>
+        <div id="vasastaden"><h3>Vasastaden</h3></div>
+        <div id="lambohov"><h3>Lambohov</h3></div>
+
+
       </div>
       <div id="home-reviews" class="section">
         <h1>Reviews</h1>
@@ -415,92 +421,90 @@
       <!--Dessa är bara flytta omkring och ändra font mm. Data laddas in i taggarna med javascript baserat på id-->
       <h1 id="read_more_ad_title"></h1>
       <h4 id="read_more_ad_neighbourhood"></h4>
-      <img src="Media/generic_home.jpg" style="width: 55vw; min-width: 330px">
-      
-      
-     
-      <div class="read_more_description row">
-        <div class = "col-8">
-
-        </div>
-        <div class="row justify-content-center attributes">
+      <div class="row">
+       
+          <img src="" class="col-7" id="readmore_img">   
+      </div>
+      <div class="row">
+        <div class = "col-7 read_more_description">
+          <div class="row justify-content-center attributes">
             
-          <div class="col-3">
-            <div class="read_more_squaremeters">
-              <i class="fas fa-home"></i>
-              <h5 id="read_more_ad_squaremetres"></h5>
+            <div class="col-3">
+              <div class="read_more_squaremeters">
+                <i class="fas fa-home"></i>
+                <h5 id="read_more_ad_squaremetres"></h5>
+              </div>
             </div>
-          </div>
-
-          <div class="col-3">
-              <div class= "read_more_beds">
-                <i class="fas fa-bed"></i>
-                <h5 id="read_more_ad_beds"></h5>
-             </div>
-          </div>
-
-          <div class="col-3">
-            <div class= "read_more_accomodationtype">
-              <i class="fas fa-building"></i>
-              <h5 id="read_more_ad_accommodationtype"></h5>
+  
+            <div class="col-3">
+                <div class= "read_more_beds">
+                  <i class="fas fa-bed"></i>
+                  <h5 id="read_more_ad_beds"></h5>
+               </div>
             </div>
-          </div>   
+  
+            <div class="col-3">
+              <div class= "read_more_accomodationtype">
+                <i class="fas fa-building"></i>
+                <h5 id="read_more_ad_accommodationtype"></h5>
+              </div>
+            </div>   
+          </div>
+          <br>
+          <br>
+          <h5 id="read_more_ad_description"></h5>
+          <br>
+          
+  
+            <div class = "read_more_adress">
+              <i class="fas fa-map-marker-alt"></i>
+              <h5 id="read_more_ad_streetaddress"></h5>
+            </div>
         </div>
-        <br>
-        <br>
-        <h5 id="read_more_ad_description"></h5>
-        <br>
-        
-
-          <div class = "read_more_adress">
-            <i class="fas fa-map-marker-alt"></i>
-            <h5 id="read_more_ad_streetaddress"></h5>
-          </div>
-
+        <div class="col-4 offset-1 read_more_price_date">
           <div class="row justify-content-center attributes">
-              <div class="col-6 headline_startdate">
-                <b>Tidigast inflytt</b> 
+            <div class="col-6 headline_startdate">
+              <b>Tidigast inflytt</b> 
+            </div>
+            <div class="col-6 headline_enddate">
+              <b>Tidigast utflytt</b> 
+            </div>
+        </div>
+          
+        <div class="row justify-content-center attributes">
+              <div class="col-6 read_more_startdate">
+                
+                  <h5 id="read_more_ad_startdate"></h5>
               </div>
-              <div class="col-6 headline_enddate">
-                <b>Tidigast utflytt</b> 
-              </div>
-          </div>
-        
-      
-          <div class="row justify-content-center attributes">
-                <div class="col-6">
-                  <div class= "read_more_startdate">
-                    <h5 id="read_more_ad_startdate"></h5>
-                  </div>
-                </div>
-              
-              
-                <div class="col-6">
-                  <div class="read_more_enddate" >
-                    <h5 id="read_more_ad_enddate"></h5>
-                  </div>
+                        
+              <div class="col-6">
+                <div class="read_more_enddate" >
+                  <h5 id="read_more_ad_enddate"></h5>
                 </div>
               </div>
-              
-                <h5 id="read_more_ad_attributes"></h5>
+            </div>
+            
+              <h5 id="read_more_ad_attributes"></h5>
+              <div class= "read_more_price">
+                 
+                 <h5 class="fas fa-coins row"  id="read_more_ad_price"  ></h5>
+     
+              </div>
+              <button id="reservation_button" class="btn btn-success">Reservera</button>
+        </div>
+      </div>
+    </script>
 
-                <div class= "read_more_price">
-                <b> <h5 id="read_more_ad_price"></h5> </b>
-                </div>
-          </div>
-
-          <div class="read_more_price_date">
-
-          </div>
-    
-
-      
-      <!-- <h1 id="read_more_ad_city"></h1> -->
-      
-      
-      
-      
-      <button id="reservation_button" class="btn btn-success">Reservera</button>
+  <!-- Help view -->
+  <script id="help_page" type="text/html">
+    <div id="help_page_container" class="container">
+      <h1>Hur funkar det?</h1>
+      <p> Unihome är en plattform där du som student kan hyra ut din bostad till andra studenter och hyra en bostad av andra studenter. Tjänsten är anpassade till studenters behov vid bostadsuthyrning. Med en UniHomekonto kan du både bli hyresvärd och hyresgäst. 
+      <br>
+      <h3>Bli hyresvärd</h3>
+       <p>Som student kan du med hjälp av vår tjänst hyra ut ditt studentboende kortsitkigt, från en helg upp till sex månader. Vår plattform är enbart för studenter till studenter. Registrera dig och välj "Skapa ny annons" för att skapa och publicera en annons för din bostad. </p> 
+      <h3>Bli hyresgäst</h3>
+      <p>Hyr ett boende av en annan student, för en helg, en vecka eller kanske ett halvår. Registrera dig och sök efter det du behöver genom att filtrera bostäderna efter dina behov. 
     </div>
   </script>
 
@@ -519,6 +523,8 @@
   <script src="templates.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"></script>
   <script src="https://kit.fontawesome.com/dbf101f92c.js" crossorigin="anonymous"></script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs">
+  </script>
 </body>
 
 </html>

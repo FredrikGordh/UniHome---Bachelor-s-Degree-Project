@@ -136,8 +136,8 @@ class Ad(db.Model):
                     postalcode=self.postalcode, country=self.country, squaremetres=self.squaremetres, price=self.price, beds=self.beds,
                     accommodationtype=self.accommodationtype, host=User.query.get(
                         self.host_id).serialize(),
-                    startdate=self.startdate,
-                    enddate=self.enddate,
+                    startdate=self.startdate.strftime('%Y-%m-%d'),
+                    enddate=self.enddate.strftime('%Y-%m-%d'),
                     reserved=self.reserved,
                     booked=self.booked,
                     paid=self.paid,
