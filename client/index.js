@@ -394,7 +394,7 @@ function go_new_ad_page() {
 //----Request variables:
 
 //Global request variable: host
-var host = 'http://localhost:5000';
+var host = 'http://localhost:5008';
 
 //----Requests:
 
@@ -484,7 +484,11 @@ function login_request(user) {
             sessionStorage.setItem('auth', JSON.stringify(response));
             go_home();
         }
+        ,error: function(){
+            $("#login_failed_container").html("Dina inloggningsuppgifter är felaktiga.");
+        }
     })
+    
 }
 
 //Function for making a register request 
@@ -495,7 +499,16 @@ function register_request(user) {
         data: JSON.stringify(user),
         success: function (response) {
             go_registered_page();
+        },
+        statusCode: {
+            500: function() {
+               alert('fyll i alla fält horunge');
+            },
+            409 : function(){
+                $("#register_failed_container").html("Den här email-adressen används redan!");
+            }
         }
+            
     })
 }
 

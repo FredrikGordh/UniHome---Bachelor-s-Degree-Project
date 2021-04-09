@@ -266,6 +266,15 @@ label {
   margin-bottom: 100px;
 }
 
+#login_failed_container{
+  color: red;
+}
+
+#register_failed_container{
+  color: red;
+}
+
+
 
 /* Klasser */
 
@@ -301,6 +310,10 @@ label {
   background-color: black;
   color:white;
   width: 100%;
+}
+
+.failed_container{
+  color: red;
 }
 
 .no-dot-list{
