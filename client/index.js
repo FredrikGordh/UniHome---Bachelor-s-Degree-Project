@@ -558,7 +558,7 @@ function load_read_more(ad_id) {
             $("#read_more_ad_neighbourhood").html(ad.neighbourhood)
             // $("#read_more_ad_studentcity").html(ad.studentcity);
             $("#read_more_ad_streetaddress").html(ad.streetaddress + ", " + ad.postalcode + ", " + ad.city);
-            $("#read_more_ad_startdate").html("Inflytt: " + ad.startdate);
+            $("#read_more_ad_startdate").html(ad.startdate);
             $("#read_more_ad_enddate").html(ad.enddate);
             $("#read_more_ad_squaremetres").html(ad.squaremetres + " kvm");
             $("#read_more_ad_price").html(ad.price + " kr");

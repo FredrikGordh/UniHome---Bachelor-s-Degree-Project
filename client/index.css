@@ -337,16 +337,15 @@ label {
 }
 
 .read_more_startdate{
-  border-right: olive solid 1px;
-  left: 50px;
   text-align: center;
+  border-right: olive solid 1px;
   
 }
 
 .read_more_enddate{
-  left: 70px;
   text-align: center;
 }
+
 .attributes {
 clear: both;}
 
