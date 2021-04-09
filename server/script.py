@@ -33,14 +33,12 @@ User.set_password(user4, "emeli")
 db.session.add(user4)
 db.session.commit()
 
-ad1 = Ad(title="Mysigt studentboende", description="mys mys mys ultra mys", neighbourhood="Valla", studentcity="Linköping",
-         streetaddress="Vallavägen", streetnumber="4", city="Linköping", postalcode="512 15", country="Sverige", squaremetres="25",
-         price="200", beds="1", accommodationtype="Lägenhet", host_id="1", startdate=datetime.date(2021, 1, 1), enddate=datetime.date(2021, 9, 9))
-db.session.add(ad1)
+user5 = User(name="fredrik", email="fredrik@google.com",
+             telephone="114 14", gender="male", birthdate=datetime.date(2000, 1, 1))
+User.set_password(user5, "fredrik")
+db.session.add(user5)
 db.session.commit()
-attributes1 = Attributes(wifi=True, sauna=True, bike=True, ad_id=ad1.id)
-db.session.add(attributes1)
-db.session.commit()
+
 
 ad2 = Ad(title="Läskigt studentboende mitt i smeten", description="Lääääääskigt", neighbourhood="Vasastan", studentcity="Linköping",
          streetaddress="Drottninggatan", streetnumber="23", city="Linköping", postalcode="512 30", country="Sverige", squaremetres="45", price="450",
@@ -73,4 +71,4 @@ db.session.add(attributes4)
 db.session.commit()
 
 
-print("You have now cleared everything that was in the database and created 4 users and 4 ads")
+print("You have now cleared everything that was in the database and created 5 users and 4 ads")
