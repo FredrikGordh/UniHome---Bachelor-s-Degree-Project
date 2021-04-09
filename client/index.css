@@ -261,6 +261,10 @@ label {
   border-radius: 20px;
 }
 
+#read_more_ad_price{
+  font-weight: bolder;
+}
+
 #read_more_ad_container {
   margin-top: 100px;
   margin-bottom: 100px;
@@ -368,21 +372,20 @@ clear: both;}
 }
 
 .read_more_price_date{
+  height: 200px;
   background-color: white;
   border-radius: 20px;
   color: black;   
-  padding: 20px;
+  padding: 30px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
 .read_more_price{
   text-align: center;
+  /* font-weight: bolder; */
 
 }
-
-
-
 
 .footer{
   background-color: black;
