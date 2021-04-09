@@ -322,9 +322,9 @@ label {
 
 .accomodation img {
   width: 300px;
-  height: 300px;
+  /*height: 300px;*/
   overflow: hidden;
-  border-radius: 20px;
+  /* border-radius: 20px; */
 }
 
 .accomodation button {
