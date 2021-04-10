@@ -1,7 +1,8 @@
 //Enum för att översätta attribut vid sökning
 const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Attribut": "Attribut" });
-
+var saved_input;
 //-------------------------JQuery events-------------------------
+
 
 $(document).ready(function () {
     go_home();
@@ -63,18 +64,25 @@ $(document).ready(function () {
         submit_home_search_form();
     });
 
+    //Go to login page
+    $("#content").on("click", "#get_to_login", function (e) {
+        e.preventDefault();
+        go_login();
+    });
+
+    //Go to login page from registered 
+    // $("#registered_page_content").on("click", "#log_in_from_registered_view", function (e) {
+    //     e.preventDefault();
+    //     alert("hej")
+    //     go_login();
+    // });
+
     //Submit register form
     $("#content").on("click", "#register_form_button", function (e) {
         e.preventDefault();
         submit_register_form();
     });
 
-    //Submit register form by pressing ENTER
-    $("#content").keyup("#password_register", function (e) {
-        if (e.keyCode === 13) {
-            submit_register_form();
-        }
-    });
 
 
     //Submit edit form
@@ -84,8 +92,8 @@ $(document).ready(function () {
     });
 
     //Submit register form by pressing ENTER
-    $("#content").keyup("#password_register", function (e) {
-        if (e.keyCode === 13) {
+    $("#content").on("keyup", "#password_register", function (e) {
+        if (e.keyCode === 13 && $("#content")) {
             submit_register_form();
         }
     });
@@ -97,7 +105,7 @@ $(document).ready(function () {
     });
 
     //Submit login form by pressing ENTER
-    $("#content").keyup("#password_login", function (e) {
+    $("#content").on("keyup", "#password_login", function (e) {
         if (e.keyCode === 13) {
             submit_login_form();
         }
@@ -113,7 +121,7 @@ $(document).ready(function () {
     });
 
     //Go to read more on an ad
-    $("#content").on("click", ".read_more_ad_button", function (e) {
+    $("#content").on("click", ".read_more_ad_button, .title_id", function (e) {
         e.preventDefault();
         go_read_more_ad_page($(this).data('id'));
     });
@@ -122,6 +130,35 @@ $(document).ready(function () {
     $("#content").on("click", "#read_more_back", function (e) {
         e.preventDefault();
         go_search();
+    });
+
+
+    //Go to create new ad page
+    $("#content").on("click", "#new_ad_button", function (e) {
+        e.preventDefault();
+        go_new_ad_page();
+        var input = document.getElementById('upload');
+        input.addEventListener('change', showFileName);
+    });
+
+    //Reserve ad
+    $("#content").on("click", "#reservation_button", function (e) {
+        e.preventDefault();
+        reserve_ad($(this).data('id'));
+        console.log("ok")
+    });
+
+    //Edit bio
+    $("#content").on("click", "#my_page_change_bio_btn", function (e) {
+        e.preventDefault();
+        go_edit_bio_page();
+    });
+
+    //cancel edit bio
+    $("#content").on("click", "#cancel_edit_form_btn", function (e) {
+        e.preventDefault();
+        go_my_page();
+        load_account_info();
     });
 
     //Edit bio
@@ -189,9 +226,29 @@ $(document).ready(function () {
         $("#area_facts").html($("#gotfridsberg_view").html());
     });
 
+    //My page: approve tenant
+    $("#content").on("click", ".book_ad_button", function (e) {
+        e.preventDefault();
+        approve_tenant($(this).data("id"));
+        load_ads();
+    });
+
+    //My page: deny tenant
+    $("#content").on("click", ".deny_ad_button", function (e) {
+        e.preventDefault();
+        deny_tenant($(this).data("id"));
+        load_ads();
+    });
 
 
-})
+    //Submit form create new ad
+    $("#content").on("click", "#create_new_ad", function (e) {
+        e.preventDefault();
+        submitAdForm();
+    });
+
+
+});
 
 //-------------------------Functions-------------------------
 
@@ -335,7 +392,6 @@ function go_search() {
     search = JSON.parse(sessionStorage.getItem('search'));
     load_search_page_search_dropdowns(search);
     load_ads_request(search);
-
 }
 
 //Function for going to view: My page
@@ -343,7 +399,6 @@ function go_my_page() {
     $("#content").html($("#my_page").html());
     var name = JSON.parse(sessionStorage.getItem('auth')).user.name
     $("#my_page_greeting").html("Hej " + name + "!");
-
 }
 
 //Function for going to view: Contact
@@ -361,10 +416,16 @@ function go_about_us_page() {
     $("#content").html($("#about_us_page").html());
 }
 
+//Function for going to view: Registered
+function go_registered_page() {
+    $("#content").html($("#successfully_registered_page").html());
+}
+
 //Function for going to view: Read more ad
 function go_read_more_ad_page(ad_id) {
     $("#content").html($("#read_more_ad_page").html());
     load_read_more(ad_id);
+    $("#reservation_button").data('id', ad_id)
 }
 
 //Function for going to view: Edit bio
@@ -377,6 +438,9 @@ function go_edit_bio_page() {
     $("#email_edit").val(user.email)
     $("#bio_edit").val(user.bio)
 
+}
+
+function go_confirmation_page() {
 
 }
 
@@ -397,26 +461,65 @@ function load_account_info() {
 
 }
 
-
 //Load account info in my page
 function load_history() {
     $("#my_page_content").html($("#my_page_history").html());
 
 }
+
 //Load account info in my page
 function load_ads() {
     $("#my_page_content").html($("#my_page_ads").html());
+    load_my_ads_request();
 
 }
+
 //Load account info in my page
 function load_bookings() {
     $("#my_page_content").html($("#my_page_bookings").html());
+    load_my_bookings_request();
 
 }
 
 function logout() {
     sessionStorage.removeItem('auth');
     go_home();
+}
+
+
+//Function for showing the uploaded picture
+function readURL(input) {
+
+    saved_input = input.files[0];
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#imageResult')
+                .attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$(function () {
+    $('#upload').on('change', function () {
+        readURL(input);
+    });
+});
+
+//Function for showing the uploaded image name. 
+function showFileName(event) {
+    var infoArea = document.getElementById('upload-label');
+    var input = event.srcElement;
+    var fileName = input.files[0].name;
+    print
+    infoArea.textContent = 'Filnamn: ' + fileName;
+}
+
+function go_new_ad_page() {
+    $("#content").html($("#new_ad_page").html());
 }
 
 
@@ -446,8 +549,62 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
         success: function (ads) {
             $("#search_result").empty();
             ads.forEach(element => {
+                element.image = element.image.url;
                 $("#search_result").append(Mustache.render(accomodation, element));
             });
+        }
+    })
+}
+
+function load_my_ads_request() {
+    $.ajax({
+        url: host + '/user/ads',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (ads) {
+            ads.forEach(element => {
+                $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
+                if (element.booked == true) {
+                    console.log("booked");
+                } else if (element.reserved == true) {
+                    get_tenant(element.id);
+                }
+            });
+        }
+    })
+}
+
+function load_my_bookings_request() {
+    $.ajax({
+        url: host + '/user/bookings',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (ads) {
+            ads.forEach(element => {
+                $("#my_page_bookings_container").append(Mustache.render(my_accomodation, element));
+            });
+        }
+    })
+}
+
+function set_tenant(ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/tenant',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'PUT',
+        success: function (result) {
+        }
+    })
+}
+
+function get_tenant(ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/tenant',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (result) {
+            result["ad_id"] = ad_id;
+            $("#my_page_ads_container").append(Mustache.render(tenant, result));
         }
     })
 }
@@ -462,7 +619,11 @@ function login_request(user) {
             sessionStorage.setItem('auth', JSON.stringify(response));
             go_home();
         }
+        ,error: function(){
+            $("#login_failed_container").html("Dina inloggningsuppgifter är felaktiga.");
+        }
     })
+    
 }
 
 //Function for making a register request 
@@ -472,8 +633,17 @@ function register_request(user) {
         type: 'POST',
         data: JSON.stringify(user),
         success: function (response) {
-            go_home();
+            go_registered_page();
+        },
+        statusCode: {
+            500: function() {
+               alert('fyll i alla fält horunge');
+            },
+            409 : function(){
+                $("#register_failed_container").html("Den här email-adressen används redan!");
+            }
         }
+            
     })
 }
 
@@ -494,7 +664,6 @@ function edit_user_request(user) {
             load_account_info();
         }
     })
-
 }
 
 
@@ -532,25 +701,45 @@ function load_read_more(ad_id) {
         type: 'GET',
         success: function (ad) {
             $("#read_more_ad_title").html(ad.title);
-            $("#read_more_ad_bio").html(ad.bio);
-            $("#read_more_ad_neighbourhood").html(ad.neighbourhood);
-            $("#read_more_ad_studentcity").html(ad.studentcity);
-            $("#read_more_ad_address").html(ad.address);
-            $("#read_more_ad_city").html(ad.ciy);
-            $("#read_more_ad_postalcode").html(ad.postalcode);
+            $("#read_more_ad_description").html(ad.description);
+            $("#read_more_ad_neighbourhood").html(ad.neighbourhood)
+            // $("#read_more_ad_studentcity").html(ad.studentcity);
+            $("#read_more_ad_streetaddress").html(ad.streetaddress + ", " + ad.postalcode + ", " + ad.city);
             $("#read_more_ad_startdate").html(ad.startdate);
             $("#read_more_ad_enddate").html(ad.enddate);
-            $("#read_more_ad_squaremetres").html(ad.squaremetres + " m3");
-            $("#read_more_ad_price").html(ad.price + " kr");
-            $("#read_more_ad_beds").html("Antal sängar " + ad.beds + " st");
-            $("#read_more_ad_accommodationtype").html("Typ " + ad.accommodationtype);
+            $("#read_more_ad_squaremetres").html(ad.squaremetres + " kvm");
+            $("#read_more_ad_price").html( ad.price + " kr");
+            $("#read_more_ad_beds").html(ad.beds + " st");
+            $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
+            $("#readmore_img").attr("src", ad.image.url);
+        }
+    })
+}
+
+function update_reserved_status(status, ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/reserved',
+        type: 'PUT',
+        data: JSON.stringify(status),
+        success: function (ad) {
+
+        }
+    })
+}
+
+function update_booked_status(status, ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/booked',
+        type: 'PUT',
+        data: JSON.stringify(status),
+        success: function (ad) {
+
         }
     })
 }
 
 //----Functional functions:
-
 
 //Function for loading all content in hamburger menu
 function load_burger() {
@@ -608,7 +797,6 @@ function load_attr(container) {
 
 //Function for loading data in dropdowns for search from home page
 function load_home_search_dropdowns() {
-    load_searchable_years();
     load_months("#home_select_start_month");
     load_days("#home_select_length");
     load_areas("#home_select_area");
@@ -625,24 +813,24 @@ function load_search_page_search_dropdowns(search) {
     $("#search_page_select_start").val(search.start);
     $("#search_page_select_end").val(search.end);
     $("#search_page_select_type").val(search.type);
-
     $("#search_page_select_attr").val(search.attributes);
 }
 
-//Function for loading searchable years when searching for ads
-function load_searchable_years() {
-    var year = new Date().getFullYear();
-    for (i = 0; i < 5; i++) {
-        $("#home_select_start_year").append("<option>" + year + "</option>")
-        ++year;
-    }
+//Function for reservring ad in database: update reserved status --> show ad to host for approval
+function reserve_ad(ad_id) {
+    update_reserved_status(true, ad_id)
+    set_tenant(ad_id);
+    go_search();
 }
 
-//Temporary, depends on how we implement how we search.
-function load_days(container) {
-    for (i = 1; i < 32; i++) {
-        $(container).append("<option>" + i + "</option>")
-    }
+//Function for approving tenant and update status of ad in database
+function approve_tenant(ad_id) {
+    update_booked_status(true, ad_id)
+}
+
+//Function for denying tenant and update status of ad in database
+function deny_tenant(ad_id) {
+    update_reserved_status(false, ad_id)
 }
 
 //----Form functions:
@@ -659,6 +847,7 @@ function submit_register_form() {
         password: $("#password_register").val()
     }
     register_request(user);
+
 }
 
 function submit_edit_form() {
@@ -722,4 +911,191 @@ function update_search() {
     sessionStorage.setItem('sort_param', JSON.stringify(sort_param));
 
     load_ads_request(search, sort, sort_param);
+}
+
+// ------- BETALNING -----------
+//var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+var stripe = Stripe("pk_test_51IdXd9I1LSmMkwS01UZ3P15rGwgKS2FVNDj7puij4jKSK9qHTzpT6RXuoxwT7R3W2egc2WdFbp31gMXAp2RsqpJO003rUKAs23");
+
+// ---------PaymentIntent ----------- //
+
+// The items the customer wants to buy
+var purchase = {
+    items: [{ id: "xl-tshirt" }]
+  };
+
+// Disable the button until we have Stripe set up on the page
+document.querySelector("button").disabled = true;
+
+fetch('/create-payment-intent', {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(purchase)
+})
+  .then(function(result) {
+    return result.json();
+  })
+  .then(function(data) {
+    var elements = stripe.elements();
+    var style = {
+      base: {
+        color: "#32325d",
+        fontFamily: 'Arial, sans-serif',
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+          color: "#32325d"
+        }
+      },
+      invalid: {
+        fontFamily: 'Arial, sans-serif',
+        color: "#fa755a",
+        iconColor: "#fa755a"
+      }
+    };
+
+    var card = elements.create("card", { style: style });
+    // Stripe injects an iframe into the DOM
+    card.mount("#card-element");
+
+    card.on("change", function (event) {
+        // Disable the Pay button if there are no card details in the Element
+        $("button").attr("disabled", event.empty);
+        document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+    });
+
+    var form = document.getElementById("payment-form");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      // Complete payment when the submit button is clicked
+      payWithCard(stripe, card, data.clientSecret);
+    });
+  });
+
+// Calls stripe.confirmCardPayment
+// If the card requires authentication Stripe shows a pop-up modal to
+// prompt the user to enter authentication details without leaving your page.
+var payWithCard = function(stripe, card, clientSecret) {
+    loading(true);
+    stripe
+      .confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card
+        }
+      })
+      .then(function(result) {
+        if (result.error) {
+          // Show error to your customer
+          showError(result.error.message);
+        } else {
+          // The payment succeeded!
+          orderComplete(result.paymentIntent.id);
+        }
+      });
+};
+
+  /* ------- UI helpers ------- */
+// Shows a success message when the payment is complete
+var orderComplete = function(paymentIntentId) {
+    loading(false);
+    document
+      .querySelector(".result-message a")
+      .setAttribute(
+        "href",
+        "https://dashboard.stripe.com/test/payments/" + paymentIntentId
+      );
+    document.querySelector(".result-message").classList.remove("hidden");
+    document.querySelector("button").disabled = true;
+  };
+
+// Show the customer the error from Stripe if their card fails to charge
+var showError = function(errorMsgText) {
+    loading(false);
+    var errorMsg = document.querySelector("#card-error");
+    errorMsg.textContent = errorMsgText;
+    setTimeout(function() {
+    errorMsg.textContent = "";
+    }, 4000);
+};
+
+// Show a spinner on payment submission
+var loading = function(isLoading) {
+    if (isLoading) {
+      // Disable the button and show a spinner
+      document.querySelector("button").disabled = true;
+      document.querySelector("#spinner").classList.remove("hidden");
+      document.querySelector("#button-text").classList.add("hidden");
+    } else {
+      document.querySelector("button").disabled = false;
+      document.querySelector("#spinner").classList.add("hidden");
+      document.querySelector("#button-text").classList.remove("hidden");
+    }
+  };
+
+function submitAdForm() {
+    var formData = new FormData();
+
+    formData.append("title", $("#titleInput_id").val());
+    formData.append("description", $("#descriptionInput_id").val());
+    formData.append("neighbourhood", $("#areaInput_id").val());
+
+    formData.append("streetadress", $("#create_ad_street_id").val());
+    formData.append("streetnumber", $("#create_ad_streetnumber_id").val());
+    formData.append("postalcode", $("#create_ad_postalcode_id").val());
+    formData.append("city", $("#create_ad_city_id").val());
+
+    formData.append("startdate", $("#ad_start_id").val());
+    formData.append("enddate", $("#ad_end_id").val());
+
+    formData.append("squaremetres", $("#create_ad_kvm_id").val());
+    formData.append("price", $("#create_ad_price_id").val());
+    formData.append("beds", $("#create_ad_beds_id").val());
+    formData.append("accommodationtype", $("#accomodation_Type_Select_id").val());
+
+
+
+    var bike = $("#create_ad_bike_id").prop("checked");
+    var dishwasher = $("#create_ad_dishwasher_id").prop("checked");
+    var wifi = $("#create_ad_wifi_id").prop("checked");
+    var sauna = $("#create_ad_sauna_id").prop("checked");
+    var washingmachine = $("#create_ad_washingmachine_id").prop("checked");
+
+    var attributes = "";
+
+    if (bike != false) {
+        attributes = attributes + "'bike' ";
+    }
+    if (dishwasher != false) {
+        attributes = attributes + "''dishwasher' ";
+    }
+    if (wifi != false) {
+        attributes = attributes + "'wifi' ";
+    }
+    if (sauna != false) {
+        attributes = attributes + "'sauna' ";
+    }
+    if (washingmachine != false) {
+        attributes = attributes + "'washingmachine' ";
+    }
+
+    formData.append("attributes", attributes);
+
+
+    formData.append("file", saved_input);
+    saved_input = null;
+
+    $.ajax({
+        url: host + '/ad/create',
+        type: 'POST',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (successMessage) {
+            go_my_page();
+        }
+    })
+
 }
