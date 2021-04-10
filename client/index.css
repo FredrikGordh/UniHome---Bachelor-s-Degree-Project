@@ -42,7 +42,11 @@ label {
 }
 
 #home-reviews {
-  background-color: aqua;
+  background-color: #F0F8FF;
+  height: 800px;
+  padding: 100px;
+  text-align: center;
+  color: black;
 }
 #home-now-hot {
   background-color: red;
@@ -61,7 +65,6 @@ label {
   
   transition: color 0.3s ease;
 }
-  
   
 #menuToggle input{
   display: block;
@@ -261,7 +264,44 @@ label {
   height: 75vh;
 }
 
+#area_facts {
+  position: absolute;
+  top: 100px;
+  left: calc(100vw - 40vw);
+}
+
 /* Klasser */
+
+.testamonial {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-webkit-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-moz-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+}
+
+.testamonial .img {
+  border-radius: 100px;
+  width: 150px;
+  height: 150px;
+  background-image: url("Media/craig-mckay-jmURdhtm7Ng-unsplash.jpg");
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  margin: 0 auto;
+}
+
+.facts_content {
+  width: 20vw;
+  background-color: white;
+  border-radius: 20px;
+  color: black;
+  min-width: 30vw;
+  width: 20vw;
+  box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-webkit-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-moz-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+}
 
 .popup-bubble {
   /* Position the bubble centred-above its parent. */
@@ -293,16 +333,6 @@ label {
   color: black;
 }
 
-.map_text{
-  position: absolute;
-  top: 100px;
-  left: 50%;
-  transform: translate(-50%,0);
-  z-index: 1;
-  color: black;
-  width: 100%;
-}
-
 .map_text h1{
     font-size: 80px;
     font-weight: bolder;
@@ -313,7 +343,7 @@ label {
   .map_text h1{
     font-size: 25px;
     text-align: center;
-}
+  }
 }
 
 .search_button {
@@ -372,6 +402,10 @@ a:hover{
   margin: 0;
   padding: 0;
 }  
+
+.section a {
+  color: black;
+}
 
 .navbar-style{
   background-color: rgba(0,0,0,0.5);
