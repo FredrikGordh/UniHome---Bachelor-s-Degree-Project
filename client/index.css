@@ -43,7 +43,11 @@ label {
 }
 
 #home-reviews {
-  background-color: aqua;
+  background-color: #F0F8FF;
+  height: 800px;
+  padding: 100px;
+  text-align: center;
+  color: black;
 }
 #home-now-hot {
   background-color: red;
@@ -177,6 +181,7 @@ label {
 
 #content {
     padding: 0;
+    margin-top: -100px;
 }
 
 #home_container {
@@ -225,6 +230,8 @@ label {
   border-radius: 37px;
   margin: 50px;
   height: 8vh;
+  min-height: 60px;
+  max-height: 100px;
 }
 
 #search_page_container {
@@ -285,10 +292,49 @@ label {
 
 
 #map {
-  height: 75vh;
+  height: 694px;
+  -webkit-mask-box-image: url(Media/map.svg) 1 repeat;
+  mask-border: url(Media/map.svg) 1 repeat;
+}
+
+#area_facts {
+  position: absolute;
+  top: 100px;
+  left: calc(100vw - 40vw);
 }
 
 /* Klasser */
+
+.testamonial {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-webkit-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-moz-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+}
+
+.testamonial .img {
+  border-radius: 100px;
+  width: 150px;
+  height: 150px;
+  background-image: url("Media/craig-mckay-jmURdhtm7Ng-unsplash.jpg");
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  margin: 0 auto;
+}
+
+.facts_content {
+  width: 20vw;
+  background-color: white;
+  border-radius: 20px;
+  color: black;
+  min-width: 30vw;
+  width: 20vw;
+  box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-webkit-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-moz-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+}
 
 .popup-bubble {
   /* Position the bubble centred-above its parent. */
@@ -359,7 +405,7 @@ label {
   .map_text h1{
     font-size: 25px;
     text-align: center;
-}
+  }
 }
 .my_accomodation {
   background-color: white;
@@ -383,8 +429,6 @@ label {
 .read_more_button {
   border-radius: 70px;
 }
-
-
 
 .read_more_description{
   background-color: white;
@@ -503,10 +547,15 @@ a:hover{
   padding: 0;
 }  
 
+.section a {
+  color: black;
+}
+
 .clickable_class{
   color:red;
   cursor: pointer;
 }  
+
 .navbar-style{
   background-color: rgba(0,0,0,0.5);
   position: fixed;

@@ -200,6 +200,32 @@ $(document).ready(function () {
         load_ads();
     });
 
+    //My page menu: go to ads
+    $("#content").on("click", "#map_ryd", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#ryd_view").html());
+    });
+    //My page menu: go to ads
+    $("#content").on("click", "#map_lambohov", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#lambohov_view").html());
+    });
+    //My page menu: go to ads
+    $("#content").on("click", "#map_valla", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#valla_view").html());
+    });
+    //My page menu: go to ads
+    $("#content").on("click", "#map_vasastaden", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#vasastaden_view").html());
+    });
+    //My page menu: go to ads
+    $("#content").on("click", "#map_gotfridsberg", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#gotfridsberg_view").html());
+    });
+
     //My page: approve tenant
     $("#content").on("click", ".book_ad_button", function (e) {
         e.preventDefault();
@@ -233,25 +259,26 @@ function go_home() {
     $("#content").html($("#home_page").html());
     load_home_search_dropdowns();
     load_burger();
+    $("#area_facts").html($("#default_view").html());
 
     let map, popup;
     map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 58.40241681113258, lng: 15.621244664416542 },
-        zoom: 13.2,
+        center: { lat: 58.40241681113258, lng: 15.651244664416542 },
+        zoom: 13,
         disableDefaultUI: true,
     });
     const citymap = {
         ryd: {
             center: { lat: 58.41320706527976, lng: 15.566379297129107 },
-            size: 50,
+            size: 60,
         },
         valla: {
             center: { lat: 58.405844557880265, lng: 15.5949486961521 },
-            size: 50,
+            size: 40,
         },
         vasastaden: {
             center: { lat: 58.418598933014735, lng: 15.612839650705164 },
-            size: 50,
+            size: 30,
         },
         gotfridsberg: {
             center: { lat: 58.414188119723406, lng: 15.596067756828468 },
@@ -259,7 +286,7 @@ function go_home() {
         },
         lambohov: {
             center: { lat: 58.382892422235216, lng: 15.561087706177256 },
-            size: 50,
+            size: 70,
         },
     };
     for (const city in citymap) {
