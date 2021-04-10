@@ -180,6 +180,7 @@ label {
 
 #content {
     padding: 0;
+    margin-top: -100px;
 }
 
 #home_container {
@@ -228,6 +229,8 @@ label {
   border-radius: 37px;
   margin: 50px;
   height: 8vh;
+  min-height: 60px;
+  max-height: 100px;
 }
 
 #search_page_container {
@@ -261,7 +264,9 @@ label {
 }
 
 #map {
-  height: 75vh;
+  height: 694px;
+  -webkit-mask-box-image: url(Media/map.svg) 1 repeat;
+  mask-border: url(Media/map.svg) 1 repeat;
 }
 
 #area_facts {
