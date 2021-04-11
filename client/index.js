@@ -260,11 +260,20 @@ function go_home() {
     load_home_search_dropdowns();
     load_burger();
     $("#area_facts").html($("#default_view").html());
+    let coord;
+    let z;
+    if (screen.width < 992) {
+        coord = { lat: 58.40241681113258, lng: 15.590244664416542 }
+        z = 12.3;
+    } else {
+        coord = { lat: 58.40241681113258, lng: 15.651244664416542 }
+        z = 13;
+    }
 
     let map, popup;
     map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 58.40241681113258, lng: 15.651244664416542 },
-        zoom: 13,
+        center: coord,
+        zoom: z,
         disableDefaultUI: true,
     });
     const citymap = {
@@ -619,11 +628,11 @@ function login_request(user) {
             sessionStorage.setItem('auth', JSON.stringify(response));
             go_home();
         }
-        ,error: function(){
+        , error: function () {
             $("#login_failed_container").html("Dina inloggningsuppgifter är felaktiga.");
         }
     })
-    
+
 }
 
 //Function for making a register request 
@@ -636,14 +645,14 @@ function register_request(user) {
             go_registered_page();
         },
         statusCode: {
-            500: function() {
-               alert('fyll i alla fält horunge');
+            500: function () {
+                alert('fyll i alla fält horunge');
             },
-            409 : function(){
+            409: function () {
                 $("#register_failed_container").html("Den här email-adressen används redan!");
             }
         }
-            
+
     })
 }
 
@@ -708,7 +717,7 @@ function load_read_more(ad_id) {
             $("#read_more_ad_startdate").html(ad.startdate);
             $("#read_more_ad_enddate").html(ad.enddate);
             $("#read_more_ad_squaremetres").html(ad.squaremetres + " kvm");
-            $("#read_more_ad_price").html( ad.price + " kr");
+            $("#read_more_ad_price").html(ad.price + " kr");
             $("#read_more_ad_beds").html(ad.beds + " st");
             $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
@@ -880,8 +889,12 @@ function submit_home_search_form() {
         type: $("#home_select_type").val(),
         attributes: $("#home_select_attr").val()
     }
-    sessionStorage.setItem('search', JSON.stringify(search));
-    go_search();
+    if (search.start > search.end && search.start != "" && search.end != "") {
+        alert("Inflytt måste vara före utflytt");
+    } else {
+        sessionStorage.setItem('search', JSON.stringify(search));
+        go_search();
+    }
 }
 
 function update_search() {
@@ -906,11 +919,18 @@ function update_search() {
         end: $("#search_page_select_end").val(),
         attributes: $("#search_page_select_attr").val(),
     }
-    sessionStorage.setItem('search', JSON.stringify(search));
-    sessionStorage.setItem('sort', JSON.stringify(sort));
-    sessionStorage.setItem('sort_param', JSON.stringify(sort_param));
+    console.log(search.start)
+    console.log(search.end)
+    if (search.start > search.end && search.start != "" && search.end != "") {
+        alert("Inflytt måste vara före utflytt");
+    } else {
+        sessionStorage.setItem('search', JSON.stringify(search));
+        sessionStorage.setItem('sort', JSON.stringify(sort));
+        sessionStorage.setItem('sort_param', JSON.stringify(sort_param));
 
-    load_ads_request(search, sort, sort_param);
+        load_ads_request(search, sort, sort_param);
+    }
+
 }
 
 // ------- BETALNING -----------
@@ -922,117 +942,117 @@ var stripe = Stripe("pk_test_51IdXd9I1LSmMkwS01UZ3P15rGwgKS2FVNDj7puij4jKSK9qHTz
 // The items the customer wants to buy
 var purchase = {
     items: [{ id: "xl-tshirt" }]
-  };
+};
 
 // Disable the button until we have Stripe set up on the page
 document.querySelector("button").disabled = true;
 
 fetch('/create-payment-intent', {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(purchase)
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(purchase)
 })
-  .then(function(result) {
-    return result.json();
-  })
-  .then(function(data) {
-    var elements = stripe.elements();
-    var style = {
-      base: {
-        color: "#32325d",
-        fontFamily: 'Arial, sans-serif',
-        fontSmoothing: "antialiased",
-        fontSize: "16px",
-        "::placeholder": {
-          color: "#32325d"
-        }
-      },
-      invalid: {
-        fontFamily: 'Arial, sans-serif',
-        color: "#fa755a",
-        iconColor: "#fa755a"
-      }
-    };
+    .then(function (result) {
+        return result.json();
+    })
+    .then(function (data) {
+        var elements = stripe.elements();
+        var style = {
+            base: {
+                color: "#32325d",
+                fontFamily: 'Arial, sans-serif',
+                fontSmoothing: "antialiased",
+                fontSize: "16px",
+                "::placeholder": {
+                    color: "#32325d"
+                }
+            },
+            invalid: {
+                fontFamily: 'Arial, sans-serif',
+                color: "#fa755a",
+                iconColor: "#fa755a"
+            }
+        };
 
-    var card = elements.create("card", { style: style });
-    // Stripe injects an iframe into the DOM
-    card.mount("#card-element");
+        var card = elements.create("card", { style: style });
+        // Stripe injects an iframe into the DOM
+        card.mount("#card-element");
 
-    card.on("change", function (event) {
-        // Disable the Pay button if there are no card details in the Element
-        $("button").attr("disabled", event.empty);
-        document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+        card.on("change", function (event) {
+            // Disable the Pay button if there are no card details in the Element
+            $("button").attr("disabled", event.empty);
+            document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+        });
+
+        var form = document.getElementById("payment-form");
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            // Complete payment when the submit button is clicked
+            payWithCard(stripe, card, data.clientSecret);
+        });
     });
-
-    var form = document.getElementById("payment-form");
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
-      // Complete payment when the submit button is clicked
-      payWithCard(stripe, card, data.clientSecret);
-    });
-  });
 
 // Calls stripe.confirmCardPayment
 // If the card requires authentication Stripe shows a pop-up modal to
 // prompt the user to enter authentication details without leaving your page.
-var payWithCard = function(stripe, card, clientSecret) {
+var payWithCard = function (stripe, card, clientSecret) {
     loading(true);
     stripe
-      .confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: card
-        }
-      })
-      .then(function(result) {
-        if (result.error) {
-          // Show error to your customer
-          showError(result.error.message);
-        } else {
-          // The payment succeeded!
-          orderComplete(result.paymentIntent.id);
-        }
-      });
+        .confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: card
+            }
+        })
+        .then(function (result) {
+            if (result.error) {
+                // Show error to your customer
+                showError(result.error.message);
+            } else {
+                // The payment succeeded!
+                orderComplete(result.paymentIntent.id);
+            }
+        });
 };
 
-  /* ------- UI helpers ------- */
+/* ------- UI helpers ------- */
 // Shows a success message when the payment is complete
-var orderComplete = function(paymentIntentId) {
+var orderComplete = function (paymentIntentId) {
     loading(false);
     document
-      .querySelector(".result-message a")
-      .setAttribute(
-        "href",
-        "https://dashboard.stripe.com/test/payments/" + paymentIntentId
-      );
+        .querySelector(".result-message a")
+        .setAttribute(
+            "href",
+            "https://dashboard.stripe.com/test/payments/" + paymentIntentId
+        );
     document.querySelector(".result-message").classList.remove("hidden");
     document.querySelector("button").disabled = true;
-  };
+};
 
 // Show the customer the error from Stripe if their card fails to charge
-var showError = function(errorMsgText) {
+var showError = function (errorMsgText) {
     loading(false);
     var errorMsg = document.querySelector("#card-error");
     errorMsg.textContent = errorMsgText;
-    setTimeout(function() {
-    errorMsg.textContent = "";
+    setTimeout(function () {
+        errorMsg.textContent = "";
     }, 4000);
 };
 
 // Show a spinner on payment submission
-var loading = function(isLoading) {
+var loading = function (isLoading) {
     if (isLoading) {
-      // Disable the button and show a spinner
-      document.querySelector("button").disabled = true;
-      document.querySelector("#spinner").classList.remove("hidden");
-      document.querySelector("#button-text").classList.add("hidden");
+        // Disable the button and show a spinner
+        document.querySelector("button").disabled = true;
+        document.querySelector("#spinner").classList.remove("hidden");
+        document.querySelector("#button-text").classList.add("hidden");
     } else {
-      document.querySelector("button").disabled = false;
-      document.querySelector("#spinner").classList.add("hidden");
-      document.querySelector("#button-text").classList.remove("hidden");
+        document.querySelector("button").disabled = false;
+        document.querySelector("#spinner").classList.add("hidden");
+        document.querySelector("#button-text").classList.remove("hidden");
     }
-  };
+};
 
 function submitAdForm() {
     var formData = new FormData();
