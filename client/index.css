@@ -200,7 +200,10 @@ label {
 }
 
 #header{
-  background-color: paleturquoise;
+  background-image: url(media/aboutusheader.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: none;
   color:black;
   width: 100%;
   height: 100vh;
@@ -309,7 +312,84 @@ label {
   left: calc(100vw - 40vw);
 }
 
+#about_us_header {
+  width: 100vw;
+  height: 80vh;
+  background-image: url(Media/aboutusheader.jpg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  text-align: center;
+  padding-top: 30vh;  
+}
+
+#about_us_header h1 {
+    font-weight: bolder;
+    font-size: 150px;
+    color: white;
+}
+
+#about_us_page_container {
+  text-align: center;
+  color: black;
+}
+
+#about_us_page_container h2{
+  font-size: 60px;
+}
+
+#about_us_page_container p{
+  font-size: 25px;
+  line-height: 45px;
+}
+
+#parallax {
+  width: 100vw;
+  height: 400px;
+  background-image: url(media/parallax.jpg);
+  background-attachment: fixed;
+  background-repeat: none;
+  background-size: cover;
+  background-position: center;
+}
+
+#ines {
+  background-image: url(media/craig-mckay-jmURdhtm7Ng-unsplash.jpg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  border-radius: 200px;
+  height: 350px;
+  width: 350px;
+  margin: 0 auto;
+}
+
+#jakob {
+  background-image: url(media/craig-mckay-jmURdhtm7Ng-unsplash.jpg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  border-radius: 200px;
+  height: 250px;
+  width: 250px;
+  margin: 0 auto;
+}
+
+#staff {
+  text-align: center;
+  color: black;
+  font-size: 30px;
+  margin: 200px 0;
+}
 /* Klasser */
+
+.our_start {
+  height: 80vh;
+}
+
+.vision {
+  height: 70vh;
+}
 
 .testamonial {
   background-color: white;
