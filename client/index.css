@@ -1,6 +1,6 @@
 body{
   /* make it look decent enough */
-  background: #333333;
+  background: white;
   color: #cdcdcd;
   font-family: "Avenir Next", "Avenir", sans-serif;
   z-index: -2;
@@ -30,6 +30,7 @@ label {
 
 #navbar-logo{
   width: 10vw;
+  min-width: 100px;
 }
 
 #menuToggle
@@ -44,7 +45,7 @@ label {
 
 #home-reviews {
   background-color: #F0F8FF;
-  padding: 100px;
+  padding-top: 100px;
   text-align: center;
   color: black;
 }
@@ -184,7 +185,7 @@ label {
 }
 
 #home_container {
-  margin-top: 1080px;
+  margin-top: 100vh;
   padding: 0;
 }
 
@@ -202,7 +203,7 @@ label {
   background-color: paleturquoise;
   color:black;
   width: 100%;
-  height: 1080px;
+  height: 100vh;
   position: absolute;
   top: 0;
   padding-top: 35vh;
@@ -292,8 +293,14 @@ label {
 
 #map {
   height: 694px;
-  -webkit-mask-box-image: url(Media/map.svg) 1 repeat;
-  mask-border: url(Media/map.svg) 1 repeat;
+  -webkit-mask-box-image: url(Media/map.svg);
+  -webkit-mask-position: top;
+  -webkit-mask-repeat: none;
+  -webkit-mask-size: cover;
+  mask-border: url(Media/map.svg);
+  mask-repeat: none;
+  mask-position: top;
+  mask-size: cover;
 }
 
 #area_facts {
@@ -316,6 +323,8 @@ margin: 0 auto;
 .testamonial .img {
   border-radius: 100px;
   width: 150px;
+  max-width: 30vw;
+  max-height: 30vw;
   height: 150px;
   background-image: url("Media/craig-mckay-jmURdhtm7Ng-unsplash.jpg");
   background-position: center;
