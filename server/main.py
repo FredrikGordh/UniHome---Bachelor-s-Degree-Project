@@ -37,8 +37,9 @@ bcrypt = Bcrypt(app)
 # Set your secret key. Remember to switch to your live secret key in production.
 # See your keys here: https://dashboard.stripe.com/account/apikeys
 
-#BETALNING_______________________creat
+# BETALNING_______________________creat
 stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfFOz1e8wgFJduwU1uJCvtrspqIeelpu7RuJjZ00j0qjVnl8"
+
 
 def calculate_order_amount(items):
     # Replace this constant with a calculation of the order's amount
@@ -52,7 +53,8 @@ def calculate_order_amount(items):
 #   payment_method_types=['card'],
 #   receipt_email='jenny.rosen@example.com',
 # )
-#__________________________________
+# __________________________________
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -141,8 +143,9 @@ class Ad(db.Model):
                     reserved=self.reserved,
                     booked=self.booked,
                     paid=self.paid,
-                    attributes=Attributes.query.filter_by(ad_id=self.id).first().serialize(),
-                    image = Image.query.filter_by(ad_id=self.id).first().serialize())
+                    attributes=Attributes.query.filter_by(
+                        ad_id=self.id).first().serialize(),
+                    image=Image.query.filter_by(ad_id=self.id).first().serialize())
 
 
 # The class attributes contains all the attributes of ad that has a boolean.
@@ -452,7 +455,8 @@ def types():
         type_list.append(type)
     return jsonify(type_list)
 
-#BETALNING__________________________________
+# BETALNING__________________________________
+
 
 @app.route('/create-payment-intent', methods=['POST'])
 def create_payment():
@@ -464,12 +468,13 @@ def create_payment():
             currency='usd'
         )
         return jsonify({
-          'clientSecret': intent['client_secret']
+            'clientSecret': intent['client_secret']
         })
     except Exception as e:
         return jsonify(error=str(e)), 403
 
-#___________________________________________
+# ___________________________________________
+
 
 exec(open('script.py').read())
 
