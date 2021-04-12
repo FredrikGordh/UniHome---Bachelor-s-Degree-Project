@@ -200,7 +200,8 @@ label {
 }
 
 #header{
-  background-image: url(media/aboutusheader.jpg);
+  background-image: url(Media/aboutusheader.jpg);
+  background-color: black;
   background-position: center;
   background-size: cover;
   background-repeat: none;
@@ -231,16 +232,21 @@ label {
 #home_search {
   background-color: white;
   border-radius: 37px;
-  margin: 50px;
+  margin: 15px;
   height: 8vh;
   min-height: 60px;
   max-height: 100px;
 }
 
+/* #home_search_filters {
+  margin: 10px;
+  border-radius: 37px;
+} */
+
 #search_page_container {
   color: white;
   margin-top: 10vh;
-  padding-bottom: 10vh;
+  padding-bottom: 5vh;
 }
 
 #search_result {
@@ -248,7 +254,7 @@ label {
 }
 
 #contact_page_container {
-  margin-top: 10vh;
+  margin-top: 15vh;
   margin-bottom: 10vh;
 }
 
@@ -257,13 +263,17 @@ label {
   margin-bottom: 10vh;
 }
 
+#create_ad_page_container{
+  marigin-top: 50
+}
+
 #help_page_container {
-  margin-top: 10vh;
+  margin-top: 15vh;
   margin-bottom: 10vh;
 }
 
 #my_page_container {
-  margin-top: 10vh;
+  margin-top: 15vh;
   margin-bottom: 10vh;
 }
 #readmore_img {
@@ -386,6 +396,8 @@ label {
   font-size: 30px;
   margin: 200px 0;
 }
+
+
 /* Klasser */
 
 .our_start {
@@ -603,6 +615,7 @@ clear: both;}
   background-color: black;
   color:white;
   width: 100%;
+  margin-top: 100px; 
 }
 
 .failed_container{
@@ -621,6 +634,11 @@ a:hover{
 
 .footer a{
   color: white;
+}
+
+.last_footer {
+  margin: 50px;
+
 }
 
 .section{
