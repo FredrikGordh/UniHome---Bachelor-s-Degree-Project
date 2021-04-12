@@ -252,10 +252,40 @@ label {
   margin-bottom: 10vh;
 }
 
+/* NEW AD PAGE */
+
 #new_ad_page_container {
-  margin-top: 10vh;
-  margin-bottom: 10vh;
+  background-color: #F0F8FF;
+   margin-top: 10vh; 
+  /* margin-bottom: 10vh; */
 }
+
+#new_ad_page_section{
+  background-color: #F0F8FF;
+}
+
+#new_ad_page{
+  background-color: #F0F8FF;
+}
+
+.ad_input{
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid rgb(196, 196, 196);
+  font-size: 20px;
+}
+
+#new_ad_page_container label{
+  font-size: 20px;
+  color: #113030;
+}
+
+.ad_options{
+  border-bottom: 1px solid rgb(196, 196, 196);
+  font-size: x-large;
+}
+
 
 #help_page_container {
   margin-top: 10vh;
