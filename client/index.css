@@ -312,16 +312,20 @@ label {
   color: black;
 }
 
-.accomodation h1 {
-  
+.accomodation div {
+  /* margin: 20px; */
+}
+
+.accomodation button {
+  margin: 20px;
 }
 
 .accomodation img {
-  width: 300px;
-  height: 300px;
+  /* width: 300px; */
+  /*height: 300px;*/
+  width: 100%;
   overflow: hidden;
   border-radius: 20px;
-  margin: 20px;
 }
 
 .accomodation button {
@@ -373,7 +377,11 @@ label {
   border-radius: 70px;
 }
 
-
+.title_id:hover {
+  color: black;
+  text-decoration: none;
+  background-color: rgb(228, 228, 228);
+}
 
 .read_more_description{
   background-color: white;

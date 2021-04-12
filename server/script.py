@@ -9,34 +9,46 @@ import datetime
 db.drop_all()
 db.create_all()
 
-user1 = User(name="jakob", email="jakob@google.com",
-             telephone="0700222144", gender="male", birthdate=datetime.date(2000, 1, 1))
+user1 = User(name="Jakob Fogelberg", email="jakob@google.com",
+             telephone="0700222144", gender="Man", birthdate=datetime.date(2000, 1, 1))
 User.set_password(user1, "jakob")
 db.session.add(user1)
 db.session.commit()
 
-user2 = User(name="albin", email="albin@google.com",
-             telephone="0152-15215", gender="male", birthdate=datetime.date(2000, 1, 1))
+user2 = User(name="Albin Janzén", email="albin@google.com",
+             telephone="0152-15215", gender="Man", birthdate=datetime.date(2000, 1, 1))
 User.set_password(user2, "albin")
 db.session.add(user2)
 db.session.commit()
 
-user3 = User(name="ines", email="ines@google.com",
-             telephone="112", gender="female", birthdate=datetime.date(2000, 1, 1))
+user3 = User(name="Ines Diezengremel", email="ines@google.com",
+             telephone="112", gender="Kvinna", birthdate=datetime.date(2000, 1, 1))
 User.set_password(user3, "ines")
 db.session.add(user3)
 db.session.commit()
 
-user4 = User(name="emeli", email="emeli@google.com",
-             telephone="114 14", gender="female", birthdate=datetime.date(2000, 1, 1))
+user4 = User(name="Emeli Anjel Lachas", email="emeli@google.com",
+             telephone="114 14", gender="Kvinna", birthdate=datetime.date(2000, 1, 1))
 User.set_password(user4, "emeli")
 db.session.add(user4)
 db.session.commit()
 
-user5 = User(name="Fredrik", email="fredrik@google.com",
-             telephone="114 14", gender="male", birthdate=datetime.date(2000, 1, 1))
+user5 = User(name="Fredrik Gordh", email="fredrik@google.com",
+             telephone="114 14", gender="Man", birthdate=datetime.date(2000, 1, 1))
 User.set_password(user5, "fredrik")
 db.session.add(user5)
+db.session.commit()
+
+user6 = User(name="Joel Einarsson", email="joel@google.com",
+             telephone="114 14", gender="Man", birthdate=datetime.date(2000, 1, 1))
+User.set_password(user6, "joel")
+db.session.add(user6)
+db.session.commit()
+
+user7 = User(name="Gustav Berling", email="gustav@google.com",
+             telephone="114 14", gender="Man", birthdate=datetime.date(2000, 1, 1))
+User.set_password(user7, "gustav")
+db.session.add(user7)
 db.session.commit()
 
 ad1 = Ad(title="Trevligt boende", description="En mindre 2:a med kök som fungerar perfekt som studentboende. Boendet ligger i stadsdelen Gottfridsberg, nära till både studentpub Flamman och till den fina stadskärnan. Minst 2 nätter sammanhängande och uthyres endast till rök- och djurfria hyresgäster.",
@@ -133,4 +145,4 @@ db.session.commit()
 
 
 
-print("You have now cleared everything that was in the database and created 5 users and 7 ads")
+print("You have now cleared everything that was in the database and created 7 users and 7 ads")
