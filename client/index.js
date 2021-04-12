@@ -234,6 +234,8 @@ $(document).ready(function () {
 
 //----Nav functions:
 
+
+
 //Function for going to view: Home_page
 function go_home() {
     $("#content").html($("#home_page").html());
@@ -678,6 +680,24 @@ function load_read_more(ad_id) {
             $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
             $("#readmore_img").attr("src", ad.image.url);
+
+        
+        parameters = "address=" + ad.streetnumber + "%20" + ad.streetaddress + "%20" + ad.city + "%20" + "Sweden";
+        
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/geocode/json?" + parameters + "&key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs",
+            type: 'GET',
+            success: function (coordinates) {
+                var coord = coordinates.results[0].geometry.location;
+                let map, popup;
+                map = new google.maps.Map(document.getElementById("map2"), {
+                //center: {coordinates.results[0].geometry.location},
+                zoom: 13.2,
+                disableDefaultUI: true,
+            });            
+            }
+            
+        })
         }
     })
 }
