@@ -221,9 +221,9 @@ $(document).ready(function () {
         $("#area_facts").html($("#vasastaden_view").html());
     });
     //My page menu: go to ads
-    $("#content").on("click", "#map_gotfridsberg", function (e) {
+    $("#content").on("click", "#map_gottfridsberg", function (e) {
         e.preventDefault();
-        $("#area_facts").html($("#gotfridsberg_view").html());
+        $("#area_facts").html($("#gottfridsberg_view").html());
     });
 
     //My page: approve tenant
@@ -289,7 +289,7 @@ function go_home() {
             center: { lat: 58.418598933014735, lng: 15.612839650705164 },
             size: 30,
         },
-        gotfridsberg: {
+        gottfridsberg: {
             center: { lat: 58.414188119723406, lng: 15.596067756828468 },
             size: 50,
         },
@@ -371,7 +371,7 @@ function go_home() {
     );
     popup4 = new Popup(
         new google.maps.LatLng(58.414188119723406, 15.596067756828468),
-        document.getElementById("gotfridsberg")
+        document.getElementById("gottfridsberg")
     );
     popup5 = new Popup(
         new google.maps.LatLng(58.382892422235216, 15.561087706177256),
