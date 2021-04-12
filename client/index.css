@@ -279,6 +279,11 @@ label {
   margin-top: 100px;
   margin-bottom: 100px;
 }
+
+#read_more_map{
+  border-radius: 20px;
+}
+
 #successfully_registered_page_container {
   margin-top: 100px;
   margin-bottom: 100px;
@@ -495,7 +500,9 @@ margin: 0 auto;
   .map_text h1{
     font-size: 25px;
     text-align: center;
+    border-radius: 20px;
   }
+
 }
 .my_accomodation {
   background-color: white;
@@ -589,6 +596,8 @@ clear: both;}
   /* font-weight: bolder; */
 
 }
+
+
 
 .footer{
   background-color: black;
