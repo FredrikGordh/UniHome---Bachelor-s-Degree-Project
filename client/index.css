@@ -456,7 +456,7 @@ margin: 0 auto;
 }
 
 .accomodation div {
-  margin: 20px;
+  /* margin: 20px; */
 }
 
 .accomodation button {
@@ -464,8 +464,9 @@ margin: 0 auto;
 }
 
 .accomodation img {
-  width: 300px;
-  height: 300px;
+  /* width: 300px; */
+  /*height: 300px;*/
+  width: 100%;
   overflow: hidden;
   border-radius: 20px;
 }
@@ -517,6 +518,12 @@ margin: 0 auto;
 
 .read_more_button {
   border-radius: 70px;
+}
+
+.title_id:hover {
+  color: black;
+  text-decoration: none;
+  background-color: rgb(228, 228, 228);
 }
 
 .read_more_description{
