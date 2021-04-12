@@ -459,15 +459,16 @@ function go_confirmation_page() {
 function load_account_info() {
     $("#my_page_content").html($("#my_page_account_info").html());
     var user = JSON.parse(sessionStorage.getItem('auth')).user
-    $("#my_page_name").html("Fullt namn: " + user.name);
-    $("#my_page_email_and_tel").html("Tel: " + user.telephone + " <br>Email: " + user.email);
+    $("#my_page_name").html("Namn: " + user.name);
+    $("#my_page_email_and_tel").html("Telefonnummer: " + user.telephone + " <br>E-mail: " + user.email);
+
     if (user.bio) {
-        $("#my_page_bio_text").css('color', 'white');
+        $("#my_page_bio_text").css('color', 'black');
         $("#my_page_bio_text").html(user.bio);
     }
     else {
-        $("#my_page_bio_text").css('color', 'red');
-        $("#my_page_bio_text").html("Du har inte lagt till någon text om dig själv än,<br> lägg till en personlig biografi genom att <br>klicka på \"Redigera min profil\" för större chans att få ditt önskade boende!");
+        $("#my_page_bio_text").css('color', 'grey');
+        $("#my_page_bio_text").html("Du har inte lagt till någon text om dig själv än, lägg till en personlig biografi genom att klicka på \"Redigera min profil\".");
     }
 
 }
@@ -574,6 +575,7 @@ function load_my_ads_request() {
         type: 'GET',
         success: function (ads) {
             ads.forEach(element => {
+                element.image = element.image.url;
                 $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
                 if (element.booked == true) {
                     console.log("booked");
@@ -592,6 +594,7 @@ function load_my_bookings_request() {
         type: 'GET',
         success: function (ads) {
             ads.forEach(element => {
+                element.image = element.image.url;
                 $("#my_page_bookings_container").append(Mustache.render(my_accomodation, element));
             });
         }
