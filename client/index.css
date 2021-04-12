@@ -2,7 +2,7 @@ body{
   /* make it look decent enough */
   background: white;
   color: #cdcdcd;
-  font-family: "Avenir Next", "Avenir", sans-serif;
+  font-family: 'Roboto', sans-serif;
   z-index: -2;
 }
 
@@ -726,7 +726,6 @@ a:hover{
 button {
   background: #5469d4;
   color: #ffffff;
-  font-family: Arial, sans-serif;
   border-radius: 0 0 4px 4px;
   border: 0;
   padding: 12px 16px;
@@ -750,7 +749,6 @@ button:disabled {
 button {
   background: #5469d4;
   color: #ffffff;
-  font-family: Arial, sans-serif;
   border-radius: 0 0 4px 4px;
   border: 0;
   padding: 12px 16px;
@@ -845,7 +843,6 @@ button:disabled {
 
 
 .body1 {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   display: flex;
