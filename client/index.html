@@ -7,6 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <!-- Bootstrap CSS -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="index.css">
@@ -125,13 +129,13 @@
           </div>
         </div>
       </div>
-      <div id="home-areas" class="section">
+      <div id="home-areas" class="section home-areas">
         <div id="map"></div>
-        <div id="ryd"><a href="" id="map_ryd"><h3>Ryd</h3></a></div>
-        <div id="valla"><a href="" id="map_valla"><h3>Valla</h3></a></div>
-        <div id="gottfridsberg"><a href="" id="map_gottfridsberg"><h3>Gottfridsberg</h3></a></div>
-        <div id="vasastaden"><a href="" id="map_vasastaden"><h3>Vasastaden</h3></a></div>
-        <div id="lambohov"><a href="" id="map_lambohov"><h3>Lambohov</h3></a></div>
+        <div id="ryd"><a href="" id="map_ryd"><h5>Ryd</h5></a></div>
+        <div id="valla"><a href="" id="map_valla"><h5>Valla</h5></a></div>
+        <div id="gotfridsberg"><a href="" id="map_gotfridsberg"><h5>Gottfridsberg</h5></a></div>
+        <div id="vasastaden"><a href="" id="map_vasastaden"><h5>Vasastaden</h5></a></div>
+        <div id="lambohov"><a href="" id="map_lambohov"><h5>Lambohov</h5></a></div>
         <div id="area_facts" class="d-none d-lg-block"></div>
       </div>
       <div id="home-reviews" class="section">
@@ -345,26 +349,6 @@
             <option>Annat</option>
           </select>
         </div>
-        <div class="form-row">
-          <div class="form-group col-4">
-            <label for="year_edit">Ändra födelseår</label>
-            <select class="form-control" id="year_edit">
-              <option>Välj ett...</option>
-            </select>            
-          </div>
-          <div class="form-group col-4">
-            <label for="month_edit">Ändra månad</label>
-            <select class="form-control" id="month_edit">
-              <option>Välj en...</option>
-            </select>  
-          </div>
-          <div class="form-group col-4">
-            <label for="day_edit">Ändra födelsedag</label>
-            <select class="form-control" id="day_edit">
-              <option>Välj en...</option>
-            </select>  
-          </div>
-        </div>
         <div class="form-group">
           <label for="phone_edit">Ändra telefonnummer</label>
           <input type="text" class="form-control" id="phone_edit">
@@ -409,19 +393,22 @@
 
   <!-- My page view -->
   <script id="my_page" type="text/html">
+    <div id = "my_page_background">
     <div id="my_page_container" class="container">
-      <h1 id = "my_page_greeting"></h1>
+      
       <div id="my_page_menu" class="row align-items-center justify-content-center">
-        <div class="col-11 col-lg-5 my_page_menuitem m-2 p-4"><a id="new_ad_button" href=""> <div class="row align-items-center"> <h3 class="col-10">Skapa ny annons </h3> <h3 class="col-2 fas fa-plus"></h3> </div> <p>Lägg upp en annons så andra kan hyra din bostad.</p></a> </div>
-        <div class="col-11 col-lg-5 my_page_menuitem m-2 p-4"><a id="account_info_link" href=""> <div class="row align-items-center"> <h3 class="col-10">Mitt konto </h3> <h3 class="col-2 fas fa-user"></h3> </div> <p>Se och redigera dina kontouppgifter.</p></a></div>
-        <div class="col-11 col-lg-5 my_page_menuitem m-2 p-4"><a id="bookings_link" href=""> <div class="row align-items-center"> <h3 class="col-10">Mina bokningar </h3> <h3 class="col-2 fas fa-home"></h3> </div><p>Se och redigera dina bokningar.</p></a></div>
-        <div class="col-11 col-lg-5 my_page_menuitem m-2 p-4"><a id="ads_link" href=""> <div class="row align-items-center"> <h3 class="col-10">Mina annonser </h3> <h3 class="col-2 fas fa-house-user"></h3> </div> <p>Se och redigera dina annonser.</p></a></div>
-        <div class="col-11 col-lg-5 my_page_menuitem m-2 p-4"><a id="history_link" href=""><div class="row align-items-center"> <h3 class="col-10">Min historik </h3> <h3 class="col-2 fas fa-history"></h3> </div><p>Se och kontrollera din bokningshistorik.</p></a></div>
+        <h1 id = "my_page_greeting" class = "col-11 col-lg-11 row align-items-center justify-content-center"></h1>
+        <a class="col-11 col-lg-5 my_page_menuitem m-2 p-4" id="new_ad_button" href=""> <div class="row align-items-center"> <h3 class="col-10">Skapa ny annons </h3> <h3 class="col-2 fas fa-plus"></h3> </div> <p>Lägg upp en annons så andra kan hyra din bostad.</p> </a> 
+        <a class="col-11 col-lg-5 my_page_menuitem m-2 p-4" id="account_info_link" href=""> <div class="row align-items-center"> <h3 class="col-10">Mitt konto </h3> <h3 class="col-2 fas fa-user"></h3> </div> <p>Se och redigera dina kontouppgifter.</p></a>
+        <a class="col-11 col-lg-5 my_page_menuitem m-2 p-4" id="bookings_link" href=""> <div class="row align-items-center"> <h3 class="col-10">Mina bokningar </h3> <h3 class="col-2 fas fa-home"></h3> </div><p>Se och redigera dina bokningar.</p></a>
+        <a class="col-11 col-lg-5 my_page_menuitem m-2 p-4" id="ads_link" href=""> <div class="row align-items-center"> <h3 class="col-10">Mina annonser </h3> <h3 class="col-2 fas fa-house-user"></h3> </div> <p>Se och redigera dina annonser.</p></a>
+        <a class="col-11 col-lg-5 my_page_menuitem m-2 p-4" id="history_link" href=""><div class="row align-items-center"> <h3 class="col-10">Min historik </h3> <h3 class="col-2 fas fa-history"></h3> </div><p>Se och kontrollera din bokningshistorik.</p></a>
       </div>
       <!--Container for loading in dynamic content in my page (ie. edit account, history etc.)-->
       <div id="my_page_content"></div>
       
     </div>
+  </div>
   </script>
 
   <!-- Successfully Registered view -->
@@ -435,12 +422,11 @@
 
   <!-- My page: account view -->
   <script id="my_page_account_info" type="text/html">
-    <div id="my_page_account_info_container" class="my_page_menuitem m-2 p-4">
+    <div id="my_page_account_info_container" class="my_page_account m-2 p-4 col-11 col-lg-11">
       <h1 id="my_page_name"></h1>
       <h3 id="my_page_email_and_tel"></h3>
       <div id="my_page_bio">
-        <div id="my_page_placeholder_img"></div>
-        <h3 id="my_page_bio_header">Om mig:</h3>
+        <h3 id="my_page_bio_header">Min biografi:</h3>
         <div id="my_page_bio_text"></div>
       </div>
       <button type="button" id = "my_page_change_bio_btn">Redigera min profil</button>
@@ -449,21 +435,21 @@
 
   <!-- My page: history view -->
   <script id="my_page_history" type="text/html">
-    <div id="my_page_history_container" class="container">
+    <div id="my_page_history_container" class="container row justify-content-center">
 
     </div>
   </script>
 
   <!-- My page: my bookings view -->
   <script id="my_page_bookings" type="text/html">
-    <div id="my_page_bookings_container" class="container">
+    <div id="my_page_bookings_container" class="container row justify-content-center">
 
     </div>
   </script>
 
   <!-- My page: my ads view -->
   <script id="my_page_ads" type="text/html">
-    <div id="my_page_ads_container" class="row justify-content-center">
+    <div id="my_page_ads_container" class="container row justify-content-center">
       
     </div>
   </script>
@@ -775,6 +761,7 @@
       <div class="row">
        
           <img src="" class="col-7" id="readmore_img">   
+          <div id="read_more_map" class="col-5"></div>
       </div>
       <div class="row">
         <div class = "col-7 read_more_description">
@@ -795,7 +782,7 @@
             </div>
   
             <div class="col-3">
-              <div class= "read_more_accomodationtype">
+              <div class= "read_more_type">
                 <i class="fas fa-building"></i>
                 <h5 id="read_more_ad_accommodationtype"></h5>
               </div>
@@ -837,9 +824,10 @@
             
               <h5 id="read_more_ad_attributes"></h5>
               <div class= "read_more_price">
-                 
-                 <h5 class="fas fa-coins row"  id="read_more_ad_price"  ></h5>
-     
+                <div class="row">
+                  <h5 class="fas fa-coins col-1"></h5>
+                  <h5 class="col-10" id="read_more_ad_price"  ></h5>
+                </div>
               </div>
               <button id="reservation_button" class="btn btn-success">Reservera</button>
         </div>
