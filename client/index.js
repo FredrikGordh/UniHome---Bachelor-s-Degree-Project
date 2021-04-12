@@ -254,6 +254,8 @@ $(document).ready(function () {
 
 //----Nav functions:
 
+
+
 //Function for going to view: Home_page
 function go_home() {
     $("#content").html($("#home_page").html());
@@ -457,15 +459,16 @@ function go_confirmation_page() {
 function load_account_info() {
     $("#my_page_content").html($("#my_page_account_info").html());
     var user = JSON.parse(sessionStorage.getItem('auth')).user
-    $("#my_page_name").html("Fullt namn: " + user.name);
-    $("#my_page_email_and_tel").html("Tel: " + user.telephone + " <br>Email: " + user.email);
+    $("#my_page_name").html("Namn: " + user.name);
+    $("#my_page_email_and_tel").html("Telefonnummer: " + user.telephone + " <br>E-mail: " + user.email);
+
     if (user.bio) {
-        $("#my_page_bio_text").css('color', 'white');
+        $("#my_page_bio_text").css('color', 'black');
         $("#my_page_bio_text").html(user.bio);
     }
     else {
-        $("#my_page_bio_text").css('color', 'red');
-        $("#my_page_bio_text").html("Du har inte lagt till någon text om dig själv än,<br> lägg till en personlig biografi genom att <br>klicka på \"Redigera min profil\" för större chans att få ditt önskade boende!");
+        $("#my_page_bio_text").css('color', 'grey');
+        $("#my_page_bio_text").html("Du har inte lagt till någon text om dig själv än, lägg till en personlig biografi genom att klicka på \"Redigera min profil\".");
     }
 
 }
@@ -572,6 +575,7 @@ function load_my_ads_request() {
         type: 'GET',
         success: function (ads) {
             ads.forEach(element => {
+                element.image = element.image.url;
                 $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
                 if (element.booked == true) {
                     console.log("booked");
@@ -590,6 +594,7 @@ function load_my_bookings_request() {
         type: 'GET',
         success: function (ads) {
             ads.forEach(element => {
+                element.image = element.image.url;
                 $("#my_page_bookings_container").append(Mustache.render(my_accomodation, element));
             });
         }
@@ -722,8 +727,36 @@ function load_read_more(ad_id) {
             $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
             $("#readmore_img").attr("src", ad.image.url);
+
+        
+        parameters = "address=" + ad.streetnumber + "%20" + ad.streetaddress + "%20" + ad.city + "%20" + "Sweden";
+        console.log(parameters);
+        
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/geocode/json?" + parameters + "&key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs",
+            type: 'GET',
+            success: function (coordinates) {
+                var coord = coordinates.results[0].geometry.location;
+                console.log(coord);
+                let map, popup;
+                map2 = new google.maps.Map(document.getElementById("read_more_map"), {
+                zoom: 13.2,
+                center: coord,
+                // disableDefaultUI: true,
+                
+            });     
+            // The marker, positioned at the address
+            const marker = new google.maps.Marker({
+            position: coord,
+            map: map2,
+            });       
+            
+        }    
+        })
+        // console.log(coord);
         }
     })
+    
 }
 
 function update_reserved_status(status, ad_id) {
@@ -758,7 +791,7 @@ function load_burger() {
         $("#menu").prepend('<a href=""><li id="register_button" class="hide-menu" >Bli medlem</li></a>'
             + '<a href=""><li id="login_button" class="hide-menu" >Logga in</li></a>')
     } else {
-        $("#menu").prepend('<a href=""><li id="my_page_button">Mina sidor</li></a>'
+        $("#menu").prepend('<a href=""><li id="my_page_button" class="hide-menu">Mina sidor</li></a>'
             + '<a href=""><li id="logout_button" class="hide-menu" >Logga ut</li></a>')
     }
 

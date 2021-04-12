@@ -1,8 +1,8 @@
 body{
   /* make it look decent enough */
   background: white;
-  color: #cdcdcd;
-  font-family: "Avenir Next", "Avenir", sans-serif;
+  color: black;
+  font-family: 'Roboto', sans-serif;
   z-index: -2;
 }
 
@@ -295,7 +295,12 @@ label {
 #my_page_container {
   margin-top: 10vh;
   margin-bottom: 10vh;
+  
 }
+#my_page_background {
+  background-color: #F0F8FF;
+}
+
 #readmore_img {
   /* width: 500px; */
   border-radius: 20px;
@@ -309,6 +314,11 @@ label {
   margin-top: 100px;
   margin-bottom: 100px;
 }
+
+#read_more_map{
+  border-radius: 20px;
+}
+
 #successfully_registered_page_container {
   margin-top: 100px;
   margin-bottom: 100px;
@@ -500,6 +510,11 @@ margin: 0 auto;
   overflow: hidden;
   border-radius: 20px;
 }
+.my_accomodation img {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+}
 
 .accomodation button {
   border-radius: 10px;
@@ -525,7 +540,9 @@ margin: 0 auto;
   .map_text h1{
     font-size: 25px;
     text-align: center;
+    border-radius: 20px;
   }
+
 }
 .my_accomodation {
   background-color: white;
@@ -619,6 +636,8 @@ clear: both;}
   /* font-weight: bolder; */
 
 }
+
+
 
 .footer{
   background-color: black;
@@ -747,7 +766,6 @@ a:hover{
 button {
   background: #5469d4;
   color: #ffffff;
-  font-family: Arial, sans-serif;
   border-radius: 0 0 4px 4px;
   border: 0;
   padding: 12px 16px;
@@ -771,7 +789,6 @@ button:disabled {
 button {
   background: #5469d4;
   color: #ffffff;
-  font-family: Arial, sans-serif;
   border-radius: 0 0 4px 4px;
   border: 0;
   padding: 12px 16px;
@@ -866,7 +883,6 @@ button:disabled {
 
 
 .body1 {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   display: flex;
@@ -945,8 +961,11 @@ button:disabled {
   background-color: white;
 }
 
-.my_page_menuitem a {
+.my_page_menuitem {
   color: black;
-  text-decoration: none;
 }
 
+.my_page_menuitem:hover {
+  color: black;
+  background-color: rgb(228, 228, 228);
+}
