@@ -410,13 +410,39 @@ label {
 margin: 0 auto;
 }
 
-.testamonial .img {
+.testamonial .img1 {
   border-radius: 100px;
   width: 150px;
   max-width: 30vw;
   max-height: 30vw;
   height: 150px;
-  background-image: url("Media/craig-mckay-jmURdhtm7Ng-unsplash.jpg");
+  background-image: url("Media/reviewer_1.jpg");
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  margin: 0 auto;
+}
+
+.testamonial .img2 {
+  border-radius: 100px;
+  width: 150px;
+  max-width: 30vw;
+  max-height: 30vw;
+  height: 150px;
+  background-image: url("Media/reviewer_2.jpg");
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  margin: 0 auto;
+}
+
+.testamonial .img3 {
+  border-radius: 100px;
+  width: 150px;
+  max-width: 30vw;
+  max-height: 30vw;
+  height: 150px;
+  background-image: url("Media/reviewer_3.jpg");
   background-position: center;
   background-repeat: none;
   background-size: cover;
