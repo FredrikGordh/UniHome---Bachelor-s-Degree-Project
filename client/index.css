@@ -1,7 +1,7 @@
 body{
   /* make it look decent enough */
   background: white;
-  color: #cdcdcd;
+  color: black;
   font-family: 'Roboto', sans-serif;
   z-index: -2;
 }
@@ -265,7 +265,12 @@ label {
 #my_page_container {
   margin-top: 10vh;
   margin-bottom: 10vh;
+  
 }
+#my_page_background {
+  background-color: #F0F8FF;
+}
+
 #readmore_img {
   /* width: 500px; */
   border-radius: 20px;
@@ -471,6 +476,11 @@ margin: 0 auto;
 .accomodation img {
   /* width: 300px; */
   /*height: 300px;*/
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.my_accomodation img {
   width: 100%;
   overflow: hidden;
   border-radius: 20px;
@@ -921,8 +931,11 @@ button:disabled {
   background-color: white;
 }
 
-.my_page_menuitem a {
+.my_page_menuitem {
   color: black;
-  text-decoration: none;
 }
 
+.my_page_menuitem:hover {
+  color: black;
+  background-color: rgb(228, 228, 228);
+}

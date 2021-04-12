@@ -207,6 +207,25 @@ def signup():
     else:
         return "email_in_use", 409
 
+@app.route('/user/edit', methods=['PUT'])
+@jwt_required()
+def edit_user():
+    edituser = request.get_json(force=True)
+    editable_user = User.query.filter_by(id = get_jwt_identity()).first()
+  #  print(editable_user.get('name'))
+    if edituser.get('name') != None:
+        editable_user.name = edituser.get('name')
+    if edituser.get('email') != None:
+        editable_user.email = edituser.get('email')
+    if edituser.get('telephone') != None:
+        editable_user.telephone = edituser.get('telephone')
+    if edituser.get('gender') != None:
+        editable_user.gender = edituser.get('gender')
+    if edituser.get('bio') != None:
+        editable_user.bio = edituser.get('bio')
+    db.session.commit()
+    return "Changed"
+
 
 # /user/login has the method POST that is used when you want to log in with a user.
 # Written by Jakob, Gustav, Joel
