@@ -161,43 +161,42 @@ $(document).ready(function () {
         load_account_info();
     });
 
-    //Edit bio
-    $("#content").on("click", "#my_page_change_bio_btn", function (e) {
-        e.preventDefault();
-        go_edit_bio_page();
-    });
-
-    //cancel edit bio
-    $("#content").on("click", "#cancel_edit_form_btn", function (e) {
-        e.preventDefault();
-        go_my_page();
-        load_account_info();
-    });
-
     //My page menu
 
     //My page menu: go to account
     $("#content").on("click", "#account_info_link", function (e) {
         e.preventDefault();
         load_account_info();
+        $('html, body').animate({
+            scrollTop: $("#my_page_account_info_container").offset().top
+        }, 1000);
     });
 
     //My page menu: go to history
     $("#content").on("click", "#history_link", function (e) {
         e.preventDefault();
         load_history();
+        $('html, body').animate({
+            scrollTop: $("#my_page_history_container").offset().top
+        }, 1000);
     });
 
     //My page menu: go to bookings
     $("#content").on("click", "#bookings_link", function (e) {
         e.preventDefault();
         load_bookings();
+        $('html, body').animate({
+            scrollTop: $("#my_page_bookings_container").offset().top
+        }, 1000);
     });
 
     //My page menu: go to ads
     $("#content").on("click", "#ads_link", function (e) {
         e.preventDefault();
         load_ads();
+        $('html, body').animate({
+            scrollTop: $("#my_page_ads_container").offset().top
+        }, 1000);
     });
 
     //My page menu: go to ads

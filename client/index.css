@@ -506,6 +506,10 @@ margin: 0 auto;
     text-align: center;
 }
 
+.home-areas a:hover {
+  color: grey;
+}
+
 @media (max-width: 991px) {
   .map_text h1{
     font-size: 25px;
