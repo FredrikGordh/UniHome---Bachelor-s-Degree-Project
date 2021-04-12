@@ -1,6 +1,6 @@
 body{
   /* make it look decent enough */
-  background: #333333;
+  background: white;
   color: #cdcdcd;
   font-family: "Avenir Next", "Avenir", sans-serif;
   z-index: -2;
@@ -30,6 +30,7 @@ label {
 
 #navbar-logo{
   width: 10vw;
+  min-width: 100px;
 }
 
 #menuToggle
@@ -43,14 +44,17 @@ label {
 }
 
 #home-reviews {
-  background-color: aqua;
+  background-color: #F0F8FF;
+  padding-top: 100px;
+  text-align: center;
+  color: black;
 }
 #home-now-hot {
   background-color: red;
 }
 #home-areas {
-  height: 100vh;
   position: relative;
+  margin-top: -100px;
 }
 
 #home-types {
@@ -181,7 +185,7 @@ label {
 }
 
 #home_container {
-  margin-top: 1080px;
+  margin-top: 100vh;
   padding: 0;
 }
 
@@ -196,10 +200,13 @@ label {
 }
 
 #header{
-  background-color: paleturquoise;
+  background-image: url(media/aboutusheader.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: none;
   color:black;
   width: 100%;
-  height: 1080px;
+  height: 100vh;
   position: absolute;
   top: 0;
   padding-top: 35vh;
@@ -226,6 +233,8 @@ label {
   border-radius: 37px;
   margin: 50px;
   height: 8vh;
+  min-height: 60px;
+  max-height: 100px;
 }
 
 #search_page_container {
@@ -275,12 +284,146 @@ label {
   margin-bottom: 100px;
 }
 
-
-#map {
-  height: 75vh;
+#login_failed_container{
+  color: red;
 }
 
+#register_failed_container{
+  color: red;
+}
+
+
+
+#map {
+  height: 694px;
+  -webkit-mask-box-image: url(Media/map.svg);
+  -webkit-mask-position: top;
+  -webkit-mask-repeat: none;
+  -webkit-mask-size: cover;
+  mask-border: url(Media/map.svg);
+  mask-repeat: none;
+  mask-position: top;
+  mask-size: cover;
+}
+
+#area_facts {
+  position: absolute;
+  top: 100px;
+  left: calc(100vw - 40vw);
+}
+
+#about_us_header {
+  width: 100vw;
+  height: 80vh;
+  background-image: url(Media/aboutusheader.jpg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  text-align: center;
+  padding-top: 30vh;  
+}
+
+#about_us_header h1 {
+    font-weight: bolder;
+    font-size: 150px;
+    color: white;
+}
+
+#about_us_page_container {
+  text-align: center;
+  color: black;
+}
+
+#about_us_page_container h2{
+  font-size: 60px;
+}
+
+#about_us_page_container p{
+  font-size: 25px;
+  line-height: 45px;
+}
+
+#parallax {
+  width: 100vw;
+  height: 400px;
+  background-image: url(media/parallax.jpg);
+  background-attachment: fixed;
+  background-repeat: none;
+  background-size: cover;
+  background-position: center;
+}
+
+#ines {
+  background-image: url(media/craig-mckay-jmURdhtm7Ng-unsplash.jpg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  border-radius: 200px;
+  height: 350px;
+  width: 350px;
+  margin: 0 auto;
+}
+
+#jakob {
+  background-image: url(media/craig-mckay-jmURdhtm7Ng-unsplash.jpg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  border-radius: 200px;
+  height: 250px;
+  width: 250px;
+  margin: 0 auto;
+}
+
+#staff {
+  text-align: center;
+  color: black;
+  font-size: 30px;
+  margin: 200px 0;
+}
 /* Klasser */
+
+.our_start {
+  height: 80vh;
+}
+
+.vision {
+  height: 70vh;
+}
+
+.testamonial {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-webkit-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-moz-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+margin: 0 auto;
+}
+
+.testamonial .img {
+  border-radius: 100px;
+  width: 150px;
+  max-width: 30vw;
+  max-height: 30vw;
+  height: 150px;
+  background-image: url("Media/craig-mckay-jmURdhtm7Ng-unsplash.jpg");
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  margin: 0 auto;
+}
+
+.facts_content {
+  width: 20vw;
+  background-color: white;
+  border-radius: 20px;
+  color: black;
+  min-width: 30vw;
+  width: 20vw;
+  box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-webkit-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-moz-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+}
 
 .popup-bubble {
   /* Position the bubble centred-above its parent. */
@@ -352,7 +495,7 @@ label {
   .map_text h1{
     font-size: 25px;
     text-align: center;
-}
+  }
 }
 .my_accomodation {
   background-color: white;
@@ -453,6 +596,10 @@ clear: both;}
   width: 100%;
 }
 
+.failed_container{
+  color: red;
+}
+
 .no-dot-list{
   list-style-type: none;
   margin: 0;
@@ -496,15 +643,21 @@ a:hover{
   padding: 0;
 }  
 
+.section a {
+  color: black;
+}
+
 .clickable_class{
   color:red;
   cursor: pointer;
 }  
+
 .navbar-style{
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0,0,0,0.5);
   position: fixed;
   z-index: 2;
   width: 100vw;
+  height: 80px;
 }
 
 .form-row .form-group {
@@ -766,3 +919,4 @@ button:disabled {
   color: black;
   text-decoration: none;
 }
+
