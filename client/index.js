@@ -135,7 +135,14 @@ $(document).ready(function () {
     //Pay your booked accomodation
     $("#content").on("click", ".payment_button", function (e) {
         e.preventDefault();
-        go_payment_page($(this).data('id'));
+        go_payment_page($(this).data('id'), $(this).data('price'));
+    });
+
+    //Cancel payment
+    $("#content").on("click", "#cancel_payment_button", function (e) {
+        e.preventDefault();
+        go_my_page();
+        load_bookings();
     });
 
     //Go back from read more to search
@@ -294,18 +301,20 @@ function go_registered_page() {
 }
 
 //Function for going to view: Payment page
-function go_payment_page(ad_id) {
+function go_payment_page(ad_id, ad_price) {
     $("#content").html($("#payment_page").html());
+    $("#display_price").html("Pris att betala: " + ad_price + "kr");
 
     var stripe = Stripe("pk_test_51IdXd9I1LSmMkwS01UZ3P15rGwgKS2FVNDj7puij4jKSK9qHTzpT6RXuoxwT7R3W2egc2WdFbp31gMXAp2RsqpJO003rUKAs23");
 
     // The items the customer wants to buy
     var purchase = {
-        items: [{ id: "xl-tshirt" }]
+        id: ad_id
       };
     
     // Disable the button until we have Stripe set up on the page
-    document.querySelector("button").disabled = true;
+    // document.querySelector("button").disabled = true;
+    $("#submit").attr("disabled", true);
     
     fetch('/create-payment-intent', {
       method: "POST",
@@ -342,7 +351,7 @@ function go_payment_page(ad_id) {
     
         card.on("change", function (event) {
             // Disable the Pay button if there are no card details in the Element
-            $("button").attr("disabled", event.empty);
+            $("#submit").attr("disabled", event.empty);
             document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
         });
     
@@ -372,6 +381,7 @@ function go_payment_page(ad_id) {
             } else {
               // The payment succeeded!
               orderComplete(result.paymentIntent.id);
+              booking_paid(ad_id)
               go_successful_payment_page()
             }
           });
@@ -388,7 +398,8 @@ function go_payment_page(ad_id) {
             "https://dashboard.stripe.com/test/payments/" + paymentIntentId
           );
         document.querySelector(".result-message").classList.remove("hidden");
-        document.querySelector("button").disabled = true;
+        // document.querySelector("button").disabled = true;
+        $("#submit").attr("disabled", true);
       };
     
     // Show the customer the error from Stripe if their card fails to charge
@@ -404,16 +415,18 @@ function go_payment_page(ad_id) {
     // Show a spinner on payment submission
     var loading = function(isLoading) {
         if (isLoading) {
-          // Disable the button and show a spinner
-          document.querySelector("button").disabled = true;
-          document.querySelector("#spinner").classList.remove("hidden");
-          document.querySelector("#button-text").classList.add("hidden");
+        // Disable the button and show a spinner
+        //   document.querySelector("button").disabled = true;
+            $("#submit").attr("disabled", true);
+            document.querySelector("#spinner").classList.remove("hidden");
+            document.querySelector("#button-text").classList.add("hidden");
         } else {
-          document.querySelector("button").disabled = false;
-          document.querySelector("#spinner").classList.add("hidden");
-          document.querySelector("#button-text").classList.remove("hidden");
+            // document.querySelector("button").disabled = false;
+            $("#submit").attr("disabled", false);
+            document.querySelector("#spinner").classList.add("hidden");
+            document.querySelector("#button-text").classList.remove("hidden");
         }
-      };
+    };
     
 
 
@@ -584,7 +597,11 @@ function load_my_bookings_request() {
         type: 'GET',
         success: function (ads) {
             ads.forEach(element => {
-                $("#my_page_bookings_container").append(Mustache.render(my_bookings, element));
+                if(element.paid == true) {
+                    $("#my_page_bookings_container").append(Mustache.render(my_bookings_paid, element));
+                } else {
+                    $("#my_page_bookings_container").append(Mustache.render(my_bookings, element));
+                }
             });
         }
     })
@@ -730,6 +747,17 @@ function update_booked_status(status, ad_id) {
     })
 }
 
+function update_paid_status(status, ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/paid',
+        type: 'PUT',
+        data: JSON.stringify(status),
+        success: function (ad) {
+
+        }
+    })
+}
+
 //----Functional functions:
 
 //Function for loading all content in hamburger menu
@@ -819,6 +847,11 @@ function approve_tenant(ad_id) {
     update_booked_status(true, ad_id)
 }
 
+//Function for marking a booking as paid, update status of ad in database
+function booking_paid(ad_id) {
+    update_paid_status(true, ad_id)
+}
+
 //Function for denying tenant and update status of ad in database
 function deny_tenant(ad_id) {
     update_reserved_status(false, ad_id)
@@ -904,7 +937,7 @@ function update_search() {
     load_ads_request(search, sort, sort_param);
 }
 
-// ------- PAYMENT -----------
+
 
 function submitAdForm() {
     var formData = new FormData();

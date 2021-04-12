@@ -46,22 +46,7 @@
 
   <div id="content" class="container-fluid"></div>
 
-  <!-- Test betalning, ska tas bort -->
-  <!-- <div class="body1">
-    <form id="payment-form" class="form1">
-      <div id="card-element"></div>
-      <button id="submit">
-        <div class="spinner hidden" id="spinner"></div>
-        <span id="button-text">Pay now</span>
-      </button>
-      <p id="card-error" role="alert"></p>
-      <p class="result-message hidden">
-        Payment succeeded, see the result in your
-        <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
-      </p>
-    </form>
-  </div> -->
-
+  
   <!-- Footern: Vi skriver ut en lista med kontaktuppgifter i vår container-->
   <div class="footer container-fluid pt-5 pb-5 hide-menu">
     <div class="row justify-content-center">
@@ -344,10 +329,12 @@
 
   <!-- Successful Payment view -->
   <script id="successful_payment_page" type="text/html">
-    <div id="successful_payment_page_container" class="container">
-      <h1>Din betalning gick igenom!</h1>
-      <div id = "payment_page_content">Kul! Nu är allt klart och betalt. Ditt boende är redo för dig, tagga!</div>
-      <!-- <button type="button" class="btn btn-primary" id = "log_in_from_registered_view>" onclick = go_login()>Till logga in</button> -->
+    <div id="login_container" class="container">
+      
+      <div class="col-11 col-lg-500 my_page_menuitem m-2 p-4"><a href=""><h3>Din betalning gick igenom!</h3><p>Kul! Nu är allt klart och betalt. Ditt boende är redo för dig, tagga!</p></a></div>
+
+      <!-- <h1>Din betalning gick igenom!</h1>
+      <div id = "payment_page_content">Kul! Nu är allt klart och betalt. Ditt boende är redo för dig, tagga!</div> -->
     </div>
   </script>
 
@@ -368,7 +355,7 @@
   <!-- My page: history view -->
   <script id="my_page_history" type="text/html">
     <div id="my_page_history_container" class="container">
-
+      
     </div>
   </script>
 
@@ -382,7 +369,7 @@
   <!-- My page: my ads view -->
   <script id="my_page_ads" type="text/html">
     <div id="my_page_ads_container" class="container row justify-content-center">
-      
+
     </div>
   </script>
 
@@ -391,7 +378,7 @@
   <!-- About us view -->
   <script id="about_us_page" type="text/html">
     <div id="about_us_page_container" class="container-fluid">
-  
+      
     </div>
   </script>
 
@@ -603,6 +590,12 @@
 
   <!-- Payment view -->
   <script id="payment_page" type="text/html">
+
+    <div id="my_page_container" class="container">
+      <h1 id = "display_price"></h1>
+      <button type="button" id="cancel_payment_button">Avbryt betalning</button>
+    </div>
+
     <div class="body1">
       <form id="payment-form" class="form1">
         <div id="card-element"><!--Stripe.js injects the Card Element--></div>
