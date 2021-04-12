@@ -758,7 +758,7 @@ function load_burger() {
         $("#menu").prepend('<a href=""><li id="register_button" class="hide-menu" >Bli medlem</li></a>'
             + '<a href=""><li id="login_button" class="hide-menu" >Logga in</li></a>')
     } else {
-        $("#menu").prepend('<a href=""><li id="my_page_button">Mina sidor</li></a>'
+        $("#menu").prepend('<a href=""><li id="my_page_button" class="hide-menu">Mina sidor</li></a>'
             + '<a href=""><li id="logout_button" class="hide-menu" >Logga ut</li></a>')
     }
 
