@@ -110,43 +110,121 @@
             </form>
           </div>
           <div id="home_search_filters">
-            <form>
               <div class="form-row align-items-center justify-content-center">
-                <div class="form-group col-12 col-lg-5">
+                <div class="form-group col-10 col-lg-5">
                   <select class="form-control no-border" id="home_select_type">
                     <option>Typ av boende</option>
                   </select>            
                 </div>
-                <div class="form-group col-12 col-lg-5">
+                <div class="form-group col-10 col-lg-5 mt-lg-0 mt-4">
                   <select class="form-control no-border" id="home_select_attr">
                     <option>Attribut</option>
                   </select>            
                 </div>
               </div>
-            </form>
           </div>
         </div>
       </div>
       <div id="home-areas" class="section">
-        <div class="map_text">
-          <div class="row justify-content-center">
-            <div class="col-12"><h1>Våra bostadsområden</h1></div>
-          </div>
-        </div>
         <div id="map"></div>
-        <div id="ryd"><h3>Ryd</h3></div>
-        <div id="valla"><h3>Valla</h3></div>
-        <div id="gotfridsberg"><h3>Gotfridsberg</h3></div>
-        <div id="vasastaden"><h3>Vasastaden</h3></div>
-        <div id="lambohov"><h3>Lambohov</h3></div>
-
-
+        <div id="ryd"><a href="" id="map_ryd"><h3>Ryd</h3></a></div>
+        <div id="valla"><a href="" id="map_valla"><h3>Valla</h3></a></div>
+        <div id="gotfridsberg"><a href="" id="map_gotfridsberg"><h3>Gotfridsberg</h3></a></div>
+        <div id="vasastaden"><a href="" id="map_vasastaden"><h3>Vasastaden</h3></a></div>
+        <div id="lambohov"><a href="" id="map_lambohov"><h3>Lambohov</h3></a></div>
+        <div id="area_facts" class="d-none d-lg-block"></div>
       </div>
       <div id="home-reviews" class="section">
-        <h1>Reviews</h1>
+        <div class="row">
+          <div class="col-12">
+            <h1>Tidigare kunders bedömningar</h1>
+            <p>Här kan du läsa lite om vad våra kunder tycker om oss och hur deras upplevese av Unihome varit.</p>
+          </div>
+        </div>
+        <div class="row mt-5 justify-content-between">
+          <div class="col-7 col-xl-3 testamonial p-4 mb-5 mt-5">
+            <div class="img"></div>
+            <h2>Peter Basch</h2>
+            <h3>Hyresgäst</h3>
+            <p>"Allt gick väldigt smidigt och jag är mycket nöjd med hur det utspelade sig!"</p>
+          </div>
+          <div class="col-7 col-xl-3 testamonial p-4 mb-5 mt-5">
+            <div class="img"></div>
+            <h2>Peter Basch</h2>
+            <h3>Hyresgäst</h3>
+            <p>"Allt gick väldigt smidigt och jag är mycket nöjd med hur det utspelade sig!"</p>
+          </div>
+          <div class="col-7 col-xl-3 testamonial p-4 mb-5 mt-5">
+            <div class="img"></div>
+            <h2>Peter Basch</h2>
+            <h3>Hyresgäst</h3>
+            <p>"Allt gick väldigt smidigt och jag är mycket nöjd med hur det utspelade sig!"</p>
+          </div>
+        </div>
       </div>
     </div>
   </script>
+
+  <script id="ryd_view" type="text/html">
+      <div class="facts_content row p-4">
+      <div class="col-12 mb-3">
+        <h1>Ryd</h1>
+      </div>
+      <div class="col-12">
+        <p>Ryd ligger i utkanten av Linköping och har nära till både mataffär och universitet. Rydskogen ger bra möjligheter till motion, inte minst tack vare frisbeegolfbanan som finn tillgänglig för alla.</p>
+      </div>
+      </div>
+    </script>
+  <script id="default_view" type="text/html">
+      <div class="facts_content row p-4">
+      <div class="col-12 mb-3">
+        <h1>Våra områden</h1>
+      </div>
+      <div class="col-12">
+        <p>Ryd ligger i utkanten av Linköping och har nära till både mataffär och universitet. Rydskogen ger bra möjligheter till motion, inte minst tack vare frisbeegolfbanan som finn tillgänglig för alla.</p>
+      </div>
+      </div>
+    </script>
+  <script id="lambohov_view" type="text/html">
+      <div class="facts_content row p-4">
+      <div class="col-12 mb-3">
+        <h1>Lambohov</h1>
+      </div>
+      <div class="col-12">
+        <p>Ryd ligger i utkanten av Linköping och har nära till både mataffär och universitet. Rydskogen ger bra möjligheter till motion, inte minst tack vare frisbeegolfbanan som finn tillgänglig för alla.</p>
+      </div>
+      </div>
+    </script>
+  <script id="valla_view" type="text/html">
+      <div class="facts_content row p-4">
+      <div class="col-12 mb-3">
+        <h1>Valla</h1>
+      </div>
+      <div class="col-12">
+        <p>Ryd ligger i utkanten av Linköping och har nära till både mataffär och universitet. Rydskogen ger bra möjligheter till motion, inte minst tack vare frisbeegolfbanan som finn tillgänglig för alla.</p>
+      </div>
+      </div>
+    </script>
+  <script id="vasastaden_view" type="text/html">
+      <div class="facts_content row p-4">
+      <div class="col-12 mb-3">
+        <h1>Vasastaden</h1>
+      </div>
+      <div class="col-12">
+        <p>Ryd ligger i utkanten av Linköping och har nära till både mataffär och universitet. Rydskogen ger bra möjligheter till motion, inte minst tack vare frisbeegolfbanan som finn tillgänglig för alla.</p>
+      </div>
+      </div>
+    </script>
+  <script id="gotfridsberg_view" type="text/html">
+      <div class="facts_content row p-4">
+      <div class="col-12 mb-3">
+        <h1>Gotfridsberg</h1>
+      </div>
+      <div class="col-12">
+        <p>Ryd ligger i utkanten av Linköping och har nära till både mataffär och universitet. Rydskogen ger bra möjligheter till motion, inte minst tack vare frisbeegolfbanan som finn tillgänglig för alla.</p>
+      </div>
+      </div>
+    </script>
 
 
   <!-- Search page view -->
@@ -242,6 +320,7 @@
           <label for="password_login">Password</label>
           <input type="password" class="form-control" id="password_register" placeholder="Password">
         </div>
+        <div id = "register_failed_container"></div>
         <button type="button" id="register_form_button" class="btn btn-primary">Registrera</button>
         <div>Har du redan ett konto? Logga in genom att klicka <span class = "clickable_class" id = "get_to_login">här</span></div>
       </form>
@@ -319,13 +398,14 @@
           <label for="password_login">Password</label>
           <input type="password" class="form-control" id="password_login" placeholder="Password">
         </div>
+        <div id = "login_failed_container"></div>
         <button type="button" id="login_form_button" class="btn btn-primary">Logga in</button>
       </form>
     </div>
   </script>
 
 
-  
+
   <!-- My page view -->
   <script id="my_page" type="text/html">
     <div id="my_page_container" class="container">
@@ -343,15 +423,15 @@
     </div>
   </script>
 
-    <!-- Successfully Registered view -->
-    <script id="successfully_registered_page" type="text/html">
+  <!-- Successfully Registered view -->
+  <script id="successfully_registered_page" type="text/html">
       <div id="successfully_registered_page_container" class="container">
          <h1>Du har registrerat dig!</h1>
         <div id = "registered_page_content">Nu kan du logga in och hyra eller hyra ut ett boende</div>
         <button type="button" class="btn btn-primary" id = "log_in_from_registered_view>" onclick = go_login()>Till logga in</button>
       </div>
     </script>
-  
+
   <!-- My page: account view -->
   <script id="my_page_account_info" type="text/html">
     <div id="my_page_account_info_container" class="my_page_menuitem m-2 p-4">
@@ -390,13 +470,92 @@
 
   <!-- About us view -->
   <script id="about_us_page" type="text/html">
-    <div id="about_us_page_container" class="container-fluid">
-  
+    <div id="about_us_page_container">
+      <div id="about_us_header">
+        <div class="row justify-content-center">
+          <div class="col-12"><h1>Vilka är vi?</h1></div>
+        </div>
+      </div>
+      <div class="row justify-content-center our_start align-items-center">
+        <div class="col-8">
+          <h2>Vår start</h2>
+          <p>Unihome började som ett kandidatprojekt där syftet var att undersöka hur design kan påverka lojalitet genom faktorerna
+            nöjdhet och förtroende. Projektet fortlöpde med stor framgång vilket senare
+            kom att leda till att projektet drevs vidare som företagsidé och tjänsten började erbjudas till allmänheten. Sedan
+            dess har Unihome fortsatt utvecklas och har idag en användarbas på över 30000 användare över hela Sverige!
+          </p>
+        </div>
+      </div>
+      <div id="parallax"></div>
+      <div class="row justify-content-center vision align-items-center">
+        <div class="col-8">
+          <h2>Vår vision</h2>
+          <p>Vi vill frigöra studenter genom att enkelt låta dem hyra ut sina lägneheter under kortare perioder. På så sätt behöver inte studenter stå med dubbel hyra och andra studenter hittar lättare en första lägenhet i en, för dem, ny studentstad.
+          </p>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-8">
+          <h2>Vilka är vi?</h2>
+          <div class="row align-items-center">
+            <div class="col-12 col-lg-4">
+              <p>VD</p>
+              <p>Ines Dizengremel</p>
+              <p>ines@unihome.se</p>
+            </div>
+            <div class="col-12 col-lg-4"><div id="ines"></div></div>
+            <div class="col-12 col-lg-4"><p>Vår mission är att hjälpa studenter hjälpa varandra. Det ska vara enkelt att hyra och hyra ut bostäder om ens för en
+            helg.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="staff">
+      <div class="row justify-content-center mb-5">
+        <div class="col-12 col-lg-4">
+          <div id="jakob"></div>
+          <p>VD</p>
+          <p>Ines Dizengremel</p>
+          <p>ines@unihome.se</p>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div id="jakob"></div>
+          <p>VD</p>
+          <p>Ines Dizengremel</p>
+          <p>ines@unihome.se</p>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div id="jakob"></div>
+          <p>VD</p>
+          <p>Ines Dizengremel</p>
+          <p>ines@unihome.se</p>
+        </div>
+      </div>
+      <div class="row justify-content-center mt-5">
+        <div class="col-12 col-lg-4">
+          <div id="jakob"></div>
+          <p>VD</p>
+          <p>Ines Dizengremel</p>
+          <p>ines@unihome.se</p>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div id="jakob"></div>
+          <p>VD</p>
+          <p>Ines Dizengremel</p>
+          <p>ines@unihome.se</p>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div id="jakob"></div>
+          <p>VD</p>
+          <p>Ines Dizengremel</p>
+          <p>ines@unihome.se</p>
+        </div>
+      </div>
     </div>
   </script>
 
-<!-- New ad view -->
-<script id="new_ad_page" type="text/html">
+  <!-- New ad view -->
+  <script id="new_ad_page" type="text/html">
   <div id="new_ad_page_container" class="container">
     <h1>Skapa din annons</h1>
     <p>Fyll i fälten nedan med information om bostaden du vill hyra ut för att skapa din annons.</p>
@@ -606,7 +765,7 @@
   </script>
 
   <!-- Read more about the housing ad-->
-  <script  id="read_more_ad_page" type="text/html">
+  <script id="read_more_ad_page" type="text/html">
     <div id="read_more_ad_container" class="container">
       <button id="read_more_back">Tillbaka</button>
       <!--Dessa är bara flytta omkring och ändra font mm. Data laddas in i taggarna med javascript baserat på id-->
