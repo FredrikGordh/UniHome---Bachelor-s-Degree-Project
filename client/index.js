@@ -381,8 +381,10 @@ function go_payment_page(ad_id, ad_price) {
             } else {
               // The payment succeeded!
               orderComplete(result.paymentIntent.id);
-              booking_paid(ad_id)
-              go_successful_payment_page()
+              booking_paid(ad_id);
+              save_payment(ad_id, result.paymentIntent.id);
+              alert(result.paymentIntent.id);
+              go_successful_payment_page();
             }
           });
     };
@@ -481,7 +483,7 @@ function load_account_info() {
 //Load account info in my page
 function load_history() {
     $("#my_page_content").html($("#my_page_history").html());
-
+    load_my_payment_history();
 }
 
 //Load account info in my page
@@ -669,6 +671,36 @@ function edit_user_request(user) {
             sessionStorage.setItem('auth', temp)
             go_my_page();
             load_account_info();
+        }
+    })
+}
+
+//Payment functions
+
+//Function for saving payment info in the database
+function save_payment(ad_id, paymentIntentId) {
+    alert(paymentIntentId)
+    $.ajax({
+        url: host + '/payments',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'POST',
+        data: JSON.stringify({"ad_id": ad_id, "paymentID": paymentIntentId}),
+        success: function (response) {
+
+        }
+    })
+}
+
+//Function for fetching the payment history for the logged in user
+function load_my_payment_history() {
+    $.ajax({
+        url: host + '/payments',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (payments) {
+            payments.forEach(element => {
+                $("#my_page_bookings_container").append(Mustache.render(load_my_payments, element));
+            });
         }
     })
 }

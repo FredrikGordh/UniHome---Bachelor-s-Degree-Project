@@ -36,6 +36,11 @@ var my_bookings_paid = '<div class="my_accomodation col-9 mt-3 p-2">'
     + '<p>{{price}} kr</p>'
     + '</div>';
 
+var load_my_payments = '<div class="my_accomodation col-9 mt-3 p-2">'
+    + '<h1>{{ad_id}}<h1>'
+    + '<h3>{{payment_price}} {{id}</h3>'
+    + '</div>';
+
 var tenant = '<div class="my_tenant col-2 offset-1 mt-3 p-2">'
     + '<h1>{{name}}</h1>'
     + '<button type="button" class="book_ad_button" data-id="{{ad_id}}">Godkänn</button>'
