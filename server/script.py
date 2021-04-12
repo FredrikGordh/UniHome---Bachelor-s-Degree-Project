@@ -53,7 +53,7 @@ db.session.commit()
 
 ad1 = Ad(title="Trevligt boende", description="En mindre 2:a med kök som fungerar perfekt som studentboende. Boendet ligger i stadsdelen Gottfridsberg, nära till både studentpub Flamman och till den fina stadskärnan. Minst 2 nätter sammanhängande och uthyres endast till rök- och djurfria hyresgäster.",
          neighbourhood="Gottfridsberg", studentcity="Linköping",
-         streetaddress="Storgatan", streetnumber="4", city="Linköping", postalcode="512 15", country="Sverige", squaremetres="47",
+         streetaddress="Skolgatan", streetnumber="23", city="Linköping", postalcode="512 15", country="Sverige", squaremetres="47",
          price="1300", beds="1", accommodationtype="Lägenhet", host_id="5", startdate=datetime.date(2021, 4, 20), enddate=datetime.date(2021, 4, 25))
 db.session.add(ad1)
 db.session.commit()

@@ -683,23 +683,33 @@ function load_read_more(ad_id) {
 
         
         parameters = "address=" + ad.streetnumber + "%20" + ad.streetaddress + "%20" + ad.city + "%20" + "Sweden";
+        console.log(parameters);
         
         $.ajax({
             url: "https://maps.googleapis.com/maps/api/geocode/json?" + parameters + "&key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs",
             type: 'GET',
             success: function (coordinates) {
                 var coord = coordinates.results[0].geometry.location;
+                console.log(coord);
                 let map, popup;
-                map = new google.maps.Map(document.getElementById("map2"), {
-                //center: {coordinates.results[0].geometry.location},
+                map2 = new google.maps.Map(document.getElementById("read_more_map"), {
                 zoom: 13.2,
-                disableDefaultUI: true,
-            });            
-            }
+                center: coord,
+                // disableDefaultUI: true,
+                
+            });     
+            // The marker, positioned at the address
+            const marker = new google.maps.Marker({
+            position: coord,
+            map: map2,
+            });       
             
+        }    
         })
+        // console.log(coord);
         }
     })
+    
 }
 
 function update_reserved_status(status, ad_id) {
