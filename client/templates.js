@@ -127,7 +127,7 @@ var my_past_booking = '<div class="my_accomodation col-9 mt-3 p-2">'
 
 var load_my_payments = '<div class="my_accomodation col-9 mt-3 p-2">'
     + '<h1>{{ad_id}}<h1>'
-    + '<h3>{{payment_price}} {{id}</h3>'
+    + '<h3>{{payment_price}} {{id}}</h3>'
     + '</div>';
 
 var tenant = '<div class="my_tenant col-2 offset-1 mt-3 p-2">'
