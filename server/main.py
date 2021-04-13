@@ -550,12 +550,12 @@ def past_bookings():
     if request.method == 'GET':
         user_id = get_jwt_identity()
         booking_list = []
-        all_bookings = Ad.query.filter(Ad.tenant_id == user_id, Ad.paid == True, Ad.tenant_enddate < datetime.now())
+        current_date = datetime.datetime.now()
+        all_bookings = Ad.query.filter(Ad.tenant_id == user_id, Ad.paid == True, Ad.tenant_enddate < current_date)
         for booking in all_bookings:
             booking_list.append(booking.serialize())
         return jsonify(booking_list)
 #Ändra detta API när datum är implementerat i en bokning 
-
 
 #___________________________________________
 
