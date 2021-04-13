@@ -510,6 +510,18 @@ def payments():
             payment_list.append(payment.serialize())
         return jsonify(payment_list)
 
+# API för att registrera en betalning till betalningshistorik samt hämta betalningshistorik
+@app.route('/past-bookings', methods=['GET'])
+@jwt_required()
+def past_bookings():
+    if request.method == 'GET':
+        user_id = get_jwt_identity()
+        booking_list = []
+        all_bookings = Ad.query.filter(Ad.tenant_id == user_id, Ad.paid == True)
+        for booking in all_bookings:
+            booking_list.append(booking.serialize())
+        return jsonify(booking_list)
+#Ändra detta API när datum är implementerat i en bokning 
 
 #___________________________________________
 
