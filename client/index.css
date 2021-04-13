@@ -266,8 +266,9 @@ label {
 
 /* Funkar inte */
 #edit_bio_container{
-  border: 10px solid #094D4D;
+  background-color: white;
   border-radius: 20px;
+  padding: 20px;
   margin-top: 15px;
   margin-bottom: 15px;
 }
@@ -310,9 +311,9 @@ label {
 } */
 
 #search_page_container {
-  color: white;
-  margin-top: 100px;
-  padding-bottom: 5vh;
+  background-color: #e7d8ca;
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 
 #search_result {
@@ -320,8 +321,8 @@ label {
 }
 
 #contact_page_container {
-  margin-top: 15vh;
-  margin-bottom: 10vh;
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 
 /* NEW AD PAGE */
@@ -369,8 +370,8 @@ label {
 }
 
 #my_page_container {
-  margin-top: 15vh;
-  margin-bottom: 10vh;
+  padding-top: 100px;
+  padding-bottom: 100px;
   
 }
 #my_page_background {
@@ -388,8 +389,8 @@ label {
   width:auto;
 }
 
-#readmore_img {
-  /* width: 500px; */
+#readmore_img{
+  width: 100%;
   border-radius: 20px;
 }
 
@@ -1128,7 +1129,7 @@ button:disabled {
 
 .my_page_heading{
   text-align: center;
-  margin: 100px 0;
+  margin-top: 100px;
 }
 
 
