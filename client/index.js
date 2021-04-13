@@ -477,13 +477,13 @@ function load_account_info() {
         $("#my_page_bio_text").css('color', 'red');
         $("#my_page_bio_text").html("Du har inte lagt till någon text om dig själv än,<br> lägg till en personlig biografi genom att <br>klicka på \"Redigera min profil\" för större chans att få ditt önskade boende!");
     }
-
 }
 
 //Load account info in my page
 function load_history() {
     $("#my_page_content").html($("#my_page_history").html());
     load_my_payment_history();
+    my_past_bookings();
 }
 
 //Load account info in my page
@@ -497,7 +497,6 @@ function load_ads() {
 function load_bookings() {
     $("#my_page_content").html($("#my_page_bookings").html());
     load_my_bookings_request();
-
 }
 
 function logout() {
@@ -604,6 +603,19 @@ function load_my_bookings_request() {
                 } else {
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings, element));
                 }
+            });
+        }
+    })
+}
+
+function my_past_bookings() {
+    $.ajax({
+        url: host + '/past-bookings',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (bookings) {
+            bookings.forEach(element => {
+                $("#my_page_history_container").append(Mustache.render(my_past_booking, element));
             });
         }
     })

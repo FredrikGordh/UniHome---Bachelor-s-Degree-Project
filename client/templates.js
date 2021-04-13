@@ -36,6 +36,15 @@ var my_bookings_paid = '<div class="my_accomodation col-9 mt-3 p-2">'
     + '<p>{{price}} kr</p>'
     + '</div>';
 
+var my_past_booking = '<div class="my_accomodation col-9 mt-3 p-2">'
+    + '<h1>{{title}}<h1>'
+    + '<h3>{{neighbourhood}}</h3>'
+    + '<h3>{{streetaddress}} {{streetnumber}}</h3>'
+    + '<p>{{description}}</p>'
+    + '<p>{{squaremetres}}</p>'
+    + '<p>{{price}} kr</p>'
+    + '</div>';
+
 var load_my_payments = '<div class="my_accomodation col-9 mt-3 p-2">'
     + '<h1>{{ad_id}}<h1>'
     + '<h3>{{payment_price}} {{id}</h3>'
