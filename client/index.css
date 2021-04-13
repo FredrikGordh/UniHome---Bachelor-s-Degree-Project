@@ -44,12 +44,33 @@ label {
 }
 
 #home-reviews {
-  background-color: #F0F8FF;
   padding-top: 100px;
+  padding-bottom: 150px;
   text-align: center;
   color: black;
+  background-color: #fcfeff;
+  background: linear-gradient(135deg, #f3f9ff55 25%, transparent 25%) -40px 0/ 80px 80px, linear-gradient(225deg, #f3f9ff 25%, transparent 25%) -40px 0/ 80px 80px, linear-gradient(315deg, #f3f9ff55 25%, transparent 25%) 0px 0/ 80px 80px, linear-gradient(45deg, #f3f9ff 25%, #fcfeff 25%) 0px 0/ 80px 80px;}
+
+#home-vision {
+  background-color: #37ABAB;
+  text-align: center;
+  padding: 100px;
+  color: white;
+  background:linear-gradient(0deg, rgba(94, 155, 206, 0.5), rgba(94, 155, 206, 0.5)), url(Media/campus.jpg) no-repeat center fixed;
+
 }
-#home-now-hot {
+
+#home-vision p{
+  font-size: 20px;
+}
+
+#home-reviews p {
+  font-size: 20px;
+  line-height: 30px;
+  margin-top: 20px;
+}
+
+ #home-now-hot {
   background-color: red;
 }
 #home-areas {
@@ -420,7 +441,7 @@ margin: 0 auto;
   background-position: center;
   background-repeat: none;
   background-size: cover;
-  margin: 0 auto;
+  margin: 30px auto;
 }
 
 .testamonial .img2 {
@@ -433,7 +454,7 @@ margin: 0 auto;
   background-position: center;
   background-repeat: none;
   background-size: cover;
-  margin: 0 auto;
+  margin: 30px auto;
 }
 
 .testamonial .img3 {
@@ -446,7 +467,11 @@ margin: 0 auto;
   background-position: center;
   background-repeat: none;
   background-size: cover;
-  margin: 0 auto;
+  margin: 30px auto;
+}
+
+.testamonial h3 {
+  font-weight: lighter;
 }
 
 .facts_content {
@@ -640,7 +665,7 @@ clear: both;}
 
 
 .footer{
-  background-color: black;
+  background-color: #094D4D;
   color:white;
   width: 100%;
 }
