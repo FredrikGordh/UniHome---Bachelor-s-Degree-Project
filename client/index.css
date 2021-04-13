@@ -584,6 +584,7 @@ margin: 0 auto;
 
 .headline_startdate{
   text-align: center;
+  border-right: olive solid 1px;
 }
 
 .headline_enddate{
@@ -968,4 +969,14 @@ button:disabled {
 .my_page_menuitem:hover {
   color: black;
   background-color: rgb(228, 228, 228);
+}
+
+
+.search_page_container {
+  background-color: #e7d8ca;
+}
+
+.search_page_price {
+  margin-top: 20%;
+  text-align: center;
 }
