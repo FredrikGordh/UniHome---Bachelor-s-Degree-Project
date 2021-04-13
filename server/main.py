@@ -185,14 +185,15 @@ class Payment(db.Model):
     ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable=False)
     payement_person_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     payment_price = db.Column(db.Integer, nullable=False)
+    ad_title = db.Column(db.String, nullable=False)
 
     def __repr__(self):
         return '<Payment {} {} {} {}>'.format(self.id, self.ad_id, self.payement_person_id,
-                                                       self.payment_price)
+                                                       self.payment_price, self.ad_title) 
 
     def serialize(self):
         return dict(id=self.id, ad_id=self.ad_id, payment_person_id=self.payement_person_id,
-                    payment_price=self.payment_price)
+                    payment_price=self.payment_price, ad_title=self.ad_title) 
 
 
 # Image class
@@ -531,7 +532,9 @@ def payments():
         user_id = get_jwt_identity()
         payment = request.get_json(force=True)
         amount=calculate_order_amount(payment.get("ad_id"))/100
-        newPaymentDB = Payment(id=payment.get('paymentID'), ad_id=payment.get("ad_id"), payement_person_id=user_id, payment_price=amount)
+        current_ad = Ad.query.get_or_404(payment.get("ad_id"))
+        ad_title_temp = current_ad.title
+        newPaymentDB = Payment(id=payment.get('paymentID'), ad_id=payment.get("ad_id"), payement_person_id=user_id, payment_price=amount, ad_title=ad_title_temp) #ändrat /Joel
         db.session.add(newPaymentDB)
         db.session.commit()
         return "success", 200
