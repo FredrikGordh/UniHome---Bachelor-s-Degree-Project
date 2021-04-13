@@ -341,8 +341,7 @@ margin-bottom: 10px;
 
 #new_ad_page_container {
   background-color: #F0F8FF;  /* #E8CDB5;*/
-   margin-top: 10vh; 
-  /* margin-bottom: 10vh; */
+  padding-top: 100px; 
 }
 
 #create_ad_page_container{
