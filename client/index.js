@@ -83,13 +83,6 @@ $(document).ready(function () {
         submit_register_form();
     });
 
-    //Submit register form by pressing ENTER
-    $("#content").keyup("#password_register", function (e) {
-        if (e.keyCode === 13) {
-            submit_register_form();
-        }
-    });
-
 
     //Submit edit form
     $("#content").on("click", "#edit_form_button", function (e) {
@@ -98,8 +91,8 @@ $(document).ready(function () {
     });
 
     //Submit register form by pressing ENTER
-    $("#content").keyup("#password_register", function (e) {
-        if (e.keyCode === 13) {
+    $("#content").on("keyup", "#password_register", function (e) {
+        if (e.keyCode === 13 && $("#content")) {
             submit_register_form();
         }
     });
@@ -111,7 +104,7 @@ $(document).ready(function () {
     });
 
     //Submit login form by pressing ENTER
-    $("#content").keyup("#password_login", function (e) {
+    $("#content").on("keyup", "#password_login", function (e) {
         if (e.keyCode === 13) {
             submit_login_form();
         }
@@ -127,7 +120,7 @@ $(document).ready(function () {
     });
 
     //Go to read more on an ad
-    $("#content").on("click", ".read_more_ad_button", function (e) {
+    $("#content").on("click", ".read_more_ad_button, .title_id", function (e) {
         e.preventDefault();
         go_read_more_ad_page($(this).data('id'));
     });
@@ -163,21 +156,11 @@ $(document).ready(function () {
     //Reserve ad
     $("#content").on("click", "#reservation_button", function (e) {
         e.preventDefault();
-        reserve_ad($(this).data('id'));
-        console.log("ok")
-    });
-
-    //Edit bio
-    $("#content").on("click", "#my_page_change_bio_btn", function (e) {
-        e.preventDefault();
-        go_edit_bio_page();
-    });
-
-    //cancel edit bio
-    $("#content").on("click", "#cancel_edit_form_btn", function (e) {
-        e.preventDefault();
-        go_my_page();
-        load_account_info();
+        if ($("#read_more_select_start").val() != "" && $("#read_more_select_start").val() != "") {
+            reserve_ad($(this).data('id'), $("#read_more_select_start").val(), $("#read_more_select_start").val());
+        } else {
+            alert("Vänligen fyll i datum innan du reserverar!")
+        }
     });
 
     //Edit bio
@@ -199,24 +182,62 @@ $(document).ready(function () {
     $("#content").on("click", "#account_info_link", function (e) {
         e.preventDefault();
         load_account_info();
+        $('html, body').animate({
+            scrollTop: $("#my_page_account_info_container").offset().top
+        }, 1000);
     });
 
     //My page menu: go to history
     $("#content").on("click", "#history_link", function (e) {
         e.preventDefault();
         load_history();
+        $('html, body').animate({
+            scrollTop: $("#my_page_history_container").offset().top
+        }, 1000);
     });
 
     //My page menu: go to bookings
     $("#content").on("click", "#bookings_link", function (e) {
         e.preventDefault();
         load_bookings();
+        $('html, body').animate({
+            scrollTop: $("#my_page_bookings_container").offset().top
+        }, 1000);
     });
 
     //My page menu: go to ads
     $("#content").on("click", "#ads_link", function (e) {
         e.preventDefault();
         load_ads();
+        $('html, body').animate({
+            scrollTop: $("#my_page_ads_container").offset().top
+        }, 1000);
+    });
+
+    //My page menu: go to ads
+    $("#content").on("click", "#map_ryd", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#ryd_view").html());
+    });
+    //My page menu: go to ads
+    $("#content").on("click", "#map_lambohov", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#lambohov_view").html());
+    });
+    //My page menu: go to ads
+    $("#content").on("click", "#map_valla", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#valla_view").html());
+    });
+    //My page menu: go to ads
+    $("#content").on("click", "#map_vasastaden", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#vasastaden_view").html());
+    });
+    //My page menu: go to ads
+    $("#content").on("click", "#map_gottfridsberg", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#gottfridsberg_view").html());
     });
 
     //My page: approve tenant
@@ -240,6 +261,12 @@ $(document).ready(function () {
         submitAdForm();
     });
 
+    //Submit form create new ad
+    $("#content").on("click", "#read_more_login_button", function (e) {
+        e.preventDefault();
+        go_login();
+    });
+
 
 });
 
@@ -247,11 +274,136 @@ $(document).ready(function () {
 
 //----Nav functions:
 
+
+
 //Function for going to view: Home_page
 function go_home() {
     $("#content").html($("#home_page").html());
     load_home_search_dropdowns();
     load_burger();
+    $("#area_facts").html($("#default_view").html());
+    let coord;
+    let z;
+    if (screen.width < 992) {
+        coord = { lat: 58.40241681113258, lng: 15.590244664416542 }
+        z = 12.3;
+    } else {
+        coord = { lat: 58.40241681113258, lng: 15.651244664416542 }
+        z = 13;
+    }
+
+    let map, popup;
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: coord,
+        zoom: z,
+        disableDefaultUI: true,
+    });
+    const citymap = {
+        ryd: {
+            center: { lat: 58.41320706527976, lng: 15.566379297129107 },
+            size: 60,
+        },
+        valla: {
+            center: { lat: 58.405844557880265, lng: 15.5949486961521 },
+            size: 40,
+        },
+        vasastaden: {
+            center: { lat: 58.418598933014735, lng: 15.612839650705164 },
+            size: 30,
+        },
+        gottfridsberg: {
+            center: { lat: 58.414188119723406, lng: 15.596067756828468 },
+            size: 50,
+        },
+        lambohov: {
+            center: { lat: 58.382892422235216, lng: 15.561087706177256 },
+            size: 70,
+        },
+    };
+    for (const city in citymap) {
+        const cityCircle = new google.maps.Circle({
+            strokeColor: "#6be0e0",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#AFEEEE",
+            fillOpacity: 0.35,
+            map,
+            center: citymap[city].center,
+            radius: Math.sqrt(citymap[city].size) * 100,
+        });
+    }
+    class Popup extends google.maps.OverlayView {
+        constructor(position, content) {
+            super();
+            this.position = position;
+            content.classList.add("popup-bubble");
+            // This zero-height div is positioned at the bottom of the bubble.
+            const bubbleAnchor = document.createElement("div");
+            bubbleAnchor.classList.add("popup-bubble-anchor");
+            bubbleAnchor.appendChild(content);
+            // This zero-height div is positioned at the bottom of the tip.
+            this.containerDiv = document.createElement("div");
+            this.containerDiv.classList.add("popup-container");
+            this.containerDiv.appendChild(bubbleAnchor);
+            // Optionally stop clicks, etc., from bubbling up to the map.
+            Popup.preventMapHitsAndGesturesFrom(this.containerDiv);
+        }
+        /** Called when the popup is added to the map. */
+        onAdd() {
+            this.getPanes().floatPane.appendChild(this.containerDiv);
+        }
+        /** Called when the popup is removed from the map. */
+        onRemove() {
+            if (this.containerDiv.parentElement) {
+                this.containerDiv.parentElement.removeChild(this.containerDiv);
+            }
+        }
+        /** Called each frame when the popup needs to draw itself. */
+        draw() {
+            const divPosition = this.getProjection().fromLatLngToDivPixel(
+                this.position
+            );
+            // Hide the popup when it is far out of view.
+            const display =
+                Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000
+                    ? "block"
+                    : "none";
+
+            if (display === "block") {
+                this.containerDiv.style.left = divPosition.x + "px";
+                this.containerDiv.style.top = divPosition.y + "px";
+            }
+
+            if (this.containerDiv.style.display !== display) {
+                this.containerDiv.style.display = display;
+            }
+        }
+    }
+    popup1 = new Popup(
+        new google.maps.LatLng(58.41320706527976, 15.566379297129107),
+        document.getElementById("ryd")
+    );
+    popup2 = new Popup(
+        new google.maps.LatLng(58.405844557880265, 15.5949486961521),
+        document.getElementById("valla")
+    );
+    popup3 = new Popup(
+        new google.maps.LatLng(58.418598933014735, 15.612839650705164),
+        document.getElementById("vasastaden")
+    );
+    popup4 = new Popup(
+        new google.maps.LatLng(58.414188119723406, 15.596067756828468),
+        document.getElementById("gottfridsberg")
+    );
+    popup5 = new Popup(
+        new google.maps.LatLng(58.382892422235216, 15.561087706177256),
+        document.getElementById("lambohov")
+    );
+    popup1.setMap(map);
+    popup2.setMap(map);
+    popup3.setMap(map);
+    popup4.setMap(map);
+    popup5.setMap(map);
 }
 
 //Function for going to view: Register_page
@@ -443,6 +595,9 @@ function go_successful_payment_page() {
 //Function for going to view: Read more ad
 function go_read_more_ad_page(ad_id) {
     $("#content").html($("#read_more_ad_page").html());
+    var signedIn = sessionStorage.getItem('auth') != null;
+    $("#read_more_reserve").toggleClass('d-none', !signedIn);
+    $("#read_more_login").toggleClass('d-none', signedIn);
     load_read_more(ad_id);
     $("#reservation_button").data('id', ad_id)
 }
@@ -467,15 +622,16 @@ function go_confirmation_page() {
 function load_account_info() {
     $("#my_page_content").html($("#my_page_account_info").html());
     var user = JSON.parse(sessionStorage.getItem('auth')).user
-    $("#my_page_name").html("Fullt namn: " + user.name);
-    $("#my_page_email_and_tel").html("Tel: " + user.telephone + " <br>Email: " + user.email);
+    $("#my_page_name").html("Namn: " + user.name);
+    $("#my_page_email_and_tel").html("Telefonnummer: " + user.telephone + " <br><br>E-mail: " + user.email);
+
     if (user.bio) {
         $("#my_page_bio_text").css('color', 'white');
         $("#my_page_bio_text").html(user.bio);
     }
     else {
-        $("#my_page_bio_text").css('color', 'red');
-        $("#my_page_bio_text").html("Du har inte lagt till någon text om dig själv än,<br> lägg till en personlig biografi genom att <br>klicka på \"Redigera min profil\" för större chans att få ditt önskade boende!");
+        $("#my_page_bio_text").css('color', 'grey');
+        $("#my_page_bio_text").html("Du har inte lagt till någon text om dig själv än, lägg till en personlig biografi genom att klicka på \"Redigera min profil\".");
     }
 }
 
@@ -567,6 +723,7 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
         success: function (ads) {
             $("#search_result").empty();
             ads.forEach(element => {
+                element.image = element.image.url;
                 $("#search_result").append(Mustache.render(accomodation, element));
             });
         }
@@ -580,6 +737,7 @@ function load_my_ads_request() {
         type: 'GET',
         success: function (ads) {
             ads.forEach(element => {
+                element.image = element.image.url;
                 $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
                 if (element.booked == true) {
                     console.log("booked");
@@ -616,6 +774,8 @@ function my_past_bookings() {
         success: function (bookings) {
             bookings.forEach(element => {
                 $("#my_page_history_container").append(Mustache.render(my_past_booking, element));
+                element.image = element.image.url;
+                $("#my_page_bookings_container").append(Mustache.render(my_accomodation, element));
             });
         }
     })
@@ -653,7 +813,11 @@ function login_request(user) {
             sessionStorage.setItem('auth', JSON.stringify(response));
             go_home();
         }
+        , error: function () {
+            $("#login_failed_container").html("Dina inloggningsuppgifter är felaktiga.");
+        }
     })
+
 }
 
 //Function for making a register request 
@@ -664,7 +828,16 @@ function register_request(user) {
         data: JSON.stringify(user),
         success: function (response) {
             go_registered_page();
+        },
+        statusCode: {
+            500: function () {
+                alert('fyll i alla fält horunge');
+            },
+            409: function () {
+                $("#register_failed_container").html("Den här email-adressen används redan!");
+            }
         }
+
     })
 }
 
@@ -732,6 +905,7 @@ function load_areas(container) {
     })
 }
 
+
 //Function for making a request for all unique accomodation types in database
 function load_types(container) {
     $.ajax({
@@ -752,28 +926,60 @@ function load_read_more(ad_id) {
         type: 'GET',
         success: function (ad) {
             $("#read_more_ad_title").html(ad.title);
-            $("#read_more_ad_bio").html(ad.bio);
-            $("#read_more_ad_neighbourhood").html(ad.neighbourhood);
-            $("#read_more_ad_studentcity").html(ad.studentcity);
-            $("#read_more_ad_address").html(ad.address);
-            $("#read_more_ad_city").html(ad.ciy);
-            $("#read_more_ad_postalcode").html(ad.postalcode);
+            $("#read_more_ad_description").html(ad.description);
+            $("#read_more_ad_neighbourhood").html(ad.neighbourhood)
+            // $("#read_more_ad_studentcity").html(ad.studentcity);
+            $("#read_more_ad_streetaddress").html(ad.streetaddress + ", " + ad.postalcode + ", " + ad.city);
             $("#read_more_ad_startdate").html(ad.startdate);
             $("#read_more_ad_enddate").html(ad.enddate);
-            $("#read_more_ad_squaremetres").html(ad.squaremetres + " m3");
+            $("#read_more_ad_squaremetres").html(ad.squaremetres + " kvm");
             $("#read_more_ad_price").html(ad.price + " kr");
-            $("#read_more_ad_beds").html("Antal sängar " + ad.beds + " st");
-            $("#read_more_ad_accommodationtype").html("Typ " + ad.accommodationtype);
+            $("#read_more_ad_beds").html(ad.beds + " st");
+            $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
+            $("#readmore_img").attr("src", ad.image.url);
+
+
+            parameters = "address=" + ad.streetnumber + "%20" + ad.streetaddress + "%20" + ad.city + "%20" + "Sweden";
+            console.log(parameters);
+
+            $.ajax({
+                url: "https://maps.googleapis.com/maps/api/geocode/json?" + parameters + "&key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs",
+                type: 'GET',
+                success: function (coordinates) {
+                    var coord = coordinates.results[0].geometry.location;
+                    console.log(coord);
+                    let map, popup;
+                    map2 = new google.maps.Map(document.getElementById("read_more_map"), {
+                        zoom: 13.2,
+                        center: coord,
+                        // disableDefaultUI: true,
+
+                    });
+                    // The marker, positioned at the address
+                    const marker = new google.maps.Marker({
+                        position: coord,
+                        map: map2,
+                    });
+
+                }
+            })
+            // console.log(coord);
         }
     })
+
 }
 
-function update_reserved_status(status, ad_id) {
+function update_reserved_status(status, ad_id, start_date, end_date) {
+    data = {
+        status: status,
+        start: start_date,
+        end: end_date
+    }
     $.ajax({
         url: host + '/ad/' + ad_id + '/reserved',
         type: 'PUT',
-        data: JSON.stringify(status),
+        data: JSON.stringify(data),
         success: function (ad) {
 
         }
@@ -812,7 +1018,7 @@ function load_burger() {
         $("#menu").prepend('<a href=""><li id="register_button" class="hide-menu" >Bli medlem</li></a>'
             + '<a href=""><li id="login_button" class="hide-menu" >Logga in</li></a>')
     } else {
-        $("#menu").prepend('<a href=""><li id="my_page_button">Mina sidor</li></a>'
+        $("#menu").prepend('<a href=""><li id="my_page_button" class="hide-menu">Mina sidor</li></a>'
             + '<a href=""><li id="logout_button" class="hide-menu" >Logga ut</li></a>')
     }
 
@@ -880,8 +1086,8 @@ function load_search_page_search_dropdowns(search) {
 }
 
 //Function for reservring ad in database: update reserved status --> show ad to host for approval
-function reserve_ad(ad_id) {
-    update_reserved_status(true, ad_id)
+function reserve_ad(ad_id, start, end) {
+    update_reserved_status(true, ad_id, start, end)
     set_tenant(ad_id);
     go_search();
 }
@@ -948,8 +1154,12 @@ function submit_home_search_form() {
         type: $("#home_select_type").val(),
         attributes: $("#home_select_attr").val()
     }
-    sessionStorage.setItem('search', JSON.stringify(search));
-    go_search();
+    if (search.start > search.end && search.start != "" && search.end != "") {
+        alert("Inflytt måste vara före utflytt");
+    } else {
+        sessionStorage.setItem('search', JSON.stringify(search));
+        go_search();
+    }
 }
 
 function update_search() {
@@ -974,14 +1184,140 @@ function update_search() {
         end: $("#search_page_select_end").val(),
         attributes: $("#search_page_select_attr").val(),
     }
-    sessionStorage.setItem('search', JSON.stringify(search));
-    sessionStorage.setItem('sort', JSON.stringify(sort));
-    sessionStorage.setItem('sort_param', JSON.stringify(sort_param));
+    console.log(search.start)
+    console.log(search.end)
+    if (search.start > search.end && search.start != "" && search.end != "") {
+        alert("Inflytt måste vara före utflytt");
+    } else {
+        sessionStorage.setItem('search', JSON.stringify(search));
+        sessionStorage.setItem('sort', JSON.stringify(sort));
+        sessionStorage.setItem('sort_param', JSON.stringify(sort_param));
 
-    load_ads_request(search, sort, sort_param);
+        load_ads_request(search, sort, sort_param);
+    }
+
 }
 
+// ------- BETALNING -----------
+//var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+var stripe = Stripe("pk_test_51IdXd9I1LSmMkwS01UZ3P15rGwgKS2FVNDj7puij4jKSK9qHTzpT6RXuoxwT7R3W2egc2WdFbp31gMXAp2RsqpJO003rUKAs23");
 
+// ---------PaymentIntent ----------- //
+
+// The items the customer wants to buy
+var purchase = {
+    items: [{ id: "xl-tshirt" }]
+};
+
+// Disable the button until we have Stripe set up on the page
+document.querySelector("button").disabled = true;
+
+fetch('/create-payment-intent', {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(purchase)
+})
+    .then(function (result) {
+        return result.json();
+    })
+    .then(function (data) {
+        var elements = stripe.elements();
+        var style = {
+            base: {
+                color: "#32325d",
+                fontFamily: 'Arial, sans-serif',
+                fontSmoothing: "antialiased",
+                fontSize: "16px",
+                "::placeholder": {
+                    color: "#32325d"
+                }
+            },
+            invalid: {
+                fontFamily: 'Arial, sans-serif',
+                color: "#fa755a",
+                iconColor: "#fa755a"
+            }
+        };
+
+        var card = elements.create("card", { style: style });
+        // Stripe injects an iframe into the DOM
+        card.mount("#card-element");
+
+        card.on("change", function (event) {
+            // Disable the Pay button if there are no card details in the Element
+            $("button").attr("disabled", event.empty);
+            document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+        });
+
+        var form = document.getElementById("payment-form");
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            // Complete payment when the submit button is clicked
+            payWithCard(stripe, card, data.clientSecret);
+        });
+    });
+
+// Calls stripe.confirmCardPayment
+// If the card requires authentication Stripe shows a pop-up modal to
+// prompt the user to enter authentication details without leaving your page.
+var payWithCard = function (stripe, card, clientSecret) {
+    loading(true);
+    stripe
+        .confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: card
+            }
+        })
+        .then(function (result) {
+            if (result.error) {
+                // Show error to your customer
+                showError(result.error.message);
+            } else {
+                // The payment succeeded!
+                orderComplete(result.paymentIntent.id);
+            }
+        });
+};
+
+/* ------- UI helpers ------- */
+// Shows a success message when the payment is complete
+var orderComplete = function (paymentIntentId) {
+    loading(false);
+    document
+        .querySelector(".result-message a")
+        .setAttribute(
+            "href",
+            "https://dashboard.stripe.com/test/payments/" + paymentIntentId
+        );
+    document.querySelector(".result-message").classList.remove("hidden");
+    document.querySelector("button").disabled = true;
+};
+
+// Show the customer the error from Stripe if their card fails to charge
+var showError = function (errorMsgText) {
+    loading(false);
+    var errorMsg = document.querySelector("#card-error");
+    errorMsg.textContent = errorMsgText;
+    setTimeout(function () {
+        errorMsg.textContent = "";
+    }, 4000);
+};
+
+// Show a spinner on payment submission
+var loading = function (isLoading) {
+    if (isLoading) {
+        // Disable the button and show a spinner
+        document.querySelector("button").disabled = true;
+        document.querySelector("#spinner").classList.remove("hidden");
+        document.querySelector("#button-text").classList.add("hidden");
+    } else {
+        document.querySelector("button").disabled = false;
+        document.querySelector("#spinner").classList.add("hidden");
+        document.querySelector("#button-text").classList.remove("hidden");
+    }
+};
 
 function submitAdForm() {
     var formData = new FormData();

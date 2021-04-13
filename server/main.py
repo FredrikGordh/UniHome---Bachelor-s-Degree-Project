@@ -9,13 +9,14 @@ from flask import abort
 import datetime
 import stripe
 import json
+import os
 # The imports down below handle images saved in the server.
 from flask import flash, redirect, url_for
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
 
 
-UPLOAD_FOLDER = './pictures'
+UPLOAD_FOLDER = '../client/Media'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__, static_folder='../client', static_url_path='/')
@@ -36,7 +37,7 @@ bcrypt = Bcrypt(app)
 # Set your secret key. Remember to switch to your live secret key in production.
 # See your keys here: https://dashboard.stripe.com/account/apikeys
 
-#BETALNING_______________________creat
+# BETALNING_______________________creat
 stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfFOz1e8wgFJduwU1uJCvtrspqIeelpu7RuJjZ00j0qjVnl8"
 
 def calculate_order_amount(id):
@@ -52,7 +53,8 @@ def calculate_order_amount(id):
 #   payment_method_types=['card'],
 #   receipt_email='jenny.rosen@example.com',
 # )
-#__________________________________
+# __________________________________
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -108,6 +110,9 @@ class Ad(db.Model):
     booked = db.Column(db.Boolean, nullable=False, default=False)
     paid = db.Column(db.Boolean, nullable=False, default=False)
 
+    tenant_startdate = db.Column(db.Date, nullable=True)
+    tenant_enddate = db.Column(db.Date, nullable=True)
+
     streetaddress = db.Column(db.String, nullable=True)
     streetnumber = db.Column(db.String, nullable=True)
     city = db.Column(db.String, nullable=True)
@@ -131,9 +136,9 @@ class Ad(db.Model):
     image_id = db.relationship("Image", backref='ad')
 
     def __repr__(self):
-        return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
-                                                                                   self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode,
-                                                                                   self.country, self.squaremetres, self.price, self.beds, self.accommodationtype, self.reserved, self.booked, self.paid, self.tenant_id)
+        return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
+                                                                                         self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode,
+                                                                                         self.country, self.squaremetres, self.price, self.beds, self.accommodationtype, self.reserved, self.booked, self.paid, self.tenant_id, self.image_id, self.tenant_startdate, self.tenant_enddate)
 
     def serialize(self):
         return dict(id=self.id, title=self.title, description=self.description, neighbourhood=self.neighbourhood,
@@ -141,12 +146,16 @@ class Ad(db.Model):
                     postalcode=self.postalcode, country=self.country, squaremetres=self.squaremetres, price=self.price, beds=self.beds,
                     accommodationtype=self.accommodationtype, host=User.query.get(
                         self.host_id).serialize(),
-                    startdate=self.startdate,
-                    enddate=self.enddate,
+                    startdate=self.startdate.strftime('%Y-%m-%d'),
+                    enddate=self.enddate.strftime('%Y-%m-%d'),
+                    tenant_startdate=self.startdate.strftime('%Y-%m-%d'),
+                    tenant_enddate=self.enddate.strftime('%Y-%m-%d'),
                     reserved=self.reserved,
                     booked=self.booked,
                     paid=self.paid,
-                    attributes=Attributes.query.filter_by(ad_id=self.id).first().serialize())
+                    attributes=Attributes.query.filter_by(
+                        ad_id=self.id).first().serialize(),
+                    image=Image.query.filter_by(ad_id=self.id).first().serialize(), )
 
 
 # The class attributes contains all the attributes of ad that has a boolean.
@@ -222,7 +231,27 @@ def signup():
         db.session.commit()
         return "Created", 201
     else:
-        return "E-mail already in use", 409
+        return "email_in_use", 409
+
+
+@app.route('/user/edit', methods=['PUT'])
+@jwt_required()
+def edit_user():
+    edituser = request.get_json(force=True)
+    editable_user = User.query.filter_by(id=get_jwt_identity()).first()
+  #  print(editable_user.get('name'))
+    if edituser.get('name') != None:
+        editable_user.name = edituser.get('name')
+    if edituser.get('email') != None:
+        editable_user.email = edituser.get('email')
+    if edituser.get('telephone') != None:
+        editable_user.telephone = edituser.get('telephone')
+    if edituser.get('gender') != None:
+        editable_user.gender = edituser.get('gender')
+    if edituser.get('bio') != None:
+        editable_user.bio = edituser.get('bio')
+    db.session.commit()
+    return "Changed"
 
 
 # /user/login has the method POST that is used when you want to log in with a user.
@@ -298,7 +327,11 @@ def set_reserved(ad_id):
     if request.method == 'PUT':
         reserved = request.get_json(force=True)
         current_ad = Ad.query.get_or_404(ad_id)
-        current_ad.reserved = reserved
+        current_ad.reserved = reserved.get('status')
+        current_ad.tenant_startdate = datetime.datetime.strptime(
+            reserved.get('start'), '%Y-%m-%d').date()
+        current_ad.tenant_enddate = datetime.datetime.strptime(
+            reserved.get('end'), '%Y-%m-%d').date()
         db.session.commit()
         return "success", 200
 
@@ -472,7 +505,8 @@ def types():
         type_list.append(type)
     return jsonify(type_list)
 
-#BETALNING__________________________________
+# BETALNING__________________________________
+
 
 @app.route('/create-payment-intent', methods=['POST'])
 def create_payment():
@@ -484,7 +518,7 @@ def create_payment():
             currency='sek'
         )
         return jsonify({
-          'clientSecret': intent['client_secret']
+            'clientSecret': intent['client_secret']
         })
     except Exception as e:
         return jsonify(error=str(e)), 403
