@@ -108,6 +108,9 @@ class Ad(db.Model):
     booked = db.Column(db.Boolean, nullable=False, default=False)
     paid = db.Column(db.Boolean, nullable=False, default=False)
 
+    tenant_startdate = db.Column(db.Date, nullable=True)
+    tenant_enddate = db.Column(db.Date, nullable=True)
+
     streetaddress = db.Column(db.String, nullable=True)
     streetnumber = db.Column(db.String, nullable=True)
     city = db.Column(db.String, nullable=True)
@@ -128,9 +131,9 @@ class Ad(db.Model):
     image_id = db.relationship("Image", backref='ad')
 
     def __repr__(self):
-        return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
-                                                                                   self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode,
-                                                                                   self.country, self.squaremetres, self.price, self.beds, self.accommodationtype, self.reserved, self.booked, self.paid, self.tenant_id, self.image_id)
+        return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
+                                                                                         self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode,
+                                                                                         self.country, self.squaremetres, self.price, self.beds, self.accommodationtype, self.reserved, self.booked, self.paid, self.tenant_id, self.image_id, self.tenant_startdate, self.tenant_enddate)
 
     def serialize(self):
         return dict(id=self.id, title=self.title, description=self.description, neighbourhood=self.neighbourhood,
@@ -140,12 +143,14 @@ class Ad(db.Model):
                         self.host_id).serialize(),
                     startdate=self.startdate.strftime('%Y-%m-%d'),
                     enddate=self.enddate.strftime('%Y-%m-%d'),
+                    tenant_startdate=self.startdate.strftime('%Y-%m-%d'),
+                    tenant_enddate=self.enddate.strftime('%Y-%m-%d'),
                     reserved=self.reserved,
                     booked=self.booked,
                     paid=self.paid,
                     attributes=Attributes.query.filter_by(
                         ad_id=self.id).first().serialize(),
-                    image=Image.query.filter_by(ad_id=self.id).first().serialize())
+                    image=Image.query.filter_by(ad_id=self.id).first().serialize(), )
 
 
 # The class attributes contains all the attributes of ad that has a boolean.
@@ -207,11 +212,12 @@ def signup():
     else:
         return "email_in_use", 409
 
+
 @app.route('/user/edit', methods=['PUT'])
 @jwt_required()
 def edit_user():
     edituser = request.get_json(force=True)
-    editable_user = User.query.filter_by(id = get_jwt_identity()).first()
+    editable_user = User.query.filter_by(id=get_jwt_identity()).first()
   #  print(editable_user.get('name'))
     if edituser.get('name') != None:
         editable_user.name = edituser.get('name')
@@ -300,7 +306,11 @@ def set_reserved(ad_id):
     if request.method == 'PUT':
         reserved = request.get_json(force=True)
         current_ad = Ad.query.get_or_404(ad_id)
-        current_ad.reserved = reserved
+        current_ad.reserved = reserved.get('status')
+        current_ad.tenant_startdate = datetime.datetime.strptime(
+            reserved.get('start'), '%Y-%m-%d').date()
+        current_ad.tenant_enddate = datetime.datetime.strptime(
+            reserved.get('end'), '%Y-%m-%d').date()
         db.session.commit()
         return "success", 200
 

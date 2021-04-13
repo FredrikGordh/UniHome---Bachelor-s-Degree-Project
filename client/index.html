@@ -805,7 +805,7 @@
               <b>Tidigast inflytt</b> 
             </div>
             <div class="col-6 headline_enddate">
-              <b>Tidigast utflytt</b> 
+              <b>Senast utflytt</b> 
             </div>
         </div>
           
@@ -829,7 +829,21 @@
                   <h5 class="col-10" id="read_more_ad_price"  ></h5>
                 </div>
               </div>
-              <button id="reservation_button" class="btn btn-success">Reservera</button>
+              <div class="row mt-5" id="read_more_reserve">
+                <div class="col-6">
+                  <input type="date" id="read_more_select_start" class="no-border">
+                </div>
+                <div class="col-6">
+                  <input type="date" id="read_more_select_end" class="no-border">
+                </div>
+                <button id="reservation_button" class="btn btn-success">Reservera</button>
+              </div>
+              <div class="row mt-5" id="read_more_login">
+                <div class="col-12">
+                  <p>Du måste logga in för att reservera ett boende.</p>
+                </div>
+                <button id="read_more_login_button" class="btn btn-success">Logga in</button>
+              </div>
         </div>
       </div>
     </script>

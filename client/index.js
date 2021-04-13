@@ -144,8 +144,11 @@ $(document).ready(function () {
     //Reserve ad
     $("#content").on("click", "#reservation_button", function (e) {
         e.preventDefault();
-        reserve_ad($(this).data('id'));
-        console.log("ok")
+        if ($("#read_more_select_start").val() != "" && $("#read_more_select_start").val() != "") {
+            reserve_ad($(this).data('id'), $("#read_more_select_start").val(), $("#read_more_select_start").val());
+        } else {
+            alert("Vänligen fyll i datum innan du reserverar!")
+        }
     });
 
     //Edit bio
@@ -244,6 +247,12 @@ $(document).ready(function () {
     $("#content").on("click", "#create_new_ad", function (e) {
         e.preventDefault();
         submitAdForm();
+    });
+
+    //Submit form create new ad
+    $("#content").on("click", "#read_more_login_button", function (e) {
+        e.preventDefault();
+        go_login();
     });
 
 
@@ -434,6 +443,9 @@ function go_registered_page() {
 //Function for going to view: Read more ad
 function go_read_more_ad_page(ad_id) {
     $("#content").html($("#read_more_ad_page").html());
+    var signedIn = sessionStorage.getItem('auth') != null;
+    $("#read_more_reserve").toggleClass('d-none', !signedIn);
+    $("#read_more_login").toggleClass('d-none', signedIn);
     load_read_more(ad_id);
     $("#reservation_button").data('id', ad_id)
 }
@@ -727,42 +739,47 @@ function load_read_more(ad_id) {
             $("#read_more_ad_attributes").html(ad.attributes);
             $("#readmore_img").attr("src", ad.image.url);
 
-        
-        parameters = "address=" + ad.streetnumber + "%20" + ad.streetaddress + "%20" + ad.city + "%20" + "Sweden";
-        console.log(parameters);
-        
-        $.ajax({
-            url: "https://maps.googleapis.com/maps/api/geocode/json?" + parameters + "&key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs",
-            type: 'GET',
-            success: function (coordinates) {
-                var coord = coordinates.results[0].geometry.location;
-                console.log(coord);
-                let map, popup;
-                map2 = new google.maps.Map(document.getElementById("read_more_map"), {
-                zoom: 13.2,
-                center: coord,
-                // disableDefaultUI: true,
-                
-            });     
-            // The marker, positioned at the address
-            const marker = new google.maps.Marker({
-            position: coord,
-            map: map2,
-            });       
-            
-        }    
-        })
-        // console.log(coord);
+
+            parameters = "address=" + ad.streetnumber + "%20" + ad.streetaddress + "%20" + ad.city + "%20" + "Sweden";
+            console.log(parameters);
+
+            $.ajax({
+                url: "https://maps.googleapis.com/maps/api/geocode/json?" + parameters + "&key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs",
+                type: 'GET',
+                success: function (coordinates) {
+                    var coord = coordinates.results[0].geometry.location;
+                    console.log(coord);
+                    let map, popup;
+                    map2 = new google.maps.Map(document.getElementById("read_more_map"), {
+                        zoom: 13.2,
+                        center: coord,
+                        // disableDefaultUI: true,
+
+                    });
+                    // The marker, positioned at the address
+                    const marker = new google.maps.Marker({
+                        position: coord,
+                        map: map2,
+                    });
+
+                }
+            })
+            // console.log(coord);
         }
     })
-    
+
 }
 
-function update_reserved_status(status, ad_id) {
+function update_reserved_status(status, ad_id, start_date, end_date) {
+    data = {
+        status: status,
+        start: start_date,
+        end: end_date
+    }
     $.ajax({
         url: host + '/ad/' + ad_id + '/reserved',
         type: 'PUT',
-        data: JSON.stringify(status),
+        data: JSON.stringify(data),
         success: function (ad) {
 
         }
@@ -858,8 +875,8 @@ function load_search_page_search_dropdowns(search) {
 }
 
 //Function for reservring ad in database: update reserved status --> show ad to host for approval
-function reserve_ad(ad_id) {
-    update_reserved_status(true, ad_id)
+function reserve_ad(ad_id, start, end) {
+    update_reserved_status(true, ad_id, start, end)
     set_tenant(ad_id);
     go_search();
 }
