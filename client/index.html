@@ -375,7 +375,11 @@
         </div>
         <br>
         <div id = "register_failed_container"></div>
-        <button type="button" id="register_form_button" class="btn btn-primary">Registrera</button>
+        <div class="row">
+          <div class="col-2">
+            <button type="button" id="register_form_button" class="btn btn-primary rounded-pill">Registrera</button>
+          </div>
+        </div>
         <div>Har du redan ett konto? Logga in genom att klicka <span class = "clickable_class" id = "get_to_login">här</span></div>
       </form>
     </div>
@@ -384,6 +388,8 @@
   <!-- Edit bio view -->
   <script id="edit_bio_page" type="text/html">
     <div id="edit_bio_container" class="container">
+      <h2 id ="my_page_heading_id"class="my_page_heading">Mina uppgifter</h2>
+    <br>
       <form>
         <div id="edit_bio_form"  class="form-group">
           <label for="edit_name" class="ad_label">Ändra för- och efternamn</label>
@@ -423,9 +429,13 @@
           <br>
           <textarea rows=3 cols="50" class="ad_input" id="bio_edit"></textarea>
         </div>
-        <button type="button" id="edit_form_button" class="btn btn-primary">Ändra!</button>
+        <div class="row justify-content-center">
+          <div class= "col-3">
+            <button type="button" id="edit_form_button" class="btn btn-primary rounded-pill">Spara</button>
+          </div>
+        </div>  
         <br>
-        <button type="button" id="cancel_edit_form_btn" class="btn btn-primary">Avbryt!</button>
+        <!-- <button type="button" id="cancel_edit_form_btn" class="btn btn-primary">Avbryt!</button> -->
       </form>
     </div>
   </script>
@@ -448,7 +458,11 @@
           <input type="password" class="ad_input" size="50" id="password_login" placeholder="Password">
         </div>
         <div id = "login_failed_container"></div>
-        <button type="button" id="login_form_button" class="btn btn-primary">Logga in</button>
+        <div class="row">
+          <div class="col-2">
+            <button type="button" id="login_form_button" class="btn btn-primary rounded-pill">Logga in</button>
+          </div>
+        </div>
       </form>
     </div>
   </script>
@@ -469,6 +483,7 @@
         <a class="col-11 col-lg-5 my_page_menuitem m-2 p-4" id="history_link" href=""><div class="row align-items-center"> <h3 class="col-10">Min historik </h3> <h3 class="col-2 fas fa-history" style="color: #37ABAB;"></h3> </div><p>Se och kontrollera din bokningshistorik.</p></a>
       </div>
       <!--Container for loading in dynamic content in my page (ie. edit account, history etc.)-->
+      <div id="my_page_content_scrolldown"></div>
       <div id="my_page_content"></div>
       
     </div>
@@ -513,12 +528,16 @@
 
   <!-- My page: history view -->
   <script id="my_page_history" type="text/html">
+    <h2 id ="my_page_heading_id"class="my_page_heading">Min historik</h2>
+    <br>
     <div id="my_page_history_container" class="container row justify-content-center">
     </div>
   </script>
 
   <!-- My page: my bookings view -->
   <script id="my_page_bookings" type="text/html">
+    <h2 id ="my_page_heading_id"class="my_page_heading">Mina bokningar</h2>
+    <br>
     <div id="my_page_bookings_container" class="container row justify-content-center">
 
     </div>
@@ -526,7 +545,7 @@
 
   <!-- My page: my ads view -->
   <script id="my_page_ads" type="text/html">
-    <h2 class="my_page_heading">Mina annonser</h2>
+    <h2 id ="my_page_heading_id"class="my_page_heading">Mina annonser</h2>
     <br>
     <div id="my_page_ads_container" class="container row justify-content-center">
     </div>
@@ -770,11 +789,11 @@
                 <div class="col-lg-6 mx-auto">
         
                     <!-- Upload image input-->
-                    <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+                    <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white ">
                         <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0 ad_input">
                         <label id="upload-label" for="upload" class="font-weight-light text-muted">Ingen fil vald ännu</label>
                         <div class="input-group-append">
-                            <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Välj bildfil</small></label>
+                            <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload"></i>Välj bildfil</label>
                         </div>
                     </div>
         
@@ -784,7 +803,11 @@
                 </div>
             </div>
             <br>
-          <button id="create_new_ad" class="btn btn-primary" type="button">Lägg upp annons</button>
+            <div class="row justify-content-center">
+              <div class="col-3">
+                <button id="create_new_ad" class="btn btn-primary rounded-pill" type="button">Lägg upp annons</button>
+              </div>
+            </div>
         </form>
         <!--
         <div class="form-group">
@@ -844,7 +867,7 @@
   <script id="read_more_ad_page" type="text/html">
     <div class="row" >
       <div class="col-1">
-        <button id="read_more_back" class="read_more_back_button btn btn-primary  "><i class="fas fa-arrow-left"></i>
+        <button id="read_more_back" class="read_more_back_button btn btn-primary rounded-pill"><i class="fas fa-arrow-left"></i>
         </button>
       </div>
     
@@ -854,8 +877,9 @@
       <h1 id="read_more_ad_title"></h1>
       <h4 id="read_more_ad_neighbourhood"></h4>
       <div class="row">
-       
-          <img src="" class="col-7" id="readmore_img">   
+          <div class="col-7">
+          <img src="" id="readmore_img">   
+          </div> 
           <div id="read_more_map" class="col-5"></div>
       </div>
       <div class="row justify-content-center">
@@ -919,25 +943,25 @@
             
               <h5 id="read_more_ad_attributes"></h5>
               <div class= "read_more_price">
-                <div class="row">
+                <div class="row justify-content-center">
                   <h5 class="fas fa-coins col-1"></h5>
                   <h5 class="col-10" id="read_more_ad_price"  ></h5>
                 </div>
               </div>
               <div class="row mt-5" id="read_more_reserve">
                 <div class="col-6">
-                  <input type="date" id="read_more_select_start" class="no-border">
+                  <input type="date" id="read_more_select_start" style ="font-size: 20px;" class="no-border">
                 </div>
                 <div class="col-6">
-                  <input type="date" id="read_more_select_end" class="no-border">
+                  <input type="date" id="read_more_select_end" style ="font-size: 20px;" class="no-border">
                 </div>
-                <button id="reservation_button" class="btn btn-success">Reservera</button>
+                <button id="reservation_button" class="btn btn-success rounded-pill">Reservera</button>
               </div>
               <div class="row mt-5" id="read_more_login">
                 <div class="col-12">
                   <p>Du måste logga in för att reservera ett boende.</p>
                 </div>
-                <button id="read_more_login_button" class="btn btn-success">Logga in</button>
+                <button id="read_more_login_button" class="btn btn-success rounded-pill">Logga in</button>
               </div>
         </div>
       </div>
@@ -1009,12 +1033,13 @@
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
   <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs">
+  </script>
   <script src="index.js"></script>
   <script src="templates.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"></script>
   <script src="https://kit.fontawesome.com/dbf101f92c.js" crossorigin="anonymous"></script>
-  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs">
-  </script>
+  
 </body>
 
 </html>

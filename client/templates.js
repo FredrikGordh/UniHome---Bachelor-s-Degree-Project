@@ -131,7 +131,7 @@ var load_my_payments = '<div class="my_accomodation col-9 mt-3 p-2">'
     + '</div>';
 
 var tenant = '<div class="my_tenant col-2 offset-1 mt-3 p-2">'
-    + '<h1>{{name}}</h1>'
-    + '<button type="button" class="book_ad_button" data-id="{{ad_id}}">Godkänn</button>'
-    + '<button type="button" class="deny_ad_button" data-id="{{ad_id}}">Neka</button>'
+    + '<h5>{{name}}</h5>'
+    + '<button type="button" class="book_ad_button rounded-pill" data-id="{{ad_id}}">Godkänn</button>'
+    + '<button type="button" class="deny_ad_button rounded-pill" data-id="{{ad_id}}">Neka</button>'
     + '</div>';
