@@ -706,6 +706,7 @@ function load_areas(container) {
     })
 }
 
+
 //Function for making a request for all unique accomodation types in database
 function load_types(container) {
     $.ajax({

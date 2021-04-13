@@ -54,21 +54,39 @@
 
   <!-- Footern: Vi skriver ut en lista med kontaktuppgifter i vår container-->
   <div class="footer container-fluid pt-5 pb-5 hide-menu">
-    <div class="row justify-content-center">
-      <div class="col-12 text-center mb-5 col-lg-3 offset-lg-2">
+    <!-- <div class="row text-center justify-content-center">
+      <div class ="col-3"> 
         <ul class="no-dot-list">
           <li>Telefon: 013 - 50 21 42</li>
           <li>Email: info@unihome.se</li>
         </ul>
       </div>
-      <div class="col-4 offset-1 col-lg-2 offset-lg-3">
+
+      <div class ="col-3">
         <ul class="no-dot-list">
           <li><a href="">Om Unihome</a></li>
           <li><a href="">Investerare</a></li>
           <li><a href="">Jobba hos oss</a></li>
         </ul>
       </div>
-      <div class="col-4 offset-1 col-lg-2 offset-lg-0">
+    </div> -->
+
+
+    <div class="row justify-content-center">
+      <div class="col-12 text-center mb-4 col-lg-3">
+        <ul class="no-dot-list">
+          <li>Telefon: 013 - 50 21 42</li>
+          <li>Email: info@unihome.se</li>
+        </ul>
+      </div>
+      <div class="col-3 offset-1 offset-lg-0 col-lg-2">
+        <ul class="no-dot-list">
+          <li><a href="">Om Unihome</a></li>
+          <li><a href="">Investerare</a></li>
+          <li><a href="">Jobba hos oss</a></li>
+        </ul>
+      </div>
+      <div class="col-3 offset-1 col-lg-1 offset-lg-0">
         <ul class="no-dot-list">
           <li><a href="">Press</a></li>
           <li><a href="">FAQ</a></li>
@@ -76,7 +94,7 @@
         </ul>
       </div>
     </div>
-    <div class="row mt-5">
+    <div class="row mt-5 last_footer">
       <div class="col-8 offset-2 col-lg-4">
         <p>© 2021 UniHome AB. All rights reserved. Org. nr. 559201-1745
           Wernersgatan 36 , Plan 2, 582 46 Linköping, Sweden.</p>
@@ -96,20 +114,24 @@
           <div class="row align-items-center justify-content-center" id="home_search">
             <form class="col-12">
               <div class="form-row align-items-center">
-                <div class="form-group col-8 col-lg-4">
+                <div class="form-group col-9 col-xl-5">
                   <select class="form-control no-border" id="home_select_area">
                     <option>Område</option>
                   </select>            
                 </div>
-                <div class="form-group col-3 d-none d-lg-block pt-1">
+                <div class="form-group col-3 d-none d-xl-block pt-1">
                   <label for="home_select_start">Inflytt</label>
                   <input type="date" id="home_select_start" class="no-border">
                 </div>
-                <div class="form-group col-3 d-none d-lg-block pt-1">
+                <div class="form-group col-3 d-none d-xl-block pt-1">
                   <label for="home_select_end">Utflytt</label>
                   <input type="date" id="home_select_end" class="no-border">
                 </div>
-                  <button type="button" id="home_search_submit" class="btn btn-primary col-3 offset-1 col-lg-1 offset-lg-1 search_button">Sök</button>
+                  <div class= "col-xl-1 col-3">
+                    <button type="button button" id="home_search_submit" class="btn btn-primary search_button"><i class="fas fa-search" ></i>
+                    </button>
+                    </div>
+                  
               </div>
             </form>
           </div>
@@ -808,8 +830,14 @@
 
   <!-- Read more about the housing ad-->
   <script id="read_more_ad_page" type="text/html">
+    <div class="row" >
+      <div class="col-1">
+        <button id="read_more_back" class="read_more_back_button btn btn-primary  "><i class="fas fa-arrow-left"></i>
+        </button>
+      </div>
+    
     <div id="read_more_ad_container" class="container">
-      <button id="read_more_back">Tillbaka</button>
+      
       <!--Dessa är bara flytta omkring och ändra font mm. Data laddas in i taggarna med javascript baserat på id-->
       <h1 id="read_more_ad_title"></h1>
       <h4 id="read_more_ad_neighbourhood"></h4>
@@ -818,8 +846,8 @@
           <img src="" class="col-7" id="readmore_img">   
           <div id="read_more_map" class="col-5"></div>
       </div>
-      <div class="row">
-        <div class = "col-7 read_more_description">
+      <div class="row justify-content-center">
+        <div class = "col-12 col-lg-7 read_more_description">
           <div class="row justify-content-center attributes">
             
             <div class="col-3">
@@ -854,7 +882,7 @@
               <h5 id="read_more_ad_streetaddress"></h5>
             </div>
         </div>
-        <div class="col-4 offset-1 read_more_price_date">
+        <div class="col-6 col-lg-5 offset-0 read_more_price_date">
           <div class="row justify-content-center attributes">
             <div class="col-6 headline_startdate">
               <b>Tidigast inflytt</b> 
@@ -901,6 +929,8 @@
               </div>
         </div>
       </div>
+    </div>
+  </div>
     </script>
 
   <!-- Help view -->
