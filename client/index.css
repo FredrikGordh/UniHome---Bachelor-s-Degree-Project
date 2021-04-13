@@ -356,6 +356,9 @@ margin-bottom: 10px;
   background-color: #F0F8FF;
 }
 
+/* ::placeholder{ */
+  /* color:rgba(173, 173, 173, 0.07) */
+/* } */
 
 .ad_input{
   border: 0;
@@ -493,19 +496,92 @@ margin-bottom: 10px;
   background-position: center;
 }
 
+#gruppbild {
+  background-image: url(Media/IMG_6639.JPG);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  text-align: center;
+  height: 500px;
+  width: 500px;
+  margin: 0 auto;
+  border-radius: 100%;
+}
+
 #ines {
-  background-image: url(media/craig-mckay-jmURdhtm7Ng-unsplash.jpg);
+  background-image: url(Media/Ines-pp.jpeg);
   background-position: center;
   background-repeat: none;
   background-size: cover;
   border-radius: 200px;
-  height: 350px;
-  width: 350px;
+  height: 250px;
+  width: 250px;
   margin: 0 auto;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
 }
 
 #jakob {
-  background-image: url(media/craig-mckay-jmURdhtm7Ng-unsplash.jpg);
+  background-image: url(Media/Jakob-pp.jpeg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  border-radius: 200px;
+  height: 250px;
+  width: 250px;
+  margin: 0 auto;
+}
+
+#gustav {
+  background-image: url(Media/Gustav-pp.jpeg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  border-radius: 200px;
+  height: 250px;
+  width: 250px;
+  margin: 0 auto;
+}
+
+#emeli {
+  background-image: url(Media/Emeli-pp.jpeg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  border-radius: 200px;
+  height: 250px;
+  width: 250px;
+  margin: 0 auto;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+#joel {
+  background-image: url(Media/Joel-pp.jpeg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  border-radius: 200px;
+  height: 250px;
+  width: 250px;
+  margin: 0 auto;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+#fredrik {
+  background-image: url(Media/Fredrik-pp.jpeg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  border-radius: 200px;
+  height: 250px;
+  width: 250px;
+  margin: 0 auto;
+}
+
+#albin {
+  background-image: url(Media/Albin-pp.jpeg);
   background-position: center;
   background-repeat: none;
   background-size: cover;
@@ -1147,6 +1223,14 @@ button:disabled {
   margin-top: 100px;
 }
 
+#edit_bio_form_id{
+  display: inline-block;
+}
+
+/* .my_page_heading{ 
+  text-align: center;
+  margin-top: 100px;
+}*/
 
 
 /* jhbjknjnjhbjkbjb     Ines testar checkboxes        jhbjhbjbljhbllhjblj */
