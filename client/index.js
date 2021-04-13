@@ -169,9 +169,10 @@ $(document).ready(function () {
     //My page menu: go to account
     $("#content").on("click", "#account_info_link", function (e) {
         e.preventDefault();
-        load_account_info();
+        go_edit_bio_page();
+        // load_account_info();
         $('html, body').animate({
-            scrollTop: $("#my_page_account_info_container").offset().top
+            scrollTop: $("#my_page_content_scrolldown").offset().top
         }, 1000);
     });
 
@@ -180,7 +181,7 @@ $(document).ready(function () {
         e.preventDefault();
         load_history();
         $('html, body').animate({
-            scrollTop: $("#my_page_history_container").offset().top
+            scrollTop: $("#my_page_content_scrolldown").offset().top
         }, 1000);
     });
 
@@ -189,7 +190,7 @@ $(document).ready(function () {
         e.preventDefault();
         load_bookings();
         $('html, body').animate({
-            scrollTop: $("#my_page_bookings_container").offset().top
+            scrollTop: $("#my_page_content_scrolldown").offset().top
         }, 1000);
     });
 
@@ -198,7 +199,7 @@ $(document).ready(function () {
         e.preventDefault();
         load_ads();
         $('html, body').animate({
-            scrollTop: $("#my_page_ads_container").offset().top
+            scrollTop: $("#my_page_content_scrolldown").offset().top
         }, 1000);
     });
 
