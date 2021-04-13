@@ -1,8 +1,8 @@
 body{
   /* make it look decent enough */
   background: white;
-  color: #cdcdcd;
-  font-family: "Avenir Next", "Avenir", sans-serif;
+  color: black;
+  font-family: 'Roboto', sans-serif;
   z-index: -2;
 }
 
@@ -21,6 +21,12 @@ h1 {
 label {
   margin: 0;
 }
+
+.btn{
+  background-color: #37ABAB;
+  border: #37ABAB;
+}
+
 
 /* ID */
 #home_area_search{
@@ -44,12 +50,33 @@ label {
 }
 
 #home-reviews {
-  background-color: #F0F8FF;
   padding-top: 100px;
+  padding-bottom: 150px;
   text-align: center;
   color: black;
+  background-color: #fcfeff;
+  background: linear-gradient(135deg, #f3f9ff55 25%, transparent 25%) -40px 0/ 80px 80px, linear-gradient(225deg, #f3f9ff 25%, transparent 25%) -40px 0/ 80px 80px, linear-gradient(315deg, #f3f9ff55 25%, transparent 25%) 0px 0/ 80px 80px, linear-gradient(45deg, #f3f9ff 25%, #fcfeff 25%) 0px 0/ 80px 80px;}
+
+#home-vision {
+  background-color: #37ABAB;
+  text-align: center;
+  padding: 100px;
+  color: white;
+  background:linear-gradient(0deg, rgba(94, 155, 206, 0.5), rgba(94, 155, 206, 0.5)), url(Media/campus.jpg) no-repeat center fixed;
+
 }
-#home-now-hot {
+
+#home-vision p{
+  font-size: 20px;
+}
+
+#home-reviews p {
+  font-size: 20px;
+  line-height: 30px;
+  margin-top: 20px;
+}
+
+ #home-now-hot {
   background-color: red;
 }
 #home-areas {
@@ -213,15 +240,48 @@ label {
   padding-top: 35vh;
 }
 
-#my_page_name {
+.my_page_bio {
+  color:rgb(255, 255, 255);
+  font-size: large;
+}
 
+#my_page_email_and_tel{
+  color:rgb(255, 255, 255);
+  font-size: large;
+}
+
+#my_page_bio_text{
+  color:rgb(255, 255, 255);
+  font-size: large;
+}
+
+#my_page_bio_header{
+  color:rgb(255, 255, 255);
   font-size: large;
 }
 
 #my_page_email_and_tel {
-
   font-size: large;
 }
+
+/* Funkar inte */
+#edit_bio_container{
+  border: 10px solid #094D4D;
+  border-radius: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+/* Funkar inte */
+/* #edit_bio_form{
+  border: 10px solid black;
+  border: #094D4D;
+  outline-color: #094D4D;
+  outline: rgb(89, 111, 214);
+  border-radius: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+} */
 
 #my_page_placeholder_img {
   background-color:white;
@@ -264,14 +324,44 @@ label {
   margin-bottom: 10vh;
 }
 
+/* NEW AD PAGE */
+
 #new_ad_page_container {
-  margin-top: 10vh;
-  margin-bottom: 10vh;
+  background-color: #F0F8FF;  /* #E8CDB5;*/
+   margin-top: 10vh; 
+  /* margin-bottom: 10vh; */
 }
 
 #create_ad_page_container{
   marigin-top: 50
 }
+
+#new_ad_page_section{
+  background-color: #F0F8FF;
+}
+
+#new_ad_page{
+  background-color: #F0F8FF;
+}
+
+.ad_input{
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid rgb(196, 196, 196);
+  font-size: 20px;
+}
+
+.ad_label{
+  font-size: 20px;
+  color: #000000;
+}
+
+.ad_options{
+  border-bottom: 1px solid rgb(196, 196, 196);
+  font-size: x-large;
+}
+
 
 #help_page_container {
   margin-top: 15vh;
@@ -281,7 +371,23 @@ label {
 #my_page_container {
   margin-top: 15vh;
   margin-bottom: 10vh;
+  
 }
+#my_page_background {
+   background-color: #e7d8ca /* #F0F8FF; */
+}
+
+#my_page_account_info_container{
+  background-color: #094D4D;
+  border-radius: 20px;
+}
+
+#my_page_change_bio_btn{
+  border-radius: 50px;
+
+  width:auto;
+}
+
 #readmore_img {
   /* width: 500px; */
   border-radius: 20px;
@@ -423,17 +529,47 @@ label {
 margin: 0 auto;
 }
 
-.testamonial .img {
+.testamonial .img1 {
   border-radius: 100px;
   width: 150px;
   max-width: 30vw;
   max-height: 30vw;
   height: 150px;
-  background-image: url("Media/craig-mckay-jmURdhtm7Ng-unsplash.jpg");
+  background-image: url("Media/reviewer_1.jpg");
   background-position: center;
   background-repeat: none;
   background-size: cover;
-  margin: 0 auto;
+  margin: 30px auto;
+}
+
+.testamonial .img2 {
+  border-radius: 100px;
+  width: 150px;
+  max-width: 30vw;
+  max-height: 30vw;
+  height: 150px;
+  background-image: url("Media/reviewer_2.jpg");
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  margin: 30px auto;
+}
+
+.testamonial .img3 {
+  border-radius: 100px;
+  width: 150px;
+  max-width: 30vw;
+  max-height: 30vw;
+  height: 150px;
+  background-image: url("Media/reviewer_3.jpg");
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  margin: 30px auto;
+}
+
+.testamonial h3 {
+  font-weight: lighter;
 }
 
 .facts_content {
@@ -442,7 +578,6 @@ margin: 0 auto;
   border-radius: 20px;
   color: black;
   min-width: 30vw;
-  width: 20vw;
   box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
 -webkit-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
 -moz-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
@@ -478,10 +613,6 @@ margin: 0 auto;
   color: black;
 }
 
-.accomodation div {
-  /* margin: 20px; */
-}
-
 .accomodation button {
   margin: 20px;
 }
@@ -489,6 +620,11 @@ margin: 0 auto;
 .accomodation img {
   /* width: 300px; */
   /*height: 300px;*/
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.my_accomodation img {
   width: 100%;
   overflow: hidden;
   border-radius: 20px;
@@ -512,6 +648,10 @@ margin: 0 auto;
     font-size: 80px;
     font-weight: bolder;
     text-align: center;
+}
+
+.home-areas a:hover {
+  color: grey;
 }
 
 @media (max-width: 991px) {
@@ -575,6 +715,7 @@ margin: 0 auto;
 
 .headline_startdate{
   text-align: center;
+  border-right: olive solid 1px;
 }
 
 .headline_enddate{
@@ -631,7 +772,7 @@ clear: both;}
 
 
 .footer{
-  background-color: black;
+  background-color: #094D4D;
   color:white;
   width: 100%;
   margin-top: 100px; 
@@ -763,7 +904,6 @@ a:hover{
 button {
   background: #5469d4;
   color: #ffffff;
-  font-family: Arial, sans-serif;
   border-radius: 0 0 4px 4px;
   border: 0;
   padding: 12px 16px;
@@ -792,7 +932,6 @@ button:disabled {
 button {
   background: #5469d4;
   color: #ffffff;
-  font-family: Arial, sans-serif;
   border-radius: 0 0 4px 4px;
   border: 0;
   padding: 12px 16px;
@@ -887,7 +1026,6 @@ button:disabled {
 
 
 .body1 {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   display: flex;
@@ -966,8 +1104,116 @@ button:disabled {
   background-color: white;
 }
 
-.my_page_menuitem a {
+.my_page_menuitem {
   color: black;
-  text-decoration: none;
 }
 
+.my_page_menuitem:hover {
+  color: black;
+  background-color: rgb(228, 228, 228);
+}
+
+.search_page_container {
+  background-color: #e7d8ca;
+}
+
+.search_page_price {
+  margin-top: 20%;
+  text-align: center;
+}
+
+#my_page_menu h3 fa-plus{
+  color: green;
+  background-color: #f10755;
+}
+
+.my_page_heading{
+  text-align: center;
+  margin: 100px 0;
+}
+
+
+
+/* jhbjknjnjhbjkbjb     Ines testar checkboxes        jhbjhbjbljhbllhjblj */
+
+/* Base for label styling */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: 0;
+  opacity: 0.01;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 2.3em;
+  font-size: 1.05em;
+  line-height: 1.7;
+  cursor: pointer;
+}
+
+/* checkbox aspect */
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.4em;
+  height: 1.4em;
+  border: 1px solid #aaa;
+  background: #FFF;
+  border-radius: .2em;
+  box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 rgba(203, 34, 237, .2);
+  -webkit-transition: all .275s;
+      transition: all .275s;
+}
+
+/* checked mark aspect */
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+  content: '✕';
+  position: absolute;
+  top: .525em;
+  left: .18em;
+  font-size: 1.375em;
+  color: #37ABAB;
+  line-height: 0;
+  -webkit-transition: all .2s;
+      transition: all .2s;
+}
+
+/* checked mark aspect changes */
+[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  -webkit-transform: scale(0) rotate(45deg);
+      transform: scale(0) rotate(45deg);
+}
+
+[type="checkbox"]:checked + label:after {
+  opacity: 1;
+  -webkit-transform: scale(1) rotate(0);
+      transform: scale(1) rotate(0);
+}
+
+/* Disabled checkbox */
+[type="checkbox"]:disabled:not(:checked) + label:before,
+[type="checkbox"]:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: #bbb;
+  background-color: #e9e9e9;
+}
+
+[type="checkbox"]:disabled:checked + label:after {
+  color: #777;
+}
+
+[type="checkbox"]:disabled + label {
+  color: #aaa;
+}
+
+/* Accessibility */
+[type="checkbox"]:checked:focus + label:before,
+[type="checkbox"]:not(:checked):focus + label:before {
+  box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 6px rgba(9, 77, 77, 0.2);
+}

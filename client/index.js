@@ -144,21 +144,11 @@ $(document).ready(function () {
     //Reserve ad
     $("#content").on("click", "#reservation_button", function (e) {
         e.preventDefault();
-        reserve_ad($(this).data('id'));
-        console.log("ok")
-    });
-
-    //Edit bio
-    $("#content").on("click", "#my_page_change_bio_btn", function (e) {
-        e.preventDefault();
-        go_edit_bio_page();
-    });
-
-    //cancel edit bio
-    $("#content").on("click", "#cancel_edit_form_btn", function (e) {
-        e.preventDefault();
-        go_my_page();
-        load_account_info();
+        if ($("#read_more_select_start").val() != "" && $("#read_more_select_start").val() != "") {
+            reserve_ad($(this).data('id'), $("#read_more_select_start").val(), $("#read_more_select_start").val());
+        } else {
+            alert("Vänligen fyll i datum innan du reserverar!")
+        }
     });
 
     //Edit bio
@@ -180,24 +170,36 @@ $(document).ready(function () {
     $("#content").on("click", "#account_info_link", function (e) {
         e.preventDefault();
         load_account_info();
+        $('html, body').animate({
+            scrollTop: $("#my_page_account_info_container").offset().top
+        }, 1000);
     });
 
     //My page menu: go to history
     $("#content").on("click", "#history_link", function (e) {
         e.preventDefault();
         load_history();
+        $('html, body').animate({
+            scrollTop: $("#my_page_history_container").offset().top
+        }, 1000);
     });
 
     //My page menu: go to bookings
     $("#content").on("click", "#bookings_link", function (e) {
         e.preventDefault();
         load_bookings();
+        $('html, body').animate({
+            scrollTop: $("#my_page_bookings_container").offset().top
+        }, 1000);
     });
 
     //My page menu: go to ads
     $("#content").on("click", "#ads_link", function (e) {
         e.preventDefault();
         load_ads();
+        $('html, body').animate({
+            scrollTop: $("#my_page_ads_container").offset().top
+        }, 1000);
     });
 
     //My page menu: go to ads
@@ -221,9 +223,9 @@ $(document).ready(function () {
         $("#area_facts").html($("#vasastaden_view").html());
     });
     //My page menu: go to ads
-    $("#content").on("click", "#map_gotfridsberg", function (e) {
+    $("#content").on("click", "#map_gottfridsberg", function (e) {
         e.preventDefault();
-        $("#area_facts").html($("#gotfridsberg_view").html());
+        $("#area_facts").html($("#gottfridsberg_view").html());
     });
 
     //My page: approve tenant
@@ -245,6 +247,12 @@ $(document).ready(function () {
     $("#content").on("click", "#create_new_ad", function (e) {
         e.preventDefault();
         submitAdForm();
+    });
+
+    //Submit form create new ad
+    $("#content").on("click", "#read_more_login_button", function (e) {
+        e.preventDefault();
+        go_login();
     });
 
 
@@ -291,7 +299,7 @@ function go_home() {
             center: { lat: 58.418598933014735, lng: 15.612839650705164 },
             size: 30,
         },
-        gotfridsberg: {
+        gottfridsberg: {
             center: { lat: 58.414188119723406, lng: 15.596067756828468 },
             size: 50,
         },
@@ -373,7 +381,7 @@ function go_home() {
     );
     popup4 = new Popup(
         new google.maps.LatLng(58.414188119723406, 15.596067756828468),
-        document.getElementById("gotfridsberg")
+        document.getElementById("gottfridsberg")
     );
     popup5 = new Popup(
         new google.maps.LatLng(58.382892422235216, 15.561087706177256),
@@ -435,6 +443,9 @@ function go_registered_page() {
 //Function for going to view: Read more ad
 function go_read_more_ad_page(ad_id) {
     $("#content").html($("#read_more_ad_page").html());
+    var signedIn = sessionStorage.getItem('auth') != null;
+    $("#read_more_reserve").toggleClass('d-none', !signedIn);
+    $("#read_more_login").toggleClass('d-none', signedIn);
     load_read_more(ad_id);
     $("#reservation_button").data('id', ad_id)
 }
@@ -459,15 +470,16 @@ function go_confirmation_page() {
 function load_account_info() {
     $("#my_page_content").html($("#my_page_account_info").html());
     var user = JSON.parse(sessionStorage.getItem('auth')).user
-    $("#my_page_name").html("Fullt namn: " + user.name);
-    $("#my_page_email_and_tel").html("Tel: " + user.telephone + " <br>Email: " + user.email);
+    $("#my_page_name").html("Namn: " + user.name);
+    $("#my_page_email_and_tel").html("Telefonnummer: " + user.telephone + " <br><br>E-mail: " + user.email);
+
     if (user.bio) {
         $("#my_page_bio_text").css('color', 'white');
         $("#my_page_bio_text").html(user.bio);
     }
     else {
-        $("#my_page_bio_text").css('color', 'red');
-        $("#my_page_bio_text").html("Du har inte lagt till någon text om dig själv än,<br> lägg till en personlig biografi genom att <br>klicka på \"Redigera min profil\" för större chans att få ditt önskade boende!");
+        $("#my_page_bio_text").css('color', 'grey');
+        $("#my_page_bio_text").html("Du har inte lagt till någon text om dig själv än, lägg till en personlig biografi genom att klicka på \"Redigera min profil\".");
     }
 
 }
@@ -574,6 +586,7 @@ function load_my_ads_request() {
         type: 'GET',
         success: function (ads) {
             ads.forEach(element => {
+                element.image = element.image.url;
                 $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
                 if (element.booked == true) {
                     console.log("booked");
@@ -592,6 +605,7 @@ function load_my_bookings_request() {
         type: 'GET',
         success: function (ads) {
             ads.forEach(element => {
+                element.image = element.image.url;
                 $("#my_page_bookings_container").append(Mustache.render(my_accomodation, element));
             });
         }
@@ -726,42 +740,47 @@ function load_read_more(ad_id) {
             $("#read_more_ad_attributes").html(ad.attributes);
             $("#readmore_img").attr("src", ad.image.url);
 
-        
-        parameters = "address=" + ad.streetnumber + "%20" + ad.streetaddress + "%20" + ad.city + "%20" + "Sweden";
-        console.log(parameters);
-        
-        $.ajax({
-            url: "https://maps.googleapis.com/maps/api/geocode/json?" + parameters + "&key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs",
-            type: 'GET',
-            success: function (coordinates) {
-                var coord = coordinates.results[0].geometry.location;
-                console.log(coord);
-                let map, popup;
-                map2 = new google.maps.Map(document.getElementById("read_more_map"), {
-                zoom: 13.2,
-                center: coord,
-                // disableDefaultUI: true,
-                
-            });     
-            // The marker, positioned at the address
-            const marker = new google.maps.Marker({
-            position: coord,
-            map: map2,
-            });       
-            
-        }    
-        })
-        // console.log(coord);
+
+            parameters = "address=" + ad.streetnumber + "%20" + ad.streetaddress + "%20" + ad.city + "%20" + "Sweden";
+            console.log(parameters);
+
+            $.ajax({
+                url: "https://maps.googleapis.com/maps/api/geocode/json?" + parameters + "&key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs",
+                type: 'GET',
+                success: function (coordinates) {
+                    var coord = coordinates.results[0].geometry.location;
+                    console.log(coord);
+                    let map, popup;
+                    map2 = new google.maps.Map(document.getElementById("read_more_map"), {
+                        zoom: 13.2,
+                        center: coord,
+                        // disableDefaultUI: true,
+
+                    });
+                    // The marker, positioned at the address
+                    const marker = new google.maps.Marker({
+                        position: coord,
+                        map: map2,
+                    });
+
+                }
+            })
+            // console.log(coord);
         }
     })
-    
+
 }
 
-function update_reserved_status(status, ad_id) {
+function update_reserved_status(status, ad_id, start_date, end_date) {
+    data = {
+        status: status,
+        start: start_date,
+        end: end_date
+    }
     $.ajax({
         url: host + '/ad/' + ad_id + '/reserved',
         type: 'PUT',
-        data: JSON.stringify(status),
+        data: JSON.stringify(data),
         success: function (ad) {
 
         }
@@ -857,8 +876,8 @@ function load_search_page_search_dropdowns(search) {
 }
 
 //Function for reservring ad in database: update reserved status --> show ad to host for approval
-function reserve_ad(ad_id) {
-    update_reserved_status(true, ad_id)
+function reserve_ad(ad_id, start, end) {
+    update_reserved_status(true, ad_id, start, end)
     set_tenant(ad_id);
     go_search();
 }
