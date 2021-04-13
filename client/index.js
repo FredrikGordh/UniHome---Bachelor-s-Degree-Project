@@ -383,7 +383,6 @@ function go_payment_page(ad_id, ad_price) {
               orderComplete(result.paymentIntent.id);
               booking_paid(ad_id);
               save_payment(ad_id, result.paymentIntent.id);
-              alert(result.paymentIntent.id);
               go_successful_payment_page();
             }
           });
@@ -580,6 +579,7 @@ function load_my_ads_request() {
         headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'GET',
         success: function (ads) {
+            console.log(ads); //ta bort denna sen
             ads.forEach(element => {
                 $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
                 if (element.booked == true) {
@@ -679,14 +679,12 @@ function edit_user_request(user) {
 
 //Function for saving payment info in the database
 function save_payment(ad_id, paymentIntentId) {
-    alert(paymentIntentId)
     $.ajax({
         url: host + '/payments',
         headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'POST',
         data: JSON.stringify({"ad_id": ad_id, "paymentID": paymentIntentId}),
         success: function (response) {
-
         }
     })
 }
@@ -698,13 +696,13 @@ function load_my_payment_history() {
         headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'GET',
         success: function (payments) {
+            console.log(payments)
             payments.forEach(element => {
-                $("#my_page_bookings_container").append(Mustache.render(load_my_payments, element));
+                $("#my_page_history_container").append(Mustache.render(load_my_payments, element));
             });
         }
     })
 }
-
 
 //Function for making a request for all unique areas in database
 function load_areas(container) {

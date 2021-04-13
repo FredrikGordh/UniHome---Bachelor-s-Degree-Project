@@ -496,7 +496,6 @@ def payments():
     if request.method == 'POST':
         user_id = get_jwt_identity()
         payment = request.get_json(force=True)
-        print(payment)
         amount=calculate_order_amount(payment.get("ad_id"))/100
         newPaymentDB = Payment(id=payment.get('paymentID'), ad_id=payment.get("ad_id"), payement_person_id=user_id, payment_price=amount)
         db.session.add(newPaymentDB)
@@ -509,6 +508,7 @@ def payments():
         for payment in all_payments:
             payment_list.append(payment.serialize())
         return jsonify(payment_list)
+
 
 
 #___________________________________________
