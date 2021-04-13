@@ -1,8 +1,8 @@
 body{
   /* make it look decent enough */
-  background: #333333;
-  color: #cdcdcd;
-  font-family: "Avenir Next", "Avenir", sans-serif;
+  background: white;
+  color: black;
+  font-family: 'Roboto', sans-serif;
   z-index: -2;
 }
 
@@ -22,6 +22,12 @@ label {
   margin: 0;
 }
 
+.btn{
+  background-color: #37ABAB;
+  border: #37ABAB;
+}
+
+
 /* ID */
 #home_area_search{
   background-color: white;
@@ -30,6 +36,7 @@ label {
 
 #navbar-logo{
   width: 10vw;
+  min-width: 100px;
 }
 
 #menuToggle
@@ -43,13 +50,38 @@ label {
 }
 
 #home-reviews {
-  background-color: aqua;
+  padding-top: 100px;
+  padding-bottom: 150px;
+  text-align: center;
+  color: black;
+  background-color: #fcfeff;
+  background: linear-gradient(135deg, #f3f9ff55 25%, transparent 25%) -40px 0/ 80px 80px, linear-gradient(225deg, #f3f9ff 25%, transparent 25%) -40px 0/ 80px 80px, linear-gradient(315deg, #f3f9ff55 25%, transparent 25%) 0px 0/ 80px 80px, linear-gradient(45deg, #f3f9ff 25%, #fcfeff 25%) 0px 0/ 80px 80px;}
+
+#home-vision {
+  background-color: #37ABAB;
+  text-align: center;
+  padding: 100px;
+  color: white;
+  background:linear-gradient(0deg, rgba(94, 155, 206, 0.5), rgba(94, 155, 206, 0.5)), url(Media/campus.jpg) no-repeat center fixed;
+
 }
-#home-now-hot {
+
+#home-vision p{
+  font-size: 20px;
+}
+
+#home-reviews p {
+  font-size: 20px;
+  line-height: 30px;
+  margin-top: 20px;
+}
+
+ #home-now-hot {
   background-color: red;
 }
 #home-areas {
-  background-color: pink;
+  position: relative;
+  margin-top: -100px;
 }
 
 #home-types {
@@ -180,7 +212,7 @@ label {
 }
 
 #home_container {
-  margin-top: 1080px;
+  margin-top: 100vh;
   padding: 0;
 }
 
@@ -195,24 +227,61 @@ label {
 }
 
 #header{
-  background-color: paleturquoise;
+  background-image: url(Media/aboutusheader.jpg);
+  background-color: black;
+  background-position: center;
+  background-size: cover;
+  background-repeat: none;
   color:black;
   width: 100%;
-  height: 1080px;
+  height: 100vh;
   position: absolute;
   top: 0;
   padding-top: 35vh;
 }
 
-#my_page_name {
+.my_page_bio {
+  color:rgb(255, 255, 255);
+  font-size: large;
+}
 
+#my_page_email_and_tel{
+  color:rgb(255, 255, 255);
+  font-size: large;
+}
+
+#my_page_bio_text{
+  color:rgb(255, 255, 255);
+  font-size: large;
+}
+
+#my_page_bio_header{
+  color:rgb(255, 255, 255);
   font-size: large;
 }
 
 #my_page_email_and_tel {
-
   font-size: large;
 }
+
+/* Funkar inte */
+#edit_bio_container{
+  border: 10px solid #094D4D;
+  border-radius: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+/* Funkar inte */
+/* #edit_bio_form{
+  border: 10px solid black;
+  border: #094D4D;
+  outline-color: #094D4D;
+  outline: rgb(89, 111, 214);
+  border-radius: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+} */
 
 #my_page_placeholder_img {
   background-color:white;
@@ -223,14 +292,27 @@ label {
 #home_search {
   background-color: white;
   border-radius: 37px;
-  margin: 50px;
+  margin: 15px auto;  
+  width: 30vw;
   height: 8vh;
+  min-height: 60px;
+  max-height: 100px;
 }
+@media (min-width: 1200px) {
+  #home_search {
+    width: 60vw;
+  }
+}
+
+/* #home_search_filters {
+  margin: 10px;
+  border-radius: 37px;
+} */
 
 #search_page_container {
   color: white;
-  margin-top: 10vh;
-  padding-bottom: 10vh;
+  margin-top: 100px;
+  padding-bottom: 5vh;
 }
 
 #search_result {
@@ -238,36 +320,292 @@ label {
 }
 
 #contact_page_container {
-  margin-top: 10vh;
+  margin-top: 15vh;
   margin-bottom: 10vh;
 }
+
+/* NEW AD PAGE */
 
 #new_ad_page_container {
-  margin-top: 10vh;
-  margin-bottom: 10vh;
+  background-color: #F0F8FF;  /* #E8CDB5;*/
+   margin-top: 10vh; 
+  /* margin-bottom: 10vh; */
 }
 
+#create_ad_page_container{
+  marigin-top: 50
+}
+
+#new_ad_page_section{
+  background-color: #F0F8FF;
+}
+
+#new_ad_page{
+  background-color: #F0F8FF;
+}
+
+.ad_input{
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid rgb(196, 196, 196);
+  font-size: 20px;
+}
+
+.ad_label{
+  font-size: 20px;
+  color: #000000;
+}
+
+.ad_options{
+  border-bottom: 1px solid rgb(196, 196, 196);
+  font-size: x-large;
+}
+
+
 #help_page_container {
-  margin-top: 10vh;
+  margin-top: 15vh;
   margin-bottom: 10vh;
 }
 
 #my_page_container {
-  margin-top: 10vh;
+  margin-top: 15vh;
   margin-bottom: 10vh;
+  
+}
+#my_page_background {
+   background-color: #e7d8ca /* #F0F8FF; */
+}
+
+#my_page_account_info_container{
+  background-color: #094D4D;
+  border-radius: 20px;
+}
+
+#my_page_change_bio_btn{
+  border-radius: 50px;
+
+  width:auto;
+}
+
+#readmore_img {
+  /* width: 500px; */
+  border-radius: 20px;
+}
+
+#read_more_ad_price{
+  font-weight: bolder;
 }
 
 #read_more_ad_container {
   margin-top: 100px;
   margin-bottom: 100px;
 }
+
+#read_more_map{
+  border-radius: 20px;
+}
+
 #successfully_registered_page_container {
   margin-top: 100px;
   margin-bottom: 100px;
 }
 
+#login_failed_container{
+  color: red;
+}
+
+#register_failed_container{
+  color: red;
+}
+
+
+
+#map {
+  height: 694px;
+  -webkit-mask-box-image: url(Media/map.svg);
+  -webkit-mask-position: top;
+  -webkit-mask-repeat: none;
+  -webkit-mask-size: cover;
+  mask-border: url(Media/map.svg);
+  mask-repeat: none;
+  mask-position: top;
+  mask-size: cover;
+}
+
+#area_facts {
+  position: absolute;
+  top: 100px;
+  left: calc(100vw - 40vw);
+}
+
+#about_us_header {
+  width: 100vw;
+  height: 80vh;
+  background-image: url(Media/aboutusheader.jpg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  text-align: center;
+  padding-top: 30vh;  
+}
+
+#about_us_header h1 {
+    font-weight: bolder;
+    font-size: 150px;
+    color: white;
+}
+
+#about_us_page_container {
+  text-align: center;
+  color: black;
+}
+
+#about_us_page_container h2{
+  font-size: 60px;
+}
+
+#about_us_page_container p{
+  font-size: 25px;
+  line-height: 45px;
+}
+
+#parallax {
+  width: 100vw;
+  height: 400px;
+  background-image: url(media/parallax.jpg);
+  background-attachment: fixed;
+  background-repeat: none;
+  background-size: cover;
+  background-position: center;
+}
+
+#ines {
+  background-image: url(media/craig-mckay-jmURdhtm7Ng-unsplash.jpg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  border-radius: 200px;
+  height: 350px;
+  width: 350px;
+  margin: 0 auto;
+}
+
+#jakob {
+  background-image: url(media/craig-mckay-jmURdhtm7Ng-unsplash.jpg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  border-radius: 200px;
+  height: 250px;
+  width: 250px;
+  margin: 0 auto;
+}
+
+#staff {
+  text-align: center;
+  color: black;
+  font-size: 30px;
+  margin: 200px 0;
+}
+
 
 /* Klasser */
+
+.our_start {
+  height: 80vh;
+}
+
+.vision {
+  height: 70vh;
+}
+
+.testamonial {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-webkit-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-moz-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+margin: 0 auto;
+}
+
+.testamonial .img1 {
+  border-radius: 100px;
+  width: 150px;
+  max-width: 30vw;
+  max-height: 30vw;
+  height: 150px;
+  background-image: url("Media/reviewer_1.jpg");
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  margin: 30px auto;
+}
+
+.testamonial .img2 {
+  border-radius: 100px;
+  width: 150px;
+  max-width: 30vw;
+  max-height: 30vw;
+  height: 150px;
+  background-image: url("Media/reviewer_2.jpg");
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  margin: 30px auto;
+}
+
+.testamonial .img3 {
+  border-radius: 100px;
+  width: 150px;
+  max-width: 30vw;
+  max-height: 30vw;
+  height: 150px;
+  background-image: url("Media/reviewer_3.jpg");
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  margin: 30px auto;
+}
+
+.testamonial h3 {
+  font-weight: lighter;
+}
+
+.facts_content {
+  width: 20vw;
+  background-color: white;
+  border-radius: 20px;
+  color: black;
+  min-width: 30vw;
+  box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-webkit-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+-moz-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
+}
+
+.popup-bubble {
+  /* Position the bubble centred-above its parent. */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  /* Style the bubble. */
+  padding: 5px;
+  font-weight: bolder;
+  overflow-y: auto;
+  max-height: 60px;
+  color: black;
+}
+
+/* JavaScript will position this div at the bottom of the popup tip. */
+.popup-container {
+  cursor: auto;
+  height: 0;
+  position: absolute;
+  /* The max width of the info window. */
+  width: 200px;
+}
+
 
 .accomodation {
   background-color: white;
@@ -275,12 +613,62 @@ label {
   color: black;
 }
 
+.accomodation button {
+  margin: 20px;
+}
+
+.accomodation img {
+  /* width: 300px; */
+  /*height: 300px;*/
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.my_accomodation img {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.accomodation button {
+  border-radius: 10px;
+}
+
+.map_text{
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translate(-50%,0);
+  z-index: 1;
+  color: black;
+  width: 100%;
+}
+
+.map_text h1{
+    font-size: 80px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.home-areas a:hover {
+  color: grey;
+}
+
+@media (max-width: 991px) {
+  .map_text h1{
+    font-size: 25px;
+    text-align: center;
+    border-radius: 20px;
+  }
+
+}
 .my_accomodation {
   background-color: white;
   border-radius: 20px;
   color: black;
   padding: 10px;
 }
+
 
 .my_tenant {
   background-color: white;
@@ -290,17 +678,107 @@ label {
 }
 
 .search_button {
+  float: right;  
+  width: 40px;
+  height: 40px;
   border-radius: 50px;
+  
+  
 }
 
 .read_more_button {
   border-radius: 70px;
 }
 
+.read_more_back_button{
+  text-align: center; 
+  border-radius: 20%;
+  margin-top: 100px;
+  margin-left: 25px;
+  width: 40px;
+}
+
+.title_id:hover {
+  color: black;
+  text-decoration: none;
+  background-color: rgb(228, 228, 228);
+}
+
+.read_more_description{
+  background-color: white;
+  border-radius: 20px;
+  color: black;   
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.headline_startdate{
+  text-align: center;
+  border-right: olive solid 1px;
+}
+
+.headline_enddate{
+  text-align: center;
+}
+
+.read_more_startdate{
+  text-align: center;
+  border-right: olive solid 1px;
+  
+}
+
+.read_more_enddate{
+  text-align: center;
+}
+
+.attributes {
+clear: both;}
+
+.read_more_squaremeters{
+  border-right: olive solid 1px;
+  text-align: center;
+}
+
+.read_more_beds{
+  border-right: olive solid 1px;
+  text-align: center;
+}
+
+.read_more_accomodationtype{
+  text-align: center;
+}
+
+.read_more_adress{
+  text-align: center;
+}
+
+.read_more_price_date{
+  height: 200px;
+  background-color: white;
+  border-radius: 20px;
+  color: black;   
+  padding: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.read_more_price{
+  text-align: center;
+  /* font-weight: bolder; */
+
+}
+
+
+
 .footer{
-  background-color: black;
+  background-color: #094D4D;
   color:white;
   width: 100%;
+}
+
+.failed_container{
+  color: red;
 }
 
 .no-dot-list{
@@ -315,6 +793,11 @@ a:hover{
 
 .footer a{
   color: white;
+}
+
+.last_footer {
+  margin: 50px;
+
 }
 
 .section{
@@ -346,15 +829,21 @@ a:hover{
   padding: 0;
 }  
 
+.section a {
+  color: black;
+}
+
 .clickable_class{
   color:red;
   cursor: pointer;
 }  
+
 .navbar-style{
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0,0,0,0.5);
   position: fixed;
   z-index: 2;
   width: 100vw;
+  height: 80px;
 }
 
 .form-row .form-group {
@@ -414,7 +903,6 @@ a:hover{
 button {
   background: #5469d4;
   color: #ffffff;
-  font-family: Arial, sans-serif;
   border-radius: 0 0 4px 4px;
   border: 0;
   padding: 12px 16px;
@@ -426,6 +914,11 @@ button {
   box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
   width: 100%;
 }
+
+/* .button1 {
+  border-radius: 50%;
+} */
+
 button:hover {
   filter: contrast(115%);
 }
@@ -438,7 +931,6 @@ button:disabled {
 button {
   background: #5469d4;
   color: #ffffff;
-  font-family: Arial, sans-serif;
   border-radius: 0 0 4px 4px;
   border: 0;
   padding: 12px 16px;
@@ -531,8 +1023,8 @@ button:disabled {
   }
 }
 
+
 .body1 {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   display: flex;
@@ -611,7 +1103,116 @@ button:disabled {
   background-color: white;
 }
 
-.my_page_menuitem a {
+.my_page_menuitem {
   color: black;
-  text-decoration: none;
+}
+
+.my_page_menuitem:hover {
+  color: black;
+  background-color: rgb(228, 228, 228);
+}
+
+.search_page_container {
+  background-color: #e7d8ca;
+}
+
+.search_page_price {
+  margin-top: 20%;
+  text-align: center;
+}
+
+#my_page_menu h3 fa-plus{
+  color: green;
+  background-color: #f10755;
+}
+
+.my_page_heading{
+  text-align: center;
+  margin: 100px 0;
+}
+
+
+
+/* jhbjknjnjhbjkbjb     Ines testar checkboxes        jhbjhbjbljhbllhjblj */
+
+/* Base for label styling */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: 0;
+  opacity: 0.01;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 2.3em;
+  font-size: 1.05em;
+  line-height: 1.7;
+  cursor: pointer;
+}
+
+/* checkbox aspect */
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.4em;
+  height: 1.4em;
+  border: 1px solid #aaa;
+  background: #FFF;
+  border-radius: .2em;
+  box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 rgba(203, 34, 237, .2);
+  -webkit-transition: all .275s;
+      transition: all .275s;
+}
+
+/* checked mark aspect */
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+  content: '✕';
+  position: absolute;
+  top: .525em;
+  left: .18em;
+  font-size: 1.375em;
+  color: #37ABAB;
+  line-height: 0;
+  -webkit-transition: all .2s;
+      transition: all .2s;
+}
+
+/* checked mark aspect changes */
+[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  -webkit-transform: scale(0) rotate(45deg);
+      transform: scale(0) rotate(45deg);
+}
+
+[type="checkbox"]:checked + label:after {
+  opacity: 1;
+  -webkit-transform: scale(1) rotate(0);
+      transform: scale(1) rotate(0);
+}
+
+/* Disabled checkbox */
+[type="checkbox"]:disabled:not(:checked) + label:before,
+[type="checkbox"]:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: #bbb;
+  background-color: #e9e9e9;
+}
+
+[type="checkbox"]:disabled:checked + label:after {
+  color: #777;
+}
+
+[type="checkbox"]:disabled + label {
+  color: #aaa;
+}
+
+/* Accessibility */
+[type="checkbox"]:checked:focus + label:before,
+[type="checkbox"]:not(:checked):focus + label:before {
+  box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 6px rgba(9, 77, 77, 0.2);
 }
