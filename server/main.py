@@ -29,6 +29,8 @@ jwt = JWTManager(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
+stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfFOz1e8wgFJduwU1uJCvtrspqIeelpu7RuJjZ00j0qjVnl8"
+
 ###################################################### CLASSES ######################################################
 
 # The class user contains all information about the user.
@@ -36,24 +38,6 @@ bcrypt = Bcrypt(app)
 
 # Set your secret key. Remember to switch to your live secret key in production.
 # See your keys here: https://dashboard.stripe.com/account/apikeys
-
-# BETALNING_______________________creat
-stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfFOz1e8wgFJduwU1uJCvtrspqIeelpu7RuJjZ00j0qjVnl8"
-
-def calculate_order_amount(id):
-    # Replace this constant with a calculation of the order's amount
-    # Calculate the order total on the server to prevent
-    # people from directly manipulating the amount on the client
-    current_ad = Ad.query.get_or_404(id)
-    return current_ad.price * 100
-
-# stripe.PaymentIntent.create(
-#   amount=1000,
-#   currency='usd',
-#   payment_method_types=['card'],
-#   receipt_email='jenny.rosen@example.com',
-# )
-# __________________________________
 
 
 class User(db.Model):
@@ -506,9 +490,14 @@ def types():
         type_list.append(type)
     return jsonify(type_list)
 
-# BETALNING__________________________________
+# Payment, functions and app routes
 
 
+def calculate_order_amount(id):
+    current_ad = Ad.query.get_or_404(id)
+    return current_ad.price * 100
+
+#Creates the payment intent 
 @app.route('/create-payment-intent', methods=['POST'])
 def create_payment():
     try:
@@ -524,7 +513,7 @@ def create_payment():
     except Exception as e:
         return jsonify(error=str(e)), 403
 
-# API för att registrera en betalning till betalningshistorik samt hämta betalningshistorik
+# API to register a payment in the payment history + get:ing the payment history
 @app.route('/payments', methods=['GET', 'POST'])
 @jwt_required()
 def payments():

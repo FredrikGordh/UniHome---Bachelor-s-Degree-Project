@@ -1197,10 +1197,9 @@ function update_search() {
 }
 
 // ------- BETALNING -----------
-//var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 var stripe = Stripe("pk_test_51IdXd9I1LSmMkwS01UZ3P15rGwgKS2FVNDj7puij4jKSK9qHTzpT6RXuoxwT7R3W2egc2WdFbp31gMXAp2RsqpJO003rUKAs23");
 
-// ---------PaymentIntent ----------- //
+// ---------PaymentIntent ----------- 
 
 // The items the customer wants to buy
 var purchase = {
