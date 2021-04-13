@@ -383,6 +383,8 @@
   <!-- Edit bio view -->
   <script id="edit_bio_page" type="text/html">
     <div id="edit_bio_container" class="container">
+      <h2 id ="my_page_heading_id"class="my_page_heading">Mina uppgifter</h2>
+    <br>
       <form>
         <div id="edit_bio_form"  class="form-group">
           <label for="edit_name" class="ad_label">Ändra för- och efternamn</label>
@@ -468,6 +470,7 @@
         <a class="col-11 col-lg-5 my_page_menuitem m-2 p-4" id="history_link" href=""><div class="row align-items-center"> <h3 class="col-10">Min historik </h3> <h3 class="col-2 fas fa-history" style="color: #37ABAB;"></h3> </div><p>Se och kontrollera din bokningshistorik.</p></a>
       </div>
       <!--Container for loading in dynamic content in my page (ie. edit account, history etc.)-->
+      <div id="my_page_content_scrolldown"></div>
       <div id="my_page_content"></div>
       
     </div>
@@ -501,6 +504,8 @@
 
   <!-- My page: history view -->
   <script id="my_page_history" type="text/html">
+    <h2 id ="my_page_heading_id"class="my_page_heading">Min historik</h2>
+    <br>
     <div id="my_page_history_container" class="container row justify-content-center">
 
     </div>
@@ -508,6 +513,8 @@
 
   <!-- My page: my bookings view -->
   <script id="my_page_bookings" type="text/html">
+    <h2 id ="my_page_heading_id"class="my_page_heading">Mina bokningar</h2>
+    <br>
     <div id="my_page_bookings_container" class="container row justify-content-center">
 
     </div>
@@ -515,7 +522,7 @@
 
   <!-- My page: my ads view -->
   <script id="my_page_ads" type="text/html">
-    <h2 class="my_page_heading">Mina annonser</h2>
+    <h2 id ="my_page_heading_id"class="my_page_heading">Mina annonser</h2>
     <br>
     <div id="my_page_ads_container" class="container row justify-content-center">
     </div>
@@ -842,8 +849,9 @@
       <h1 id="read_more_ad_title"></h1>
       <h4 id="read_more_ad_neighbourhood"></h4>
       <div class="row">
-       
-          <img src="" class="col-7" id="readmore_img">   
+          <div class="col-7">
+          <img src="" id="readmore_img">   
+          </div> 
           <div id="read_more_map" class="col-5"></div>
       </div>
       <div class="row justify-content-center">
@@ -914,10 +922,10 @@
               </div>
               <div class="row mt-5" id="read_more_reserve">
                 <div class="col-6">
-                  <input type="date" id="read_more_select_start" class="no-border">
+                  <input type="date" id="read_more_select_start" style ="font-size: 20px;" class="no-border">
                 </div>
                 <div class="col-6">
-                  <input type="date" id="read_more_select_end" class="no-border">
+                  <input type="date" id="read_more_select_end" style ="font-size: 20px;" class="no-border">
                 </div>
                 <button id="reservation_button" class="btn btn-success">Reservera</button>
               </div>
@@ -957,12 +965,13 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs">
+  </script>
   <script src="index.js"></script>
   <script src="templates.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"></script>
   <script src="https://kit.fontawesome.com/dbf101f92c.js" crossorigin="anonymous"></script>
-  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs">
-  </script>
+  
 </body>
 
 </html>
