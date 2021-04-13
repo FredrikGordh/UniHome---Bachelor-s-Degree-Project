@@ -560,7 +560,6 @@ margin: 0 auto;
   border-radius: 20px;
   color: black;
   min-width: 30vw;
-  width: 20vw;
   box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
 -webkit-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
 -moz-box-shadow: 0px 0px 20px -6px rgba(0,0,0,0.66);
@@ -594,10 +593,6 @@ margin: 0 auto;
   background-color: white;
   border-radius: 20px;
   color: black;
-}
-
-.accomodation div {
-  /* margin: 20px; */
 }
 
 .accomodation button {
@@ -689,6 +684,7 @@ margin: 0 auto;
 
 .headline_startdate{
   text-align: center;
+  border-right: olive solid 1px;
 }
 
 .headline_enddate{
@@ -1073,6 +1069,15 @@ button:disabled {
 .my_page_menuitem:hover {
   color: black;
   background-color: rgb(228, 228, 228);
+}
+
+.search_page_container {
+  background-color: #e7d8ca;
+}
+
+.search_page_price {
+  margin-top: 20%;
+  text-align: center;
 }
 
 #my_page_menu h3 fa-plus{
