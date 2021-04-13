@@ -169,7 +169,8 @@ $(document).ready(function () {
     //My page menu: go to account
     $("#content").on("click", "#account_info_link", function (e) {
         e.preventDefault();
-        load_account_info();
+        go_edit_bio_page();
+        // load_account_info();
         $('html, body').animate({
             scrollTop: $("#my_page_account_info_container").offset().top
         }, 1000);

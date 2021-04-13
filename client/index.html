@@ -374,7 +374,11 @@
         </div>
         <br>
         <div id = "register_failed_container"></div>
-        <button type="button" id="register_form_button" class="btn btn-primary">Registrera</button>
+        <div class="row">
+          <div class="col-2">
+            <button type="button" id="register_form_button" class="btn btn-primary rounded-pill">Registrera</button>
+          </div>
+        </div>
         <div>Har du redan ett konto? Logga in genom att klicka <span class = "clickable_class" id = "get_to_login">här</span></div>
       </form>
     </div>
@@ -422,9 +426,13 @@
           <br>
           <textarea rows=3 cols="50" class="ad_input" id="bio_edit"></textarea>
         </div>
-        <button type="button" id="edit_form_button" class="btn btn-primary">Ändra!</button>
+        <div class="row justify-content-center">
+          <div class= "col-3">
+            <button type="button" id="edit_form_button" class="btn btn-primary rounded-pill">Spara</button>
+          </div>
+        </div>  
         <br>
-        <button type="button" id="cancel_edit_form_btn" class="btn btn-primary">Avbryt!</button>
+        <!-- <button type="button" id="cancel_edit_form_btn" class="btn btn-primary">Avbryt!</button> -->
       </form>
     </div>
   </script>
@@ -447,7 +455,11 @@
           <input type="password" class="ad_input" size="50" id="password_login" placeholder="Password">
         </div>
         <div id = "login_failed_container"></div>
-        <button type="button" id="login_form_button" class="btn btn-primary">Logga in</button>
+        <div class="row">
+          <div class="col-2">
+            <button type="button" id="login_form_button" class="btn btn-primary rounded-pill">Logga in</button>
+          </div>
+        </div>
       </form>
     </div>
   </script>
@@ -759,11 +771,11 @@
                 <div class="col-lg-6 mx-auto">
         
                     <!-- Upload image input-->
-                    <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+                    <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white ">
                         <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0 ad_input">
                         <label id="upload-label" for="upload" class="font-weight-light text-muted">Ingen fil vald ännu</label>
                         <div class="input-group-append">
-                            <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Välj bildfil</small></label>
+                            <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload"></i>Välj bildfil</label>
                         </div>
                     </div>
         
@@ -773,7 +785,11 @@
                 </div>
             </div>
             <br>
-          <button id="create_new_ad" class="btn btn-primary" type="button">Lägg upp annons</button>
+            <div class="row justify-content-center">
+              <div class="col-3">
+                <button id="create_new_ad" class="btn btn-primary rounded-pill" type="button">Lägg upp annons</button>
+              </div>
+            </div>
         </form>
         <!--
         <div class="form-group">
@@ -832,7 +848,7 @@
   <script id="read_more_ad_page" type="text/html">
     <div class="row" >
       <div class="col-1">
-        <button id="read_more_back" class="read_more_back_button btn btn-primary  "><i class="fas fa-arrow-left"></i>
+        <button id="read_more_back" class="read_more_back_button btn btn-primary rounded-pill"><i class="fas fa-arrow-left"></i>
         </button>
       </div>
     
@@ -907,7 +923,7 @@
             
               <h5 id="read_more_ad_attributes"></h5>
               <div class= "read_more_price">
-                <div class="row">
+                <div class="row justify-content-center">
                   <h5 class="fas fa-coins col-1"></h5>
                   <h5 class="col-10" id="read_more_ad_price"  ></h5>
                 </div>
@@ -919,13 +935,13 @@
                 <div class="col-6">
                   <input type="date" id="read_more_select_end" class="no-border">
                 </div>
-                <button id="reservation_button" class="btn btn-success">Reservera</button>
+                <button id="reservation_button" class="btn btn-success rounded-pill">Reservera</button>
               </div>
               <div class="row mt-5" id="read_more_login">
                 <div class="col-12">
                   <p>Du måste logga in för att reservera ett boende.</p>
                 </div>
-                <button id="read_more_login_button" class="btn btn-success">Logga in</button>
+                <button id="read_more_login_button" class="btn btn-success rounded-pill">Logga in</button>
               </div>
         </div>
       </div>

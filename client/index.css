@@ -27,6 +27,10 @@ label {
   border: #37ABAB;
 }
 
+.btn:hover{
+  background-color: #094D4D;  
+}
+
 
 /* ID */
 #home_area_search{
@@ -270,6 +274,14 @@ label {
   border-radius: 20px;
   margin-top: 15px;
   margin-bottom: 15px;
+}
+
+#edit_form_button{
+margin-bottom: 10px;
+}
+
+#cancel_edit_Form_btn{
+
 }
 
 /* Funkar inte */
@@ -902,7 +914,7 @@ a:hover{
 
 /* Buttons and links */
 button {
-  background: #5469d4;
+  background: #094D4D;
   color: #ffffff;
   border-radius: 0 0 4px 4px;
   border: 0;
@@ -922,6 +934,9 @@ button {
 
 button:hover {
   filter: contrast(115%);
+  background-color: #094D4D;
+  color: #094D4D;
+
 }
 button:disabled {
   opacity: 0.5;
@@ -929,7 +944,7 @@ button:disabled {
 }
 
 /* Buttons and links */
-button {
+/* button {
   background: #5469d4;
   color: #ffffff;
   border-radius: 0 0 4px 4px;
@@ -949,7 +964,7 @@ button:hover {
 button:disabled {
   opacity: 0.5;
   cursor: default;
-}
+} */
 /* spinner/processing state, errors */
 .spinner,
 .spinner:before,
