@@ -29,6 +29,8 @@ jwt = JWTManager(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
+stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfFOz1e8wgFJduwU1uJCvtrspqIeelpu7RuJjZ00j0qjVnl8"
+
 ###################################################### CLASSES ######################################################
 
 # The class user contains all information about the user.
@@ -36,24 +38,6 @@ bcrypt = Bcrypt(app)
 
 # Set your secret key. Remember to switch to your live secret key in production.
 # See your keys here: https://dashboard.stripe.com/account/apikeys
-
-# BETALNING_______________________creat
-stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfFOz1e8wgFJduwU1uJCvtrspqIeelpu7RuJjZ00j0qjVnl8"
-
-def calculate_order_amount(id):
-    # Replace this constant with a calculation of the order's amount
-    # Calculate the order total on the server to prevent
-    # people from directly manipulating the amount on the client
-    current_ad = Ad.query.get_or_404(id)
-    return current_ad.price * 100
-
-# stripe.PaymentIntent.create(
-#   amount=1000,
-#   currency='usd',
-#   payment_method_types=['card'],
-#   receipt_email='jenny.rosen@example.com',
-# )
-# __________________________________
 
 
 class User(db.Model):
@@ -183,16 +167,18 @@ class Attributes(db.Model):
 class Payment(db.Model):
     id = db.Column(db.String, primary_key=True)
     ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable=False)
-    payement_person_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    payement_person_id = db.Column(
+        db.Integer, db.ForeignKey('user.id'), nullable=False)
     payment_price = db.Column(db.Integer, nullable=False)
+    ad_title = db.Column(db.String, nullable=False)
 
     def __repr__(self):
         return '<Payment {} {} {} {}>'.format(self.id, self.ad_id, self.payement_person_id,
-                                                       self.payment_price)
+                                              self.payment_price, self.ad_title)
 
     def serialize(self):
         return dict(id=self.id, ad_id=self.ad_id, payment_person_id=self.payement_person_id,
-                    payment_price=self.payment_price)
+                    payment_price=self.payment_price, ad_title=self.ad_title)
 
 
 # Image class
@@ -505,7 +491,14 @@ def types():
         type_list.append(type)
     return jsonify(type_list)
 
-# BETALNING__________________________________
+# Payment, functions and app routes
+
+
+def calculate_order_amount(id):
+    current_ad = Ad.query.get_or_404(id)
+    return current_ad.price * 100
+
+# Creates the payment intent
 
 
 @app.route('/create-payment-intent', methods=['POST'])
@@ -523,27 +516,34 @@ def create_payment():
     except Exception as e:
         return jsonify(error=str(e)), 403
 
-# API för att registrera en betalning till betalningshistorik samt hämta betalningshistorik
+# API to register a payment in the payment history + get:ing the payment history
+
+
 @app.route('/payments', methods=['GET', 'POST'])
 @jwt_required()
 def payments():
     if request.method == 'POST':
         user_id = get_jwt_identity()
         payment = request.get_json(force=True)
-        amount=calculate_order_amount(payment.get("ad_id"))/100
-        newPaymentDB = Payment(id=payment.get('paymentID'), ad_id=payment.get("ad_id"), payement_person_id=user_id, payment_price=amount)
+        amount = calculate_order_amount(payment.get("ad_id"))/100
+        current_ad = Ad.query.get_or_404(payment.get("ad_id"))
+        ad_title_temp = current_ad.title
+        newPaymentDB = Payment(id=payment.get('paymentID'), ad_id=payment.get(
+            "ad_id"), payement_person_id=user_id, payment_price=amount, ad_title=ad_title_temp)  # ändrat /Joel
         db.session.add(newPaymentDB)
         db.session.commit()
         return "success", 200
     elif request.method == 'GET':
         user_id = get_jwt_identity()
-        payment_list = []
-        all_payments = Payment.query.filter(Payment.payement_person_id == user_id)
-        for payment in all_payments:
-            payment_list.append(payment.serialize())
-        return jsonify(payment_list)
+        ad_id = request.args.get('id')
+        payment = Payment.query.filter(
+            Payment.ad_id == ad_id).first()
+        payment = payment.serialize()
+        return jsonify(payment)
 
 # API för att registrera en betalning till betalningshistorik samt hämta betalningshistorik
+
+
 @app.route('/past-bookings', methods=['GET'])
 @jwt_required()
 def past_bookings():
@@ -555,7 +555,7 @@ def past_bookings():
         for booking in all_bookings:
             booking_list.append(booking.serialize())
         return jsonify(booking_list)
-#Ändra detta API när datum är implementerat i en bokning 
+# Ändra detta API när datum är implementerat i en bokning
 
 #___________________________________________
 
