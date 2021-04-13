@@ -460,10 +460,10 @@ function load_account_info() {
     $("#my_page_content").html($("#my_page_account_info").html());
     var user = JSON.parse(sessionStorage.getItem('auth')).user
     $("#my_page_name").html("Namn: " + user.name);
-    $("#my_page_email_and_tel").html("Telefonnummer: " + user.telephone + " <br>E-mail: " + user.email);
+    $("#my_page_email_and_tel").html("Telefonnummer: " + user.telephone + " <br><br>E-mail: " + user.email);
 
     if (user.bio) {
-        $("#my_page_bio_text").css('color', 'black');
+        $("#my_page_bio_text").css('color', 'white');
         $("#my_page_bio_text").html(user.bio);
     }
     else {
