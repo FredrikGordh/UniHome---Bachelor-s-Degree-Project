@@ -292,7 +292,7 @@ def my_bookings():
     current_user_id = get_jwt_identity()
     if request.method == 'GET':
         all_ads = Ad.query.filter(
-            Ad.tenant_id == current_user_id, Ad.booked == True).all()
+            Ad.tenant_id == current_user_id, Ad.reserved == True).all()
         ad_list = []
         for ad in all_ads:
             ad_list.append(ad.serialize())
@@ -551,7 +551,7 @@ def past_bookings():
     if request.method == 'GET':
         user_id = get_jwt_identity()
         booking_list = []
-        all_bookings = Ad.query.filter(Ad.tenant_id == user_id, Ad.paid == True)
+        all_bookings = Ad.query.filter(Ad.tenant_id == user_id, Ad.paid == True, Ad.tenant_enddate < datetime.now())
         for booking in all_bookings:
             booking_list.append(booking.serialize())
         return jsonify(booking_list)
