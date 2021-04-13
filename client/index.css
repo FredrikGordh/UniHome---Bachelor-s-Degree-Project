@@ -27,6 +27,10 @@ label {
   border: #37ABAB;
 }
 
+.btn:hover{
+  background-color: #094D4D;  
+}
+
 
 /* ID */
 #home_area_search{
@@ -266,10 +270,19 @@ label {
 
 /* Funkar inte */
 #edit_bio_container{
-  border: 10px solid #094D4D;
+  background-color: white;
   border-radius: 20px;
+  padding: 20px;
   margin-top: 15px;
   margin-bottom: 15px;
+}
+
+#edit_form_button{
+margin-bottom: 10px;
+}
+
+#cancel_edit_Form_btn{
+
 }
 
 /* Funkar inte */
@@ -310,9 +323,9 @@ label {
 } */
 
 #search_page_container {
-  color: white;
-  margin-top: 100px;
-  padding-bottom: 5vh;
+  background-color: #e7d8ca;
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 
 #search_result {
@@ -320,8 +333,8 @@ label {
 }
 
 #contact_page_container {
-  margin-top: 15vh;
-  margin-bottom: 10vh;
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 
 /* NEW AD PAGE */
@@ -333,7 +346,7 @@ label {
 }
 
 #create_ad_page_container{
-  marigin-top: 50
+  margin-top: 50
 }
 
 #new_ad_page_section{
@@ -343,6 +356,7 @@ label {
 #new_ad_page{
   background-color: #F0F8FF;
 }
+
 
 .ad_input{
   border: 0;
@@ -369,8 +383,8 @@ label {
 }
 
 #my_page_container {
-  margin-top: 15vh;
-  margin-bottom: 10vh;
+  padding-top: 100px;
+  padding-bottom: 100px;
   
 }
 #my_page_background {
@@ -388,8 +402,8 @@ label {
   width:auto;
 }
 
-#readmore_img {
-  /* width: 500px; */
+#readmore_img{
+  width: 100%;
   border-radius: 20px;
 }
 
@@ -901,7 +915,7 @@ a:hover{
 
 /* Buttons and links */
 button {
-  background: #5469d4;
+  background: #094D4D;
   color: #ffffff;
   border-radius: 0 0 4px 4px;
   border: 0;
@@ -921,6 +935,9 @@ button {
 
 button:hover {
   filter: contrast(115%);
+  background-color: #094D4D;
+  color: #094D4D;
+
 }
 button:disabled {
   opacity: 0.5;
@@ -928,7 +945,7 @@ button:disabled {
 }
 
 /* Buttons and links */
-button {
+/* button {
   background: #5469d4;
   color: #ffffff;
   border-radius: 0 0 4px 4px;
@@ -948,7 +965,7 @@ button:hover {
 button:disabled {
   opacity: 0.5;
   cursor: default;
-}
+} */
 /* spinner/processing state, errors */
 .spinner,
 .spinner:before,
@@ -1128,7 +1145,7 @@ button:disabled {
 
 .my_page_heading{
   text-align: center;
-  margin: 100px 0;
+  margin-top: 100px;
 }
 
 
