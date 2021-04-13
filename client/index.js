@@ -3,7 +3,6 @@ const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "
 var saved_input;
 //-------------------------JQuery events-------------------------
 
-
 $(document).ready(function () {
     go_home();
 
@@ -84,7 +83,6 @@ $(document).ready(function () {
     });
 
 
-
     //Submit edit form
     $("#content").on("click", "#edit_form_button", function (e) {
         e.preventDefault();
@@ -124,6 +122,19 @@ $(document).ready(function () {
     $("#content").on("click", ".read_more_ad_button, .title_id", function (e) {
         e.preventDefault();
         go_read_more_ad_page($(this).data('id'));
+    });
+
+    //Pay your booked accomodation
+    $("#content").on("click", ".payment_button", function (e) {
+        e.preventDefault();
+        go_payment_page($(this).data('id'), $(this).data('price'));
+    });
+
+    //Cancel payment
+    $("#content").on("click", "#cancel_payment_button", function (e) {
+        e.preventDefault();
+        go_my_page();
+        load_bookings();
     });
 
     //Go back from read more to search
@@ -262,8 +273,6 @@ $(document).ready(function () {
 //-------------------------Functions-------------------------
 
 //----Nav functions:
-
-
 
 //Function for going to view: Home_page
 function go_home() {
@@ -441,6 +450,145 @@ function go_registered_page() {
     $("#content").html($("#successfully_registered_page").html());
 }
 
+//Function for going to view: Payment page
+function go_payment_page(ad_id, ad_price) {
+    $("#content").html($("#payment_page").html());
+    $("#display_price").html("Pris att betala: " + ad_price + "kr");
+
+    var stripe = Stripe("pk_test_51IdXd9I1LSmMkwS01UZ3P15rGwgKS2FVNDj7puij4jKSK9qHTzpT6RXuoxwT7R3W2egc2WdFbp31gMXAp2RsqpJO003rUKAs23");
+
+    // The items the customer wants to buy
+    var purchase = {
+        id: ad_id
+      };
+    
+    // Disable the button until we have Stripe set up on the page
+    // document.querySelector("button").disabled = true;
+    $("#submit").attr("disabled", true);
+    
+    fetch('/create-payment-intent', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(purchase)
+    })
+      .then(function(result) {
+        return result.json();
+      })
+      .then(function(data) {
+        var elements = stripe.elements();
+        var style = {
+          base: {
+            color: "#32325d",
+            fontFamily: 'Arial, sans-serif',
+            fontSmoothing: "antialiased",
+            fontSize: "16px",
+            "::placeholder": {
+              color: "#32325d"
+            }
+          },
+          invalid: {
+            fontFamily: 'Arial, sans-serif',
+            color: "#fa755a",
+            iconColor: "#fa755a"
+          }
+        };
+    
+        var card = elements.create("card", { style: style });
+        // Stripe injects an iframe into the DOM
+        card.mount("#card-element");
+    
+        card.on("change", function (event) {
+            // Disable the Pay button if there are no card details in the Element
+            $("#submit").attr("disabled", event.empty);
+            document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+        });
+    
+        var form = document.getElementById("payment-form");
+        form.addEventListener("submit", function(event) {
+          event.preventDefault();
+          // Complete payment when the submit button is clicked
+          payWithCard(stripe, card, data.clientSecret);
+        });
+      });
+    
+    // Calls stripe.confirmCardPayment
+    // If the card requires authentication Stripe shows a pop-up modal to
+    // prompt the user to enter authentication details without leaving your page.
+    var payWithCard = function(stripe, card, clientSecret) {
+        loading(true);
+        stripe
+          .confirmCardPayment(clientSecret, {
+            payment_method: {
+              card: card
+            }
+          })
+          .then(function(result) {
+            if (result.error) {
+              // Show error to your customer
+              showError(result.error.message);
+            } else {
+              // The payment succeeded!
+              orderComplete(result.paymentIntent.id);
+              booking_paid(ad_id);
+              save_payment(ad_id, result.paymentIntent.id);
+              go_successful_payment_page();
+            }
+          });
+    };
+    
+      /* ------- UI helpers ------- */
+    // Shows a success message when the payment is complete
+    var orderComplete = function(paymentIntentId) {
+        loading(false);
+        document
+          .querySelector(".result-message a")
+          .setAttribute(
+            "href",
+            "https://dashboard.stripe.com/test/payments/" + paymentIntentId
+          );
+        document.querySelector(".result-message").classList.remove("hidden");
+        // document.querySelector("button").disabled = true;
+        $("#submit").attr("disabled", true);
+      };
+    
+    // Show the customer the error from Stripe if their card fails to charge
+    var showError = function(errorMsgText) {
+        loading(false);
+        var errorMsg = document.querySelector("#card-error");
+        errorMsg.textContent = errorMsgText;
+        setTimeout(function() {
+        errorMsg.textContent = "";
+        }, 4000);
+    };
+    
+    // Show a spinner on payment submission
+    var loading = function(isLoading) {
+        if (isLoading) {
+        // Disable the button and show a spinner
+        //   document.querySelector("button").disabled = true;
+            $("#submit").attr("disabled", true);
+            document.querySelector("#spinner").classList.remove("hidden");
+            document.querySelector("#button-text").classList.add("hidden");
+        } else {
+            // document.querySelector("button").disabled = false;
+            $("#submit").attr("disabled", false);
+            document.querySelector("#spinner").classList.add("hidden");
+            document.querySelector("#button-text").classList.remove("hidden");
+        }
+    };
+    
+
+
+    // använda ad_id för att beräkna pris
+}
+
+//Function for going to view: Successful payment page
+function go_successful_payment_page() {
+    $("#content").html($("#successful_payment_page").html());
+}
+
 //Function for going to view: Read more ad
 function go_read_more_ad_page(ad_id) {
     $("#content").html($("#read_more_ad_page").html());
@@ -482,13 +630,13 @@ function load_account_info() {
         $("#my_page_bio_text").css('color', 'grey');
         $("#my_page_bio_text").html("Du har inte lagt till någon text om dig själv än, lägg till en personlig biografi genom att klicka på \"Redigera min profil\".");
     }
-
 }
 
 //Load account info in my page
 function load_history() {
     $("#my_page_content").html($("#my_page_history").html());
-
+    load_my_payment_history();
+    my_past_bookings();
 }
 
 //Load account info in my page
@@ -502,7 +650,6 @@ function load_ads() {
 function load_bookings() {
     $("#my_page_content").html($("#my_page_bookings").html());
     load_my_bookings_request();
-
 }
 
 function logout() {
@@ -586,6 +733,7 @@ function load_my_ads_request() {
         headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'GET',
         success: function (ads) {
+            console.log(ads); //ta bort denna sen
             ads.forEach(element => {
                 element.image = element.image.url;
                 $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
@@ -606,6 +754,24 @@ function load_my_bookings_request() {
         type: 'GET',
         success: function (ads) {
             ads.forEach(element => {
+                if(element.paid == true) {
+                    $("#my_page_bookings_container").append(Mustache.render(my_bookings_paid, element));
+                } else {
+                    $("#my_page_bookings_container").append(Mustache.render(my_bookings, element));
+                }
+            });
+        }
+    })
+}
+
+function my_past_bookings() {
+    $.ajax({
+        url: host + '/past-bookings',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (bookings) {
+            bookings.forEach(element => {
+                $("#my_page_history_container").append(Mustache.render(my_past_booking, element));
                 element.image = element.image.url;
                 $("#my_page_bookings_container").append(Mustache.render(my_accomodation, element));
             });
@@ -692,6 +858,34 @@ function edit_user_request(user) {
     })
 }
 
+//Payment functions
+
+//Function for saving payment info in the database
+function save_payment(ad_id, paymentIntentId) {
+    $.ajax({
+        url: host + '/payments',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'POST',
+        data: JSON.stringify({"ad_id": ad_id, "paymentID": paymentIntentId}),
+        success: function (response) {
+        }
+    })
+}
+
+//Function for fetching the payment history for the logged in user
+function load_my_payment_history() {
+    $.ajax({
+        url: host + '/payments',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (payments) {
+            console.log(payments)
+            payments.forEach(element => {
+                $("#my_page_history_container").append(Mustache.render(load_my_payments, element));
+            });
+        }
+    })
+}
 
 //Function for making a request for all unique areas in database
 function load_areas(container) {
@@ -799,6 +993,17 @@ function update_booked_status(status, ad_id) {
     })
 }
 
+function update_paid_status(status, ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/paid',
+        type: 'PUT',
+        data: JSON.stringify(status),
+        success: function (ad) {
+
+        }
+    })
+}
+
 //----Functional functions:
 
 //Function for loading all content in hamburger menu
@@ -886,6 +1091,11 @@ function reserve_ad(ad_id, start, end) {
 //Function for approving tenant and update status of ad in database
 function approve_tenant(ad_id) {
     update_booked_status(true, ad_id)
+}
+
+//Function for marking a booking as paid, update status of ad in database
+function booking_paid(ad_id) {
+    update_paid_status(true, ad_id)
 }
 
 //Function for denying tenant and update status of ad in database
@@ -983,127 +1193,6 @@ function update_search() {
     }
 
 }
-
-// ------- BETALNING -----------
-//var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
-var stripe = Stripe("pk_test_51IdXd9I1LSmMkwS01UZ3P15rGwgKS2FVNDj7puij4jKSK9qHTzpT6RXuoxwT7R3W2egc2WdFbp31gMXAp2RsqpJO003rUKAs23");
-
-// ---------PaymentIntent ----------- //
-
-// The items the customer wants to buy
-var purchase = {
-    items: [{ id: "xl-tshirt" }]
-};
-
-// Disable the button until we have Stripe set up on the page
-document.querySelector("button").disabled = true;
-
-fetch('/create-payment-intent', {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify(purchase)
-})
-    .then(function (result) {
-        return result.json();
-    })
-    .then(function (data) {
-        var elements = stripe.elements();
-        var style = {
-            base: {
-                color: "#32325d",
-                fontFamily: 'Arial, sans-serif',
-                fontSmoothing: "antialiased",
-                fontSize: "16px",
-                "::placeholder": {
-                    color: "#32325d"
-                }
-            },
-            invalid: {
-                fontFamily: 'Arial, sans-serif',
-                color: "#fa755a",
-                iconColor: "#fa755a"
-            }
-        };
-
-        var card = elements.create("card", { style: style });
-        // Stripe injects an iframe into the DOM
-        card.mount("#card-element");
-
-        card.on("change", function (event) {
-            // Disable the Pay button if there are no card details in the Element
-            $("button").attr("disabled", event.empty);
-            document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
-        });
-
-        var form = document.getElementById("payment-form");
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();
-            // Complete payment when the submit button is clicked
-            payWithCard(stripe, card, data.clientSecret);
-        });
-    });
-
-// Calls stripe.confirmCardPayment
-// If the card requires authentication Stripe shows a pop-up modal to
-// prompt the user to enter authentication details without leaving your page.
-var payWithCard = function (stripe, card, clientSecret) {
-    loading(true);
-    stripe
-        .confirmCardPayment(clientSecret, {
-            payment_method: {
-                card: card
-            }
-        })
-        .then(function (result) {
-            if (result.error) {
-                // Show error to your customer
-                showError(result.error.message);
-            } else {
-                // The payment succeeded!
-                orderComplete(result.paymentIntent.id);
-            }
-        });
-};
-
-/* ------- UI helpers ------- */
-// Shows a success message when the payment is complete
-var orderComplete = function (paymentIntentId) {
-    loading(false);
-    document
-        .querySelector(".result-message a")
-        .setAttribute(
-            "href",
-            "https://dashboard.stripe.com/test/payments/" + paymentIntentId
-        );
-    document.querySelector(".result-message").classList.remove("hidden");
-    document.querySelector("button").disabled = true;
-};
-
-// Show the customer the error from Stripe if their card fails to charge
-var showError = function (errorMsgText) {
-    loading(false);
-    var errorMsg = document.querySelector("#card-error");
-    errorMsg.textContent = errorMsgText;
-    setTimeout(function () {
-        errorMsg.textContent = "";
-    }, 4000);
-};
-
-// Show a spinner on payment submission
-var loading = function (isLoading) {
-    if (isLoading) {
-        // Disable the button and show a spinner
-        document.querySelector("button").disabled = true;
-        document.querySelector("#spinner").classList.remove("hidden");
-        document.querySelector("#button-text").classList.add("hidden");
-    } else {
-        document.querySelector("button").disabled = false;
-        document.querySelector("#spinner").classList.add("hidden");
-        document.querySelector("#button-text").classList.remove("hidden");
-    }
-};
 
 function submitAdForm() {
     var formData = new FormData();

@@ -40,12 +40,12 @@ bcrypt = Bcrypt(app)
 # BETALNING_______________________creat
 stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfFOz1e8wgFJduwU1uJCvtrspqIeelpu7RuJjZ00j0qjVnl8"
 
-
-def calculate_order_amount(items):
+def calculate_order_amount(id):
     # Replace this constant with a calculation of the order's amount
     # Calculate the order total on the server to prevent
     # people from directly manipulating the amount on the client
-    return 1400
+    current_ad = Ad.query.get_or_404(id)
+    return current_ad.price * 100
 
 # stripe.PaymentIntent.create(
 #   amount=1000,
@@ -68,6 +68,8 @@ class User(db.Model):
     hostads = db.relationship("Ad", backref="host", foreign_keys="Ad.host_id")
     bookedads = db.relationship(
         "Ad", backref="tenant", foreign_keys="Ad.tenant_id")
+
+    payments = db.relationship("Payment", backref="user")
 
     university = db.Column(db.String, nullable=True)
     education = db.Column(db.String, nullable=True)
@@ -128,6 +130,9 @@ class Ad(db.Model):
 
     host_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     tenant_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+
+    payment_id = db.relationship("Payment", backref="ad")
+
     image_id = db.relationship("Image", backref='ad')
 
     def __repr__(self):
@@ -172,6 +177,22 @@ class Attributes(db.Model):
     def serialize(self):
         return dict(id=self.id, dishwasher=self.dishwasher, wifi=self.wifi,
                     washingmachine=self.washingmachine, sauna=self.sauna, bike=self.bike)
+
+
+# The class contains details regarding a payment
+class Payment(db.Model):
+    id = db.Column(db.String, primary_key=True)
+    ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable=False)
+    payement_person_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    payment_price = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return '<Payment {} {} {} {}>'.format(self.id, self.ad_id, self.payement_person_id,
+                                                       self.payment_price)
+
+    def serialize(self):
+        return dict(id=self.id, ad_id=self.ad_id, payment_person_id=self.payement_person_id,
+                    payment_price=self.payment_price)
 
 
 # Image class
@@ -271,7 +292,7 @@ def my_bookings():
     current_user_id = get_jwt_identity()
     if request.method == 'GET':
         all_ads = Ad.query.filter(
-            Ad.tenant_id == current_user_id, Ad.booked == True).all()
+            Ad.tenant_id == current_user_id, Ad.reserved == True).all()
         ad_list = []
         for ad in all_ads:
             ad_list.append(ad.serialize())
@@ -491,10 +512,10 @@ def types():
 def create_payment():
     try:
         data = json.loads(request.data)
-        print("123")
+        print(data)
         intent = stripe.PaymentIntent.create(
-            amount=calculate_order_amount(data['items']),
-            currency='usd'
+            amount=calculate_order_amount(data['id']),
+            currency='sek'
         )
         return jsonify({
             'clientSecret': intent['client_secret']
@@ -502,8 +523,41 @@ def create_payment():
     except Exception as e:
         return jsonify(error=str(e)), 403
 
-# ___________________________________________
+# API för att registrera en betalning till betalningshistorik samt hämta betalningshistorik
+@app.route('/payments', methods=['GET', 'POST'])
+@jwt_required()
+def payments():
+    if request.method == 'POST':
+        user_id = get_jwt_identity()
+        payment = request.get_json(force=True)
+        amount=calculate_order_amount(payment.get("ad_id"))/100
+        newPaymentDB = Payment(id=payment.get('paymentID'), ad_id=payment.get("ad_id"), payement_person_id=user_id, payment_price=amount)
+        db.session.add(newPaymentDB)
+        db.session.commit()
+        return "success", 200
+    elif request.method == 'GET':
+        user_id = get_jwt_identity()
+        payment_list = []
+        all_payments = Payment.query.filter(Payment.payement_person_id == user_id)
+        for payment in all_payments:
+            payment_list.append(payment.serialize())
+        return jsonify(payment_list)
 
+# API för att registrera en betalning till betalningshistorik samt hämta betalningshistorik
+@app.route('/past-bookings', methods=['GET'])
+@jwt_required()
+def past_bookings():
+    if request.method == 'GET':
+        user_id = get_jwt_identity()
+        booking_list = []
+        current_date = datetime.datetime.now()
+        all_bookings = Ad.query.filter(Ad.tenant_id == user_id, Ad.paid == True, Ad.tenant_enddate < current_date)
+        for booking in all_bookings:
+            booking_list.append(booking.serialize())
+        return jsonify(booking_list)
+#Ändra detta API när datum är implementerat i en bokning 
+
+#___________________________________________
 
 exec(open('script.py').read())
 

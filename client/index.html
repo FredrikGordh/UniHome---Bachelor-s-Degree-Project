@@ -52,6 +52,7 @@
 
   <div id="content" class="container-fluid hide-menu"></div>
 
+  
   <!-- Footern: Vi skriver ut en lista med kontaktuppgifter i vår container-->
   <div class="footer container-fluid pt-5 pb-5 hide-menu">
     <!-- <div class="row text-center justify-content-center">
@@ -498,6 +499,17 @@
       </div>
     </script>
 
+  <!-- Successful Payment view -->
+  <script id="successful_payment_page" type="text/html">
+    <div id="login_container" class="container">
+      
+      <div class="col-11 col-lg-500 my_page_menuitem m-2 p-4"><a href=""><h3>Din betalning gick igenom!</h3><p>Kul! Nu är allt klart och betalt. Ditt boende är redo för dig, tagga!</p></a></div>
+
+      <!-- <h1>Din betalning gick igenom!</h1>
+      <div id = "payment_page_content">Kul! Nu är allt klart och betalt. Ditt boende är redo för dig, tagga!</div> -->
+    </div>
+  </script>
+
   <!-- My page: account view -->
   <script id="my_page_account_info" type="text/html">
     <div id="my_page_account_info_container" class="my_page_account m-2 p-4 col-11 col-lg-11">
@@ -519,7 +531,6 @@
     <h2 id ="my_page_heading_id"class="my_page_heading">Min historik</h2>
     <br>
     <div id="my_page_history_container" class="container row justify-content-center">
-
     </div>
   </script>
 
@@ -839,6 +850,7 @@
   </script>
 
   <!-- Help view -->
+
   <script id="help_page" type="text/html">
     <div id="help_page_container" class="container">
       <h1>Hur funkar det?</h1>
@@ -959,15 +971,54 @@
 
   <!-- Help view -->
   <script id="help_page" type="text/html">
-    <div id="help_page_container" class="container">
-      <h1>Hur funkar det?</h1>
-      <p> Unihome är en plattform där du som student kan hyra ut din bostad till andra studenter och hyra en bostad av andra studenter. Tjänsten är anpassade till studenters behov vid bostadsuthyrning. Med en UniHomekonto kan du både bli hyresvärd och hyresgäst. 
-      <br>
-      <h3>Bli hyresvärd</h3>
-       <p>Som student kan du med hjälp av vår tjänst hyra ut ditt studentboende kortsitkigt, från en helg upp till sex månader. Vår plattform är enbart för studenter till studenter. Registrera dig och välj "Skapa ny annons" för att skapa och publicera en annons för din bostad. </p> 
-      <h3>Bli hyresgäst</h3>
-      <p>Hyr ett boende av en annan student, för en helg, en vecka eller kanske ett halvår. Registrera dig och sök efter det du behöver genom att filtrera bostäderna efter dina behov. 
+    <div id="help_page_container" class="container-fluid">
     </div>
+  </script>
+
+  <!-- Payment view -->
+  <script id="payment_page" type="text/html">
+
+    <div id="my_page_container" class="container">
+      <h1 id = "display_price"></h1>
+      <button type="button" id="cancel_payment_button">Avbryt betalning</button>
+    </div>
+
+    <div class="body1">
+      <form id="payment-form" class="form1">
+        <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+        <button id="submit">
+          <div class="spinner hidden" id="spinner"></div>
+          <span id="button-text">Pay now</span>
+        </button>
+        <p id="card-error" role="alert"></p>
+        <p class="result-message hidden">
+          Payment succeeded, see the result in your
+          <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+        </p>
+      </form>
+    </div>
+  </script>
+
+  <!-- Read more about the housing ad-->
+  <script id="read_more_ad_page" type="text/html">
+    <div id="read_more_ad_container" class="container">
+      <button id="read_more_back">Tillbaka</button>
+      <!--Dessa är bara flytta omkring och ändra font mm. Data laddas in i taggarna med javascript baserat på id-->
+      <h1 id="read_more_ad_title"></h1>
+      <h1 id="read_more_ad_bio"></h1>
+      <h1 id="read_more_ad_neighbourhood"></h1>
+      <h1 id="read_more_ad_studentcity"></h1>
+      <h1 id="read_more_ad_address"></h1>
+      <h1 id="read_more_ad_city"></h1>
+      <h1 id="read_more_ad_postalcode"></h1>
+      <h1 id="read_more_ad_startdate"></h1>
+      <h1 id="read_more_ad_enddate"></h1>
+      <h1 id="read_more_ad_squaremetres"></h1>
+      <h1 id="read_more_ad_price"></h1>
+      <h1 id="read_more_ad_beds"></h1>
+      <h1 id="read_more_ad_accommodationtype"></h1>
+      <h1 id="read_more_ad_attributes"></h1>
+      <button id="reservation_button">Reservera</button>
   </script>
 
   <!-- Optional JavaScript -->
@@ -981,6 +1032,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
+  <script src="https://js.stripe.com/v3/"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs">
   </script>
   <script src="index.js"></script>
