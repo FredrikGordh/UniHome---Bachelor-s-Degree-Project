@@ -481,14 +481,15 @@ label {
 }
 
 #ines {
-  background-image: url(media/craig-mckay-jmURdhtm7Ng-unsplash.jpg);
+  background-image: url(Media/IMG_6639.JPG);
   background-position: center;
   background-repeat: none;
   background-size: cover;
-  border-radius: 200px;
-  height: 350px;
-  width: 350px;
+  align
+  height: 500px;
+  width: 500px;
   margin: 0 auto;
+  border-radius: 100%;
 }
 
 #jakob {
