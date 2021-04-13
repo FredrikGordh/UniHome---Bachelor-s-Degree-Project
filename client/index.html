@@ -310,7 +310,7 @@
         <div class="form-group"><br>
           <label class="required ad_label" for="name_register">För och Efternamn</label>
           <br>
-          <input type="text" class=" ad_input" id="name_register" placeholder="Per Johansson">
+          <input type="text" class=" ad_input" id="name_register" placeholder="">
         </div>
         <div class="form-row">
         <div class="form-group col-4">
@@ -356,21 +356,21 @@
           <br>
           <label class="required ad_label" for="phone_register">Telefon</label>
           <br>
-          <input type="text" class="ad_input " id="phone_register" placeholder="0730502142">
+          <input type="text" class="ad_input " id="phone_register" placeholder="">
         </div>
         <div class="form-group">
           <br>
           <br>
           <label class="required ad_label" for="email_register">Email</label>
           <br>
-          <input type="email" class="ad_input " id="email_register" placeholder="Email">
+          <input type="email" class="ad_input " id="email_register" placeholder="">
         </div>
         <div class="form-group">
           <br>
           <br>
-          <label class="required ad_label" for="password_login">Password</label>
+          <label class="required ad_label" for="password_login">Lösenord</label>
           <br>
-          <input type="password" class="ad_input " id="password_register" placeholder="Password">
+          <input type="password" class="ad_input " id="password_register" placeholder="">
         </div>
         <br>
         <div id = "register_failed_container"></div>
@@ -386,18 +386,18 @@
 
   <!-- Edit bio view -->
   <script id="edit_bio_page" type="text/html">
-    <div id="edit_bio_container" class="container">
+    <div id="edit_bio_container" class="container justify-content-center">
       <h2 id ="my_page_heading_id"class="my_page_heading">Mina uppgifter</h2>
     <br>
-      <form>
+      <form id="edit_bio_form">
         <div id="edit_bio_form"  class="form-group">
-          <label for="edit_name" class="ad_label">Ändra för- och efternamn</label>
+          <label for="edit_name" class="ad_label">För- och efternamn</label>
           <br>
           <input type="text" size="50" class="ad_input " id="name_edit" placeholder="Per Johansson">
         </div>
         <br>
         <div class="form-group">
-          <label class="ad_label" for="gender_register">Ändra kön</label>
+          <label class="ad_label" for="gender_register">Kön</label>
           <br>
           <select class="ad_input" id="gender_edit">
             <option>Välj en...</option>
@@ -408,13 +408,13 @@
         </div>
         <br>
         <div class="form-group">
-          <label class="ad_label" for="phone_edit">Ändra telefonnummer</label>
+          <label class="ad_label" for="phone_edit">Telefonnummer</label>
           <br>
           <input type="text" class="ad_input" size="50" id="phone_edit">
         </div>
         <br>
         <div class="form-group">
-          <label class="ad_label" for="email_edit">Ändra email</label>
+          <label class="ad_label" for="email_edit">Email</label>
           <br>
           <input type="email" size="50" class="ad_input" id="email_edit">
         </div>
@@ -424,7 +424,7 @@
         </div> -->
         <br>
         <div class="form-group">
-          <label class="ad_label" for="bio_edit">Ändra biografi</label>
+          <label class="ad_label" for="bio_edit">Biografi</label>
           <br>
           <textarea rows=3 cols="50" class="ad_input" id="bio_edit"></textarea>
         </div>
@@ -452,9 +452,9 @@
         </div>
         <div class="form-group">
           <br>
-          <label class="ad_label" for="password_login">Password</label>
+          <label class="ad_label" for="password_login">Lösenord</label>
           <br>
-          <input type="password" class="ad_input" size="50" id="password_login" placeholder="Password">
+          <input type="password" class="ad_input" size="50" id="password_login" placeholder="Lösenord">
         </div>
         <div id = "login_failed_container"></div>
         <div class="row">
@@ -572,9 +572,7 @@
           <h2>Vilka är vi?</h2>
           <div class="row align-items-center">
             <div class="col-12 col-lg-3">
-              <p>VD</p>
-              <p>Ines Dizengremel</p>
-              <p>ines@unihome.se</p>
+              <p>UniHomes grundare</p>
             </div>
             <div class="col-12 col-lg-6"><div id="ines"></div></div>
             <div class="col-12 col-lg-3"><p>Vår mission är att hjälpa studenter hjälpa varandra. Det ska vara enkelt att hyra och hyra ut bostäder om ens för en

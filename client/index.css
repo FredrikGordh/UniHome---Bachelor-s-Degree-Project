@@ -357,6 +357,9 @@ margin-bottom: 10px;
   background-color: #F0F8FF;
 }
 
+/* ::placeholder{ */
+  /* color:rgba(173, 173, 173, 0.07) */
+/* } */
 
 .ad_input{
   border: 0;
@@ -499,7 +502,7 @@ margin-bottom: 10px;
   background-position: center;
   background-repeat: none;
   background-size: cover;
-  align
+  text-align: center;
   height: 500px;
   width: 500px;
   margin: 0 auto;
@@ -1149,6 +1152,14 @@ button:disabled {
   margin-top: 100px;
 }
 
+#edit_bio_form_id{
+  display: inline-block;
+}
+
+/* .my_page_heading{ 
+  text-align: center;
+  margin-top: 100px;
+}*/
 
 
 /* jhbjknjnjhbjkbjb     Ines testar checkboxes        jhbjhbjbljhbllhjblj */
