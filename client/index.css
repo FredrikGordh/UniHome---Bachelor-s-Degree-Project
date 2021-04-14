@@ -1220,11 +1220,13 @@ button:disabled {
 
 .my_page_heading{
   text-align: center;
-  margin-top: 100px;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 
 #edit_bio_form_id{
   display: inline-block;
+
 }
 
 /* .my_page_heading{ 
