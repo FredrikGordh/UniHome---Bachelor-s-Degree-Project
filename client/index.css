@@ -96,8 +96,14 @@ label {
   text-decoration: none;
   color: #232323;
   
+  
   transition: color 0.3s ease;
 }
+
+.burger-menu span{
+  background-color: slateblue;
+}
+
   
 #menuToggle input{
   display: block;
@@ -183,7 +189,7 @@ label {
   border-radius: 20px;
   /*opacity: 0;*/
 
-  background: #ededed;
+  background: #fcfeff;
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
   /* to stop flickering of text in safari */
@@ -201,6 +207,11 @@ label {
 #menu li{
   padding: 10px 0;
   font-size: 22px;
+}
+
+#menu li:hover{
+  font-size: 24px;
+  color: #37ABAB;
 }
   
 /*
@@ -272,7 +283,7 @@ label {
 #edit_bio_container{
   background-color: white;
   border-radius: 20px;
-  padding: 20px;
+  padding: 50px;
   margin-top: 15px;
   margin-bottom: 15px;
 }
@@ -1272,11 +1283,13 @@ button:disabled {
 
 .my_page_heading{
   text-align: center;
-  margin-top: 100px;
+  margin-top: 0px;
+  margin-bottom: 30px;
 }
 
 #edit_bio_form_id{
   display: inline-block;
+
 }
 
 /* .my_page_heading{ 
@@ -1341,10 +1354,15 @@ button:disabled {
       transform: scale(0) rotate(45deg);
 }
 
+
 [type="checkbox"]:checked + label:after {
   opacity: 1;
   -webkit-transform: scale(1) rotate(0);
       transform: scale(1) rotate(0);
+}
+
+#testdiv{
+  background-color: violet;
 }
 
 /* Disabled checkbox */
