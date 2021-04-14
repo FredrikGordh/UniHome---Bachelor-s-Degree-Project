@@ -922,7 +922,7 @@ function load_read_more(ad_id) {
             $("#read_more_ad_description").html(ad.description);
             $("#read_more_ad_neighbourhood").html(ad.neighbourhood)
             // $("#read_more_ad_studentcity").html(ad.studentcity);
-            $("#read_more_ad_streetaddress").html(ad.streetaddress + ", " + ad.postalcode + ", " + ad.city);
+            $("#read_more_ad_streetaddress").html(ad.streetaddress + " " + ad.streetnumber + ", " + ad.postalcode + ", " + ad.city);
             $("#read_more_ad_startdate").html(ad.startdate);
             $("#read_more_ad_enddate").html(ad.enddate);
             $("#read_more_ad_squaremetres").html(ad.squaremetres + " kvm");
@@ -931,6 +931,32 @@ function load_read_more(ad_id) {
             $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
             $("#readmore_img").attr("src", ad.image.url);
+
+            if (ad.attributes.wifi) {
+                $("#wifi-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+            } else {
+            $("#wifi-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+            }
+            if (ad.attributes.dishwasher) {
+                $("#dishwasher-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+            } else {
+            $("#dishwasher-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+            }
+            if (ad.attributes.washingmachine) {
+                $("#washingmachine-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+            } else {
+            $("#washingmachine-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+            }
+            if (ad.attributes.bike) {
+                $("#bike-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+            } else {
+            $("#bike-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+            }
+            if (ad.attributes.sauna) {
+                $("#sauna-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+            } else {
+            $("#sauna-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+            }
 
 
             parameters = "address=" + ad.streetnumber + "%20" + ad.streetaddress + "%20" + ad.city + "%20" + "Sweden";
