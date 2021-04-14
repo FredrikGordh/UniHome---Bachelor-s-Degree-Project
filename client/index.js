@@ -698,7 +698,7 @@ function go_new_ad_page() {
 //----Request variables:
 
 //Global request variable: host
-var host = 'http://localhost:5000';
+var host = '';
 
 //----Requests:
 
@@ -935,27 +935,27 @@ function load_read_more(ad_id) {
             if (ad.attributes.wifi) {
                 $("#wifi-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
             } else {
-            $("#wifi-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+                $("#wifi-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
             }
             if (ad.attributes.dishwasher) {
                 $("#dishwasher-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
             } else {
-            $("#dishwasher-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+                $("#dishwasher-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
             }
             if (ad.attributes.washingmachine) {
                 $("#washingmachine-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
             } else {
-            $("#washingmachine-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+                $("#washingmachine-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
             }
             if (ad.attributes.bike) {
                 $("#bike-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
             } else {
-            $("#bike-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+                $("#bike-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
             }
             if (ad.attributes.sauna) {
                 $("#sauna-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
             } else {
-            $("#sauna-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+                $("#sauna-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
             }
 
 
