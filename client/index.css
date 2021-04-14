@@ -332,9 +332,22 @@ margin-bottom: 10px;
   margin-top: 50px;
 }
 
+#contact_header h1 {
+  font-size: 80px;
+}
+
+#contact_header p {
+  font-size: 30px;
+}
+
 #contact_page_container {
-  padding-top: 100px;
+  text-align: center;
   padding-bottom: 100px;
+}
+
+#contact_page_container p {
+  line-height: 40px;
+  margin: 50px 0;
 }
 
 /* NEW AD PAGE */
@@ -380,6 +393,16 @@ margin-bottom: 10px;
 
 #help_header {
   background: linear-gradient(0deg, rgba(94, 155, 206, 0.5), rgba(94, 155, 206, 0.5)), url(Media/help.jpg) no-repeat center fixed;    background-size: cover;
+  width: 100%;
+  height: 80vh;
+  padding-top: 300px;
+  color: white;
+  padding-left: 15vw;
+  padding-right: 15vw;
+}
+
+#contact_header {
+  background: linear-gradient(0deg, rgba(94, 155, 206, 0.5), rgba(94, 155, 206, 0.5)), url(Media/contact.jpeg) no-repeat center fixed;    background-size: cover;
   width: 100%;
   height: 80vh;
   padding-top: 300px;
@@ -629,6 +652,12 @@ margin-bottom: 10px;
 
 .vision {
   height: 70vh;
+}
+
+.contacttext {
+  font-size: 20px;
+  margin: 0px;
+  padding-bottom: 5px;
 }
 
 .helptext {
