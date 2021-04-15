@@ -266,9 +266,46 @@ $(document).ready(function () {
         e.preventDefault();
         go_login();
     });
-
-
 });
+
+//--------------------Webbplatskarta-------------------------
+
+    //webbplatskarta: Startsida
+    $("#start-page").on("click", function (e) {
+        e.preventDefault();
+        go_home();
+    }); 
+
+    //webbplatskarta: Bli medlem
+    $("#become-member").on("click", function (e) {
+        e.preventDefault();
+        go_register();
+    });
+
+    // webbplatskarta: Logga in
+    $("#log-in").on("click", function (e) {
+        e.preventDefault();
+        go_login();
+    });
+
+       //webbplatskarta: Vilka är vi
+    $("#who-are-we").on("click", function (e) {
+        e.preventDefault();
+        go_about_us_page();
+    }); 
+
+
+    //webbplatskarta: Hur funkar det
+    $("#how-does-it-work").on("click", function (e) {
+        e.preventDefault();
+        go_help_page();
+    }); 
+
+    //webbplatskarta: Kontakta oss
+    $("#contact-us").on("click", function (e) {
+        e.preventDefault();
+        go_contact_page();
+    }); 
 
 //-------------------------Functions-------------------------
 
