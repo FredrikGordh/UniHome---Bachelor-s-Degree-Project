@@ -58,6 +58,17 @@ $(document).ready(function () {
         $("#close-menu").prop("checked", false);
     });
 
+    //Attributes: Dropdown checklist
+    $("#content").on("click", ".anchor", function (e) {
+     var checkList = $("#attributes_dropdown")[0];
+   if (checkList.classList.contains('visible')){
+     checkList.classList.remove('visible');
+    }
+   else {
+     checkList.classList.add('visible');
+    }
+});
+
     //Go to search page
     $("#content").on("click", "#home_search_submit", function (e) {
         e.preventDefault();
@@ -116,7 +127,7 @@ $(document).ready(function () {
     });
 
     //Register update of search sort
-    $("#content").on("change", "#search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_page_select_attr", function (e) {
+    $("#content").on("change", ".checkboxupdate, #search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_page_select_attr", function (e) {
         update_search();
     });
 
@@ -567,7 +578,7 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
             end: search.end,
             area: search.area,
             type: search.type,
-            attributes: Attr_Enum[search.attributes]
+            attributes: search.attributes
         },
         success: function (ads) {
             $("#search_result").empty();
@@ -853,13 +864,14 @@ function load_attr(container) {
     });
 }
 
+
 //Function for loading data in dropdowns for search from home page
 function load_home_search_dropdowns() {
     load_months("#home_select_start_month");
     load_days("#home_select_length");
     load_areas("#home_select_area");
     load_types("#home_select_type");
-    load_attr("#home_select_attr");
+   // load_attr("#home_select_attr");
 }
 
 //Function for loading data in dropdowns for search on search page
@@ -936,7 +948,7 @@ function submit_home_search_form() {
         start: $("#home_select_start").val(),
         end: $("#home_select_end").val(),
         type: $("#home_select_type").val(),
-        attributes: $("#home_select_attr").val()
+        attributes: get_wanted_attributes()
     }
     if (search.start > search.end && search.start != "" && search.end != "") {
         alert("Inflytt måste vara före utflytt");
@@ -945,6 +957,24 @@ function submit_home_search_form() {
         go_search();
     }
 }
+
+function get_wanted_attributes() {
+    var attributes = ""
+    $("input[name=attr]").each(function() {
+        if (this.checked){
+            attributes =  this.value + "-" + attributes
+        }
+    })
+    if (attributes == ""){
+        attributes = "Attribut"
+    }
+    else {
+        attributes = attributes.substring(0,attributes.length-1)
+    }
+    return attributes
+
+}
+
 
 function update_search() {
     sort = $("#search_page_sort").val();
@@ -966,7 +996,7 @@ function update_search() {
         type: $("#search_page_select_type").val(),
         start: $("#search_page_select_start").val(),
         end: $("#search_page_select_end").val(),
-        attributes: $("#search_page_select_attr").val(),
+        attributes: get_wanted_attributes()
     }
     console.log(search.start)
     console.log(search.end)

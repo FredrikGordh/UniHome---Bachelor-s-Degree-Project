@@ -121,9 +121,23 @@
                   </select>            
                 </div>
                 <div class="form-group col-10 col-lg-5 mt-lg-0 mt-4">
-                  <select class="form-control no-border" id="home_select_attr">
+                  <div id="attributes_dropdown" class="dropdown-check-list form-group">
+                    <span class="anchor">Välj extra bekvämligheter</span>
+                    <ul id = "home_select_attr" class="items">
+                      <li><input name = 'attr' type="checkbox" value = 'bike' />Cykel </li>
+                      <li><input name = 'attr' type="checkbox" value = 'dishwasher' />Diskmaskin</li>
+                      <li><input name = 'attr' type="checkbox" value = 'washingmachine' />Tvättmaskin</li>
+                      <li><input name = 'attr' type="checkbox" value = 'wifi' />Wifi </li>
+                      <li><input name = 'attr' type="checkbox" value = 'sauna' />Bastu </li>
+                    </ul>
+                  </div>
+                  <!-- <select class="form-control no-border" id="home_select_attr">
                     <option>Attribut</option>
-                  </select>            
+                  </select> -->
+                  <!-- <select multiple class="form-control no-border">
+                    <option><input type="checkbox">Test 1</option>
+                    <option><input type="checkbox">Test 2</option>
+                   </select>             -->
                 </div>
               </div>
           </div>
@@ -247,11 +261,9 @@
               <option>Typ av boende</option>
             </select>            
           </div>
-          <div class="col-2">
-            <select class="form-control no-border" id="search_page_select_attr">
+            <!-- <select class="form-control no-border" id="search_page_select_attr">
               <option>Attribut</option>
-            </select>            
-          </div>
+            </select>             -->
           <div class="col-2 pt-1">
             <label for="search_page_select_start">Inflytt</label>
             <input type="date" id="search_page_select_start" class="no-border">
@@ -268,6 +280,16 @@
                 <option>Pris ökande</option>
                 <option>Pris sjunkande</option>
               </select> 
+            </div>
+            <div id="attributes_dropdown" class="dropdown-check-list form-control">
+              <span class="anchor">Bekvämligheter</span>
+              <ul id = "home_select_attr" class="items">
+                <li><input name = 'attr' class = 'checkboxupdate' type="checkbox" value = 'bike' />Cykel </li>
+                <li><input name = 'attr' class = 'checkboxupdate'type="checkbox" value = 'dishwasher' />Diskmaskin</li>
+                <li><input name = 'attr' class = 'checkboxupdate'type="checkbox" value = 'washingmachine' />Tvättmaskin</li>
+                <li><input name = 'attr' class = 'checkboxupdate'type="checkbox" value = 'wifi' />Wifi </li>
+                <li><input name = 'attr' class = 'checkboxupdate'type="checkbox" value = 'sauna' />Bastu </li>
+              </ul>
             </div>
         </div>
       </div>
