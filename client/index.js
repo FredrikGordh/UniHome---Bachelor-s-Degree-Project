@@ -756,9 +756,12 @@ function load_my_bookings_request() {
                 if (element.paid == true) {
                     element.image = element.image.url
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings_paid, element));
-                } else {
+                } else if (element.booked == false){
                     element.image = element.image.url
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings, element));
+                } else {
+                    element.image = element.image.url
+                    $("#my_page_bookings_container").append(Mustache.render(my_bookings_booked, element));
                 }
             });
         }
