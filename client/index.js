@@ -277,14 +277,14 @@ $(document).ready(function () {
     $("#content").on("click", ".book_ad_button", function (e) {
         e.preventDefault();
         approve_tenant($(this).data("id"));
-        load_ads();
+        // load_ads();
     });
 
     //My page: deny tenant
     $("#content").on("click", ".deny_ad_button", function (e) {
         e.preventDefault();
         deny_tenant($(this).data("id"));
-        load_ads();
+        // load_ads();
     });
 
 
@@ -802,10 +802,18 @@ function load_my_ads_request() {
         headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'GET',
         success: function (ads) {
-            console.log(ads); //ta bort denna sen
             ads.forEach(element => {
-                element.image = element.image.url;
-                $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
+                if (element.paid == true) {
+                    element.image = element.image.url
+                    $("#my_page_ads_container").append(Mustache.render(my_accomodation_paid, element));
+                } else if (element.booked == false){
+                    element.image = element.image.url
+                    $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
+                } else {
+                    element.image = element.image.url
+                    $("#my_page_ads_container").append(Mustache.render(my_accomodation_booked, element));
+                } 
+
                 if (element.booked == true) {
                     console.log("booked");
                 } else if (element.reserved == true) {
@@ -826,9 +834,12 @@ function load_my_bookings_request() {
                 if (element.paid == true) {
                     element.image = element.image.url
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings_paid, element));
-                } else {
+                } else if (element.booked == false){
                     element.image = element.image.url
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings, element));
+                } else {
+                    element.image = element.image.url
+                    $("#my_page_bookings_container").append(Mustache.render(my_bookings_booked, element));
                 }
             });
         }
@@ -1078,13 +1089,25 @@ function update_reserved_status(status, ad_id, start_date, end_date) {
     })
 }
 
+function update_reserved_status_denied(status, ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/denied',
+        type: 'PUT',
+        data: JSON.stringify(status),
+        success: function (ad) {
+        load_ads();
+        }
+    })
+}
+
+
 function update_booked_status(status, ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/booked',
         type: 'PUT',
         data: JSON.stringify(status),
         success: function (ad) {
-
+        load_ads();
         }
     })
 }
@@ -1195,7 +1218,7 @@ function booking_paid(ad_id) {
 
 //Function for denying tenant and update status of ad in database
 function deny_tenant(ad_id) {
-    update_reserved_status(false, ad_id)
+    update_reserved_status_denied(false, ad_id)
 }
 
 //----Form functions:
