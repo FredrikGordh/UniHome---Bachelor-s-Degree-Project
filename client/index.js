@@ -162,8 +162,15 @@ $(document).ready(function () {
     //Reserve ad
     $("#content").on("click", "#reservation_button", function (e) {
         e.preventDefault();
-        if ($("#read_more_select_start").val() != "" && $("#read_more_select_start").val() != "") {
-            reserve_ad($(this).data('id'), $("#read_more_select_start").val(), $("#read_more_select_start").val());
+        start = $("#read_more_select_start").val();
+        end = $("#read_more_select_end").val();
+        console.log(end);
+        if (start != "" && end != "") {
+            if (start != "" && Date.parse(start) < Date.parse($("#read_more_ad_startdate").html()) || end != "" && Date.parse(end) > Date.parse($("#read_more_ad_enddate").html())) {
+                alert("Vänligen välj datum inom tidigast in- och utflytt!")
+            } else {
+                reserve_ad($(this).data('id'), start, end);
+            }
         } else {
             alert("Vänligen fyll i datum innan du reserverar!")
         }
@@ -884,7 +891,10 @@ function login_request(user) {
         data: JSON.stringify(user),
         success: function (response) {
             sessionStorage.setItem('auth', JSON.stringify(response));
-            go_home();
+            $("#login_container").html($("#login_success").html());
+            $("#success_name").html("Välkommen " + JSON.parse(sessionStorage.getItem('auth')).user.name)
+            setTimeout(() => { go_home(); }, 3000);
+
         }
         , error: function () {
             $("#login_failed_container").html("Dina inloggningsuppgifter är felaktiga.");
