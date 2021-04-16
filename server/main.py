@@ -14,6 +14,7 @@ import os
 from flask import flash, redirect, url_for
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
+from flask_cors import CORS, cross_origin
 
 
 UPLOAD_FOLDER = '../client/Media'
@@ -25,6 +26,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'LuSg31rsf76nGvMVjzeqV1R0vchtnxu6XTrhrOSLtek'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app)
+
 jwt = JWTManager(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -551,13 +555,15 @@ def past_bookings():
         user_id = get_jwt_identity()
         booking_list = []
         current_date = datetime.datetime.now()
-        all_bookings = Ad.query.filter(Ad.tenant_id == user_id, Ad.paid == True, Ad.tenant_enddate < current_date)
+        all_bookings = Ad.query.filter(
+            Ad.tenant_id == user_id, Ad.paid == True, Ad.tenant_enddate < current_date)
         for booking in all_bookings:
             booking_list.append(booking.serialize())
         return jsonify(booking_list)
 # Ändra detta API när datum är implementerat i en bokning
 
-#___________________________________________
+# ___________________________________________
+
 
 exec(open('script.py').read())
 

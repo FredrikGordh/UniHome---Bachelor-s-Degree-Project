@@ -23,6 +23,7 @@ $(document).ready(function () {
     //Burger menu: Go login
     $("#menu").on("click", "#login_button", function (e) {
         e.preventDefault();
+        console.log("ok");
         go_login();
     });
 
@@ -64,7 +65,7 @@ $(document).ready(function () {
     });
 
     //Go to login page
-    $("#content").on("click", "#get_to_login", function (e) {
+    $("#content").on("click", "#get_to_login, #help_login_button", function (e) {
         e.preventDefault();
         go_login();
     });
@@ -80,6 +81,12 @@ $(document).ready(function () {
     $("#content").on("click", "#register_form_button", function (e) {
         e.preventDefault();
         submit_register_form();
+    });
+
+    //Go register
+    $("#content").on("click", "#help_register_button", function (e) {
+        e.preventDefault();
+        go_register();
     });
 
 
@@ -266,8 +273,45 @@ $(document).ready(function () {
         e.preventDefault();
         go_login();
     });
+});
+
+//--------------------Webbplatskarta-------------------------
+
+//webbplatskarta: Startsida
+$("#start-page").on("click", function (e) {
+    e.preventDefault();
+    go_home();
+});
+
+//webbplatskarta: Bli medlem
+$("#become-member").on("click", function (e) {
+    e.preventDefault();
+    go_register();
+});
+
+// webbplatskarta: Logga in
+$("#log-in").on("click", function (e) {
+    e.preventDefault();
+    go_login();
+});
+
+//webbplatskarta: Vilka är vi
+$("#who-are-we").on("click", function (e) {
+    e.preventDefault();
+    go_about_us_page();
+});
 
 
+//webbplatskarta: Hur funkar det
+$("#how-does-it-work").on("click", function (e) {
+    e.preventDefault();
+    go_help_page();
+});
+
+//webbplatskarta: Kontakta oss
+$("#contact-us").on("click", function (e) {
+    e.preventDefault();
+    go_contact_page();
 });
 
 //-------------------------Functions-------------------------
@@ -698,7 +742,7 @@ function go_new_ad_page() {
 //----Request variables:
 
 //Global request variable: host
-var host = 'http://localhost:5000';
+var host = '';
 
 //----Requests:
 
@@ -938,27 +982,27 @@ function load_read_more(ad_id) {
             if (ad.attributes.wifi) {
                 $("#wifi-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
             } else {
-            $("#wifi-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+                $("#wifi-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
             }
             if (ad.attributes.dishwasher) {
                 $("#dishwasher-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
             } else {
-            $("#dishwasher-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+                $("#dishwasher-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
             }
             if (ad.attributes.washingmachine) {
                 $("#washingmachine-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
             } else {
-            $("#washingmachine-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+                $("#washingmachine-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
             }
             if (ad.attributes.bike) {
                 $("#bike-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
             } else {
-            $("#bike-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+                $("#bike-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
             }
             if (ad.attributes.sauna) {
                 $("#sauna-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
             } else {
-            $("#sauna-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+                $("#sauna-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
             }
 
 
