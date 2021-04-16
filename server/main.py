@@ -101,9 +101,9 @@ class Ad(db.Model):
     tenant_startdate = db.Column(db.Date, nullable=True)
     tenant_enddate = db.Column(db.Date, nullable=True)
 
-    streetaddress = db.Column(db.String, nullable=True)
+    streetaddress = db.Column(db.String, nullable=False)
     streetnumber = db.Column(db.String, nullable=True)
-    city = db.Column(db.String, nullable=True)
+    city = db.Column(db.String, nullable=False)
     postalcode = db.Column(db.Integer, nullable=True)
     country = db.Column(db.String, nullable=True)
 
@@ -111,12 +111,12 @@ class Ad(db.Model):
     enddate = db.Column(db.Date, nullable=False)
     attributes = db.relationship("Attributes", backref='ad_attribute')
 
-    squaremetres = db.Column(db.Integer, nullable=True)
-    price = db.Column(db.Integer, nullable=True)
-    beds = db.Column(db.Integer, nullable=True)
-    accommodationtype = db.Column(db.String, nullable=True)
+    squaremetres = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    beds = db.Column(db.Integer, nullable=False)
+    accommodationtype = db.Column(db.String, nullable=False)
 
-    host_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    host_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     tenant_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
     payment_id = db.relationship("Payment", backref="ad")
@@ -271,8 +271,6 @@ def my_ads():
         ad_list = []
         for ad in all_ads:
             ad_list.append(ad.serialize())
-        for ad in ad_list:
-            print("ok")
         return jsonify(ad_list)
 
 
@@ -395,7 +393,6 @@ def ads():
             all_ads = Ad.query.filter(*filter).order_by(
                 getattr(Ad, sort_parameter).desc()).all()
         for ad in all_ads:
-            print(ad)
             ad_list.append(ad.serialize())
         return jsonify(ad_list)
 
@@ -417,11 +414,10 @@ def uploaded_file(filename):
 @app.route('/ad/create', methods=['POST'])
 @jwt_required()
 def create_ad():
-    print('test')
     if request.method == 'POST':
         current_user_id = get_jwt_identity()
         newad = request.form
-
+        print(newad)
         newadDB = Ad(title=newad.get('title'), description=newad.get('description'),
                      neighbourhood=newad.get('neighbourhood'), studentcity="Linköping",
                      streetaddress=newad.get('streetaddress'), streetnumber=newad.get('streetnumber'), city=newad.get('city'),
@@ -435,17 +431,18 @@ def create_ad():
         db.session.flush()
         db.session.commit()
 
+        print(newad.get('attributes'))
+        attributesDB = Attributes()
+        setattr(attributesDB, 'ad_id', newadDB.id)
         if newad.get('attributes'):
             list = newad.get('attributes').split(
                 ' ')  # list = ['bike', 'wifi'];
-            attributesDB = Attributes()
-            setattr(attributesDB, 'ad_id', newadDB.id)
             for x in list:
                 setattr(attributesDB, x, True)
-
-            db.session.add(attributesDB)
-            db.session.flush()
-            db.session.commit()
+        db.session.add(attributesDB)
+        db.session.flush()
+        print(attributesDB)
+        db.session.commit()
 
         file = request.files.get('file')
         if file and allowed_file(file.filename):
@@ -509,7 +506,6 @@ def calculate_order_amount(id):
 def create_payment():
     try:
         data = json.loads(request.data)
-        print(data)
         intent = stripe.PaymentIntent.create(
             amount=calculate_order_amount(data['id']),
             currency='sek'
