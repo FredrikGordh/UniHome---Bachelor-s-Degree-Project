@@ -523,7 +523,19 @@ function go_registered_page() {
 //Function for going to view: Payment page
 function go_payment_page(ad_id, ad_price) {
     $("#content").html($("#payment_page").html());
-    $("#display_price").html("Pris att betala: " + ad_price + "kr");
+
+    $.ajax({
+        url: host + '/rentalperiod',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        data: {
+            id: ad_id
+        },
+        success: function (amount_of_days) {
+            $("#display_payment_info").html("Bokad period: " + amount_of_days + " dagar. Pris per dag: " + ad_price + "kr");
+            $("#display_price").html("Totalt pris att betala: " + ad_price * amount_of_days + "kr");
+        }
+    })
 
     var stripe = Stripe("pk_test_51IdXd9I1LSmMkwS01UZ3P15rGwgKS2FVNDj7puij4jKSK9qHTzpT6RXuoxwT7R3W2egc2WdFbp31gMXAp2RsqpJO003rUKAs23");
 
