@@ -776,10 +776,18 @@ function load_my_ads_request() {
         headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'GET',
         success: function (ads) {
-            console.log(ads); //ta bort denna sen
             ads.forEach(element => {
-                element.image = element.image.url;
-                $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
+                if (element.paid == true) {
+                    element.image = element.image.url
+                    $("#my_page_ads_container").append(Mustache.render(my_accomodation_paid, element));
+                } else if (element.booked == false){
+                    element.image = element.image.url
+                    $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
+                } else {
+                    element.image = element.image.url
+                    $("#my_page_ads_container").append(Mustache.render(my_accomodation_booked, element));
+                } 
+
                 if (element.booked == true) {
                     console.log("booked");
                 } else if (element.reserved == true) {
@@ -1170,7 +1178,8 @@ function booking_paid(ad_id) {
 
 //Function for denying tenant and update status of ad in database
 function deny_tenant(ad_id) {
-    update_reserved_status(false, ad_id)
+    //fixa här så att man skickar med startdatum och slutdatum, eller skapa en ny approute
+    update_reserved_status(false, ad_id, start, end)
 }
 
 //----Form functions:

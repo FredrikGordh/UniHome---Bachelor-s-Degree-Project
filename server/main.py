@@ -318,6 +318,8 @@ def set_reserved(ad_id):
         reserved = request.get_json(force=True)
         current_ad = Ad.query.get_or_404(ad_id)
         current_ad.reserved = reserved.get('status')
+        print(current_ad.reserved)
+        print("test hej hej")
         current_ad.tenant_startdate = datetime.datetime.strptime(
             reserved.get('start'), '%Y-%m-%d').date()
         current_ad.tenant_enddate = datetime.datetime.strptime(
