@@ -1,5 +1,5 @@
 //Enum för att översätta attribut vid sökning
-const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Attribut": "Attribut" });
+const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Bekvämligheter": "Bekvämligheter" });
 var saved_input;
 //-------------------------JQuery events-------------------------
 
@@ -32,7 +32,6 @@ $(document).ready(function () {
     //Burger menu: Go login
     $("#menu").on("click", "#login_button", function (e) {
         e.preventDefault();
-        console.log("ok");
         go_login();
     });
 
@@ -125,7 +124,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#menu").on("click", ".hide-menu", function (e) {
+    $("#menu, nav").on("click", ".hide-menu", function (e) {
         $("#close-menu").prop("checked", false);
     });
 
@@ -255,30 +254,40 @@ $(document).ready(function () {
         }, 1000);
     });
 
-    //My page menu: go to ads
+    //Home: change area facts: ryd
     $("#content").on("click", "#map_ryd", function (e) {
         e.preventDefault();
         $("#area_facts").html($("#ryd_view").html());
+        exists = ($("#home_select_area").children().text().search("Ryd") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
     });
-    //My page menu: go to ads
+    //Home: change area facts: lambohov
     $("#content").on("click", "#map_lambohov", function (e) {
         e.preventDefault();
         $("#area_facts").html($("#lambohov_view").html());
+        exists = ($("#home_select_area").children().text().search("Lambohov") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
     });
-    //My page menu: go to ads
+    //Home: change area facts: valla
     $("#content").on("click", "#map_valla", function (e) {
         e.preventDefault();
         $("#area_facts").html($("#valla_view").html());
+        exists = ($("#home_select_area").children().text().search("Valla") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
     });
-    //My page menu: go to ads
-    $("#content").on("click", "#map_vasastaden", function (e) {
+    //Home: change area facts: vasastan
+    $("#content").on("click", "#map_vasastan", function (e) {
         e.preventDefault();
-        $("#area_facts").html($("#vasastaden_view").html());
+        $("#area_facts").html($("#vasastan_view").html());
+        exists = ($("#home_select_area").children().text().search("Vasastan") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
     });
-    //My page menu: go to ads
+    //Home: change area facts: gottfridsberg
     $("#content").on("click", "#map_gottfridsberg", function (e) {
         e.preventDefault();
         $("#area_facts").html($("#gottfridsberg_view").html());
+        exists = ($("#home_select_area").children().text().search("Gottfridsberg") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
     });
 
     //My page: approve tenant
@@ -301,8 +310,6 @@ $(document).ready(function () {
         e.preventDefault();
         start = Date.parse($("#ad_start_id").val());
         end = Date.parse($("#ad_end_id").val());
-        console.log(start);
-        console.log(end);
         if (start > end) {
             alert("Inflytt måste vara före utflytt");
         } else {
@@ -320,6 +327,15 @@ $(document).ready(function () {
     $("nav").on("click", "#sign_in_nav", function (e) {
         e.preventDefault();
         go_login();
+    });
+
+    //Go login from nav
+    $("#content").on("click", "#go_area", function (e) {
+        e.preventDefault();
+        search = JSON.parse(sessionStorage.getItem('search'));
+        search.area = $(this).data('area');
+        sessionStorage.setItem('search', JSON.stringify(search));
+        go_search();
     });
 
     //Go create ad from nav
@@ -411,7 +427,7 @@ function go_home() {
             center: { lat: 58.405844557880265, lng: 15.5949486961521 },
             size: 40,
         },
-        vasastaden: {
+        vasastan: {
             center: { lat: 58.418598933014735, lng: 15.612839650705164 },
             size: 30,
         },
@@ -493,7 +509,7 @@ function go_home() {
     );
     popup3 = new Popup(
         new google.maps.LatLng(58.418598933014735, 15.612839650705164),
-        document.getElementById("vasastaden")
+        document.getElementById("vasastan")
     );
     popup4 = new Popup(
         new google.maps.LatLng(58.414188119723406, 15.596067756828468),
@@ -832,10 +848,15 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
         },
         success: function (ads) {
             $("#search_result").empty();
-            ads.forEach(element => {
-                element.image = element.image.url;
-                $("#search_result").append(Mustache.render(accomodation, element));
-            });
+            if (ads.length > 0) {
+                ads.forEach(element => {
+                    element.image = element.image.url;
+                    $("#search_result").append(Mustache.render(accomodation, element));
+                });
+            } else {
+                $("#search_result").append("<h3>Ooops, verkar som din sökning inte gav några träffar! Försök igen!</h3>");
+            }
+
         }
     })
 }
@@ -846,7 +867,6 @@ function load_my_ads_request() {
         headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'GET',
         success: function (ads) {
-            console.log(ads); //ta bort denna sen
             ads.forEach(element => {
                 element.image = element.image.url;
                 $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
@@ -895,7 +915,6 @@ function my_past_bookings() {
                     success: function (payment) {
                         element.image = element.image.url;
                         element['id'] = payment.id;
-                        console.log(element.id)
                         $("#my_page_history_container").append(Mustache.render(my_past_booking, element));
                     }
                 })
@@ -921,7 +940,6 @@ function get_tenant(ad_id) {
         type: 'GET',
         success: function (result) {
             result["ad_id"] = ad_id;
-            console.log(result);
             $(".accomodation_tennant_" + ad_id).append(Mustache.render(tenant, result));
         }
     })
@@ -1077,14 +1095,11 @@ function load_read_more(ad_id) {
 
 
             parameters = "address=" + ad.streetnumber + "%20" + ad.streetaddress + "%20" + ad.city + "%20" + "Sweden";
-            console.log(parameters);
-
             $.ajax({
                 url: "https://maps.googleapis.com/maps/api/geocode/json?" + parameters + "&key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs",
                 type: 'GET',
                 success: function (coordinates) {
                     var coord = coordinates.results[0].geometry.location;
-                    console.log(coord);
                     let map, popup;
                     map2 = new google.maps.Map(document.getElementById("read_more_map"), {
                         zoom: 13.2,
@@ -1322,8 +1337,7 @@ function update_search() {
         end: $("#search_page_select_end").val(),
         attributes: $("#search_page_select_attr").val(),
     }
-    console.log(search.start)
-    console.log(search.end)
+
     if (search.start > search.end && search.start != "" && search.end != "") {
         alert("Inflytt måste vara före utflytt");
     } else {
@@ -1365,7 +1379,6 @@ function submitAdForm() {
     }
 
     if (typeof saved_input !== 'undefined') {
-        console.log(saved_input)
         var ad = {
             title: $("#titleInput_id").val(),
             description: $("#descriptionInput_id").val(),

@@ -3,7 +3,6 @@ body {
   background: white;
   color: black;
   font-family: "Roboto", sans-serif;
-  z-index: -2;
 }
 
 body,
@@ -20,6 +19,30 @@ h1 {
 
 label {
   margin: 0;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+  text-align: center;
+}
+
+video {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
 }
 
 .btn {
@@ -248,6 +271,7 @@ label {
 
 #content {
   padding: 0;
+  margin: 0;
 }
 
 #home_container {
@@ -901,6 +925,7 @@ label {
   padding: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .headline_startdate {
