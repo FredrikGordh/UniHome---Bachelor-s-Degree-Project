@@ -510,7 +510,27 @@ def types():
 
 def calculate_order_amount(id):
     current_ad = Ad.query.get_or_404(id)
-    return current_ad.price * 100
+    startdate = current_ad.tenant_startdate
+    enddate = current_ad.tenant_enddate
+    rental_period = enddate - startdate
+    amount_of_days = rental_period.days
+    return (current_ad.price * amount_of_days)* 100
+
+
+# Calculates the amount of days that tenant will rent the add
+
+@app.route('/rentalperiod', methods=['GET'])
+@jwt_required()
+def calculate_rentalperiod():
+    if request.method == 'GET':
+        ad_id = request.args.get('id')
+        current_ad = Ad.query.get_or_404(ad_id)
+        startdate = current_ad.tenant_startdate
+        enddate = current_ad.tenant_enddate
+        rental_period = enddate - startdate
+        amount_of_days = rental_period.days
+        return jsonify(amount_of_days)
+
 
 # Creates the payment intent
 
