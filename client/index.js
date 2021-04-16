@@ -5,6 +5,10 @@ var saved_input;
 
 $(document).ready(function () {
     go_home();
+    if (sessionStorage.getItem('auth')) {
+        $("#sign_in_nav").removeClass('d-md-block');
+        $("#sign_in_nav").addClass('d-none');
+    }
 
     //Click on logo to go home
     $("#navbar-logo").click(function (e) {
@@ -18,6 +22,11 @@ $(document).ready(function () {
     $("#menu").on("click", "#register_button", function (e) {
         e.preventDefault();
         go_register();
+    });
+
+    $("#menu").on("click", "#home_button", function (e) {
+        e.preventDefault();
+        go_home();
     });
 
     //Burger menu: Go login
@@ -116,7 +125,7 @@ $(document).ready(function () {
         }
     });
 
-    $(".hide-menu").click(function (e) {
+    $("#menu").on("click", ".hide-menu", function (e) {
         $("#close-menu").prop("checked", false);
     });
 
@@ -164,7 +173,6 @@ $(document).ready(function () {
         e.preventDefault();
         start = $("#read_more_select_start").val();
         end = $("#read_more_select_end").val();
-        console.log(end);
         if (start != "" && end != "") {
             if (start != "" && Date.parse(start) < Date.parse($("#read_more_ad_startdate").html()) || end != "" && Date.parse(end) > Date.parse($("#read_more_ad_enddate").html())) {
                 alert("Vänligen välj datum inom tidigast in- och utflytt!")
@@ -291,13 +299,39 @@ $(document).ready(function () {
     //Submit form create new ad
     $("#content").on("click", "#create_new_ad", function (e) {
         e.preventDefault();
-        submitAdForm();
+        start = Date.parse($("#ad_start_id").val());
+        end = Date.parse($("#ad_end_id").val());
+        console.log(start);
+        console.log(end);
+        if (start > end) {
+            alert("Inflytt måste vara före utflytt");
+        } else {
+            submitAdForm();
+        }
     });
 
     //Submit form create new ad
     $("#content").on("click", "#read_more_login_button", function (e) {
         e.preventDefault();
         go_login();
+    });
+
+    //Go login from nav
+    $("nav").on("click", "#sign_in_nav", function (e) {
+        e.preventDefault();
+        go_login();
+    });
+
+    //Go create ad from nav
+    $("nav").on("click", "#ad_accomodation_nav", function (e) {
+        e.preventDefault();
+        if (sessionStorage.getItem('auth')) {
+            go_my_page();
+            go_new_ad_page();
+        } else {
+            alert('Logga in först!')
+        }
+
     });
 });
 
@@ -350,6 +384,8 @@ function go_home() {
     load_home_search_dropdowns();
     load_burger();
     $("#area_facts").html($("#default_view").html());
+    $("#home_select_start").val(new Date().toISOString().slice(0, 10));
+    $("#home_select_end").val(new Date().toISOString().slice(0, 10));
     let coord;
     let z;
     if (screen.width < 992) {
@@ -666,7 +702,10 @@ function go_read_more_ad_page(ad_id) {
     $("#read_more_reserve").toggleClass('d-none', !signedIn);
     $("#read_more_login").toggleClass('d-none', signedIn);
     load_read_more(ad_id);
-    $("#reservation_button").data('id', ad_id)
+    $("#reservation_button").data('id', ad_id);
+    $("#read_more_select_start").val(JSON.parse(sessionStorage.getItem('search')).start);
+    $("#read_more_select_end").val(JSON.parse(sessionStorage.getItem('search')).end);
+
 }
 
 //Function for going to view: Edit bio
@@ -723,6 +762,8 @@ function load_bookings() {
 
 function logout() {
     sessionStorage.removeItem('auth');
+    $("#sign_in_nav").addClass('d-none');
+    $("#sign_in_nav").addClass('d-md-block');
     go_home();
 }
 
@@ -760,6 +801,9 @@ function showFileName(event) {
 
 function go_new_ad_page() {
     $("#content").html($("#new_ad_page").html());
+    $("#ad_start_id").val(new Date().toISOString().slice(0, 10));
+    $("#ad_end_id").val(new Date().toISOString().slice(0, 10));
+
 }
 
 
@@ -807,7 +851,6 @@ function load_my_ads_request() {
                 element.image = element.image.url;
                 $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
                 if (element.booked == true) {
-                    console.log("booked");
                 } else if (element.reserved == true) {
                     get_tenant(element.id);
                 }
@@ -878,7 +921,8 @@ function get_tenant(ad_id) {
         type: 'GET',
         success: function (result) {
             result["ad_id"] = ad_id;
-            $("#my_page_ads_container").append(Mustache.render(tenant, result));
+            console.log(result);
+            $(".accomodation_tennant_" + ad_id).append(Mustache.render(tenant, result));
         }
     })
 }
@@ -891,7 +935,8 @@ function login_request(user) {
         data: JSON.stringify(user),
         success: function (response) {
             sessionStorage.setItem('auth', JSON.stringify(response));
-            $("#login_container").html($("#login_success").html());
+            $("#sign_in_nav").removeClass('d-md-block');
+            $("#sign_in_nav").addClass('d-none');
             go_home()
 
         }
@@ -1105,17 +1150,20 @@ function update_paid_status(status, ad_id) {
 function load_burger() {
     $("#menu").empty();
 
+
     if (sessionStorage.getItem('auth') == null) {
         $("#menu").prepend('<a href=""><li id="register_button" class="hide-menu" >Bli medlem</li></a>'
-            + '<a href=""><li id="login_button" class="hide-menu" >Logga in</li></a>')
+            + '<a href=""><li id="login_button" class="hide-menu d-block d-md-none">Logga in</li></a>')
     } else {
         $("#menu").prepend('<a href=""><li id="my_page_button" class="hide-menu">Mina sidor</li></a>'
-            + '<a href=""><li id="logout_button" class="hide-menu" >Logga ut</li></a>')
+            + '<a href=""><li id="logout_button" class="hide-menu">Logga ut</li></a>')
     }
+    $("#menu").prepend('<a href=""><li id="home_button" class="hide-menu">Hem</li></a>'
+        + '<a href=""><li id="burger_add_accomodation" class="hide-menu d-block d-md-none">Lägg upp boende</li></a>')
 
-    $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu" > Vilka är vi</li></a>'
-        + '<a href=""><li id="contact_button" class="hide-menu" >Kontakta oss</li></a>'
-        + '<a href=""><li id="help_button" class="hide-menu" >Hur funkar det</li></a>')
+    $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu">Om oss</li></a>'
+        + '<a href=""><li id="contact_button" class="hide-menu">Kontakta oss</li></a>'
+        + '<a href=""><li id="help_button" class="hide-menu">Hur funkar det</li></a>')
 }
 
 //Function for calling all date loaders
@@ -1244,7 +1292,7 @@ function submit_home_search_form() {
         type: $("#home_select_type").val(),
         attributes: $("#home_select_attr").val()
     }
-    if (search.start > search.end && search.start != "" && search.end != "") {
+    if (Date.parse(search.start) > Date.parse(search.end) && search.start != "" && search.end != "") {
         alert("Inflytt måste vara före utflytt");
     } else {
         sessionStorage.setItem('search', JSON.stringify(search));
@@ -1288,24 +1336,6 @@ function update_search() {
 }
 
 function submitAdForm() {
-    var formData = new FormData();
-
-    formData.append("title", $("#titleInput_id").val());
-    formData.append("description", $("#descriptionInput_id").val());
-    formData.append("neighbourhood", $("#areaInput_id").val());
-
-    formData.append("streetaddress", $("#create_ad_street_id").val());
-    formData.append("streetnumber", $("#create_ad_streetnumber_id").val());
-    formData.append("postalcode", $("#create_ad_postalcode_id").val());
-    formData.append("city", $("#create_ad_city_id").val());
-
-    formData.append("startdate", $("#ad_start_id").val());
-    formData.append("enddate", $("#ad_end_id").val());
-
-    formData.append("squaremetres", $("#create_ad_kvm_id").val());
-    formData.append("price", $("#create_ad_price_id").val());
-    formData.append("beds", $("#create_ad_beds_id").val());
-    formData.append("accommodationtype", $("#accomodation_Type_Select_id").val());
 
     var bike = $("#create_ad_bike_id").prop("checked");
     var dishwasher = $("#create_ad_dishwasher_id").prop("checked");
@@ -1334,18 +1364,32 @@ function submitAdForm() {
         attributes = attributes.slice(0, -1);
     }
 
-    formData.append("attributes", attributes);
     if (typeof saved_input !== 'undefined') {
-        formData.append("file", saved_input);
+        console.log(saved_input)
+        var ad = {
+            title: $("#titleInput_id").val(),
+            description: $("#descriptionInput_id").val(),
+            description: $("#descriptionInput_id").val(),
+            neighbourhood: $("#areaInput_id").val(),
+            streetaddress: $("#create_ad_street_id").val(),
+            streetnumber: $("#create_ad_streetnumber_id").val(),
+            postalcode: $("#create_ad_postalcode_id").val(),
+            city: $("#create_ad_city_id").val(),
+            startdate: $("#ad_start_id").val(),
+            enddate: $("#ad_end_id").val(),
+            squaremetres: $("#create_ad_kvm_id").val(),
+            price: $("#create_ad_price_id").val(),
+            beds: $("#create_ad_beds_id").val(),
+            accommodationtype: $("#accomodation_Type_Select_id").val(),
+            attributes: attributes,
+            file: saved_input
+        };
         saved_input = null;
-
         $.ajax({
             url: host + '/ad/create',
             type: 'POST',
             headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
-            data: formData,
-            processData: false,
-            contentType: false,
+            data: JSON.stringify(ad),
             success: function (successMessage) {
                 go_my_page();
             },

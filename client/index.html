@@ -24,6 +24,8 @@
   <!-- Navbar: En hamburgarmeny + navbar -->
   <nav class="navbar navbar-style">
     <a href="" class="navbar-brand hide-menu"><img id="navbar-logo" src="Media/Unihome-logga.png"></a>
+    <a href="" id="ad_accomodation_nav" class="d-none d-md-block">Lägg upp boende</a>
+    <a href="" id="sign_in_nav" class="d-none d-md-block">Logga in</a>
     <div id="menuToggle" class="burger-menu">
       <!--
             A fake / hidden checkbox is used as click reciever,
@@ -90,7 +92,7 @@
       </div>
       <div class="col-3 offset-1 col-lg-1 offset-lg-0">
         <ul class="no-dot-list">
-          <li id=who-are-we><a href="">Vilka är vi</a></li>
+          <li id=who-are-we><a href="">Om oss</a></li>
           <li id=how-does-it-work><a href="">Hur funkar det</a></li>
           <li id=contact-us><a href="">Kontakta oss</a></li>
           <!--<li><a href="">Jobba hos oss</a></li>
@@ -214,7 +216,7 @@
   <script id="default_view" type="text/html">
       <div class="facts_content row p-4">
       <div class="col-12 mb-3">
-        <h1>Våra områden</h1>
+        <h1>Våra populära områden i Linköping</h1>
       </div>
       <div class="col-12">
         <p>Klicka på ett av de inringade områdena för att få läsa mer om det.</p>
@@ -604,7 +606,7 @@
     <div id="about_us_page_container">
       <div id="about_us_header">
         <div class="row justify-content-center">
-          <div class="col-12"><h1>Vilka är vi?</h1></div>
+          <div class="col-12"><h1>Om oss</h1></div>
         </div>
       </div>
       <div class="row justify-content-center our_start align-items-center">
@@ -627,7 +629,7 @@
       </div>
       <div class="row justify-content-center">
         <div class="col-10">
-          <h2>Vilka är vi?</h2>
+          <h2>Om oss</h2>
           <div class="row align-items-center justify-content-center">
             <div class="col-12 col-xl-4">
               <p>UniHomes grundare</p>
@@ -700,17 +702,17 @@
           <div class="form-group">
             <label class="required ad_label" for="titleInput_id">Rubrik</label>
             <br>
-            <input type="title" class="ad_input" id="titleInput_id" size="50" placeholder="Exempel: Korridorsrum 5 min från Campus" required>
+            <input type="title" class="ad_input create_ad_required" id="titleInput_id" size="50" placeholder="Exempel: Korridorsrum 5 min från Campus" required>
           </div>
           <br>
           <div class="form-group">
             <label class="ad_label required" for="descriptionInput_id">Beskrivning</label>
             <br>
-            <textarea class="ad_input" id="descriptionInput_id" rows="3" cols="50" placeholder="Beskriv ditt boende här..." required></textarea>
+            <textarea class="ad_input create_ad_required" id="descriptionInput_id" rows="3" cols="50" placeholder="Beskriv ditt boende här..." required></textarea>
           </div>
           <br>
           <div class="form-group">
-            <label class="ad_label required" for="areaInput_id">Område</label>
+            <label class="ad_label required" for="areaInput_id">Område i Linköping</label>
             <select class="ad_input" id="areaInput_id" required>
               <option selected="selected"> Välj område </option>
               <option>Ryd</option>

@@ -416,7 +416,7 @@ def uploaded_file(filename):
 def create_ad():
     if request.method == 'POST':
         current_user_id = get_jwt_identity()
-        newad = request.form
+        newad = request.get_json(force=True)
         print(newad)
         newadDB = Ad(title=newad.get('title'), description=newad.get('description'),
                      neighbourhood=newad.get('neighbourhood'), studentcity="Linköping",
