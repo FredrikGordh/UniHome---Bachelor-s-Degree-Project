@@ -251,14 +251,14 @@ $(document).ready(function () {
     $("#content").on("click", ".book_ad_button", function (e) {
         e.preventDefault();
         approve_tenant($(this).data("id"));
-        load_ads();
+        // load_ads();
     });
 
     //My page: deny tenant
     $("#content").on("click", ".deny_ad_button", function (e) {
         e.preventDefault();
         deny_tenant($(this).data("id"));
-        load_ads();
+        // load_ads();
     });
 
 
@@ -1060,13 +1060,25 @@ function update_reserved_status(status, ad_id, start_date, end_date) {
     })
 }
 
+function update_reserved_status_denied(status, ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/denied',
+        type: 'PUT',
+        data: JSON.stringify(status),
+        success: function (ad) {
+        load_ads();
+        }
+    })
+}
+
+
 function update_booked_status(status, ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/booked',
         type: 'PUT',
         data: JSON.stringify(status),
         success: function (ad) {
-
+        load_ads();
         }
     })
 }
@@ -1178,8 +1190,7 @@ function booking_paid(ad_id) {
 
 //Function for denying tenant and update status of ad in database
 function deny_tenant(ad_id) {
-    //fixa här så att man skickar med startdatum och slutdatum, eller skapa en ny approute
-    update_reserved_status(false, ad_id, start, end)
+    update_reserved_status_denied(false, ad_id)
 }
 
 //----Form functions:

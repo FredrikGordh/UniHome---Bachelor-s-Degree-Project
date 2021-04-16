@@ -318,12 +318,20 @@ def set_reserved(ad_id):
         reserved = request.get_json(force=True)
         current_ad = Ad.query.get_or_404(ad_id)
         current_ad.reserved = reserved.get('status')
-        print(current_ad.reserved)
-        print("test hej hej")
         current_ad.tenant_startdate = datetime.datetime.strptime(
             reserved.get('start'), '%Y-%m-%d').date()
         current_ad.tenant_enddate = datetime.datetime.strptime(
             reserved.get('end'), '%Y-%m-%d').date()
+        db.session.commit()
+        return "success", 200
+
+# Used when a reservation is denied and the ad should no longer be reserved
+@app.route('/ad/<int:ad_id>/denied', methods=['PUT'])
+def deny_tenant(ad_id):
+    if request.method == 'PUT':
+        status = request.get_json(force=True)
+        current_ad = Ad.query.get_or_404(ad_id)
+        current_ad.reserved = status
         db.session.commit()
         return "success", 200
 
