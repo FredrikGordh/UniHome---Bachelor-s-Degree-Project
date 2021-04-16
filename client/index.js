@@ -169,6 +169,25 @@ $(document).ready(function () {
         }
     });
 
+    //Route to my page after reservation
+    $("#content").on("click", "#reservation_to_mypage_button", function (e) {
+        e.preventDefault();
+        $('#modal_reservation').modal('hide');
+        $('.modal-backdrop').hide();
+        go_my_page();
+    });
+
+    //Route to search after reservation
+    $("#content").on("click", "#reservation_to_search_button", function (e) {
+        e.preventDefault();
+        $('#modal_reservation').modal('hide');
+        $('.modal-backdrop').hide();
+        go_search();
+    });
+
+    
+
+
     //Edit bio
     $("#content").on("click", "#my_page_change_bio_btn", function (e) {
         e.preventDefault();
@@ -1152,7 +1171,6 @@ function load_search_page_search_dropdowns(search) {
 function reserve_ad(ad_id, start, end) {
     update_reserved_status(true, ad_id, start, end)
     set_tenant(ad_id);
-    go_search();
 }
 
 //Function for approving tenant and update status of ad in database

@@ -1049,7 +1049,35 @@
                 <div class="col-6">
                   <input type="date" id="read_more_select_end" style ="font-size: 20px;" class="no-border">
                 </div>
-                <button id="reservation_button" class="btn btn-success rounded-pill mt-3">Reservera</button>
+                <button id="reservation_button" class="btn btn-success rounded-pill mt-3" data-toggle="modal" data-target="#modal_reservation">Reservera</button>
+                <!-- Modal -->
+                <div id="modal_reservation" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header row">
+                        <div class="col-2">
+                        <button id ="reservation_to_search_button"type="button" class="btn btn-default">
+                          <h3>&times;</h3>
+                        </button>
+                      </div>
+                      <div class=" col-10  justify-content-center">
+                        <h3 class="modal-title "> Reservationen lyckades</h3>
+                      </div>
+                    </div>
+                      <div class="modal-body">
+                        <p>Du har nu en reservation på följande boende. Du kan hantera dina reservationer på dina sidor. 
+                          Vänligen håll utkik där för att se när hyresvärden har godkänt din förfrågan, därefter kan du betala för din vistelse.
+                        </p>
+                      </div>
+                      <div class="modal-footer">
+                        <button id= "reservation_to_mypage_button" type="button" class="btn btn-default rounded-pill" >Gå till mina sidor</button>
+                      </div>
+                    </div>
+                
+                  </div>
+                </div>
               </div>
               <div class="row mt-5" id="read_more_login">
                 <div class="col-12">
