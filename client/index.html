@@ -143,12 +143,12 @@
           </div>
           <div id="home_search_filters">
               <div class="form-row align-items-center justify-content-center">
-                <div class="form-group col-10 col-lg-5">
+                <div class="form-group col-7 col-lg-5">
                   <select class="form-control no-border" id="home_select_type">
                     <option>Typ av boende</option>
                   </select>            
                 </div>
-                <div class="form-group col-10 col-lg-5 mt-lg-0 mt-4">
+                <div class="form-group col-7 col-lg-5 mt-lg-0 mt-4">
                   <select class="form-control no-border" id="home_select_attr">
                     <option>Attribut</option>
                   </select>            
@@ -266,9 +266,9 @@
 
   <!-- Search page view -->
   <script id="search_page" type="text/html">
-    <div id="search_page_container" class="container-fluid">
+    <div id="search_page_container" class="row justify-content-center">
       <div class="col-12">
-        <div class="form-row align-items-center">
+        <div class="form-row align-items-center justify-content-center d-none d-lg-flex">
           <div class="col-2">
             <select class="form-control no-border" id="search_page_select_area">
               <option>Område</option>
@@ -284,26 +284,28 @@
               <option>Attribut</option>
             </select>            
           </div>
-          <div class="col-2 pt-1">
-            <label for="search_page_select_start">Inflytt</label>
-            <input type="date" id="search_page_select_start" class="no-border">
+          <div class="col-2 search_date">
+            <label for="search_page_select_start" class="d-none d-xxl-inline">Inflytt</label>
+            <input type="date" id="search_page_select_start" value="test" class="no-border">
           </div>
-          <div class="col-2 pt-1">
-            <label for="search_page_select_end">Utflytt</label>
+          <div class="col-2 search_date">
+            <label for="search_page_select_end" class="d-none d-xxl-inline">Utflytt</label>
             <input type="date" id="search_page_select_end" class="no-border">
           </div>
-          <div class="col-2">
-            <label for="search_page_sort" class="form-label">Sortera</label>
-              <select class="form-control no-border" id="search_page_sort">
-                <option>A-Ö</option>
-                <option>Ö-A</option>
-                <option>Pris ökande</option>
-                <option>Pris sjunkande</option>
-              </select> 
-            </div>
         </div>
       </div>
-      <div id="search_result" class="row justify-content-center align-items-start"></div>
+      <div class="col-8 offset-2">
+        <div id="search_result" class="row justify-content-center align-items-start"></div>
+      </div>
+      <div class="col-2 pr-5 mt-5">
+        <label for="search_page_sort" class="form-label">Sortera</label>
+        <select class="form-control no-border" id="search_page_sort">
+          <option>A-Ö</option>
+          <option>Ö-A</option>
+          <option>Pris ökande</option>
+          <option>Pris sjunkande</option>
+        </select>
+      </div>
     </div>
   </script>
 
@@ -503,6 +505,17 @@
     </div>
   </script>
 
+  <script id="login_success" type="text/html">
+    <div id="login_success_container" class="container">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-8">
+          <h2 id="success_name"></h2>
+          <h3>Du är nu inloggad!</h3>
+        </div>
+      </div>
+    </div>
+  </script>
+
 
 
   <!-- My page view -->
@@ -626,14 +639,14 @@
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-10">
           <h2>Vilka är vi?</h2>
-          <div class="row align-items-center">
-            <div class="col-12 col-lg-3">
+          <div class="row align-items-center justify-content-center">
+            <div class="col-12 col-xl-4">
               <p>UniHomes grundare</p>
             </div>
-            <div class="col-12 col-lg-6"><div id="gruppbild"></div></div>
-            <div class="col-12 col-lg-3"><p>Vår mission är att hjälpa studenter hjälpa varandra. Det ska vara enkelt att hyra och hyra ut bostäder om ens för en
+            <div class="col-6 col-xl-4"><div id="gruppbild"></div></div>
+            <div class="col-12 mt-lg-5 col-xl-4"><p>Vår mission är att hjälpa studenter hjälpa varandra. Det ska vara enkelt att hyra och hyra ut bostäder om ens för en
             helg.</p></div>
           </div>
         </div>
