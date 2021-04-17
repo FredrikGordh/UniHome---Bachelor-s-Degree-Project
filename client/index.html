@@ -860,7 +860,7 @@
         
                     <!-- Upload image input-->
                     <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white ">
-                        <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0 ad_input">
+                        <input id="upload" type="file" onchange="readURL(this); showFileName(this);" class="form-control border-0 ad_input">
                         <label id="upload-label" for="upload" class="font-weight-light text-muted">Ingen fil vald ännu</label>
                         <div class="input-group-append">
                             <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload"></i>Välj bildfil</label>

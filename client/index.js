@@ -163,8 +163,11 @@ $(document).ready(function () {
     $("#content").on("click", "#new_ad_button", function (e) {
         e.preventDefault();
         go_new_ad_page();
-        var input = document.getElementById('upload');
-        input.addEventListener('change', showFileName);
+    });
+
+    $("nav").on("click", "#ad_accomodation_nav, #burger_add_accomodation", function (e) {
+        e.preventDefault();
+        go_new_ad_page();
     });
 
     //Reserve ad
@@ -800,18 +803,11 @@ function readURL(input) {
     }
 }
 
-$(function () {
-    $('#upload').on('change', function () {
-        readURL(input);
-    });
-});
-
 //Function for showing the uploaded image name. 
 function showFileName(event) {
     var infoArea = document.getElementById('upload-label');
-    var input = event.srcElement;
+    var input = event;
     var fileName = input.files[0].name;
-    print
     infoArea.textContent = 'Filnamn: ' + fileName;
 }
 
@@ -1395,16 +1391,19 @@ function submitAdForm() {
             beds: $("#create_ad_beds_id").val(),
             accommodationtype: $("#accomodation_Type_Select_id").val(),
             attributes: attributes,
-            file: saved_input
         };
-        saved_input = null;
+        console.log(ad.file);
         $.ajax({
             url: host + '/ad/create',
             type: 'POST',
             headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
             data: JSON.stringify(ad),
+            files: saved_input,
+            processData: false,
+            contentType: false,
             success: function (successMessage) {
                 go_my_page();
+                saved_input = null;
             },
             statusCode: {
                 500: function () {

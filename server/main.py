@@ -15,6 +15,8 @@ from flask import flash, redirect, url_for
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
 from flask_cors import CORS, cross_origin
+from sqlalchemy.orm import validates
+
 
 
 UPLOAD_FOLDER = '../client/Media'
@@ -83,6 +85,13 @@ class User(db.Model):
     def set_admin(self):
         self.is_admin = True
 
+    @validates('name', 'email', 'telephone')
+    def empty_string_to_null(self, key, value):
+        if isinstance(value,str) and value == '':
+            return None
+        else:
+            return value
+
 
 # The class ad containts all the information about the ads. An ad is owned by a user.
 # Written by Jakob, Gustav, Joel
@@ -144,6 +153,13 @@ class Ad(db.Model):
                     attributes=Attributes.query.filter_by(
                         ad_id=self.id).first().serialize(),
                     image=Image.query.filter_by(ad_id=self.id).first().serialize(), )
+    
+    @validates('title', 'describtion', 'streetaddress', 'city', 'postalcode', 'squaremetres', 'price', 'beds', 'accommodationtype')
+    def empty_string_to_null(self, key, value):
+        if isinstance(value,str) and value == '':
+            return None
+        else:
+            return value
 
 
 # The class attributes contains all the attributes of ad that has a boolean.
@@ -417,7 +433,6 @@ def create_ad():
     if request.method == 'POST':
         current_user_id = get_jwt_identity()
         newad = request.get_json(force=True)
-        print(newad)
         newadDB = Ad(title=newad.get('title'), description=newad.get('description'),
                      neighbourhood=newad.get('neighbourhood'), studentcity="Linköping",
                      streetaddress=newad.get('streetaddress'), streetnumber=newad.get('streetnumber'), city=newad.get('city'),
@@ -443,8 +458,13 @@ def create_ad():
         db.session.flush()
         print(attributesDB)
         db.session.commit()
-
-        file = request.files.get('file')
+        print(request.args.items)
+        print(request.files.items)
+        file = request.files['file']
+        print("##############################################################################################################")
+        print(newad)
+        print(file)
+        print("##############################################################################################################")
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
