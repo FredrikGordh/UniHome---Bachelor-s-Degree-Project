@@ -432,7 +432,8 @@ def uploaded_file(filename):
 def create_ad():
     if request.method == 'POST':
         current_user_id = get_jwt_identity()
-        newad = request.get_json(force=True)
+        newad = request.form
+        print(newad)
         newadDB = Ad(title=newad.get('title'), description=newad.get('description'),
                      neighbourhood=newad.get('neighbourhood'), studentcity="Linköping",
                      streetaddress=newad.get('streetaddress'), streetnumber=newad.get('streetnumber'), city=newad.get('city'),
@@ -458,13 +459,8 @@ def create_ad():
         db.session.flush()
         print(attributesDB)
         db.session.commit()
-        print(request.args.items)
-        print(request.files.items)
-        file = request.files['file']
-        print("##############################################################################################################")
-        print(newad)
-        print(file)
-        print("##############################################################################################################")
+
+        file = request.files.get('file')
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -485,6 +481,7 @@ def create_ad():
             db.session.commit()
 
         return "success", 200
+
 
 # Löser så att man kan lägga till bilder
 # @app.route('/ad/addimage/<int:ad_id>', methods = ['POST'])

@@ -1346,6 +1346,26 @@ function update_search() {
 }
 
 function submitAdForm() {
+    var formData = new FormData();
+
+    formData.append("title", $("#titleInput_id").val());
+    formData.append("description", $("#descriptionInput_id").val());
+    formData.append("neighbourhood", $("#areaInput_id").val());
+
+    formData.append("streetaddress", $("#create_ad_street_id").val());
+    formData.append("streetnumber", $("#create_ad_streetnumber_id").val());
+    formData.append("postalcode", $("#create_ad_postalcode_id").val());
+    formData.append("city", $("#create_ad_city_id").val());
+
+    formData.append("startdate", $("#ad_start_id").val());
+    formData.append("enddate", $("#ad_end_id").val());
+
+    formData.append("squaremetres", $("#create_ad_kvm_id").val());
+    formData.append("price", $("#create_ad_price_id").val());
+    formData.append("beds", $("#create_ad_beds_id").val());
+    formData.append("accommodationtype", $("#accomodation_Type_Select_id").val());
+
+
 
     var bike = $("#create_ad_bike_id").prop("checked");
     var dishwasher = $("#create_ad_dishwasher_id").prop("checked");
@@ -1374,31 +1394,16 @@ function submitAdForm() {
         attributes = attributes.slice(0, -1);
     }
 
-    if (typeof saved_input !== 'undefined') {
-        var ad = {
-            title: $("#titleInput_id").val(),
-            description: $("#descriptionInput_id").val(),
-            description: $("#descriptionInput_id").val(),
-            neighbourhood: $("#areaInput_id").val(),
-            streetaddress: $("#create_ad_street_id").val(),
-            streetnumber: $("#create_ad_streetnumber_id").val(),
-            postalcode: $("#create_ad_postalcode_id").val(),
-            city: $("#create_ad_city_id").val(),
-            startdate: $("#ad_start_id").val(),
-            enddate: $("#ad_end_id").val(),
-            squaremetres: $("#create_ad_kvm_id").val(),
-            price: $("#create_ad_price_id").val(),
-            beds: $("#create_ad_beds_id").val(),
-            accommodationtype: $("#accomodation_Type_Select_id").val(),
-            attributes: attributes,
-        };
-        console.log(ad.file);
+    formData.append("attributes", attributes);
+
+
+    formData.append("file", saved_input);
+    if (saved_input !== undefined) {
         $.ajax({
             url: host + '/ad/create',
             type: 'POST',
             headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
-            data: JSON.stringify(ad),
-            files: saved_input,
+            data: formData,
             processData: false,
             contentType: false,
             success: function (successMessage) {
@@ -1412,7 +1417,8 @@ function submitAdForm() {
             }
         })
     } else {
-        alert('Du måste lägga till en bild!')
+        alert('Du måste ladda upp en bild!')
     }
+
 
 }
