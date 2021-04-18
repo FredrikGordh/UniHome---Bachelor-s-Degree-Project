@@ -14,6 +14,7 @@ import os
 from flask import flash, redirect, url_for
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
+from flask_cors import CORS, cross_origin
 
 
 UPLOAD_FOLDER = '../client/Media'
@@ -25,9 +26,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'LuSg31rsf76nGvMVjzeqV1R0vchtnxu6XTrhrOSLtek'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app)
+
 jwt = JWTManager(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+
+stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfFOz1e8wgFJduwU1uJCvtrspqIeelpu7RuJjZ00j0qjVnl8"
 
 ###################################################### CLASSES ######################################################
 
@@ -36,24 +42,6 @@ bcrypt = Bcrypt(app)
 
 # Set your secret key. Remember to switch to your live secret key in production.
 # See your keys here: https://dashboard.stripe.com/account/apikeys
-
-# BETALNING_______________________creat
-stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfFOz1e8wgFJduwU1uJCvtrspqIeelpu7RuJjZ00j0qjVnl8"
-
-
-def calculate_order_amount(items):
-    # Replace this constant with a calculation of the order's amount
-    # Calculate the order total on the server to prevent
-    # people from directly manipulating the amount on the client
-    return 1400
-
-# stripe.PaymentIntent.create(
-#   amount=1000,
-#   currency='usd',
-#   payment_method_types=['card'],
-#   receipt_email='jenny.rosen@example.com',
-# )
-# __________________________________
 
 
 class User(db.Model):
@@ -68,6 +56,8 @@ class User(db.Model):
     hostads = db.relationship("Ad", backref="host", foreign_keys="Ad.host_id")
     bookedads = db.relationship(
         "Ad", backref="tenant", foreign_keys="Ad.tenant_id")
+
+    payments = db.relationship("Payment", backref="user")
 
     university = db.Column(db.String, nullable=True)
     education = db.Column(db.String, nullable=True)
@@ -128,6 +118,9 @@ class Ad(db.Model):
 
     host_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     tenant_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+
+    payment_id = db.relationship("Payment", backref="ad")
+
     image_id = db.relationship("Image", backref='ad')
 
     def __repr__(self):
@@ -172,6 +165,24 @@ class Attributes(db.Model):
     def serialize(self):
         return dict(id=self.id, dishwasher=self.dishwasher, wifi=self.wifi,
                     washingmachine=self.washingmachine, sauna=self.sauna, bike=self.bike)
+
+
+# The class contains details regarding a payment
+class Payment(db.Model):
+    id = db.Column(db.String, primary_key=True)
+    ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable=False)
+    payement_person_id = db.Column(
+        db.Integer, db.ForeignKey('user.id'), nullable=False)
+    payment_price = db.Column(db.Integer, nullable=False)
+    ad_title = db.Column(db.String, nullable=False)
+
+    def __repr__(self):
+        return '<Payment {} {} {} {}>'.format(self.id, self.ad_id, self.payement_person_id,
+                                              self.payment_price, self.ad_title)
+
+    def serialize(self):
+        return dict(id=self.id, ad_id=self.ad_id, payment_person_id=self.payement_person_id,
+                    payment_price=self.payment_price, ad_title=self.ad_title)
 
 
 # Image class
@@ -271,7 +282,7 @@ def my_bookings():
     current_user_id = get_jwt_identity()
     if request.method == 'GET':
         all_ads = Ad.query.filter(
-            Ad.tenant_id == current_user_id, Ad.booked == True).all()
+            Ad.tenant_id == current_user_id, Ad.reserved == True).all()
         ad_list = []
         for ad in all_ads:
             ad_list.append(ad.serialize())
@@ -311,6 +322,16 @@ def set_reserved(ad_id):
             reserved.get('start'), '%Y-%m-%d').date()
         current_ad.tenant_enddate = datetime.datetime.strptime(
             reserved.get('end'), '%Y-%m-%d').date()
+        db.session.commit()
+        return "success", 200
+
+# Used when a reservation is denied and the ad should no longer be reserved
+@app.route('/ad/<int:ad_id>/denied', methods=['PUT'])
+def deny_tenant(ad_id):
+    if request.method == 'PUT':
+        status = request.get_json(force=True)
+        current_ad = Ad.query.get_or_404(ad_id)
+        current_ad.reserved = status
         db.session.commit()
         return "success", 200
 
@@ -485,23 +506,92 @@ def types():
         type_list.append(type)
     return jsonify(type_list)
 
-# BETALNING__________________________________
+# Payment, functions and app routes
+
+
+def calculate_order_amount(id):
+    current_ad = Ad.query.get_or_404(id)
+    startdate = current_ad.tenant_startdate
+    enddate = current_ad.tenant_enddate
+    rental_period = enddate - startdate
+    amount_of_days = rental_period.days
+    return (current_ad.price * amount_of_days)* 100
+
+
+# Calculates the amount of days that tenant will rent the add
+
+@app.route('/rentalperiod', methods=['GET'])
+@jwt_required()
+def calculate_rentalperiod():
+    if request.method == 'GET':
+        ad_id = request.args.get('id')
+        current_ad = Ad.query.get_or_404(ad_id)
+        startdate = current_ad.tenant_startdate
+        enddate = current_ad.tenant_enddate
+        rental_period = enddate - startdate
+        amount_of_days = rental_period.days
+        return jsonify(amount_of_days)
+
+
+# Creates the payment intent
 
 
 @app.route('/create-payment-intent', methods=['POST'])
 def create_payment():
     try:
         data = json.loads(request.data)
-        print("123")
+        print(data)
         intent = stripe.PaymentIntent.create(
-            amount=calculate_order_amount(data['items']),
-            currency='usd'
+            amount=calculate_order_amount(data['id']),
+            currency='sek'
         )
         return jsonify({
             'clientSecret': intent['client_secret']
         })
     except Exception as e:
         return jsonify(error=str(e)), 403
+
+# API to register a payment in the payment history + get:ing the payment history
+
+
+@app.route('/payments', methods=['GET', 'POST'])
+@jwt_required()
+def payments():
+    if request.method == 'POST':
+        user_id = get_jwt_identity()
+        payment = request.get_json(force=True)
+        amount = calculate_order_amount(payment.get("ad_id"))/100
+        current_ad = Ad.query.get_or_404(payment.get("ad_id"))
+        ad_title_temp = current_ad.title
+        newPaymentDB = Payment(id=payment.get('paymentID'), ad_id=payment.get(
+            "ad_id"), payement_person_id=user_id, payment_price=amount, ad_title=ad_title_temp)  # ändrat /Joel
+        db.session.add(newPaymentDB)
+        db.session.commit()
+        return "success", 200
+    elif request.method == 'GET':
+        user_id = get_jwt_identity()
+        ad_id = request.args.get('id')
+        payment = Payment.query.filter(
+            Payment.ad_id == ad_id).first()
+        payment = payment.serialize()
+        return jsonify(payment)
+
+# API för att registrera en betalning till betalningshistorik samt hämta betalningshistorik
+
+
+@app.route('/past-bookings', methods=['GET'])
+@jwt_required()
+def past_bookings():
+    if request.method == 'GET':
+        user_id = get_jwt_identity()
+        booking_list = []
+        current_date = datetime.datetime.now()
+        all_bookings = Ad.query.filter(
+            Ad.tenant_id == user_id, Ad.paid == True, Ad.tenant_enddate < current_date)
+        for booking in all_bookings:
+            booking_list.append(booking.serialize())
+        return jsonify(booking_list)
+# Ändra detta API när datum är implementerat i en bokning
 
 # ___________________________________________
 

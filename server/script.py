@@ -105,7 +105,7 @@ db.session.commit()
 
 
 ad5 = Ad(title="Lägenhet med fin utsikt mitt i stan", description="Rymliga lägenhet i stadsdelen Vasastan, som passar utmärkt för ett par om två personer. På taket finns även en trevlig uteplats med sol under hela dagen, utemöbler och grill", neighbourhood="Vasastan", studentcity="Linköping",
-         streetaddress="Drottninggatan", streetnumber="37", city="Linköping", postalcode="511 35", country="Sverige", squaremetres="45", price="110",
+         streetaddress="Drottninggatan", streetnumber="37", city="Linköping", postalcode="511 35", country="Sverige", squaremetres="45", price="1100",
          beds="2", accommodationtype="Lägenhet", host_id="4", startdate=datetime.date(2021, 4, 20), enddate=datetime.date(2021, 4, 30))
 db.session.add(ad5)
 db.session.commit()
@@ -142,7 +142,43 @@ image7 = Image(url = "Media/albin.jpg", ad_id = ad7.id)
 db.session.add(image7)
 db.session.commit()
 
+ad8 = Ad(title="Trevligt korridorsrum uthyres", description="Litet och trevligt korridorsrum som ligger i Ryd. Uthyres till någon lugn och skötsam, ingen fest tillåten. Uthyres endast till rökfria och djurfria hyresgäster.", neighbourhood="Ryd", studentcity="Linköping",
+         streetaddress="Rydsvägen", streetnumber="248C", city="Linköping", postalcode="584 34", country="Sverige", squaremetres="20", price="400",
+         beds="1", accommodationtype="Korridorsrum", host_id="2", startdate=datetime.date(2021, 4, 17), enddate=datetime.date(2021, 4, 18))
+db.session.add(ad8)
+db.session.commit()
+attributes8 = Attributes(wifi=True, sauna=True, dishwasher=False, washingmachine=True, bike=True, ad_id=ad8.id)
+db.session.add(attributes8)
+db.session.commit()
+image8 = Image(url = "Media/korridor1.jpg", ad_id = ad8.id)
+db.session.add(image8)
+db.session.commit()
+
+ad9 = Ad(title="Litet korridorsrum", description="Litet och trevligt inrett korridorsrum som ligger i Ryd. Uthyres till någon lugn och skötsam, ingen fest tillåten. Uthyres endast till rökfria och djurfria hyresgäster.", neighbourhood="Ryd", studentcity="Linköping",
+         streetaddress="Rydsvägen", streetnumber="258B", city="Linköping", postalcode="584 34", country="Sverige", squaremetres="20", price="500",
+         beds="1", accommodationtype="Korridorsrum", host_id="2", startdate=datetime.date(2021, 4, 17), enddate=datetime.date(2021, 4, 18))
+db.session.add(ad9)
+db.session.commit()
+attributes9 = Attributes(wifi=True, sauna=False, dishwasher=True, washingmachine=True, bike=False, ad_id=ad9.id)
+db.session.add(attributes9)
+db.session.commit()
+image9 = Image(url = "Media/korridor2.jpg", ad_id = ad9.id)
+db.session.add(image9)
+db.session.commit()
+
+ad10 = Ad(title="Korridorsrum med dubbelsäng", description="Ett korridorsrum i Ryd som har dubbelsäng, perfekt för ett par som är på besök över en festhelg. Uthyres endast till rökfria och djurfria hyresgäster.", neighbourhood="Ryd", studentcity="Linköping",
+         streetaddress="Rydsvägen", streetnumber="240A", city="Linköping", postalcode="584 34", country="Sverige", squaremetres="20", price="550",
+         beds="2", accommodationtype="Korridorsrum", host_id="2", startdate=datetime.date(2021, 4, 17), enddate=datetime.date(2021, 4, 18))
+db.session.add(ad10)
+db.session.commit()
+attributes10 = Attributes(wifi=True, sauna=False, dishwasher=True, washingmachine=False, bike=True, ad_id=ad10.id)
+db.session.add(attributes10)
+db.session.commit()
+image10 = Image(url = "Media/korridor3.jpg", ad_id = ad10.id)
+db.session.add(image10)
+db.session.commit()
 
 
 
-print("You have now cleared everything that was in the database and created 7 users and 7 ads")
+
+print("You have now cleared everything that was in the database and created 7 users and 10 ads")

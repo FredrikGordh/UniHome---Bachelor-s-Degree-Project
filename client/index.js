@@ -3,7 +3,6 @@ const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "
 var saved_input;
 //-------------------------JQuery events-------------------------
 
-
 $(document).ready(function () {
     go_home();
 
@@ -24,6 +23,7 @@ $(document).ready(function () {
     //Burger menu: Go login
     $("#menu").on("click", "#login_button", function (e) {
         e.preventDefault();
+        console.log("ok");
         go_login();
     });
 
@@ -76,7 +76,7 @@ $(document).ready(function () {
     });
 
     //Go to login page
-    $("#content").on("click", "#get_to_login", function (e) {
+    $("#content").on("click", "#get_to_login, #help_login_button", function (e) {
         e.preventDefault();
         go_login();
     });
@@ -94,6 +94,11 @@ $(document).ready(function () {
         submit_register_form();
     });
 
+    //Go register
+    $("#content").on("click", "#help_register_button", function (e) {
+        e.preventDefault();
+        go_register();
+    });
 
 
     //Submit edit form
@@ -137,6 +142,19 @@ $(document).ready(function () {
         go_read_more_ad_page($(this).data('id'));
     });
 
+    //Pay your booked accomodation
+    $("#content").on("click", ".payment_button", function (e) {
+        e.preventDefault();
+        go_payment_page($(this).data('id'), $(this).data('price'));
+    });
+
+    //Cancel payment
+    $("#content").on("click", "#cancel_payment_button", function (e) {
+        e.preventDefault();
+        go_my_page();
+        load_bookings();
+    });
+
     //Go back from read more to search
     $("#content").on("click", "#read_more_back", function (e) {
         e.preventDefault();
@@ -155,12 +173,38 @@ $(document).ready(function () {
     //Reserve ad
     $("#content").on("click", "#reservation_button", function (e) {
         e.preventDefault();
-        if ($("#read_more_select_start").val() != "" && $("#read_more_select_start").val() != "") {
-            reserve_ad($(this).data('id'), $("#read_more_select_start").val(), $("#read_more_select_start").val());
+        start = $("#read_more_select_start").val();
+        end = $("#read_more_select_end").val();
+        console.log(end);
+        if (start != "" && end != "") {
+            if (start != "" && Date.parse(start) < Date.parse($("#read_more_ad_startdate").html()) || end != "" && Date.parse(end) > Date.parse($("#read_more_ad_enddate").html())) {
+                alert("Vänligen välj datum inom tidigast in- och utflytt!")
+            } else {
+                reserve_ad($(this).data('id'), start, end);
+            }
         } else {
             alert("Vänligen fyll i datum innan du reserverar!")
         }
     });
+
+    //Route to my page after reservation
+    $("#content").on("click", "#reservation_to_mypage_button", function (e) {
+        e.preventDefault();
+        $('#modal_reservation').modal('hide');
+        $('.modal-backdrop').hide();
+        go_my_page();
+    });
+
+    //Route to search after reservation
+    $("#content").on("click", "#reservation_to_search_button", function (e) {
+        e.preventDefault();
+        $('#modal_reservation').modal('hide');
+        $('.modal-backdrop').hide();
+        go_search();
+    });
+
+    
+
 
     //Edit bio
     $("#content").on("click", "#my_page_change_bio_btn", function (e) {
@@ -180,9 +224,10 @@ $(document).ready(function () {
     //My page menu: go to account
     $("#content").on("click", "#account_info_link", function (e) {
         e.preventDefault();
-        load_account_info();
+        go_edit_bio_page();
+        // load_account_info();
         $('html, body').animate({
-            scrollTop: $("#my_page_account_info_container").offset().top
+            scrollTop: $("#my_page_content_scrolldown").offset().top
         }, 1000);
     });
 
@@ -191,7 +236,7 @@ $(document).ready(function () {
         e.preventDefault();
         load_history();
         $('html, body').animate({
-            scrollTop: $("#my_page_history_container").offset().top
+            scrollTop: $("#my_page_content_scrolldown").offset().top
         }, 1000);
     });
 
@@ -200,7 +245,7 @@ $(document).ready(function () {
         e.preventDefault();
         load_bookings();
         $('html, body').animate({
-            scrollTop: $("#my_page_bookings_container").offset().top
+            scrollTop: $("#my_page_content_scrolldown").offset().top
         }, 1000);
     });
 
@@ -209,7 +254,7 @@ $(document).ready(function () {
         e.preventDefault();
         load_ads();
         $('html, body').animate({
-            scrollTop: $("#my_page_ads_container").offset().top
+            scrollTop: $("#my_page_content_scrolldown").offset().top
         }, 1000);
     });
 
@@ -243,14 +288,14 @@ $(document).ready(function () {
     $("#content").on("click", ".book_ad_button", function (e) {
         e.preventDefault();
         approve_tenant($(this).data("id"));
-        load_ads();
+        // load_ads();
     });
 
     //My page: deny tenant
     $("#content").on("click", ".deny_ad_button", function (e) {
         e.preventDefault();
         deny_tenant($(this).data("id"));
-        load_ads();
+        // load_ads();
     });
 
 
@@ -265,15 +310,50 @@ $(document).ready(function () {
         e.preventDefault();
         go_login();
     });
+});
+
+//--------------------Webbplatskarta-------------------------
+
+//webbplatskarta: Startsida
+$("#start-page").on("click", function (e) {
+    e.preventDefault();
+    go_home();
+});
+
+//webbplatskarta: Bli medlem
+$("#become-member").on("click", function (e) {
+    e.preventDefault();
+    go_register();
+});
+
+// webbplatskarta: Logga in
+$("#log-in").on("click", function (e) {
+    e.preventDefault();
+    go_login();
+});
+
+//webbplatskarta: Vilka är vi
+$("#who-are-we").on("click", function (e) {
+    e.preventDefault();
+    go_about_us_page();
+});
 
 
+//webbplatskarta: Hur funkar det
+$("#how-does-it-work").on("click", function (e) {
+    e.preventDefault();
+    go_help_page();
+});
+
+//webbplatskarta: Kontakta oss
+$("#contact-us").on("click", function (e) {
+    e.preventDefault();
+    go_contact_page();
 });
 
 //-------------------------Functions-------------------------
 
 //----Nav functions:
-
-
 
 //Function for going to view: Home_page
 function go_home() {
@@ -451,6 +531,157 @@ function go_registered_page() {
     $("#content").html($("#successfully_registered_page").html());
 }
 
+//Function for going to view: Payment page
+function go_payment_page(ad_id, ad_price) {
+    $("#content").html($("#payment_page").html());
+
+    $.ajax({
+        url: host + '/rentalperiod',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        data: {
+            id: ad_id
+        },
+        success: function (amount_of_days) {
+            $("#display_payment_info").html("Bokad period: " + amount_of_days + " dagar. Pris per dag: " + ad_price + "kr");
+            $("#display_price").html("Totalt pris att betala: " + ad_price * amount_of_days + "kr");
+        }
+    })
+
+    var stripe = Stripe("pk_test_51IdXd9I1LSmMkwS01UZ3P15rGwgKS2FVNDj7puij4jKSK9qHTzpT6RXuoxwT7R3W2egc2WdFbp31gMXAp2RsqpJO003rUKAs23");
+
+    // The items the customer wants to buy
+    var purchase = {
+        id: ad_id
+    };
+
+    // Disable the button until we have Stripe set up on the page
+    // document.querySelector("button").disabled = true;
+    $("#submit").attr("disabled", true);
+
+    fetch('/create-payment-intent', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(purchase)
+    })
+        .then(function (result) {
+            return result.json();
+        })
+        .then(function (data) {
+            var elements = stripe.elements();
+            var style = {
+                base: {
+                    color: "#32325d",
+                    fontFamily: 'Arial, sans-serif',
+                    fontSmoothing: "antialiased",
+                    fontSize: "16px",
+                    "::placeholder": {
+                        color: "#32325d"
+                    }
+                },
+                invalid: {
+                    fontFamily: 'Arial, sans-serif',
+                    color: "#fa755a",
+                    iconColor: "#fa755a"
+                }
+            };
+
+            var card = elements.create("card", { style: style });
+            // Stripe injects an iframe into the DOM
+            card.mount("#card-element");
+
+            card.on("change", function (event) {
+                // Disable the Pay button if there are no card details in the Element
+                $("#submit").attr("disabled", event.empty);
+                document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+            });
+
+            var form = document.getElementById("payment-form");
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+                // Complete payment when the submit button is clicked
+                payWithCard(stripe, card, data.clientSecret);
+            });
+        });
+
+    // Calls stripe.confirmCardPayment
+    // If the card requires authentication Stripe shows a pop-up modal to
+    // prompt the user to enter authentication details without leaving your page.
+    var payWithCard = function (stripe, card, clientSecret) {
+        loading(true);
+        stripe
+            .confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: card
+                }
+            })
+            .then(function (result) {
+                if (result.error) {
+                    // Show error to your customer
+                    showError(result.error.message);
+                } else {
+                    // The payment succeeded!
+                    orderComplete(result.paymentIntent.id);
+                    booking_paid(ad_id);
+                    save_payment(ad_id, result.paymentIntent.id);
+                    go_successful_payment_page();
+                }
+            });
+    };
+
+    /* ------- UI helpers ------- */
+    // Shows a success message when the payment is complete
+    var orderComplete = function (paymentIntentId) {
+        loading(false);
+        document
+            .querySelector(".result-message a")
+            .setAttribute(
+                "href",
+                "https://dashboard.stripe.com/test/payments/" + paymentIntentId
+            );
+        document.querySelector(".result-message").classList.remove("hidden");
+        // document.querySelector("button").disabled = true;
+        $("#submit").attr("disabled", true);
+    };
+
+    // Show the customer the error from Stripe if their card fails to charge
+    var showError = function (errorMsgText) {
+        loading(false);
+        var errorMsg = document.querySelector("#card-error");
+        errorMsg.textContent = errorMsgText;
+        setTimeout(function () {
+            errorMsg.textContent = "";
+        }, 4000);
+    };
+
+    // Show a spinner on payment submission
+    var loading = function (isLoading) {
+        if (isLoading) {
+            // Disable the button and show a spinner
+            //   document.querySelector("button").disabled = true;
+            $("#submit").attr("disabled", true);
+            document.querySelector("#spinner").classList.remove("hidden");
+            document.querySelector("#button-text").classList.add("hidden");
+        } else {
+            // document.querySelector("button").disabled = false;
+            $("#submit").attr("disabled", false);
+            document.querySelector("#spinner").classList.add("hidden");
+            document.querySelector("#button-text").classList.remove("hidden");
+        }
+    };
+
+
+
+    // använda ad_id för att beräkna pris
+}
+
+//Function for going to view: Successful payment page
+function go_successful_payment_page() {
+    $("#content").html($("#successful_payment_page").html());
+}
+
 //Function for going to view: Read more ad
 function go_read_more_ad_page(ad_id) {
     $("#content").html($("#read_more_ad_page").html());
@@ -482,23 +713,22 @@ function load_account_info() {
     $("#my_page_content").html($("#my_page_account_info").html());
     var user = JSON.parse(sessionStorage.getItem('auth')).user
     $("#my_page_name").html("Namn: " + user.name);
-    $("#my_page_email_and_tel").html("Telefonnummer: " + user.telephone + " <br>E-mail: " + user.email);
+    $("#my_page_email_and_tel").html("Telefonnummer: " + user.telephone + " <br><br>E-mail: " + user.email);
 
     if (user.bio) {
-        $("#my_page_bio_text").css('color', 'black');
+        $("#my_page_bio_text").css('color', 'white');
         $("#my_page_bio_text").html(user.bio);
     }
     else {
         $("#my_page_bio_text").css('color', 'grey');
         $("#my_page_bio_text").html("Du har inte lagt till någon text om dig själv än, lägg till en personlig biografi genom att klicka på \"Redigera min profil\".");
     }
-
 }
 
 //Load account info in my page
 function load_history() {
     $("#my_page_content").html($("#my_page_history").html());
-
+    my_past_bookings();
 }
 
 //Load account info in my page
@@ -512,7 +742,6 @@ function load_ads() {
 function load_bookings() {
     $("#my_page_content").html($("#my_page_bookings").html());
     load_my_bookings_request();
-
 }
 
 function logout() {
@@ -562,7 +791,7 @@ function go_new_ad_page() {
 //----Request variables:
 
 //Global request variable: host
-var host = 'http://localhost:5000';
+var host = '';
 
 //----Requests:
 
@@ -597,8 +826,17 @@ function load_my_ads_request() {
         type: 'GET',
         success: function (ads) {
             ads.forEach(element => {
-                element.image = element.image.url;
-                $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
+                if (element.paid == true) {
+                    element.image = element.image.url
+                    $("#my_page_ads_container").append(Mustache.render(my_accomodation_paid, element));
+                } else if (element.booked == false){
+                    element.image = element.image.url
+                    $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
+                } else {
+                    element.image = element.image.url
+                    $("#my_page_ads_container").append(Mustache.render(my_accomodation_booked, element));
+                } 
+
                 if (element.booked == true) {
                     console.log("booked");
                 } else if (element.reserved == true) {
@@ -616,8 +854,42 @@ function load_my_bookings_request() {
         type: 'GET',
         success: function (ads) {
             ads.forEach(element => {
-                element.image = element.image.url;
-                $("#my_page_bookings_container").append(Mustache.render(my_accomodation, element));
+                if (element.paid == true) {
+                    element.image = element.image.url
+                    $("#my_page_bookings_container").append(Mustache.render(my_bookings_paid, element));
+                } else if (element.booked == false){
+                    element.image = element.image.url
+                    $("#my_page_bookings_container").append(Mustache.render(my_bookings, element));
+                } else {
+                    element.image = element.image.url
+                    $("#my_page_bookings_container").append(Mustache.render(my_bookings_booked, element));
+                }
+            });
+        }
+    })
+}
+
+function my_past_bookings() {
+    $.ajax({
+        url: host + '/past-bookings',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (bookings) {
+            bookings.forEach(element => {
+                $.ajax({
+                    url: host + '/payments',
+                    headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+                    type: 'GET',
+                    data: {
+                        id: element.id
+                    },
+                    success: function (payment) {
+                        element.image = element.image.url;
+                        element['id'] = payment.id;
+                        console.log(element.id)
+                        $("#my_page_history_container").append(Mustache.render(my_past_booking, element));
+                    }
+                })
             });
         }
     })
@@ -653,7 +925,10 @@ function login_request(user) {
         data: JSON.stringify(user),
         success: function (response) {
             sessionStorage.setItem('auth', JSON.stringify(response));
-            go_home();
+            $("#login_container").html($("#login_success").html());
+            $("#success_name").html("Välkommen " + JSON.parse(sessionStorage.getItem('auth')).user.name)
+            setTimeout(() => { go_home(); }, 3000);
+
         }
         , error: function () {
             $("#login_failed_container").html("Dina inloggningsuppgifter är felaktiga.");
@@ -702,6 +977,19 @@ function edit_user_request(user) {
     })
 }
 
+//Payment functions
+
+//Function for saving payment info in the database
+function save_payment(ad_id, paymentIntentId) {
+    $.ajax({
+        url: host + '/payments',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'POST',
+        data: JSON.stringify({ "ad_id": ad_id, "paymentID": paymentIntentId }),
+        success: function (response) {
+        }
+    })
+}
 
 //Function for making a request for all unique areas in database
 function load_areas(container) {
@@ -716,6 +1004,7 @@ function load_areas(container) {
         }
     })
 }
+
 
 //Function for making a request for all unique accomodation types in database
 function load_types(container) {
@@ -740,7 +1029,7 @@ function load_read_more(ad_id) {
             $("#read_more_ad_description").html(ad.description);
             $("#read_more_ad_neighbourhood").html(ad.neighbourhood)
             // $("#read_more_ad_studentcity").html(ad.studentcity);
-            $("#read_more_ad_streetaddress").html(ad.streetaddress + ", " + ad.postalcode + ", " + ad.city);
+            $("#read_more_ad_streetaddress").html(ad.streetaddress + " " + ad.streetnumber + ", " + ad.postalcode + ", " + ad.city);
             $("#read_more_ad_startdate").html(ad.startdate);
             $("#read_more_ad_enddate").html(ad.enddate);
             $("#read_more_ad_squaremetres").html(ad.squaremetres + " kvm");
@@ -749,6 +1038,32 @@ function load_read_more(ad_id) {
             $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
             $("#readmore_img").attr("src", ad.image.url);
+
+            if (ad.attributes.wifi) {
+                $("#wifi-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+            } else {
+                $("#wifi-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+            }
+            if (ad.attributes.dishwasher) {
+                $("#dishwasher-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+            } else {
+                $("#dishwasher-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+            }
+            if (ad.attributes.washingmachine) {
+                $("#washingmachine-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+            } else {
+                $("#washingmachine-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+            }
+            if (ad.attributes.bike) {
+                $("#bike-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+            } else {
+                $("#bike-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+            }
+            if (ad.attributes.sauna) {
+                $("#sauna-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+            } else {
+                $("#sauna-attribute").html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+            }
 
 
             parameters = "address=" + ad.streetnumber + "%20" + ad.streetaddress + "%20" + ad.city + "%20" + "Sweden";
@@ -797,9 +1112,32 @@ function update_reserved_status(status, ad_id, start_date, end_date) {
     })
 }
 
+function update_reserved_status_denied(status, ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/denied',
+        type: 'PUT',
+        data: JSON.stringify(status),
+        success: function (ad) {
+        load_ads();
+        }
+    })
+}
+
+
 function update_booked_status(status, ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/booked',
+        type: 'PUT',
+        data: JSON.stringify(status),
+        success: function (ad) {
+        load_ads();
+        }
+    })
+}
+
+function update_paid_status(status, ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/paid',
         type: 'PUT',
         data: JSON.stringify(status),
         success: function (ad) {
@@ -890,7 +1228,6 @@ function load_search_page_search_dropdowns(search) {
 function reserve_ad(ad_id, start, end) {
     update_reserved_status(true, ad_id, start, end)
     set_tenant(ad_id);
-    go_search();
 }
 
 //Function for approving tenant and update status of ad in database
@@ -898,9 +1235,14 @@ function approve_tenant(ad_id) {
     update_booked_status(true, ad_id)
 }
 
+//Function for marking a booking as paid, update status of ad in database
+function booking_paid(ad_id) {
+    update_paid_status(true, ad_id)
+}
+
 //Function for denying tenant and update status of ad in database
 function deny_tenant(ad_id) {
-    update_reserved_status(false, ad_id)
+    update_reserved_status_denied(false, ad_id)
 }
 
 //----Form functions:
@@ -1011,127 +1353,6 @@ function update_search() {
     }
 
 }
-
-// ------- BETALNING -----------
-//var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
-var stripe = Stripe("pk_test_51IdXd9I1LSmMkwS01UZ3P15rGwgKS2FVNDj7puij4jKSK9qHTzpT6RXuoxwT7R3W2egc2WdFbp31gMXAp2RsqpJO003rUKAs23");
-
-// ---------PaymentIntent ----------- //
-
-// The items the customer wants to buy
-var purchase = {
-    items: [{ id: "xl-tshirt" }]
-};
-
-// Disable the button until we have Stripe set up on the page
-document.querySelector("button").disabled = true;
-
-fetch('/create-payment-intent', {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify(purchase)
-})
-    .then(function (result) {
-        return result.json();
-    })
-    .then(function (data) {
-        var elements = stripe.elements();
-        var style = {
-            base: {
-                color: "#32325d",
-                fontFamily: 'Arial, sans-serif',
-                fontSmoothing: "antialiased",
-                fontSize: "16px",
-                "::placeholder": {
-                    color: "#32325d"
-                }
-            },
-            invalid: {
-                fontFamily: 'Arial, sans-serif',
-                color: "#fa755a",
-                iconColor: "#fa755a"
-            }
-        };
-
-        var card = elements.create("card", { style: style });
-        // Stripe injects an iframe into the DOM
-        card.mount("#card-element");
-
-        card.on("change", function (event) {
-            // Disable the Pay button if there are no card details in the Element
-            $("button").attr("disabled", event.empty);
-            document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
-        });
-
-        var form = document.getElementById("payment-form");
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();
-            // Complete payment when the submit button is clicked
-            payWithCard(stripe, card, data.clientSecret);
-        });
-    });
-
-// Calls stripe.confirmCardPayment
-// If the card requires authentication Stripe shows a pop-up modal to
-// prompt the user to enter authentication details without leaving your page.
-var payWithCard = function (stripe, card, clientSecret) {
-    loading(true);
-    stripe
-        .confirmCardPayment(clientSecret, {
-            payment_method: {
-                card: card
-            }
-        })
-        .then(function (result) {
-            if (result.error) {
-                // Show error to your customer
-                showError(result.error.message);
-            } else {
-                // The payment succeeded!
-                orderComplete(result.paymentIntent.id);
-            }
-        });
-};
-
-/* ------- UI helpers ------- */
-// Shows a success message when the payment is complete
-var orderComplete = function (paymentIntentId) {
-    loading(false);
-    document
-        .querySelector(".result-message a")
-        .setAttribute(
-            "href",
-            "https://dashboard.stripe.com/test/payments/" + paymentIntentId
-        );
-    document.querySelector(".result-message").classList.remove("hidden");
-    document.querySelector("button").disabled = true;
-};
-
-// Show the customer the error from Stripe if their card fails to charge
-var showError = function (errorMsgText) {
-    loading(false);
-    var errorMsg = document.querySelector("#card-error");
-    errorMsg.textContent = errorMsgText;
-    setTimeout(function () {
-        errorMsg.textContent = "";
-    }, 4000);
-};
-
-// Show a spinner on payment submission
-var loading = function (isLoading) {
-    if (isLoading) {
-        // Disable the button and show a spinner
-        document.querySelector("button").disabled = true;
-        document.querySelector("#spinner").classList.remove("hidden");
-        document.querySelector("#button-text").classList.add("hidden");
-    } else {
-        document.querySelector("button").disabled = false;
-        document.querySelector("#spinner").classList.add("hidden");
-        document.querySelector("#button-text").classList.remove("hidden");
-    }
-};
 
 function submitAdForm() {
     var formData = new FormData();
