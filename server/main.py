@@ -381,6 +381,7 @@ def ads():
         end = request.args.get('end')
         area = request.args.get('area')
         attrib = request.args.get('attributes')
+        print(attrib)
         type = request.args.get('type')
         attrib2 = attrib.split('-')
         filter = []
