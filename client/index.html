@@ -142,15 +142,29 @@
           </div>
           <div id="home_search_filters">
               <div class="form-row align-items-center justify-content-center">
-                <div class="form-group col-10 col-lg-5">
+                <div class="form-group col-7 col-lg-5">
                   <select class="form-control no-border" id="home_select_type">
                     <option>Typ av boende</option>
                   </select>            
                 </div>
                 <div class="form-group col-10 col-lg-5 mt-lg-0 mt-4">
-                  <select class="form-control no-border" id="home_select_attr">
+                  <div id="attributes_dropdown" class="dropdown-check-list form-group">
+                    <span class="anchor">Välj extra bekvämligheter</span>
+                    <ul id = "home_select_attr" class="items">
+                      <li><input name = 'attr' type="checkbox" value = 'bike' />Cykel </li>
+                      <li><input name = 'attr' type="checkbox" value = 'dishwasher' />Diskmaskin</li>
+                      <li><input name = 'attr' type="checkbox" value = 'washingmachine' />Tvättmaskin</li>
+                      <li><input name = 'attr' type="checkbox" value = 'wifi' />Wifi </li>
+                      <li><input name = 'attr' type="checkbox" value = 'sauna' />Bastu </li>
+                    </ul>
+                  </div>
+                  <!-- <select class="form-control no-border" id="home_select_attr">
                     <option>Attribut</option>
-                  </select>            
+                  </select> -->
+                  <!-- <select multiple class="form-control no-border">
+                    <option><input type="checkbox">Test 1</option>
+                    <option><input type="checkbox">Test 2</option>
+                   </select>             -->
                 </div>
               </div>
           </div>
@@ -265,9 +279,9 @@
 
   <!-- Search page view -->
   <script id="search_page" type="text/html">
-    <div id="search_page_container" class="container-fluid">
+    <div id="search_page_container" class="row justify-content-center">
       <div class="col-12">
-        <div class="form-row align-items-center">
+        <div class="form-row align-items-center justify-content-center d-none d-lg-flex">
           <div class="col-2">
             <select class="form-control no-border" id="search_page_select_area">
               <option>Område</option>
@@ -278,17 +292,15 @@
               <option>Typ av boende</option>
             </select>            
           </div>
-          <div class="col-2">
-            <select class="form-control no-border" id="search_page_select_attr">
+            <!-- <select class="form-control no-border" id="search_page_select_attr">
               <option>Attribut</option>
-            </select>            
-          </div>
+            </select>             -->
           <div class="col-2 pt-1">
             <label for="search_page_select_start">Inflytt</label>
             <input type="date" id="search_page_select_start" class="no-border">
           </div>
-          <div class="col-2 pt-1">
-            <label for="search_page_select_end">Utflytt</label>
+          <div class="col-2 search_date">
+            <label for="search_page_select_end" class="d-none d-xxl-inline">Utflytt</label>
             <input type="date" id="search_page_select_end" class="no-border">
           </div>
           <div class="col-2">
@@ -300,9 +312,30 @@
                 <option>Pris sjunkande</option>
               </select> 
             </div>
+            <div id="attributes_dropdown" class="dropdown-check-list form-control">
+              <span class="anchor">Bekvämligheter</span>
+              <ul id = "home_select_attr" class="items">
+                <li><input name = 'attr' class = 'checkboxupdate' type="checkbox" value = 'bike' />Cykel </li>
+                <li><input name = 'attr' class = 'checkboxupdate'type="checkbox" value = 'dishwasher' />Diskmaskin</li>
+                <li><input name = 'attr' class = 'checkboxupdate'type="checkbox" value = 'washingmachine' />Tvättmaskin</li>
+                <li><input name = 'attr' class = 'checkboxupdate'type="checkbox" value = 'wifi' />Wifi </li>
+                <li><input name = 'attr' class = 'checkboxupdate'type="checkbox" value = 'sauna' />Bastu </li>
+              </ul>
+            </div>
         </div>
       </div>
-      <div id="search_result" class="row justify-content-center align-items-start"></div>
+      <div class="col-8 offset-2">
+        <div id="search_result" class="row justify-content-center align-items-start"></div>
+      </div>
+      <div class="col-2 pr-5 mt-5">
+        <label for="search_page_sort" class="form-label">Sortera</label>
+        <select class="form-control no-border" id="search_page_sort">
+          <option>A-Ö</option>
+          <option>Ö-A</option>
+          <option>Pris ökande</option>
+          <option>Pris sjunkande</option>
+        </select>
+      </div>
     </div>
   </script>
 
@@ -502,6 +535,17 @@
     </div>
   </script>
 
+  <script id="login_success" type="text/html">
+    <div id="login_success_container" class="container">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-8">
+          <h2 id="success_name"></h2>
+          <h3>Du är nu inloggad!</h3>
+        </div>
+      </div>
+    </div>
+  </script>
+
 
 
   <!-- My page view -->
@@ -625,14 +669,14 @@
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-10">
           <h2>Vilka är vi?</h2>
-          <div class="row align-items-center">
-            <div class="col-12 col-lg-3">
+          <div class="row align-items-center justify-content-center">
+            <div class="col-12 col-xl-4">
               <p>UniHomes grundare</p>
             </div>
-            <div class="col-12 col-lg-6"><div id="gruppbild"></div></div>
-            <div class="col-12 col-lg-3"><p>Vår mission är att hjälpa studenter hjälpa varandra. Det ska vara enkelt att hyra och hyra ut bostäder om ens för en
+            <div class="col-6 col-xl-4"><div id="gruppbild"></div></div>
+            <div class="col-12 mt-lg-5 col-xl-4"><p>Vår mission är att hjälpa studenter hjälpa varandra. Det ska vara enkelt att hyra och hyra ut bostäder om ens för en
             helg.</p></div>
           </div>
         </div>
@@ -1048,7 +1092,35 @@
                 <div class="col-6">
                   <input type="date" id="read_more_select_end" style ="font-size: 20px;" class="no-border">
                 </div>
-                <button id="reservation_button" class="btn btn-success rounded-pill mt-3">Reservera</button>
+                <button id="reservation_button" class="btn btn-success rounded-pill mt-3" data-toggle="modal" data-target="#modal_reservation">Reservera</button>
+                <!-- Modal -->
+                <div id="modal_reservation" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header row">
+                        <div class="col-2">
+                        <button id ="reservation_to_search_button"type="button" class="btn btn-default">
+                          <h3>&times;</h3>
+                        </button>
+                      </div>
+                      <div class=" col-10  justify-content-center">
+                        <h3 class="modal-title "> Reservationen lyckades</h3>
+                      </div>
+                    </div>
+                      <div class="modal-body">
+                        <p>Du har nu en reservation på följande boende. Du kan hantera dina reservationer på dina sidor. 
+                          Vänligen håll utkik där för att se när hyresvärden har godkänt din förfrågan, därefter kan du betala för din vistelse.
+                        </p>
+                      </div>
+                      <div class="modal-footer">
+                        <button id= "reservation_to_mypage_button" type="button" class="btn btn-default rounded-pill" >Gå till mina sidor</button>
+                      </div>
+                    </div>
+                
+                  </div>
+                </div>
               </div>
               <div class="row mt-5" id="read_more_login">
                 <div class="col-12">
@@ -1072,6 +1144,7 @@
   <script id="payment_page" type="text/html">
 
     <div id="my_page_container" class="container">
+      <h3 id = "display_payment_info"></h3>
       <h1 id = "display_price"></h1>
       <button type="button" id="cancel_payment_button">Avbryt betalning</button>
     </div>

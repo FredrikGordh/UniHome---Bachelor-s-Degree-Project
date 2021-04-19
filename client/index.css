@@ -314,15 +314,10 @@ margin-bottom: 10px;
   background-color: white;
   border-radius: 37px;
   margin: 15px auto;  
-  width: 30vw;
+  width: 60vw;
   height: 8vh;
   min-height: 60px;
   max-height: 100px;
-}
-@media (min-width: 1200px) {
-  #home_search {
-    width: 60vw;
-  }
 }
 
 /* #home_search_filters {
@@ -400,7 +395,8 @@ margin-bottom: 10px;
 }
 
 #help_header {
-  background: linear-gradient(0deg, rgba(94, 155, 206, 0.5), rgba(94, 155, 206, 0.5)), url(Media/help.jpg) no-repeat center fixed;    background-size: cover;
+  background: linear-gradient(0deg, rgba(94, 155, 206, 0.5), rgba(94, 155, 206, 0.5)), url(Media/help.jpg) no-repeat center fixed;
+  background-size: cover;
   width: 100%;
   height: 800px;
   padding-top: 300px;
@@ -410,7 +406,8 @@ margin-bottom: 10px;
 }
 
 #contact_header {
-  background: linear-gradient(0deg, rgba(94, 155, 206, 0.5), rgba(94, 155, 206, 0.5)), url(Media/contact.jpeg) no-repeat center fixed;    background-size: cover;
+  background: linear-gradient(0deg, rgba(94, 155, 206, 0.5), rgba(94, 155, 206, 0.5)), url(Media/contact.jpeg) no-repeat center fixed;    
+  background-size: cover;
   width: 100%;
   height: 80vh;
   padding-top: 300px;
@@ -555,10 +552,15 @@ margin-bottom: 10px;
   background-repeat: none;
   background-size: cover;
   text-align: center;
-  height: 500px;
-  width: 500px;
+  width: 100%;
+  padding-top: 100%;
   margin: 0 auto;
   border-radius: 100%;
+}
+
+#login_success_container {
+  text-align: center;
+  height: 80vh;
 }
 
 #ines {
@@ -694,6 +696,14 @@ margin: 0 auto;
   margin: 30px auto;
 }
 
+.search_date {
+  background-color: white;
+  border-radius: 5px;
+  padding: 6px 0;
+  margin: 0 5px;
+  text-align: center;
+}
+
 .testamonial .img2 {
   border-radius: 100px;
   width: 150px;
@@ -770,11 +780,15 @@ margin: 0 auto;
 }
 
 .accomodation img {
-  /* width: 300px; */
-  /*height: 300px;*/
   width: 100%;
+  max-width: 400px;
+  max-height: 300px;
+  height: 100%;
   overflow: hidden;
+  object-fit: cover;
   border-radius: 20px;
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 .my_accomodation img {
   width: 100%;
@@ -1267,12 +1281,66 @@ button:disabled {
   background-color: rgb(228, 228, 228);
 }
 
+ /* -----------------------------Dropdown checkbox css --------------------------*/
+
+.dropdown-check-list {
+  display: inline-block;
+  padding-left: 100px;
+  color:grey;
+  /* border: none; */
+}
+
+.dropdown-check-list .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 50px 5px 10px;
+}
+
+.dropdown-check-list .anchor:after {
+  position: absolute;
+  content: "";
+  border-left: 2px solid black;
+  border-top: 2px solid black; 
+  padding: 5px;
+  right: 10px;
+  top: 20%;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+.dropdown-check-list .anchor:active:after {
+  right: 8px;
+  top: 21%;
+}
+
+.dropdown-check-list ul.items {
+  padding: 2px;
+  display: none;
+  margin: 0;
+  /* border: 1px solid #ccc; */
+  border-top: none;
+}
+
+.dropdown-check-list ul.items li {
+  list-style: none;
+}
+
+.dropdown-check-list.visible .anchor {
+  color: #0094ff;
+}
+
+.dropdown-check-list.visible .items {
+  display: block;
+
 .search_page_container {
   background-color: #e7d8ca;
 }
 
 .search_page_price {
-  margin-top: 20%;
   text-align: center;
 }
 
@@ -1387,3 +1455,15 @@ button:disabled {
   box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 6px rgba(9, 77, 77, 0.2);
 }
 
+#reservation_to_search_button {
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+  color:white;
+  text-align: center; 
+  padding-bottom: 30px;
+}
+
+#reservation_to_mypage_button {
+  color: white;
+}

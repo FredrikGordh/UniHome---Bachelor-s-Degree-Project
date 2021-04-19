@@ -45,6 +45,7 @@ $(document).ready(function () {
         $("#close-menu").prop("checked", false);
     });
 
+
     //Burger menu: Go login
     $("#menu").on("click", "#login_button", function (e) {
         e.preventDefault();
@@ -57,6 +58,18 @@ $(document).ready(function () {
         e.preventDefault();
         logout();
         });
+
+    //Attributes: Dropdown checklist
+    $("#content").on("click", ".anchor", function (e) {
+     var checkList = $("#attributes_dropdown")[0];
+   if (checkList.classList.contains('visible')){
+     checkList.classList.remove('visible');
+    }
+   else {
+     checkList.classList.add('visible');
+    }
+});
+
 
     //Go to search page
     $("#content").on("click", "#home_search_submit", function (e) {
@@ -121,7 +134,7 @@ $(document).ready(function () {
     });
 
     //Register update of search sort
-    $("#content").on("change", "#search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_page_select_attr", function (e) {
+    $("#content").on("change", ".checkboxupdate, #search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_page_select_attr", function (e) {
         update_search();
     });
 
@@ -162,12 +175,38 @@ $(document).ready(function () {
     //Reserve ad
     $("#content").on("click", "#reservation_button", function (e) {
         e.preventDefault();
-        if ($("#read_more_select_start").val() != "" && $("#read_more_select_start").val() != "") {
-            reserve_ad($(this).data('id'), $("#read_more_select_start").val(), $("#read_more_select_start").val());
+        start = $("#read_more_select_start").val();
+        end = $("#read_more_select_end").val();
+        console.log(end);
+        if (start != "" && end != "") {
+            if (start != "" && Date.parse(start) < Date.parse($("#read_more_ad_startdate").html()) || end != "" && Date.parse(end) > Date.parse($("#read_more_ad_enddate").html())) {
+                alert("Vänligen välj datum inom tidigast in- och utflytt!")
+            } else {
+                reserve_ad($(this).data('id'), start, end);
+            }
         } else {
             alert("Vänligen fyll i datum innan du reserverar!")
         }
     });
+
+    //Route to my page after reservation
+    $("#content").on("click", "#reservation_to_mypage_button", function (e) {
+        e.preventDefault();
+        $('#modal_reservation').modal('hide');
+        $('.modal-backdrop').hide();
+        go_my_page();
+    });
+
+    //Route to search after reservation
+    $("#content").on("click", "#reservation_to_search_button", function (e) {
+        e.preventDefault();
+        $('#modal_reservation').modal('hide');
+        $('.modal-backdrop').hide();
+        go_search();
+    });
+
+    
+
 
     //Edit bio
     $("#content").on("click", "#my_page_change_bio_btn", function (e) {
@@ -251,14 +290,14 @@ $(document).ready(function () {
     $("#content").on("click", ".book_ad_button", function (e) {
         e.preventDefault();
         approve_tenant($(this).data("id"));
-        load_ads();
+        // load_ads();
     });
 
     //My page: deny tenant
     $("#content").on("click", ".deny_ad_button", function (e) {
         e.preventDefault();
         deny_tenant($(this).data("id"));
-        load_ads();
+        // load_ads();
     });
 
 
@@ -497,7 +536,19 @@ function go_registered_page() {
 //Function for going to view: Payment page
 function go_payment_page(ad_id, ad_price) {
     $("#content").html($("#payment_page").html());
-    $("#display_price").html("Pris att betala: " + ad_price + "kr");
+
+    $.ajax({
+        url: host + '/rentalperiod',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        data: {
+            id: ad_id
+        },
+        success: function (amount_of_days) {
+            $("#display_payment_info").html("Bokad period: " + amount_of_days + " dagar. Pris per dag: " + ad_price + "kr");
+            $("#display_price").html("Totalt pris att betala: " + ad_price * amount_of_days + "kr");
+        }
+    })
 
     var stripe = Stripe("pk_test_51IdXd9I1LSmMkwS01UZ3P15rGwgKS2FVNDj7puij4jKSK9qHTzpT6RXuoxwT7R3W2egc2WdFbp31gMXAp2RsqpJO003rUKAs23");
 
@@ -758,7 +809,7 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
             end: search.end,
             area: search.area,
             type: search.type,
-            attributes: Attr_Enum[search.attributes]
+            attributes: search.attributes
         },
         success: function (ads) {
             $("#search_result").empty();
@@ -776,10 +827,18 @@ function load_my_ads_request() {
         headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'GET',
         success: function (ads) {
-            console.log(ads); //ta bort denna sen
             ads.forEach(element => {
-                element.image = element.image.url;
-                $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
+                if (element.paid == true) {
+                    element.image = element.image.url
+                    $("#my_page_ads_container").append(Mustache.render(my_accomodation_paid, element));
+                } else if (element.booked == false){
+                    element.image = element.image.url
+                    $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
+                } else {
+                    element.image = element.image.url
+                    $("#my_page_ads_container").append(Mustache.render(my_accomodation_booked, element));
+                } 
+
                 if (element.booked == true) {
                     console.log("booked");
                 } else if (element.reserved == true) {
@@ -800,9 +859,12 @@ function load_my_bookings_request() {
                 if (element.paid == true) {
                     element.image = element.image.url
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings_paid, element));
-                } else {
+                } else if (element.booked == false){
                     element.image = element.image.url
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings, element));
+                } else {
+                    element.image = element.image.url
+                    $("#my_page_bookings_container").append(Mustache.render(my_bookings_booked, element));
                 }
             });
         }
@@ -865,7 +927,10 @@ function login_request(user) {
         data: JSON.stringify(user),
         success: function (response) {
             sessionStorage.setItem('auth', JSON.stringify(response));
-            go_home();
+            $("#login_container").html($("#login_success").html());
+            $("#success_name").html("Välkommen " + JSON.parse(sessionStorage.getItem('auth')).user.name)
+            setTimeout(() => { go_home(); }, 3000);
+
         }
         , error: function () {
             $("#login_failed_container").html("Dina inloggningsuppgifter är felaktiga.");
@@ -1049,13 +1114,25 @@ function update_reserved_status(status, ad_id, start_date, end_date) {
     })
 }
 
+function update_reserved_status_denied(status, ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/denied',
+        type: 'PUT',
+        data: JSON.stringify(status),
+        success: function (ad) {
+        load_ads();
+        }
+    })
+}
+
+
 function update_booked_status(status, ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/booked',
         type: 'PUT',
         data: JSON.stringify(status),
         success: function (ad) {
-
+        load_ads();
         }
     })
 }
@@ -1131,13 +1208,14 @@ function load_attr(container) {
     });
 }
 
+
 //Function for loading data in dropdowns for search from home page
 function load_home_search_dropdowns() {
     load_months("#home_select_start_month");
     load_days("#home_select_length");
     load_areas("#home_select_area");
     load_types("#home_select_type");
-    load_attr("#home_select_attr");
+   // load_attr("#home_select_attr");
 }
 
 //Function for loading data in dropdowns for search on search page
@@ -1156,7 +1234,6 @@ function load_search_page_search_dropdowns(search) {
 function reserve_ad(ad_id, start, end) {
     update_reserved_status(true, ad_id, start, end)
     set_tenant(ad_id);
-    go_search();
 }
 
 //Function for approving tenant and update status of ad in database
@@ -1171,7 +1248,7 @@ function booking_paid(ad_id) {
 
 //Function for denying tenant and update status of ad in database
 function deny_tenant(ad_id) {
-    update_reserved_status(false, ad_id)
+    update_reserved_status_denied(false, ad_id)
 }
 
 //----Form functions:
@@ -1219,7 +1296,7 @@ function submit_home_search_form() {
         start: $("#home_select_start").val(),
         end: $("#home_select_end").val(),
         type: $("#home_select_type").val(),
-        attributes: $("#home_select_attr").val()
+        attributes: get_wanted_attributes()
     }
     if (search.start > search.end && search.start != "" && search.end != "") {
         alert("Inflytt måste vara före utflytt");
@@ -1228,6 +1305,24 @@ function submit_home_search_form() {
         go_search();
     }
 }
+
+function get_wanted_attributes() {
+    var attributes = ""
+    $("input[name=attr]").each(function() {
+        if (this.checked){
+            attributes =  this.value + "-" + attributes
+        }
+    })
+    if (attributes == ""){
+        attributes = "Attribut"
+    }
+    else {
+        attributes = attributes.substring(0,attributes.length-1)
+    }
+    return attributes
+
+}
+
 
 function update_search() {
     sort = $("#search_page_sort").val();
@@ -1249,7 +1344,7 @@ function update_search() {
         type: $("#search_page_select_type").val(),
         start: $("#search_page_select_start").val(),
         end: $("#search_page_select_end").val(),
-        attributes: $("#search_page_select_attr").val(),
+        attributes: get_wanted_attributes()
     }
     console.log(search.start)
     console.log(search.end)
