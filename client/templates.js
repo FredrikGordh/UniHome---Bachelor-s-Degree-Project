@@ -57,7 +57,7 @@ var accomodation = '<a href= "" class = "title_id accomodation col-10 col-xl-8 m
     + '</a>';
 
 var my_accomodation = '<div class="my_accomodation col-9 mt-3 p-2">'
-    + '<div class="row">'
+    + '<div class="row justify-content-center">'
     + '<div class="col-12 col-xl-5">'
     + '<img src="{{image}}">'
     + '</div>'
@@ -102,6 +102,7 @@ var my_accomodation = '<div class="my_accomodation col-9 mt-3 p-2">'
     + '<h4>  {{price}} kr </h4>'
     + '</div>'
     + '</div>'
+    + '<div class="accomodation_tennant_{{id}} col-10"></div>'
     + '</div>'
     + '</div>';
 
@@ -411,8 +412,17 @@ var load_my_payments = '<div class="my_accomodation col-9 mt-3 p-2">'
     + '<p>Betalningsreferens: {{id}}</p>'
     + '</div>';
 
-var tenant = '<div class="my_tenant col-2 offset-1 mt-3 p-2">'
-    + '<h7>{{name}} vill boka ditt boende</h7>'
+var tenant = '<div class="my_tenant">'
+    + '<h5>{{name}}</h5>'
+    + '<p>{{bio}}</p>'
+    + '<p>{{telephone}}</p>'
+    + '<p>{{email}}</p>'
+    + '<div class="row">'
+    + '<div class="col-6">'
     + '<button type="button" class="book_ad_button rounded-pill" data-id="{{ad_id}}">Godkänn</button>'
+    + '</div>'
+    + '<div class="col-6">'
     + '<button type="button" class="deny_ad_button rounded-pill" data-id="{{ad_id}}">Neka</button>'
+    + '</div>'
+    + '</div>'
     + '</div>';

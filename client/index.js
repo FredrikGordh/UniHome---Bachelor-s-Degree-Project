@@ -1,10 +1,17 @@
 //Enum för att översätta attribut vid sökning
-const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Attribut": "Attribut" });
+const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Bekvämligheter": "Bekvämligheter" });
 var saved_input;
 //-------------------------JQuery events-------------------------
 
 $(document).ready(function () {
     go_home();
+
+    
+
+    if (sessionStorage.getItem('auth')) {
+        $("#sign_in_nav").removeClass('d-md-block');
+        $("#sign_in_nav").addClass('d-none');
+    }
 
     //Click on logo to go home
     $("#navbar-logo").click(function (e) {
@@ -12,43 +19,64 @@ $(document).ready(function () {
         go_home();
     });
 
+    $('html, body').animate({
+        scrollTop: $("#scrolltop").offset().top
+    }, 1000);
+    
+
     //Using .on()-function since we need to check if the content of #content is loaded before checking for events
 
     //Burger menu: Go register
     $("#menu").on("click", "#register_button", function (e) {
         e.preventDefault();
         go_register();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
+    });
+
+    $("#menu").on("click", "#home_button", function (e) {
+        e.preventDefault();
+        go_home();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Burger menu: Go login
     $("#menu").on("click", "#login_button", function (e) {
         e.preventDefault();
-        console.log("ok");
         go_login();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Burger menu: Go to my page
     $("#menu").on("click", "#my_page_button", function (e) {
         e.preventDefault();
         go_my_page();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Burger menu: Go to help page
     $("#menu").on("click", "#help_button", function (e) {
         e.preventDefault();
         go_help_page();
-    });
-
-    //Burger menu: Log Out
-    $("#menu").on("click", "#logout_button", function (e) {
-        e.preventDefault();
-        logout();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Burger menu: Go to about us page
     $("#menu").on("click", "#about_us_button", function (e) {
         e.preventDefault();
         go_about_us_page();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Burger menu: Go to contact page
@@ -56,18 +84,58 @@ $(document).ready(function () {
         e.preventDefault();
         go_contact_page();
         $("#close-menu").prop("checked", false);
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
+
+
+    //Burger menu: Go login
+    $("#menu").on("click", "#login_button", function (e) {
+        e.preventDefault();
+        console.log("ok");
+        go_login();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
+    });
+
+    //Burger menu: Log Out
+    $("#menu").on("click", "#logout_button", function (e) {
+        e.preventDefault();
+        logout();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
+        });
+
+    //Attributes: Dropdown checklist
+    $("#content").on("click", ".anchor", function (e) {
+        var checkList = $("#attributes_dropdown")[0];
+        if (checkList.classList.contains('visible')) {
+            checkList.classList.remove('visible');
+        } else {
+            checkList.classList.add('visible');
+        }
+    });
+
 
     //Go to search page
     $("#content").on("click", "#home_search_submit", function (e) {
         e.preventDefault();
         submit_home_search_form();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Go to login page
     $("#content").on("click", "#get_to_login, #help_login_button", function (e) {
         e.preventDefault();
         go_login();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Go to login page from registered 
@@ -81,12 +149,18 @@ $(document).ready(function () {
     $("#content").on("click", "#register_form_button", function (e) {
         e.preventDefault();
         submit_register_form();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Go register
-    $("#content").on("click", "#help_register_button", function (e) {
+    $("#content").on("click", "#help_register_button, #get_to_register", function (e) {
         e.preventDefault();
         go_register();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
 
@@ -94,12 +168,16 @@ $(document).ready(function () {
     $("#content").on("click", "#edit_form_button", function (e) {
         e.preventDefault();
         submit_edit_form();
+ 
     });
 
     //Submit register form by pressing ENTER
     $("#content").on("keyup", "#password_register", function (e) {
         if (e.keyCode === 13 && $("#content")) {
             submit_register_form();
+            $('html, body').animate({
+                scrollTop: $("#scrolltop").offset().top
+            }, 500);
         }
     });
 
@@ -107,21 +185,27 @@ $(document).ready(function () {
     $("#content").on("click", "#login_form_button", function (e) {
         e.preventDefault();
         submit_login_form();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Submit login form by pressing ENTER
     $("#content").on("keyup", "#password_login", function (e) {
         if (e.keyCode === 13) {
             submit_login_form();
+            $('html, body').animate({
+                scrollTop: $("#scrolltop").offset().top
+            }, 500);
         }
     });
 
-    $(".hide-menu").click(function (e) {
+    $("#menu, nav").on("click", ".hide-menu", function (e) {
         $("#close-menu").prop("checked", false);
     });
 
     //Register update of search sort
-    $("#content").on("change", "#search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_page_select_attr", function (e) {
+    $("#content").on("change", ".checkboxupdate, #search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_ad_bike_id, #search_ad_dishwasher_id, #search_ad_wifi_id, #search_ad_sauna_id, #search_ad_washingmachine_id", function (e) {
         update_search();
     });
 
@@ -129,12 +213,18 @@ $(document).ready(function () {
     $("#content").on("click", ".read_more_ad_button, .title_id", function (e) {
         e.preventDefault();
         go_read_more_ad_page($(this).data('id'));
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Pay your booked accomodation
     $("#content").on("click", ".payment_button", function (e) {
         e.preventDefault();
         go_payment_page($(this).data('id'), $(this).data('price'));
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Cancel payment
@@ -142,12 +232,18 @@ $(document).ready(function () {
         e.preventDefault();
         go_my_page();
         load_bookings();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Go back from read more to search
     $("#content").on("click", "#read_more_back", function (e) {
         e.preventDefault();
         go_search();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
 
@@ -155,8 +251,9 @@ $(document).ready(function () {
     $("#content").on("click", "#new_ad_button", function (e) {
         e.preventDefault();
         go_new_ad_page();
-        var input = document.getElementById('upload');
-        input.addEventListener('change', showFileName);
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Reserve ad
@@ -164,7 +261,6 @@ $(document).ready(function () {
         e.preventDefault();
         start = $("#read_more_select_start").val();
         end = $("#read_more_select_end").val();
-        console.log(end);
         if (start != "" && end != "") {
             if (start != "" && Date.parse(start) < Date.parse($("#read_more_ad_startdate").html()) || end != "" && Date.parse(end) > Date.parse($("#read_more_ad_enddate").html())) {
                 alert("Vänligen välj datum inom tidigast in- och utflytt!")
@@ -182,6 +278,9 @@ $(document).ready(function () {
         $('#modal_reservation').modal('hide');
         $('.modal-backdrop').hide();
         go_my_page();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Route to search after reservation
@@ -190,9 +289,23 @@ $(document).ready(function () {
         $('#modal_reservation').modal('hide');
         $('.modal-backdrop').hide();
         go_search();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
-    
+    //Route to my pages from modal save changes
+       $("#content").on("click", "#save_changes_to_search_button", function (e) {
+        e.preventDefault();
+        $('#modal_save_changes').modal('hide');
+        $('.modal-backdrop').hide();
+        go_my_page();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
+    });
+
+
 
 
     //Edit bio
@@ -247,30 +360,40 @@ $(document).ready(function () {
         }, 1000);
     });
 
-    //My page menu: go to ads
+    //Home: change area facts: ryd
     $("#content").on("click", "#map_ryd", function (e) {
         e.preventDefault();
         $("#area_facts").html($("#ryd_view").html());
+        exists = ($("#home_select_area").children().text().search("Ryd") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
     });
-    //My page menu: go to ads
+    //Home: change area facts: lambohov
     $("#content").on("click", "#map_lambohov", function (e) {
         e.preventDefault();
         $("#area_facts").html($("#lambohov_view").html());
+        exists = ($("#home_select_area").children().text().search("Lambohov") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
     });
-    //My page menu: go to ads
+    //Home: change area facts: valla
     $("#content").on("click", "#map_valla", function (e) {
         e.preventDefault();
         $("#area_facts").html($("#valla_view").html());
+        exists = ($("#home_select_area").children().text().search("Valla") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
     });
-    //My page menu: go to ads
-    $("#content").on("click", "#map_vasastaden", function (e) {
+    //Home: change area facts: vasastan
+    $("#content").on("click", "#map_vasastan", function (e) {
         e.preventDefault();
-        $("#area_facts").html($("#vasastaden_view").html());
+        $("#area_facts").html($("#vasastan_view").html());
+        exists = ($("#home_select_area").children().text().search("Vasastan") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
     });
-    //My page menu: go to ads
+    //Home: change area facts: gottfridsberg
     $("#content").on("click", "#map_gottfridsberg", function (e) {
         e.preventDefault();
         $("#area_facts").html($("#gottfridsberg_view").html());
+        exists = ($("#home_select_area").children().text().search("Gottfridsberg") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
     });
 
     //My page: approve tenant
@@ -291,13 +414,46 @@ $(document).ready(function () {
     //Submit form create new ad
     $("#content").on("click", "#create_new_ad", function (e) {
         e.preventDefault();
-        submitAdForm();
+        start = Date.parse($("#ad_start_id").val());
+        end = Date.parse($("#ad_end_id").val());
+        if (start > end) {
+            alert("Inflytt måste vara före utflytt");
+        } else {
+            submitAdForm();
+        }
     });
 
     //Submit form create new ad
     $("#content").on("click", "#read_more_login_button", function (e) {
         e.preventDefault();
         go_login();
+    });
+
+    //Go login from nav
+    $("nav").on("click", "#sign_in_nav", function (e) {
+        e.preventDefault();
+        go_login();
+    });
+
+    //Go login from nav
+    $("#content").on("click", "#go_area", function (e) {
+        e.preventDefault();
+        search = JSON.parse(sessionStorage.getItem('search'));
+        search.area = $(this).data('area');
+        sessionStorage.setItem('search', JSON.stringify(search));
+        go_search();
+    });
+
+    //Go create ad from nav
+    $("nav").on("click", "#ad_accomodation_nav, #burger_add_accomodation", function (e) {
+        e.preventDefault();
+        if (sessionStorage.getItem('auth')) {
+            go_my_page();
+            go_new_ad_page();
+        } else {
+            alert('Logga in först!')
+        }
+
     });
 });
 
@@ -350,6 +506,11 @@ function go_home() {
     load_home_search_dropdowns();
     load_burger();
     $("#area_facts").html($("#default_view").html());
+    var today = new Date();
+    $("#home_select_start").val(today.toISOString().slice(0, 10));
+    tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    $("#home_select_end").val(tomorrow.toISOString().slice(0, 10));
     let coord;
     let z;
     if (screen.width < 992) {
@@ -375,7 +536,7 @@ function go_home() {
             center: { lat: 58.405844557880265, lng: 15.5949486961521 },
             size: 40,
         },
-        vasastaden: {
+        vasastan: {
             center: { lat: 58.418598933014735, lng: 15.612839650705164 },
             size: 30,
         },
@@ -457,7 +618,7 @@ function go_home() {
     );
     popup3 = new Popup(
         new google.maps.LatLng(58.418598933014735, 15.612839650705164),
-        document.getElementById("vasastaden")
+        document.getElementById("vasastan")
     );
     popup4 = new Popup(
         new google.maps.LatLng(58.414188119723406, 15.596067756828468),
@@ -678,7 +839,10 @@ function go_read_more_ad_page(ad_id) {
     $("#read_more_reserve").toggleClass('d-none', !signedIn);
     $("#read_more_login").toggleClass('d-none', signedIn);
     load_read_more(ad_id);
-    $("#reservation_button").data('id', ad_id)
+    $("#reservation_button").data('id', ad_id);
+    $("#read_more_select_start").val(JSON.parse(sessionStorage.getItem('search')).start);
+    $("#read_more_select_end").val(JSON.parse(sessionStorage.getItem('search')).end);
+
 }
 
 //Function for going to view: Edit bio
@@ -735,6 +899,8 @@ function load_bookings() {
 
 function logout() {
     sessionStorage.removeItem('auth');
+    $("#sign_in_nav").addClass('d-none');
+    $("#sign_in_nav").addClass('d-md-block');
     go_home();
 }
 
@@ -755,23 +921,19 @@ function readURL(input) {
     }
 }
 
-$(function () {
-    $('#upload').on('change', function () {
-        readURL(input);
-    });
-});
-
 //Function for showing the uploaded image name. 
 function showFileName(event) {
     var infoArea = document.getElementById('upload-label');
-    var input = event.srcElement;
+    var input = event;
     var fileName = input.files[0].name;
-    print
     infoArea.textContent = 'Filnamn: ' + fileName;
 }
 
 function go_new_ad_page() {
     $("#content").html($("#new_ad_page").html());
+    $("#ad_start_id").val(new Date().toISOString().slice(0, 10));
+    $("#ad_end_id").val(new Date().toISOString().slice(0, 10));
+
 }
 
 
@@ -796,14 +958,19 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
             end: search.end,
             area: search.area,
             type: search.type,
-            attributes: Attr_Enum[search.attributes]
+            attributes: search.attributes
         },
         success: function (ads) {
             $("#search_result").empty();
-            ads.forEach(element => {
-                element.image = element.image.url;
-                $("#search_result").append(Mustache.render(accomodation, element));
-            });
+            if (ads.length > 0) {
+                ads.forEach(element => {
+                    element.image = element.image.url;
+                    $("#search_result").append(Mustache.render(accomodation, element));
+                });
+            } else {
+                $("#search_result").append("<h3>Ooops, verkar som din sökning inte gav några träffar! Försök igen!</h3>");
+            }
+
         }
     })
 }
@@ -818,16 +985,15 @@ function load_my_ads_request() {
                 if (element.paid == true) {
                     element.image = element.image.url
                     $("#my_page_ads_container").append(Mustache.render(my_accomodation_paid, element));
-                } else if (element.booked == false){
+                } else if (element.booked == false) {
                     element.image = element.image.url
                     $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
                 } else {
                     element.image = element.image.url
                     $("#my_page_ads_container").append(Mustache.render(my_accomodation_booked, element));
-                } 
+                }
 
                 if (element.booked == true) {
-                    console.log("booked");
                 } else if (element.reserved == true) {
                     get_tenant(element.id);
                 }
@@ -846,7 +1012,7 @@ function load_my_bookings_request() {
                 if (element.paid == true) {
                     element.image = element.image.url
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings_paid, element));
-                } else if (element.booked == false){
+                } else if (element.booked == false) {
                     element.image = element.image.url
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings, element));
                 } else {
@@ -875,7 +1041,6 @@ function my_past_bookings() {
                     success: function (payment) {
                         element.image = element.image.url;
                         element['id'] = payment.id;
-                        console.log(element.id)
                         $("#my_page_history_container").append(Mustache.render(my_past_booking, element));
                     }
                 })
@@ -901,7 +1066,7 @@ function get_tenant(ad_id) {
         type: 'GET',
         success: function (result) {
             result["ad_id"] = ad_id;
-            $("#my_page_ads_container").append(Mustache.render(tenant, result));
+            $(".accomodation_tennant_" + ad_id).append(Mustache.render(tenant, result));
         }
     })
 }
@@ -914,9 +1079,9 @@ function login_request(user) {
         data: JSON.stringify(user),
         success: function (response) {
             sessionStorage.setItem('auth', JSON.stringify(response));
-            $("#login_container").html($("#login_success").html());
-            $("#success_name").html("Välkommen " + JSON.parse(sessionStorage.getItem('auth')).user.name)
-            setTimeout(() => { go_home(); }, 3000);
+            $("#sign_in_nav").removeClass('d-md-block');
+            $("#sign_in_nav").addClass('d-none');
+            go_home()
 
         }
         , error: function () {
@@ -960,8 +1125,8 @@ function edit_user_request(user) {
             temp.user = user
             temp = JSON.stringify(temp)
             sessionStorage.setItem('auth', temp)
-            go_my_page();
-            load_account_info();
+            //go_my_page();
+            //load_account_info();
         }
     })
 }
@@ -1056,14 +1221,11 @@ function load_read_more(ad_id) {
 
 
             parameters = "address=" + ad.streetnumber + "%20" + ad.streetaddress + "%20" + ad.city + "%20" + "Sweden";
-            console.log(parameters);
-
             $.ajax({
                 url: "https://maps.googleapis.com/maps/api/geocode/json?" + parameters + "&key=AIzaSyD0L9KI4onjHguu5jOrMCCxOVFL97XQwFs",
                 type: 'GET',
                 success: function (coordinates) {
                     var coord = coordinates.results[0].geometry.location;
-                    console.log(coord);
                     let map, popup;
                     map2 = new google.maps.Map(document.getElementById("read_more_map"), {
                         zoom: 13.2,
@@ -1107,7 +1269,7 @@ function update_reserved_status_denied(status, ad_id) {
         type: 'PUT',
         data: JSON.stringify(status),
         success: function (ad) {
-        load_ads();
+            load_ads();
         }
     })
 }
@@ -1119,7 +1281,7 @@ function update_booked_status(status, ad_id) {
         type: 'PUT',
         data: JSON.stringify(status),
         success: function (ad) {
-        load_ads();
+            load_ads();
         }
     })
 }
@@ -1141,17 +1303,20 @@ function update_paid_status(status, ad_id) {
 function load_burger() {
     $("#menu").empty();
 
+    $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu">Om oss</li></a>'
+            + '<a href=""><li id="contact_button" class="hide-menu">Kontakta oss</li></a>'
+            + '<a href=""><li id="help_button" class="hide-menu">Så fungerar det</li></a>')
+
     if (sessionStorage.getItem('auth') == null) {
-        $("#menu").prepend('<a href=""><li id="register_button" class="hide-menu" >Bli medlem</li></a>'
-            + '<a href=""><li id="login_button" class="hide-menu" >Logga in</li></a>')
+        $("#menu").prepend('<a href=""><li id="register_button" class="hide-menu">Bli medlem</li></a>'
+            + '<a href=""><li id="login_button" class="hide-menu d-block d-md-none">Logga in</li></a>')
     } else {
         $("#menu").prepend('<a href=""><li id="my_page_button" class="hide-menu">Mina sidor</li></a>'
-            + '<a href=""><li id="logout_button" class="hide-menu" >Logga ut</li></a>')
+            + '<a href=""><li id="logout_button" class="hide-menu">Logga ut</li></a>')
     }
 
-    $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu" > Vilka är vi</li></a>'
-        + '<a href=""><li id="contact_button" class="hide-menu" >Kontakta oss</li></a>'
-        + '<a href=""><li id="help_button" class="hide-menu" >Hur funkar det</li></a>')
+    $("#menu").prepend('<a href=""><li id="home_button" class="hide-menu">Startsida</li></a>'
+        + '<a href=""><li id="burger_add_accomodation" class="hide-menu d-block d-md-none">Lägg upp boende</li></a>')
 }
 
 //Function for calling all date loaders
@@ -1163,7 +1328,7 @@ function load_register_dates() {
 
 //Function for loading in all selectable years in register form
 function load_years(container) {
-    var year = new Date().getFullYear();
+    var year = 2003;
     for (i = 0; i < 100; i++) {
         $(container).append("<option>" + year + "</option>")
         --year;
@@ -1191,13 +1356,14 @@ function load_attr(container) {
     });
 }
 
+
 //Function for loading data in dropdowns for search from home page
 function load_home_search_dropdowns() {
     load_months("#home_select_start_month");
     load_days("#home_select_length");
     load_areas("#home_select_area");
     load_types("#home_select_type");
-    load_attr("#home_select_attr");
+    // load_attr("#home_select_attr");
 }
 
 //Function for loading data in dropdowns for search on search page
@@ -1209,7 +1375,12 @@ function load_search_page_search_dropdowns(search) {
     $("#search_page_select_start").val(search.start);
     $("#search_page_select_end").val(search.end);
     $("#search_page_select_type").val(search.type);
-    $("#search_page_select_attr").val(search.attributes);
+    var attrib = search.attributes.split("-"), i;
+
+    for (i = 0; i < attrib.length; i++) {
+        $("#search_ad_" + attrib[i] + "_id").prop("checked", true);
+        console.log("#search_ad_" + attrib[i] + "_id")
+    }
 }
 
 //Function for reservring ad in database: update reserved status --> show ad to host for approval
@@ -1278,15 +1449,68 @@ function submit_home_search_form() {
         start: $("#home_select_start").val(),
         end: $("#home_select_end").val(),
         type: $("#home_select_type").val(),
-        attributes: $("#home_select_attr").val()
+        attributes: get_wanted_attributes_home()
     }
-    if (search.start > search.end && search.start != "" && search.end != "") {
+    if (Date.parse(search.start) > Date.parse(search.end) && search.start != "" && search.end != "") {
         alert("Inflytt måste vara före utflytt");
     } else {
         sessionStorage.setItem('search', JSON.stringify(search));
         go_search();
     }
 }
+
+function get_wanted_attributes() {
+    var bike = $("#search_ad_bike_id").prop("checked");
+    var dishwasher = $("#search_ad_dishwasher_id").prop("checked");
+    var wifi = $("#search_ad_wifi_id").prop("checked");
+    var sauna = $("#search_ad_sauna_id").prop("checked");
+    var washingmachine = $("#search_ad_washingmachine_id").prop("checked");
+    var attributes = "";
+
+    if (bike != false) {
+        attributes = attributes + "bike-";
+    }
+    if (dishwasher != false) {
+        attributes = attributes + "dishwasher-";
+    }
+    if (wifi != false) {
+        attributes = attributes + "wifi-";
+    }
+    if (sauna != false) {
+        attributes = attributes + "sauna-";
+    }
+    if (washingmachine != false) {
+        attributes = attributes + "washingmachine-";
+    }
+    if (attributes.charAt(attributes.length - 1) == '-') {
+        attributes = attributes.slice(0, -1);
+    }
+
+    if (attributes == "") {
+        attributes = "Bekvämligheter";
+    }
+
+    return attributes
+
+}
+
+function get_wanted_attributes_home() {
+    var attributes = ""
+    $("input[name=attr]").each(function () {
+        if (this.checked) {
+            attributes = this.value + "-" + attributes
+        }
+    })
+    if (attributes == "") {
+        attributes = "Bekvämligheter"
+    }
+    else {
+        attributes = attributes.substring(0, attributes.length - 1)
+    }
+    return attributes
+
+}
+
 
 function update_search() {
     sort = $("#search_page_sort").val();
@@ -1303,15 +1527,15 @@ function update_search() {
         sort = "desc";
         sort_param = "price";
     }
+
     var search = {
         area: $("#search_page_select_area").val(),
         type: $("#search_page_select_type").val(),
         start: $("#search_page_select_start").val(),
         end: $("#search_page_select_end").val(),
-        attributes: $("#search_page_select_attr").val(),
+        attributes: get_wanted_attributes()
     }
-    console.log(search.start)
-    console.log(search.end)
+
     if (search.start > search.end && search.start != "" && search.end != "") {
         alert("Inflytt måste vara före utflytt");
     } else {
@@ -1321,7 +1545,6 @@ function update_search() {
 
         load_ads_request(search, sort, sort_param);
     }
-
 }
 
 function submitAdForm() {
@@ -1331,7 +1554,7 @@ function submitAdForm() {
     formData.append("description", $("#descriptionInput_id").val());
     formData.append("neighbourhood", $("#areaInput_id").val());
 
-    formData.append("streetadress", $("#create_ad_street_id").val());
+    formData.append("streetaddress", $("#create_ad_street_id").val());
     formData.append("streetnumber", $("#create_ad_streetnumber_id").val());
     formData.append("postalcode", $("#create_ad_postalcode_id").val());
     formData.append("city", $("#create_ad_city_id").val());
@@ -1355,37 +1578,49 @@ function submitAdForm() {
     var attributes = "";
 
     if (bike != false) {
-        attributes = attributes + "'bike' ";
+        attributes = attributes + "bike ";
     }
     if (dishwasher != false) {
-        attributes = attributes + "''dishwasher' ";
+        attributes = attributes + "dishwasher ";
     }
     if (wifi != false) {
-        attributes = attributes + "'wifi' ";
+        attributes = attributes + "wifi ";
     }
     if (sauna != false) {
-        attributes = attributes + "'sauna' ";
+        attributes = attributes + "sauna ";
     }
     if (washingmachine != false) {
-        attributes = attributes + "'washingmachine' ";
+        attributes = attributes + "washingmachine ";
+    }
+    if (attributes.charAt(attributes.length - 1) == ' ') {
+        attributes = attributes.slice(0, -1);
     }
 
     formData.append("attributes", attributes);
 
 
     formData.append("file", saved_input);
-    saved_input = null;
+    if (saved_input !== undefined) {
+        $.ajax({
+            url: host + '/ad/create',
+            type: 'POST',
+            headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (successMessage) {
+                go_my_page();
+                saved_input = null;
+            },
+            statusCode: {
+                500: function () {
+                    alert('fyll i alla fält horunge');
+                },
+            }
+        })
+    } else {
+        alert('Du måste ladda upp en bild!')
+    }
 
-    $.ajax({
-        url: host + '/ad/create',
-        type: 'POST',
-        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (successMessage) {
-            go_my_page();
-        }
-    })
 
 }
