@@ -339,6 +339,16 @@ def set_reserved(ad_id):
         db.session.commit()
         return "success", 200
 
+# Used when a reservation is denied and the ad should no longer be reserved
+@app.route('/ad/<int:ad_id>/denied', methods=['PUT'])
+def deny_tenant(ad_id):
+    if request.method == 'PUT':
+        status = request.get_json(force=True)
+        current_ad = Ad.query.get_or_404(ad_id)
+        current_ad.reserved = status
+        db.session.commit()
+        return "success", 200
+
 
 @app.route('/ad/<int:ad_id>/paid', methods=['PUT'])
 def set_paid(ad_id):
@@ -385,6 +395,7 @@ def ads():
         end = request.args.get('end')
         area = request.args.get('area')
         attrib = request.args.get('attributes')
+        print(attrib)
         type = request.args.get('type')
         attrib2 = attrib.split('-')
         filter = []
@@ -514,7 +525,27 @@ def types():
 
 def calculate_order_amount(id):
     current_ad = Ad.query.get_or_404(id)
-    return current_ad.price * 100
+    startdate = current_ad.tenant_startdate
+    enddate = current_ad.tenant_enddate
+    rental_period = enddate - startdate
+    amount_of_days = rental_period.days
+    return (current_ad.price * amount_of_days)* 100
+
+
+# Calculates the amount of days that tenant will rent the add
+
+@app.route('/rentalperiod', methods=['GET'])
+@jwt_required()
+def calculate_rentalperiod():
+    if request.method == 'GET':
+        ad_id = request.args.get('id')
+        current_ad = Ad.query.get_or_404(ad_id)
+        startdate = current_ad.tenant_startdate
+        enddate = current_ad.tenant_enddate
+        rental_period = enddate - startdate
+        amount_of_days = rental_period.days
+        return jsonify(amount_of_days)
+
 
 # Creates the payment intent
 
