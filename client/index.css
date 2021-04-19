@@ -963,7 +963,6 @@ a:hover{
 
 .last_footer {
   margin: 50px;
-
 }
 
 .section{
@@ -1409,6 +1408,10 @@ button:disabled {
   padding-bottom: 30px;
 }
 
-#reservation_to_mypage_button {
+.reservation_to_mypage_button {
   color: white;
+}
+
+.sml-socialm-icon{
+  width: 70%;
 }
