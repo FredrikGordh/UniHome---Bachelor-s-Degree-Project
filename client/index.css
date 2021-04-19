@@ -1525,9 +1525,14 @@ button:disabled {
   padding-bottom: 30px;
 }
 
-#reservation_to_mypage_button {
+.reservation_to_mypage_button {
   color: white;
 }
+
+.sml-socialm-icon{
+  width: 70%;
+}
+
 #home_vision {
   text-align: center;
   color:rgb(255, 255, 197);  
