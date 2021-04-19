@@ -123,55 +123,53 @@
         </video>
         <div class="container">
           <div class="row align-items-center justify-content-center">
-            <form class="col-12">
-              <div class="form-row align-items-center" id="home_search">
-                <div class="form-group col-9 col-xl-5">
-                  <select class="form-control no-border" id="home_select_area">
-                    <option>Område</option>
-                  </select>            
-                </div>
-                <div class="form-group col-3 d-none d-xl-block pt-1">
-                  <label for="home_select_start">Inflytt</label>
-                  <input type="date" id="home_select_start" class="no-border">
-                </div>
-                <div class="form-group col-3 d-none d-xl-block pt-1">
-                  <label for="home_select_end">Utflytt</label>
-                  <input type="date" id="home_select_end" class="no-border">
-                </div>
-                  <div class= "col-xl-1 col-3">
-                    <button type="button button" id="home_search_submit" class="btn btn-primary search_button"><i class="fas fa-search" ></i>
-                    </button>
+            <div class="col-10">
+              <div class="row align-items-center justify-content-center">
+                <form class="col-12">
+                  <div class="form-row align-items-center" id="home_search">
+                    <div class="form-group col-9 col-xl-5">
+                      <select class="form-control no-border" id="home_select_area">
+                        <option>Område</option>
+                      </select>            
+                    </div>
+                    <div class="form-group col-3 d-none d-xl-block pt-1">
+                      <label for="home_select_start">Inflytt</label>
+                      <input type="date" id="home_select_start" class="no-border">
+                    </div>
+                    <div class="form-group col-3 d-none d-xl-block pt-1">
+                      <label for="home_select_end">Utflytt</label>
+                      <input type="date" id="home_select_end" class="no-border">
+                    </div>
+                    <div class="col-12">
+                      <div id="home_search_filters">
+                        <div class="form-row align-items-start justify-content-center">
+                          <div class="form-group col-7 col-lg-5">
+                            <select class="form-control no-border" id="home_select_type">
+                              <option>Typ av boende</option>
+                            </select>
+                          </div>
+                          <div class="form-group col-10 col-lg-5 mt-lg-0 mt-4">
+                            <div id="attributes_dropdown" class="dropdown-check-list form-group">
+                              <span class="anchor">Välj extra bekvämligheter</span>
+                              <ul id="home_select_attr" class="items">
+                                <li><input name='attr' type="checkbox" value='bike' /> Cykel </li>
+                                <li><input name='attr' type="checkbox" value='dishwasher' /> Diskmaskin</li>
+                                <li><input name='attr' type="checkbox" value='washingmachine' /> Tvättmaskin</li>
+                                <li><input name='attr' type="checkbox" value='wifi' /> Wifi </li>
+                                <li><input name='attr' type="checkbox" value='sauna' /> Bastu </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>   
-              </div>
-            </form>
-          </div>
-          <div id="home_search_filters">
-              <div class="form-row align-items-center justify-content-center">
-                <div class="form-group col-7 col-lg-5">
-                  <select class="form-control no-border" id="home_select_type">
-                    <option>Typ av boende</option>
-                  </select>            
-                </div>
-                <div class="form-group col-10 col-lg-5 mt-lg-0 mt-4">
-                  <div id="attributes_dropdown" class="dropdown-check-list form-group">
-                    <span class="anchor">Välj extra bekvämligheter</span>
-                    <ul id = "home_select_attr" class="items">
-                      <li><input name = 'attr' type="checkbox" value = 'bike' />Cykel </li>
-                      <li><input name = 'attr' type="checkbox" value = 'dishwasher' />Diskmaskin</li>
-                      <li><input name = 'attr' type="checkbox" value = 'washingmachine' />Tvättmaskin</li>
-                      <li><input name = 'attr' type="checkbox" value = 'wifi' />Wifi </li>
-                      <li><input name = 'attr' type="checkbox" value = 'sauna' />Bastu </li>
-                    </ul>
                   </div>
-                  <!-- <select class="form-control no-border" id="home_select_attr">
-                    <option>Attribut</option>
-                  </select> -->
-                  <!-- <select multiple class="form-control no-border">
-                    <option><input type="checkbox">Test 1</option>
-                    <option><input type="checkbox">Test 2</option>
-                   </select>             -->
-                </div>
+                </form>
               </div>
+            </div>
+            <div class="col-2">
+                <button type="button button" id="home_search_submit" class="btn btn-primary search_button"><i class="fas fa-search"></i></button>
+            </div>
           </div>
         </div>
       </div>
@@ -241,7 +239,7 @@
         <p>Klicka på ett av de inringade områdena för att få läsa mer om det.</p>
       </div>
       </div>
-    </script>
+  </script>
   <script id="lambohov_view" type="text/html">
       <div class="facts_content row p-4">
       <div class="col-12 mb-3">
@@ -254,7 +252,7 @@
         <a href="" id="go_area" data-area="Lambohov">Hitta bostäder i Lambohov</a>
       </div>
       </div>
-    </script>
+  </script>
   <script id="valla_view" type="text/html">
       <div class="facts_content row p-4">
       <div class="col-12 mb-3">
@@ -280,7 +278,7 @@
         <a href="" id="go_area" data-area="Vasastan">Hitta bostäder i Vasastan</a>
       </div>
       </div>
-    </script>
+  </script>
   <script id="gottfridsberg_view" type="text/html">
       <div class="facts_content row p-4">
       <div class="col-12 mb-3">
@@ -293,7 +291,7 @@
         <a href="" id="go_area" data-area="Gottfridsberg">Hitta bostäder i Gottfridsberg</a>
       </div>
       </div>
-    </script>
+  </script>
 
 
   <!-- Search page view -->
@@ -311,11 +309,6 @@
               <option>Typ av boende</option>
             </select>            
           </div>
-          <div class="col-2">
-            <select class="form-control no-border" id="search_page_select_attr">
-              <option>Bekvämligheter</option>
-            </select>            
-          </div>
           <div class="col-2 search_date">
             <label for="search_page_select_start" class="d-none d-xl-inline">Inflytt</label>
             <input type="date" id="search_page_select_start" class="no-border">
@@ -325,37 +318,66 @@
             <input type="date" id="search_page_select_end" class="no-border">
           </div>
           <div class="col-2">
-            <label for="search_page_sort" class="form-label">Sortera</label>
-              <select class="form-control no-border" id="search_page_sort">
-                <option>A-Ö</option>
-                <option>Ö-A</option>
-                <option>Pris ökande</option>
-                <option>Pris sjunkande</option>
-              </select> 
+            <select class="form-control no-border" id="search_page_sort">
+              <option>A-Ö</option>
+              <option>Ö-A</option>
+              <option>Pris ökande</option>
+              <option>Pris sjunkande</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <div class="row justify-content-center">
+              <div class="col-2">
+                <div class="bekvamligheter stylebox">
+                  <br>
+                  <input class="form-check-input ad_input search_checkbox" type="checkbox" value="" id="search_ad_bike_id">
+                  <label class="ad_label form-check-label" for="create_ad_bike_id">
+                    Cykel
+                  </label>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="bekvamligheter">
+                <br>
+                <input class="form-check-input ad_input search_checkbox" type="checkbox" value="" id="search_ad_dishwasher_id">
+                <label class="ad_label form-check-label" for="create_ad_dishwasher_id">
+                  Diskmaskin
+                  </label>
+                  </div>
+              </div>
+              <div class="col-2">
+                <div class="bekvamligheter">
+                <br>
+                <input class="form-check-input ad_input search_checkbox" type="checkbox" value="" id="search_ad_washingmachine_id">
+                <label class="ad_label form-check-label" for="create_ad_washingmachine_id">
+                  Tvättmaskin
+                  </label>
+                  </div>
+              </div>
+              <div class="col-2">
+                <div class="bekvamligheter">
+                <br>
+                <input class="form-check-input ad_input search_checkbox" type="checkbox" value="" id="search_ad_wifi_id">
+                <label class="ad_label form-check-label" for="create_ad_wifi_id">
+                  Wifi
+                </label>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="bekvamligheter">
+                <br>
+                <input class="form-check-input ad_input search_checkbox" type="checkbox" value="" id="search_ad_sauna_id">
+                <label class="ad_label form-check-label" for="create_ad_sauna_id">
+                  Bastu
+                  </label>
+                  </div>
+              </div>
             </div>
-            <div id="attributes_dropdown" class="dropdown-check-list form-control">
-              <span class="anchor">Bekvämligheter</span>
-              <ul id = "home_select_attr" class="items">
-                <li><input name = 'attr' class = 'checkboxupdate' type="checkbox" value = 'bike' />Cykel </li>
-                <li><input name = 'attr' class = 'checkboxupdate'type="checkbox" value = 'dishwasher' />Diskmaskin</li>
-                <li><input name = 'attr' class = 'checkboxupdate'type="checkbox" value = 'washingmachine' />Tvättmaskin</li>
-                <li><input name = 'attr' class = 'checkboxupdate'type="checkbox" value = 'wifi' />Wifi </li>
-                <li><input name = 'attr' class = 'checkboxupdate'type="checkbox" value = 'sauna' />Bastu </li>
-              </ul>
-            </div>
+          </div>
         </div>
       </div>
-      <div class="col-8 offset-2">
+      <div class="col-8">
         <div id="search_result" class="row justify-content-center align-items-start"></div>
-      </div>
-      <div class="col-2 pr-5 mt-5">
-        <label for="search_page_sort" class="form-label">Sortera</label>
-        <select class="form-control no-border" id="search_page_sort">
-          <option>A-Ö</option>
-          <option>Ö-A</option>
-          <option>Pris ökande</option>
-          <option>Pris sjunkande</option>
-        </select>
       </div>
     </div>
   </script>

@@ -67,23 +67,22 @@ $(document).ready(function () {
         console.log("ok");
         go_login();
     });
-        
+
     //Burger menu: Log Out
     $("#menu").on("click", "#logout_button", function (e) {
         e.preventDefault();
         logout();
-        });
+    });
 
     //Attributes: Dropdown checklist
     $("#content").on("click", ".anchor", function (e) {
-     var checkList = $("#attributes_dropdown")[0];
-   if (checkList.classList.contains('visible')){
-     checkList.classList.remove('visible');
-    }
-   else {
-     checkList.classList.add('visible');
-    }
-});
+        var checkList = $("#attributes_dropdown")[0];
+        if (checkList.classList.contains('visible')) {
+            checkList.classList.remove('visible');
+        } else {
+            checkList.classList.add('visible');
+        }
+    });
 
 
     //Go to search page
@@ -149,7 +148,7 @@ $(document).ready(function () {
     });
 
     //Register update of search sort
-    $("#content").on("change", ".checkboxupdate, #search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_page_select_attr", function (e) {
+    $("#content").on("change", ".checkboxupdate, #search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_ad_bike_id, #search_ad_dishwasher_id, #search_ad_wifi_id, #search_ad_sauna_id, #search_ad_washingmachine_id", function (e) {
         update_search();
     });
 
@@ -418,8 +417,11 @@ function go_home() {
     load_home_search_dropdowns();
     load_burger();
     $("#area_facts").html($("#default_view").html());
-    $("#home_select_start").val(new Date().toISOString().slice(0, 10));
-    $("#home_select_end").val(new Date().toISOString().slice(0, 10));
+    var today = new Date();
+    $("#home_select_start").val(today.toISOString().slice(0, 10));
+    tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    $("#home_select_end").val(tomorrow.toISOString().slice(0, 10));
     let coord;
     let z;
     if (screen.width < 992) {
@@ -894,13 +896,13 @@ function load_my_ads_request() {
                 if (element.paid == true) {
                     element.image = element.image.url
                     $("#my_page_ads_container").append(Mustache.render(my_accomodation_paid, element));
-                } else if (element.booked == false){
+                } else if (element.booked == false) {
                     element.image = element.image.url
                     $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
                 } else {
                     element.image = element.image.url
                     $("#my_page_ads_container").append(Mustache.render(my_accomodation_booked, element));
-                } 
+                }
 
                 if (element.booked == true) {
                 } else if (element.reserved == true) {
@@ -921,7 +923,7 @@ function load_my_bookings_request() {
                 if (element.paid == true) {
                     element.image = element.image.url
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings_paid, element));
-                } else if (element.booked == false){
+                } else if (element.booked == false) {
                     element.image = element.image.url
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings, element));
                 } else {
@@ -1178,7 +1180,7 @@ function update_reserved_status_denied(status, ad_id) {
         type: 'PUT',
         data: JSON.stringify(status),
         success: function (ad) {
-        load_ads();
+            load_ads();
         }
     })
 }
@@ -1190,7 +1192,7 @@ function update_booked_status(status, ad_id) {
         type: 'PUT',
         data: JSON.stringify(status),
         success: function (ad) {
-        load_ads();
+            load_ads();
         }
     })
 }
@@ -1213,14 +1215,14 @@ function load_burger() {
     $("#menu").empty();
 
     $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu">Om oss</li></a>'
-            + '<a href=""><li id="contact_button" class="hide-menu">Kontakta oss</li></a>'
-            + '<a href=""><li id="help_button" class="hide-menu">Hur funkar det</li></a>')
+        + '<a href=""><li id="contact_button" class="hide-menu">Kontakta oss</li></a>'
+        + '<a href=""><li id="help_button" class="hide-menu">Hur funkar det</li></a>')
 
     if (sessionStorage.getItem('auth') == null) {
         $("#menu").prepend('<a href=""><li id="register_button" class="hide-menu">Bli medlem</li></a>'
             + '<a href=""><li id="login_button" class="hide-menu d-block d-md-none">Logga in</li></a>')
     } else {
-        $("#menu").append('<a href=""><li id="my_page_button" class="hide-menu">Mina sidor</li></a>'
+        $("#menu").prepend('<a href=""><li id="my_page_button" class="hide-menu">Mina sidor</li></a>'
             + '<a href=""><li id="logout_button" class="hide-menu">Logga ut</li></a>')
     }
 
@@ -1272,7 +1274,7 @@ function load_home_search_dropdowns() {
     load_days("#home_select_length");
     load_areas("#home_select_area");
     load_types("#home_select_type");
-   // load_attr("#home_select_attr");
+    // load_attr("#home_select_attr");
 }
 
 //Function for loading data in dropdowns for search on search page
@@ -1284,7 +1286,12 @@ function load_search_page_search_dropdowns(search) {
     $("#search_page_select_start").val(search.start);
     $("#search_page_select_end").val(search.end);
     $("#search_page_select_type").val(search.type);
-    $("#search_page_select_attr").val(search.attributes);
+    var attrib = search.attributes.split("-"), i;
+
+    for (i = 0; i < attrib.length; i++) {
+        $("#search_ad_" + attrib[i] + "_id").prop("checked", true);
+        console.log("#search_ad_" + attrib[i] + "_id")
+    }
 }
 
 //Function for reservring ad in database: update reserved status --> show ad to host for approval
@@ -1353,7 +1360,7 @@ function submit_home_search_form() {
         start: $("#home_select_start").val(),
         end: $("#home_select_end").val(),
         type: $("#home_select_type").val(),
-        attributes: get_wanted_attributes()
+        attributes: get_wanted_attributes_home()
     }
     if (Date.parse(search.start) > Date.parse(search.end) && search.start != "" && search.end != "") {
         alert("Inflytt måste vara före utflytt");
@@ -1364,17 +1371,52 @@ function submit_home_search_form() {
 }
 
 function get_wanted_attributes() {
+    var bike = $("#search_ad_bike_id").prop("checked");
+    var dishwasher = $("#search_ad_dishwasher_id").prop("checked");
+    var wifi = $("#search_ad_wifi_id").prop("checked");
+    var sauna = $("#search_ad_sauna_id").prop("checked");
+    var washingmachine = $("#search_ad_washingmachine_id").prop("checked");
+    var attributes = "";
+
+    if (bike != false) {
+        attributes = attributes + "bike-";
+    }
+    if (dishwasher != false) {
+        attributes = attributes + "dishwasher-";
+    }
+    if (wifi != false) {
+        attributes = attributes + "wifi-";
+    }
+    if (sauna != false) {
+        attributes = attributes + "sauna-";
+    }
+    if (washingmachine != false) {
+        attributes = attributes + "washingmachine-";
+    }
+    if (attributes.charAt(attributes.length - 1) == '-') {
+        attributes = attributes.slice(0, -1);
+    }
+
+    if (attributes == "") {
+        attributes = "Bekvämligheter";
+    }
+
+    return attributes
+
+}
+
+function get_wanted_attributes_home() {
     var attributes = ""
-    $("input[name=attr]").each(function() {
-        if (this.checked){
-            attributes =  this.value + "-" + attributes
+    $("input[name=attr]").each(function () {
+        if (this.checked) {
+            attributes = this.value + "-" + attributes
         }
     })
-    if (attributes == ""){
-        attributes = "Attribut"
+    if (attributes == "") {
+        attributes = "Bekvämligheter"
     }
     else {
-        attributes = attributes.substring(0,attributes.length-1)
+        attributes = attributes.substring(0, attributes.length - 1)
     }
     return attributes
 
@@ -1396,6 +1438,7 @@ function update_search() {
         sort = "desc";
         sort_param = "price";
     }
+
     var search = {
         area: $("#search_page_select_area").val(),
         type: $("#search_page_select_type").val(),
