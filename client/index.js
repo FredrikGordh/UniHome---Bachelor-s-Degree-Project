@@ -1294,7 +1294,7 @@ function load_burger() {
 
     $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu">Om oss</li></a>'
             + '<a href=""><li id="contact_button" class="hide-menu">Kontakta oss</li></a>'
-            + '<a href=""><li id="help_button" class="hide-menu">Hur funkar det</li></a>')
+            + '<a href=""><li id="help_button" class="hide-menu">Så fungerar det</li></a>')
 
     if (sessionStorage.getItem('auth') == null) {
         $("#menu").prepend('<a href=""><li id="register_button" class="hide-menu">Bli medlem</li></a>'
@@ -1304,7 +1304,7 @@ function load_burger() {
             + '<a href=""><li id="logout_button" class="hide-menu">Logga ut</li></a>')
     }
 
-    $("#menu").prepend('<a href=""><li id="home_button" class="hide-menu">Hem</li></a>'
+    $("#menu").prepend('<a href=""><li id="home_button" class="hide-menu">Startsida</li></a>'
         + '<a href=""><li id="burger_add_accomodation" class="hide-menu d-block d-md-none">Lägg upp boende</li></a>')
 }
 

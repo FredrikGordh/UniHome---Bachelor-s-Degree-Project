@@ -99,12 +99,9 @@ video {
   padding-bottom: 150px;
   text-align: center;
   color: black;
-  background-color: #fcfeff;
-  background: linear-gradient(135deg, #f3f9ff55 25%, transparent 25%) -40px 0/
-      80px 80px,
-    linear-gradient(225deg, #f3f9ff 25%, transparent 25%) -40px 0/ 80px 80px,
-    linear-gradient(315deg, #f3f9ff55 25%, transparent 25%) 0px 0/ 80px 80px,
-    linear-gradient(45deg, #f3f9ff 25%, #fcfeff 25%) 0px 0/ 80px 80px;
+  background-color: #ffffff;
+  background-image: radial-gradient(circle at center center, #f4fbff, #ffffff), repeating-radial-gradient(circle at center right,#f4fbff, #f4fbff, 200px, transparent 400px, transparent 200px);
+  background-blend-mode: multiply;
 }
 
 #home-vision {
@@ -284,9 +281,9 @@ video {
   margin-bottom: 10vh;
 }
 
-#login_container {
+#login_container_box {
   margin-top: 20vh;
-  margin-bottom: 10vh;
+  margin-bottom: 20vh;
 }
 
 #header {
@@ -1507,4 +1504,30 @@ button:disabled {
 
 #reservation_to_mypage_button {
   color: white;
+}
+#home_vision {
+  text-align: center;
+  color:rgb(255, 255, 197);  
+  font-family: 'Helvetica Neue', sans-serif; 
+  /* font-size: 80px;  */
+  font-weight: bold; 
+  letter-spacing: -1px; 
+  line-height: 1;
+  text-shadow: 2px 2px 4px darkgrey;;
+}
+
+#home_vision_div {
+  margin-top: 0vh;
+}
+
+#login_image {
+  background-color: #37abab;
+  color: white;
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(248, 252, 255, 0.2)
+    ),
+    url(Media/login.jpg) center fixed;
+    left: 0;
 }
