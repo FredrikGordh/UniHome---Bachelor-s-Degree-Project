@@ -21,6 +21,7 @@
 </head>
 
 <body>
+  <div id="scrolltop"></div>
   <!-- Navbar: En hamburgarmeny + navbar -->
   <nav class="navbar navbar-style hide-menu">
     <a href="" class="navbar-brand hide-menu"><img id="navbar-logo" src="Media/Unihome-logga.png"></a>
@@ -119,7 +120,7 @@
     <div id="home_container">
       <div id="header">
         <video playsinline autoplay muted loop id="bgvid">
-          <source src="media/production ID_3770033.mp4" type="video/mp4">
+          <source src="media/production_ID_3770033.mp4" type="video/mp4">
         </video>
         <div class="container">
           <div class="row align-items-center justify-content-center">
@@ -309,6 +310,11 @@
               <option>Typ av boende</option>
             </select>            
           </div>
+          <!-- <div class="col-2">
+            <select class="form-control no-border" id="search_page_select_attr">
+              <option>Bekvämligheter</option>
+            </select>            
+          </div> -->
           <div class="col-2 search_date">
             <label for="search_page_select_start" class="d-none d-xl-inline">Inflytt</label>
             <input type="date" id="search_page_select_start" class="no-border">
@@ -1126,7 +1132,7 @@
                     <div class="modal-content">
                       <div class="modal-header row">
                         <div class="col-2">
-                        <button id ="reservation_to_search_button"type="button" class="btn btn-default">
+                        <button id ="reservation_to_search_button" type="button" class="btn btn-default">
                           <h3>&times;</h3>
                         </button>
                       </div>

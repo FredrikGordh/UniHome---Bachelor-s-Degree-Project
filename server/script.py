@@ -54,7 +54,7 @@ db.session.commit()
 ad1 = Ad(title="Trevligt boende", description="En mindre 2:a med kök som fungerar perfekt som studentboende. Boendet ligger i stadsdelen Gottfridsberg, nära till både studentpub Flamman och till den fina stadskärnan. Minst 2 nätter sammanhängande och uthyres endast till rök- och djurfria hyresgäster.",
          neighbourhood="Gottfridsberg", studentcity="Linköping",
          streetaddress="Skolgatan", streetnumber="23", city="Linköping", postalcode="512 15", country="Sverige", squaremetres="47",
-         price="1300", beds="1", accommodationtype="Lägenhet", host_id="5", startdate=datetime.date(2021, 4, 20), enddate=datetime.date(2021, 4, 25))
+         price="1300", beds="1", accommodationtype="Lägenhet", host_id="5", startdate=datetime.date(2021, 4, 19), enddate=datetime.date(2021, 4, 25))
 db.session.add(ad1)
 db.session.commit()
 attributes1 = Attributes(wifi=True, sauna=True, bike=True, ad_id=ad1.id)
@@ -66,7 +66,7 @@ db.session.commit()
 
 ad2 = Ad(title="Centralt studentboende i Irrblosset", description="En 1:a med kök som ligger mitt i fina Valla och nära Campus Valla. Lägenheten ligger nära en studentbar, gym och matbutik. Uthyres till rökfria personer, längre uthyrningar prioriteras.", neighbourhood="Valla", studentcity="Linköping",
          streetaddress="Vallavägen", streetnumber="4D", city="Linköping", postalcode="512 15", country="Sverige", squaremetres="27", price="450",
-         beds="2", accommodationtype="Lägenhet", host_id="1", startdate=datetime.date(2021, 4, 22), enddate=datetime.date(2021, 4, 25))
+         beds="2", accommodationtype="Lägenhet", host_id="1", startdate=datetime.date(2021, 4, 19), enddate=datetime.date(2021, 4, 25))
 db.session.add(ad2)
 db.session.commit()
 attributes2 = Attributes(wifi=True, sauna=True, dishwasher=True, ad_id=ad2.id)
@@ -80,7 +80,7 @@ db.session.commit()
 
 ad3 = Ad(title="Liten och mysig student-etta", description="Nyrenoverad lägenhet, omgjord från korridorsrum i Ryd som ligger nära campus Valla. Det finns även en trevlig uteplats för husets boendegäster. Uthyres endast till djurfria personer.", neighbourhood="Ryd", studentcity="Linköping",
          streetaddress="Rydsvägen", streetnumber="258C", city="Linköping", postalcode="511 34", country="Sverige", squaremetres="20", price="150",
-         beds="1", accommodationtype="Lägenhet", host_id="1", startdate=datetime.date(2021, 4, 21), enddate=datetime.date(2021, 4, 21))
+         beds="1", accommodationtype="Lägenhet", host_id="1", startdate=datetime.date(2021, 4, 19), enddate=datetime.date(2021, 4, 21))
 db.session.add(ad3)
 db.session.commit()
 attributes3 = Attributes(wifi=True, ad_id=ad3.id)
@@ -93,7 +93,7 @@ db.session.commit()
 
 ad4 = Ad(title="Fräsch 1:a nära campus Valla", description="Mysig 1:a med kök nära Ebbepark, ett stenkast från campus Valla. Mölighet till att hyra cykel finns. ", neighbourhood="Valla", studentcity="Linköping",
          streetaddress="Vallavägen", streetnumber="2c", city="Linköping", postalcode="511 34", country="Sverige", squaremetres="27", price="500",
-         beds="1", accommodationtype="Lägenhet", host_id="2", startdate=datetime.date(2021, 4, 22), enddate=datetime.date(2021, 4, 26))
+         beds="1", accommodationtype="Lägenhet", host_id="2", startdate=datetime.date(2021, 4, 19), enddate=datetime.date(2021, 4, 26))
 db.session.add(ad4)
 db.session.commit()
 attributes4 = Attributes(wifi=True, dishwasher=True, ad_id=ad4.id)
@@ -106,7 +106,7 @@ db.session.commit()
 
 ad5 = Ad(title="Lägenhet med fin utsikt mitt i stan", description="Rymliga lägenhet i stadsdelen Vasastan, som passar utmärkt för ett par om två personer. På taket finns även en trevlig uteplats med sol under hela dagen, utemöbler och grill", neighbourhood="Vasastan", studentcity="Linköping",
          streetaddress="Drottninggatan", streetnumber="37", city="Linköping", postalcode="511 35", country="Sverige", squaremetres="45", price="1100",
-         beds="2", accommodationtype="Lägenhet", host_id="4", startdate=datetime.date(2021, 4, 20), enddate=datetime.date(2021, 4, 30))
+         beds="2", accommodationtype="Lägenhet", host_id="4", startdate=datetime.date(2021, 4, 19), enddate=datetime.date(2021, 4, 30))
 db.session.add(ad5)
 db.session.commit()
 attributes5 = Attributes(wifi=True, dishwasher=True, washingmachine=True, ad_id=ad5.id)
@@ -132,7 +132,7 @@ db.session.commit()
 
 ad7 = Ad(title="Liten 2:a i Irrblosset", description="Gemytlig 2:a uthyres under helger i Irrblosset. Uthyres till besökande studenter under vårens festhelger. Uthyres endast till rökfria och djurfria hyresgäster.  ", neighbourhood="Valla", studentcity="Linköping",
          streetaddress="Vallavägen", streetnumber="2D", city="Linköping", postalcode="511 36", country="Sverige", squaremetres="35", price="600",
-         beds="2", accommodationtype="Lägenhet", host_id="2", startdate=datetime.date(2021, 4, 1), enddate=datetime.date(2021, 5, 30))
+         beds="2", accommodationtype="Lägenhet", host_id="2", startdate=datetime.date(2021, 4, 10), enddate=datetime.date(2021, 5, 30))
 db.session.add(ad7)
 db.session.commit()
 attributes7 = Attributes(wifi=True, sauna=True, dishwasher=True, washingmachine=True, ad_id=ad7.id)
@@ -144,7 +144,7 @@ db.session.commit()
 
 ad8 = Ad(title="Trevligt korridorsrum uthyres", description="Litet och trevligt korridorsrum som ligger i Ryd. Uthyres till någon lugn och skötsam, ingen fest tillåten. Uthyres endast till rökfria och djurfria hyresgäster.", neighbourhood="Ryd", studentcity="Linköping",
          streetaddress="Rydsvägen", streetnumber="248C", city="Linköping", postalcode="584 34", country="Sverige", squaremetres="20", price="400",
-         beds="1", accommodationtype="Korridorsrum", host_id="2", startdate=datetime.date(2021, 4, 17), enddate=datetime.date(2021, 4, 18))
+         beds="1", accommodationtype="Korridorsrum", host_id="2", startdate=datetime.date(2021, 4, 17), enddate=datetime.date(2021, 4, 30))
 db.session.add(ad8)
 db.session.commit()
 attributes8 = Attributes(wifi=True, sauna=True, dishwasher=False, washingmachine=True, bike=True, ad_id=ad8.id)
@@ -156,7 +156,7 @@ db.session.commit()
 
 ad9 = Ad(title="Litet korridorsrum", description="Litet och trevligt inrett korridorsrum som ligger i Ryd. Uthyres till någon lugn och skötsam, ingen fest tillåten. Uthyres endast till rökfria och djurfria hyresgäster.", neighbourhood="Ryd", studentcity="Linköping",
          streetaddress="Rydsvägen", streetnumber="258B", city="Linköping", postalcode="584 34", country="Sverige", squaremetres="20", price="500",
-         beds="1", accommodationtype="Korridorsrum", host_id="2", startdate=datetime.date(2021, 4, 17), enddate=datetime.date(2021, 4, 18))
+         beds="1", accommodationtype="Korridorsrum", host_id="2", startdate=datetime.date(2021, 4, 15), enddate=datetime.date(2021, 5, 5))
 db.session.add(ad9)
 db.session.commit()
 attributes9 = Attributes(wifi=True, sauna=False, dishwasher=True, washingmachine=True, bike=False, ad_id=ad9.id)
@@ -168,7 +168,7 @@ db.session.commit()
 
 ad10 = Ad(title="Korridorsrum med dubbelsäng", description="Ett korridorsrum i Ryd som har dubbelsäng, perfekt för ett par som är på besök över en festhelg. Uthyres endast till rökfria och djurfria hyresgäster.", neighbourhood="Ryd", studentcity="Linköping",
          streetaddress="Rydsvägen", streetnumber="240A", city="Linköping", postalcode="584 34", country="Sverige", squaremetres="20", price="550",
-         beds="2", accommodationtype="Korridorsrum", host_id="2", startdate=datetime.date(2021, 4, 17), enddate=datetime.date(2021, 4, 18))
+         beds="2", accommodationtype="Korridorsrum", host_id="2", startdate=datetime.date(2021, 4, 17), enddate=datetime.date(2021, 5, 18))
 db.session.add(ad10)
 db.session.commit()
 attributes10 = Attributes(wifi=True, sauna=False, dishwasher=True, washingmachine=False, bike=True, ad_id=ad10.id)
