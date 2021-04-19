@@ -20,13 +20,6 @@ $(document).ready(function () {
         go_register();
     });
 
-    //Burger menu: Go login
-    $("#menu").on("click", "#login_button", function (e) {
-        e.preventDefault();
-        console.log("ok");
-        go_login();
-    });
-
     //Burger menu: Go to my page
     $("#menu").on("click", "#my_page_button", function (e) {
         e.preventDefault();
@@ -37,12 +30,6 @@ $(document).ready(function () {
     $("#menu").on("click", "#help_button", function (e) {
         e.preventDefault();
         go_help_page();
-    });
-
-    //Burger menu: Log Out
-    $("#menu").on("click", "#logout_button", function (e) {
-        e.preventDefault();
-        logout();
     });
 
     //Burger menu: Go to about us page
@@ -58,6 +45,20 @@ $(document).ready(function () {
         $("#close-menu").prop("checked", false);
     });
 
+
+    //Burger menu: Go login
+    $("#menu").on("click", "#login_button", function (e) {
+        e.preventDefault();
+        console.log("ok");
+        go_login();
+    });
+        
+    //Burger menu: Log Out
+    $("#menu").on("click", "#logout_button", function (e) {
+        e.preventDefault();
+        logout();
+        });
+
     //Attributes: Dropdown checklist
     $("#content").on("click", ".anchor", function (e) {
      var checkList = $("#attributes_dropdown")[0];
@@ -68,6 +69,7 @@ $(document).ready(function () {
      checkList.classList.add('visible');
     }
 });
+
 
     //Go to search page
     $("#content").on("click", "#home_search_submit", function (e) {
@@ -1155,14 +1157,18 @@ function load_burger() {
     if (sessionStorage.getItem('auth') == null) {
         $("#menu").prepend('<a href=""><li id="register_button" class="hide-menu" >Bli medlem</li></a>'
             + '<a href=""><li id="login_button" class="hide-menu" >Logga in</li></a>')
-    } else {
-        $("#menu").prepend('<a href=""><li id="my_page_button" class="hide-menu">Mina sidor</li></a>'
-            + '<a href=""><li id="logout_button" class="hide-menu" >Logga ut</li></a>')
-    }
-
-    $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu" > Vilka är vi</li></a>'
+        $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu" > Vilka är vi</li></a>'
         + '<a href=""><li id="contact_button" class="hide-menu" >Kontakta oss</li></a>'
         + '<a href=""><li id="help_button" class="hide-menu" >Hur funkar det</li></a>')
+    } else {
+        $("#menu").prepend('<a href=""><li id="my_page_button" class="hide-menu">Mina sidor</li></a>')
+        $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu" > Vilka är vi</li></a>'
+        + '<a href=""><li id="contact_button" class="hide-menu" >Kontakta oss</li></a>'
+        + '<a href=""><li id="help_button" class="hide-menu" >Hur funkar det</li></a>'
+        + '<a href=""><li id="logout_button" class="hide-menu" >Logga ut</li></a>')
+    }
+
+
 }
 
 //Function for calling all date loaders
