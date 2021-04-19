@@ -22,8 +22,10 @@
 
 <body>
   <!-- Navbar: En hamburgarmeny + navbar -->
-  <nav class="navbar navbar-style">
+  <nav class="navbar navbar-style hide-menu">
     <a href="" class="navbar-brand hide-menu"><img id="navbar-logo" src="Media/Unihome-logga.png"></a>
+    <a href="" id="ad_accomodation_nav" class="d-none d-md-block">Lägg upp boende</a>
+    <a href="" id="sign_in_nav" class="d-none d-md-block">Logga in</a>
     <div id="menuToggle" class="burger-menu">
       <!--
             A fake / hidden checkbox is used as click reciever,
@@ -51,11 +53,11 @@
 
 
 
-  <div id="content" class="container-fluid hide-menu"></div>
+  <div id="content" class="hide-menu"></div>
 
 
   <!-- Footern: Vi skriver ut en lista med kontaktuppgifter i vår container-->
-  <div class="footer container-fluid pt-5 pb-5 hide-menu">
+  <div class="footer pt-5 pb-5 hide-menu">
     <!-- <div class="row text-center justify-content-center">
       <div class ="col-3"> 
         <ul class="no-dot-list">
@@ -90,7 +92,7 @@
       </div>
       <div class="col-3 offset-1 col-lg-1 offset-lg-0">
         <ul class="no-dot-list">
-          <li id=who-are-we><a href="">Vilka är vi</a></li>
+          <li id=who-are-we><a href="">Om oss</a></li>
           <li id=how-does-it-work><a href="">Hur funkar det</a></li>
           <li id=contact-us><a href="">Kontakta oss</a></li>
           <!--<li><a href="">Jobba hos oss</a></li>
@@ -114,12 +116,15 @@
 
   <!-- Home page view -->
   <script id="home_page" type="text/html">
-    <div id="home_container" class="container-fluid">
+    <div id="home_container">
       <div id="header">
+        <video playsinline autoplay muted loop id="bgvid">
+          <source src="media/production ID_3770033.mp4" type="video/mp4">
+        </video>
         <div class="container">
-          <div class="row align-items-center justify-content-center" id="home_search">
+          <div class="row align-items-center justify-content-center">
             <form class="col-12">
-              <div class="form-row align-items-center">
+              <div class="form-row align-items-center" id="home_search">
                 <div class="form-group col-9 col-xl-5">
                   <select class="form-control no-border" id="home_select_area">
                     <option>Område</option>
@@ -175,7 +180,7 @@
         <div id="ryd"><a href="" id="map_ryd"><h5>Ryd</h5></a></div>
         <div id="valla"><a href="" id="map_valla"><h5>Valla</h5></a></div>
         <div id="gottfridsberg"><a href="" id="map_gottfridsberg"><h5>Gottfridsberg</h5></a></div>
-        <div id="vasastaden"><a href="" id="map_vasastaden"><h5>Vasastaden</h5></a></div>
+        <div id="vasastan"><a href="" id="map_vasastan"><h5>Vasastan</h5></a></div>
         <div id="lambohov"><a href="" id="map_lambohov"><h5>Lambohov</h5></a></div>
         <div id="area_facts" class="d-none d-lg-block"></div>
       </div>
@@ -222,12 +227,15 @@
       <div class="col-12">
         <p>Ryd ligger i utkanten av Linköping och har nära till både mataffär och universitet. Rydskogen ger bra möjligheter till motion, inte minst tack vare frisbeegolfbanan som finn tillgänglig för alla.</p>
       </div>
+      <div class="col-12">
+        <a href="" id="go_area" data-area="Ryd">Hitta bostäder i Ryd</a>
+      </div>
       </div>
     </script>
   <script id="default_view" type="text/html">
       <div class="facts_content row p-4">
       <div class="col-12 mb-3">
-        <h1>Våra områden</h1>
+        <h1>Våra populära områden i Linköping</h1>
       </div>
       <div class="col-12">
         <p>Klicka på ett av de inringade områdena för att få läsa mer om det.</p>
@@ -241,8 +249,10 @@
       </div>
       <div class="col-12">
         <p>Lambohov är en pittoresk stadsdel i sydvästra linköping som passar dig som vill ha lite mer lugn och ro i ditt besök. Här huserar småbarnsfamiljer mest, men närheten till skytte-c gör att en rivig studentfest aldrig är mer än 5 minuters cykelfärd bort</p>
-
-        </div>
+      </div>
+      <div class="col-12">
+        <a href="" id="go_area" data-area="Lambohov">Hitta bostäder i Lambohov</a>
+      </div>
       </div>
     </script>
   <script id="valla_view" type="text/html">
@@ -253,15 +263,21 @@
       <div class="col-12">
         <p>Valla passar dig som vill ha nära till allt. Vare sig du vill till universitetet, universitetssjukhuset eller in till stan så är du aldrig mer än en rask promenad bort. Här stoltserar även gamla linköping: ett måste för den kulturelle livsnjutaren eller för dig som bara vill ta en glass i solen vid friluftsmuseet.</p>
       </div>
+      <div class="col-12">
+        <a href="" id="go_area" data-area="Valla">Hitta bostäder i Valla</a>
+      </div>
       </div>
     </script>
-  <script id="vasastaden_view" type="text/html">
+  <script id="vasastan_view" type="text/html">
       <div class="facts_content row p-4">
       <div class="col-12 mb-3">
-        <h1>Vasastaden</h1>
+        <h1>Vasastan</h1>
       </div>
       <div class="col-12">
-        <p>Vasastaden är för dig som vill bo nära linköping city. På bara några promenadstegs avstånd hittar du alla de stora butikskedjorna, de trendigaste galleriorna och de hetaste studentklubbarna.</p>
+        <p>Vasastan är för dig som vill bo nära linköping city. På bara några promenadstegs avstånd hittar du alla de stora butikskedjorna, de trendigaste galleriorna och de hetaste studentklubbarna.</p>
+      </div>
+      <div class="col-12">
+        <a href="" id="go_area" data-area="Vasastan">Hitta bostäder i Vasastan</a>
       </div>
       </div>
     </script>
@@ -272,6 +288,9 @@
       </div>
       <div class="col-12">
         <p>I gemytliga gottfridsberg får du både närhet till universitetet och till linköpings studenters favoritklubb: Flamman. För den naturintresserade ligger Rydsskogen på bara ett stenkasts avstånd.</p>
+      </div>
+      <div class="col-12">
+        <a href="" id="go_area" data-area="Gottfridsberg">Hitta bostäder i Gottfridsberg</a>
       </div>
       </div>
     </script>
@@ -292,15 +311,17 @@
               <option>Typ av boende</option>
             </select>            
           </div>
-            <!-- <select class="form-control no-border" id="search_page_select_attr">
-              <option>Attribut</option>
-            </select>             -->
-          <div class="col-2 pt-1">
-            <label for="search_page_select_start">Inflytt</label>
+          <div class="col-2">
+            <select class="form-control no-border" id="search_page_select_attr">
+              <option>Bekvämligheter</option>
+            </select>            
+          </div>
+          <div class="col-2 search_date">
+            <label for="search_page_select_start" class="d-none d-xl-inline">Inflytt</label>
             <input type="date" id="search_page_select_start" class="no-border">
           </div>
           <div class="col-2 search_date">
-            <label for="search_page_select_end" class="d-none d-xxl-inline">Utflytt</label>
+            <label for="search_page_select_end" class="d-none d-xl-inline">Utflytt</label>
             <input type="date" id="search_page_select_end" class="no-border">
           </div>
           <div class="col-2">
@@ -535,19 +556,6 @@
     </div>
   </script>
 
-  <script id="login_success" type="text/html">
-    <div id="login_success_container" class="container">
-      <div class="row justify-content-center align-items-center">
-        <div class="col-8">
-          <h2 id="success_name"></h2>
-          <h3>Du är nu inloggad!</h3>
-        </div>
-      </div>
-    </div>
-  </script>
-
-
-
   <!-- My page view -->
   <script id="my_page" type="text/html">
     <div id = "my_page_background">
@@ -647,7 +655,7 @@
     <div id="about_us_page_container">
       <div id="about_us_header">
         <div class="row justify-content-center">
-          <div class="col-12"><h1>Vilka är vi?</h1></div>
+          <div class="col-12"><h1>Om oss</h1></div>
         </div>
       </div>
       <div class="row justify-content-center our_start align-items-center">
@@ -670,7 +678,7 @@
       </div>
       <div class="row justify-content-center">
         <div class="col-10">
-          <h2>Vilka är vi?</h2>
+          <h2>Om oss</h2>
           <div class="row align-items-center justify-content-center">
             <div class="col-12 col-xl-4">
               <p>UniHomes grundare</p>
@@ -743,23 +751,23 @@
           <div class="form-group">
             <label class="required ad_label" for="titleInput_id">Rubrik</label>
             <br>
-            <input type="title" class="ad_input" id="titleInput_id" size="50" placeholder="Exempel: Korridorsrum 5 min från Campus" required>
+            <input type="title" class="ad_input create_ad_required" id="titleInput_id" size="50" placeholder="Exempel: Korridorsrum 5 min från Campus" required>
           </div>
           <br>
           <div class="form-group">
             <label class="ad_label required" for="descriptionInput_id">Beskrivning</label>
             <br>
-            <textarea class="ad_input" id="descriptionInput_id" rows="3" cols="50" placeholder="Beskriv ditt boende här..." required></textarea>
+            <textarea class="ad_input create_ad_required" id="descriptionInput_id" rows="3" cols="50" placeholder="Beskriv ditt boende här..." required></textarea>
           </div>
           <br>
           <div class="form-group">
-            <label class="ad_label required" for="areaInput_id">Område</label>
+            <label class="ad_label required" for="areaInput_id">Område i Linköping</label>
             <select class="ad_input" id="areaInput_id" required>
               <option selected="selected"> Välj område </option>
               <option>Ryd</option>
               <option>Valla</option>
               <option>Innerstaden</option>
-              <option>Vasastaden</option>
+              <option>Vasastan</option>
               <option>Vallastaden</option>
               <option>Lambohov</option>
               <option>Skäggetorp</option>
@@ -884,7 +892,7 @@
         
                     <!-- Upload image input-->
                     <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white ">
-                        <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0 ad_input">
+                        <input id="upload" type="file" onchange="readURL(this); showFileName(this);" class="form-control border-0 ad_input">
                         <label id="upload-label" for="upload" class="font-weight-light text-muted">Ingen fil vald ännu</label>
                         <div class="input-group-append">
                             <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload"></i>Välj bildfil</label>
@@ -1007,25 +1015,19 @@
         <div class = "col-12 col-lg-7 read_more_description">
           <div class="row justify-content-center attributes">
             
-            <div class="col-3">
-              <div class="read_more_squaremeters">
+            <div class="col-3 read_more_squaremeters">
                 <i class="fas fa-home"></i>
                 <h5 id="read_more_ad_squaremetres"></h5>
-              </div>
             </div>
   
-            <div class="col-3">
-                <div class= "read_more_beds">
+            <div class="col-3 read_more_beds">
                   <i class="fas fa-bed"></i>
                   <h5 id="read_more_ad_beds"></h5>
-               </div>
             </div>
   
-            <div class="col-3">
-              <div class= "read_more_accomodationtype">
+            <div class="col-3 read_more_accomodationtype">
                 <i class="fas fa-building"></i>
                 <h5 id="read_more_ad_accommodationtype"></h5>
-              </div>
             </div>   
           </div>
           <br>
@@ -1081,15 +1083,16 @@
               <h5 id="read_more_ad_attributes"></h5>
               <div class= "read_more_price">
                 <div class="row justify-content-center mt-5">
-
                   <h4 class="col-10" id="read_more_ad_price" ></h4>
                 </div>
               </div>
               <div class="row mt-4" id="read_more_reserve">
                 <div class="col-6">
+                  <label for="read_more_select_start" class="d-none d-xl-inline">Inflytt</label>
                   <input type="date" id="read_more_select_start" style ="font-size: 20px;" class="no-border">
                 </div>
                 <div class="col-6">
+                  <label for="read_more_select_end" class="d-none d-xl-inline">Utflytt</label>
                   <input type="date" id="read_more_select_end" style ="font-size: 20px;" class="no-border">
                 </div>
                 <button id="reservation_button" class="btn btn-success rounded-pill mt-3" data-toggle="modal" data-target="#modal_reservation">Reservera</button>
@@ -1136,7 +1139,7 @@
 
   <!-- Help view -->
   <script id="help_page" type="text/html">
-    <div id="help_page_container" class="container-fluid">
+    <div id="help_page_container">
     </div>
   </script>
 
