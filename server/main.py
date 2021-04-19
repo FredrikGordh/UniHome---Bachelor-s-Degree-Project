@@ -408,7 +408,7 @@ def ads():
             filter.append(Ad.neighbourhood == area)
         if type != "Typ av boende":
             filter.append(Ad.accommodationtype == type)
-        if attrib != "Attribut":
+        if attrib != "Bekvämligheter":
             for a in attrib2:
                 filter.append(Ad.attributes.any(
                     getattr(Attributes, a)) == True)
