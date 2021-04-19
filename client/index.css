@@ -369,12 +369,14 @@ video {
 
 #home_search {
   background-color: white;
-  border-radius: 37px;
+  border-radius: 55px;
   margin: 15px auto;
   width: 60vw;
-  height: 8vh;
-  min-height: 60px;
-  max-height: 100px;
+  padding: 15px 10px;
+}
+
+#attributes_dropdown {
+  color: black;
 }
 
 /* #home_search_filters {
@@ -563,6 +565,7 @@ video {
   mask-size: cover;
 }
 
+
 #area_facts {
   position: absolute;
   top: 100px;
@@ -719,6 +722,11 @@ video {
 
 /* Klasser */
 
+.bekvamligheter {
+  margin-left: 50%;
+  transform: translateX(-40%);
+}
+
 .our_start {
   height: 80vh;
 }
@@ -758,6 +766,13 @@ video {
   background-size: cover;
   margin: 30px auto;
 }
+
+/* 
+Används när ines checkbox klasser används
+.search_checkbox {
+  margin-left: 6%;
+  z-index: 20;
+} */
 
 .search_date {
   background-color: white;
@@ -905,8 +920,8 @@ video {
 
 .search_button {
   float: right;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50px;
 }
 
@@ -1390,6 +1405,8 @@ button:disabled {
   display: block;
 }
 
+}
+
 .search_page_container {
   background-color: #e7d8ca;
 }
@@ -1419,14 +1436,14 @@ button:disabled {
 }*/
 
 /* jhbjknjnjhbjkbjb     Ines testar checkboxes        jhbjhbjbljhbllhjblj */
-
-/* Base for label styling */
+/* 
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
   position: absolute;
   left: 0;
   opacity: 0.01;
 }
+
 [type="checkbox"]:not(:checked) + label,
 [type="checkbox"]:checked + label {
   position: relative;
@@ -1436,7 +1453,6 @@ button:disabled {
   cursor: pointer;
 }
 
-/* checkbox aspect */
 [type="checkbox"]:not(:checked) + label:before,
 [type="checkbox"]:checked + label:before {
   content: "";
@@ -1453,13 +1469,12 @@ button:disabled {
   transition: all 0.275s;
 }
 
-/* checked mark aspect */
 [type="checkbox"]:not(:checked) + label:after,
 [type="checkbox"]:checked + label:after {
   content: "✕";
   position: absolute;
   top: 0.525em;
-  left: 0.18em;
+  left: 3px;
   font-size: 1.375em;
   color: #37abab;
   line-height: 0;
@@ -1467,7 +1482,6 @@ button:disabled {
   transition: all 0.2s;
 }
 
-/* checked mark aspect changes */
 [type="checkbox"]:not(:checked) + label:after {
   opacity: 0;
   -webkit-transform: scale(0) rotate(45deg);
@@ -1484,7 +1498,6 @@ button:disabled {
   background-color: violet;
 }
 
-/* Disabled checkbox */
 [type="checkbox"]:disabled:not(:checked) + label:before,
 [type="checkbox"]:disabled:checked + label:before {
   box-shadow: none;
@@ -1500,11 +1513,10 @@ button:disabled {
   color: #aaa;
 }
 
-/* Accessibility */
 [type="checkbox"]:checked:focus + label:before,
 [type="checkbox"]:not(:checked):focus + label:before {
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 6px rgba(9, 77, 77, 0.2);
-}
+} */
 
 .cancel_button_modal {
   height: 40px;
