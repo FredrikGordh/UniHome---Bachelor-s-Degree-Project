@@ -1326,7 +1326,7 @@ function load_register_dates() {
 
 //Function for loading in all selectable years in register form
 function load_years(container) {
-    var year = new Date().getFullYear();
+    var year = 2003;
     for (i = 0; i < 100; i++) {
         $(container).append("<option>" + year + "</option>")
         --year;
