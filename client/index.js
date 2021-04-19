@@ -156,7 +156,7 @@ $(document).ready(function () {
     });
 
     //Go register
-    $("#content").on("click", "#help_register_button", function (e) {
+    $("#content").on("click", "#help_register_button, #get_to_register", function (e) {
         e.preventDefault();
         go_register();
         $('html, body').animate({
@@ -169,9 +169,7 @@ $(document).ready(function () {
     $("#content").on("click", "#edit_form_button", function (e) {
         e.preventDefault();
         submit_edit_form();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+ 
     });
 
     //Submit register form by pressing ENTER
@@ -292,6 +290,17 @@ $(document).ready(function () {
         $('#modal_reservation').modal('hide');
         $('.modal-backdrop').hide();
         go_search();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
+    });
+
+    //Route to my pages from modal save changes
+       $("#content").on("click", "#save_changes_to_search_button", function (e) {
+        e.preventDefault();
+        $('#modal_save_changes').modal('hide');
+        $('.modal-backdrop').hide();
+        go_my_page();
         $('html, body').animate({
             scrollTop: $("#scrolltop").offset().top
         }, 500);
@@ -1114,8 +1123,8 @@ function edit_user_request(user) {
             temp.user = user
             temp = JSON.stringify(temp)
             sessionStorage.setItem('auth', temp)
-            go_my_page();
-            load_account_info();
+            //go_my_page();
+            //load_account_info();
         }
     })
 }
