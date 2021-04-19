@@ -122,7 +122,15 @@
         <video playsinline autoplay muted loop id="bgvid">
           <source src="media/production_ID_3770033.mp4" type="video/mp4">
         </video>
+        
         <div class="container">
+          <div class="row home_vision_div">
+            <div class="col-12">
+              <h1 id="home_vision">
+                för studenter, av studenter.
+              </h1>
+            </div>
+            </div>
           <div class="row align-items-center justify-content-center">
             <div class="col-10">
               <div class="row align-items-center justify-content-center">
@@ -193,20 +201,20 @@
         <div class="row mt-5 justify-content-between">
           <div class="col-7 col-xl-3 testamonial p-4 mb-5 mt-5">
             <div class="img3"></div>
-            <h2>Peter Basch</h2>
-            <h3>Nationalekonomi, SU</h3>
-            <p>"Allt gick väldigt smidigt och jag är mycket nöjd med hur mitt linköpingsäventyr utspelade sig!"</p>
+            <h2>Peter</h2>
+            <h3>Lärarprogrammet, UU</h3>
+            <p>"Allt gick väldigt smidigt och jag är mycket nöjd med hur mitt Linköpingsäventyr utspelade sig!"</p>
           </div>
           <div class="col-7 col-xl-3 testamonial p-4 mb-5 mt-5">
             <div class="img1"></div>
-            <h2>Emelie Fogelgremel</h2>
-            <h3>Pol-Kand, Uppsala Universitet</h3>
+            <h2>Beatrice</h2>
+            <h3>Rymdteknik, LTU</h3>
             <p>"Unihome är snabba, professionella och flexibla. De löste mina behov snabbt och var vid min sida hela vägen!"</p>
           </div>
           <div class="col-7 col-xl-3 testamonial p-4 mb-5 mt-5">
             <div class="img2"></div>
-            <h2>Joel Dizenberg</h2>
-            <h3>Teknisk Fysik, Chalmers</h3>
+            <h2>Erik</h2>
+            <h3>Kemiteknik, CTH</h3>
             <p>"Jag kommer aldrig använda någon annan uthyrningssida än Unihome någonsin igen!"</p>
           </div>
         </div>
@@ -391,111 +399,90 @@
 
   <!-- Register view -->
   <script id="register_page" type="text/html">
-    <div id="register_container" class="container">
-      <div class="row justify-content-center">
-      <form>
-      <div class="row justify-content-center">
-        <h2>Bli medlem</h2>
-      </div>
-        <div class="form-group"><br>
-          <div class="row justify-content-center">
-          <label class="required ad_label" for="name_register">För och Efternamn</label>
-        </div>
+    <div class="row ">
+      <div class="col-12 col-lg-5" id="signup_image"> </div>
+      
+      <div class="offset-1 col-12 col-lg-6 justify-content-center align-items-center">
+        <div id="register_container">
+          <form>
+            <h2>Bli medlem</h2>
+
+            <div class="form-group"><br>
+              <label class="required ad_label" for="name_register">För och Efternamn</label>
+              <br>
+              <input type="text" class=" ad_input" id="name_register" placeholder="">
+            </div>
+            <div class="form-group">
+            <br>
+
+            <label class="required ad_label" for="gender_register">Kön</label>
+  
+            <div class="row justify-content-center">
+              <select class="ad_input form-control" id="gender_register">
+                <option>Välj en...</option>
+                <option>Kvinna</option>
+                <option>Man</option>
+                <option>Icke-binär</option>
+              </select>
+            </div>
+          </div>
           <br>
-          <div class="row justify-content-center">
-          <input type="text" class=" ad_input" id="name_register" placeholder="">
-        </div>
-        </div>
-        <div class="row justify-content-center">
-        <div class="form-row">
+
+          <div class="form-row">
+            <div class="form-group col-3">
+              <label class="required ad_label" for="year_register">Födelseår</label>
+                <select class="ad_input form-control" id="year_register">
+                  <option>Välj ett...</option>
+                </select>            
+            </div>
+          
+            <div class="form-group col-3">
+              <label class="required ad_label" for="month_register">Månad</label>
+                <select class=" ad_input form-control" id="month_register">
+                  <option>Välj en...</option>
+                </select>  
+            </div>
+
+            <div class="form-group col-3">
+              <label class="required ad_label" for="day_register">Dag</label>
+                <select class="ad_input form-control" id="day_register">
+                  <option>Välj en...</option>
+                </select>  
+            </div>
+          </div>
+          <br>
+
         <div class="form-group">
-          <br>
-          <br>
-          <div class="row justify-content-center">
-          <label class="required ad_label" for="gender_register">Kön</label>
-        </div>
-        <div class="row justify-content-center">
-          <select class="ad_input form-control" id="gender_register">
-            <option>Välj en...</option>
-            <option>Kvinna</option>
-            <option>Man</option>
-            <option>Annat</option>
-          </select>
-        </div>
-        </div>
-      </div>
-    </div>
-        <div class="form-row">
-          <div class="form-group col-4">
-            <br>
-            <br>
-            <label class="required ad_label" for="year_register">Födelseår</label>
-            <select class="ad_input form-control" id="year_register">
-              <option>Välj ett...</option>
-            </select>            
-          </div>
-          <div class="form-group col-4">
-            <br>
-            <br>
-            <label class="required ad_label" for="month_register">Månad</label>
-            <select class=" ad_input form-control" id="month_register">
-              <option>Välj en...</option>
-            </select>  
-          </div>
-          <div class="form-group col-4">
-            <br>
-            <br>
-            <label class="required ad_label" for="day_register">Dag</label>
-            <select class="ad_input form-control" id="day_register">
-              <option>Välj en...</option>
-            </select>  
-          </div>
-        </div>
-        <div class="form-group">
-          <br>
-          <br>
-          <div class="row justify-content-center">
           <label class="required ad_label" for="phone_register">Telefon</label>
-          </div>
           <br>
-          <div class="row justify-content-center">
           <input type="text" class="ad_input " id="phone_register" placeholder="">
-          </div>
         </div>
+        <br>
+
         <div class="form-group">
-          <br>
-          <br>
-          <div class="row justify-content-center">
           <label class="required ad_label" for="email_register">Email</label>
-        </div>
           <br>
-          <div class="row justify-content-center">
           <input type="email" class="ad_input " id="email_register" placeholder="">
         </div>
-        </div>
+        <br>
+
         <div class="form-group">
-          <br>
-          <br>
-          <div class="row justify-content-center">
           <label class="required ad_label" for="password_login">Lösenord</label>
-        </div>
           <br>
-          <div class="row justify-content-center">
           <input type="password" class="ad_input " id="password_register" placeholder="">
         </div>
-        </div>
         <br>
+
         <div id = "register_failed_container"></div>
-        <div class="row justify-content-center">
-          <div class="col-5">
+
+          <div class="col-4">
             <button type="button" id="register_form_button" class="btn btn-primary rounded-pill">Registrera</button>
           </div>
+          <div>Har du redan ett konto? Logga in genom att klicka <span class = "clickable_class" id = "get_to_login">här</span></div>
         </div>
-        <br>
-        <div>Har du redan ett konto? Logga in genom att klicka <span class = "clickable_class" id = "get_to_login">här</span></div>
       </form>
     </div>
-    </div>
+  </div>
   </script>
 
   <!-- Edit bio view -->
@@ -544,23 +531,51 @@
         </div>
         <div class="row justify-content-center">
           <div class= "col-3">
-            <button type="button" id="edit_form_button" class="btn btn-primary rounded-pill">Spara</button>
+            <button type="button" id="edit_form_button" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#modal_save_changes">Spara</button>
+                         <!-- Modal -->
+                         <div id="modal_save_changes" class="modal fade" role="dialog">
+                          <div class="modal-dialog">
+                        
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <div class="row">
+                                <div class="col-2">
+                                  <button id ="save_changes_to_search_button" type="button" class="btn btn-default cancel_button_modal">
+                                    <h3>&times;</h3>
+                                  </button>
+                                </div>
+                                <div class=" col-10  justify-content-center">
+                                  <h3 class="modal-title"> Sparade ändringar</h3>
+                                </div>
+                              </div>
+                            </div>
+                              <div class="modal-body">
+                                <p>Dina ändringar har nu sparats.</p>
+                              </div>
+                            
+                          </div>
+                          </div>
+                         </div>
           </div>
         </div>  
         <br>
         <!-- <button type="button" id="cancel_edit_form_btn" class="btn btn-primary">Avbryt!</button> -->
       </form>
+      
     </div>
   </script>
-
   <!-- Login view -->
   <script id="login_page" type="text/html">
-    <div id="login_container" class="container">
-      <div class="row justify-content-center">
-      <h2>Logga in</h2>
-      </div>
-      <br>
-      <div class="row justify-content-center">
+    <div id="login_container">
+      <div class="row">
+        <div class="col-12 col-lg-5" id ="login_image">
+        </div>
+
+        <div class="offset-1 col-12 col-lg-6 justify-content-center align-items-center" id="login_container_box">
+          <h2>Logga in</h2>
+         <br>
+        
       <form>
         <div class="form-group">
           <label class="ad_label" for="email_login">Email</label>
@@ -574,12 +589,18 @@
           <input type="password" class="ad_input" size="50" id="password_login" placeholder="Lösenord">
         </div>
         <div id = "login_failed_container"></div>
-        <div class="row justify-content-center">
+        <div class="row">
           <div class="col-4">
               <button type="button" id="login_form_button" class="btn btn-primary rounded-pill">Logga in</button>
           </div>
+        
         </div>
+        <br>
+        <div>Har du inget konto? Bli medlem genom att klicka <span class = "clickable_class" id = "get_to_register">här</span></div>
+
       </form>
+    </div>
+    </div>
     </div>
     </div>
   </script>
@@ -621,7 +642,7 @@
       <br>
       <div class="row justify-content-center">
         <div class="col-3">
-        <button type="button" class="btn btn-primary rounded-pill" id = "log_in_from_registered_view>" onclick = go_login()>Till logga in</button>
+        <button type="button" class="btn btn-primary rounded-pill" id = "log_in_from_registered_view>" onclick = go_login()>Logga in</button>
       </div>
       </div>
       </div>
@@ -1130,15 +1151,17 @@
                 
                     <!-- Modal content-->
                     <div class="modal-content">
-                      <div class="modal-header row">
+                      <div class="modal-header">
+                      <div class="row">
                         <div class="col-2">
-                        <button id ="reservation_to_search_button" type="button" class="btn btn-default">
+                        <button id ="reservation_to_search_button" type="button" class="btn btn-default cancel_button_modal">
                           <h3>&times;</h3>
                         </button>
                       </div>
                       <div class=" col-10  justify-content-center">
                         <h3 class="modal-title "> Reservationen lyckades</h3>
                       </div>
+                    </div>
                     </div>
                       <div class="modal-body">
                         <p>Du har nu en reservation på följande boende. Du kan hantera dina reservationer på dina sidor. 

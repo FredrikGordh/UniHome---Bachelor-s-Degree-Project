@@ -155,7 +155,7 @@ $(document).ready(function () {
     });
 
     //Go register
-    $("#content").on("click", "#help_register_button", function (e) {
+    $("#content").on("click", "#help_register_button, #get_to_register", function (e) {
         e.preventDefault();
         go_register();
         $('html, body').animate({
@@ -168,9 +168,7 @@ $(document).ready(function () {
     $("#content").on("click", "#edit_form_button", function (e) {
         e.preventDefault();
         submit_edit_form();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+ 
     });
 
     //Submit register form by pressing ENTER
@@ -291,6 +289,17 @@ $(document).ready(function () {
         $('#modal_reservation').modal('hide');
         $('.modal-backdrop').hide();
         go_search();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
+    });
+
+    //Route to my pages from modal save changes
+       $("#content").on("click", "#save_changes_to_search_button", function (e) {
+        e.preventDefault();
+        $('#modal_save_changes').modal('hide');
+        $('.modal-backdrop').hide();
+        go_my_page();
         $('html, body').animate({
             scrollTop: $("#scrolltop").offset().top
         }, 500);
@@ -1116,8 +1125,8 @@ function edit_user_request(user) {
             temp.user = user
             temp = JSON.stringify(temp)
             sessionStorage.setItem('auth', temp)
-            go_my_page();
-            load_account_info();
+            //go_my_page();
+            //load_account_info();
         }
     })
 }
@@ -1295,8 +1304,8 @@ function load_burger() {
     $("#menu").empty();
 
     $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu">Om oss</li></a>'
-        + '<a href=""><li id="contact_button" class="hide-menu">Kontakta oss</li></a>'
-        + '<a href=""><li id="help_button" class="hide-menu">Hur funkar det</li></a>')
+            + '<a href=""><li id="contact_button" class="hide-menu">Kontakta oss</li></a>'
+            + '<a href=""><li id="help_button" class="hide-menu">Så fungerar det</li></a>')
 
     if (sessionStorage.getItem('auth') == null) {
         $("#menu").prepend('<a href=""><li id="register_button" class="hide-menu">Bli medlem</li></a>'
@@ -1306,7 +1315,7 @@ function load_burger() {
             + '<a href=""><li id="logout_button" class="hide-menu">Logga ut</li></a>')
     }
 
-    $("#menu").prepend('<a href=""><li id="home_button" class="hide-menu">Hem</li></a>'
+    $("#menu").prepend('<a href=""><li id="home_button" class="hide-menu">Startsida</li></a>'
         + '<a href=""><li id="burger_add_accomodation" class="hide-menu d-block d-md-none">Lägg upp boende</li></a>')
 }
 
@@ -1319,7 +1328,7 @@ function load_register_dates() {
 
 //Function for loading in all selectable years in register form
 function load_years(container) {
-    var year = new Date().getFullYear();
+    var year = 2003;
     for (i = 0; i < 100; i++) {
         $(container).append("<option>" + year + "</option>")
         --year;
