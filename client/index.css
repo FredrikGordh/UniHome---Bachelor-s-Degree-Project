@@ -1378,6 +1378,7 @@ button:disabled {
 
 .dropdown-check-list.visible .items {
   display: block;
+}
 
 .search_page_container {
   background-color: #e7d8ca;

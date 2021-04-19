@@ -5,6 +5,9 @@ var saved_input;
 
 $(document).ready(function () {
     go_home();
+
+    
+
     if (sessionStorage.getItem('auth')) {
         $("#sign_in_nav").removeClass('d-md-block');
         $("#sign_in_nav").addClass('d-none');
@@ -16,41 +19,64 @@ $(document).ready(function () {
         go_home();
     });
 
+    $('html, body').animate({
+        scrollTop: $("#scrolltop").offset().top
+    }, 1000);
+    
+
     //Using .on()-function since we need to check if the content of #content is loaded before checking for events
 
     //Burger menu: Go register
     $("#menu").on("click", "#register_button", function (e) {
         e.preventDefault();
         go_register();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     $("#menu").on("click", "#home_button", function (e) {
         e.preventDefault();
         go_home();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Burger menu: Go login
     $("#menu").on("click", "#login_button", function (e) {
         e.preventDefault();
         go_login();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Burger menu: Go to my page
     $("#menu").on("click", "#my_page_button", function (e) {
         e.preventDefault();
         go_my_page();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Burger menu: Go to help page
     $("#menu").on("click", "#help_button", function (e) {
         e.preventDefault();
         go_help_page();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Burger menu: Go to about us page
     $("#menu").on("click", "#about_us_button", function (e) {
         e.preventDefault();
         go_about_us_page();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Burger menu: Go to contact page
@@ -58,6 +84,9 @@ $(document).ready(function () {
         e.preventDefault();
         go_contact_page();
         $("#close-menu").prop("checked", false);
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
 
@@ -66,12 +95,18 @@ $(document).ready(function () {
         e.preventDefault();
         console.log("ok");
         go_login();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
         
     //Burger menu: Log Out
     $("#menu").on("click", "#logout_button", function (e) {
         e.preventDefault();
         logout();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
         });
 
     //Attributes: Dropdown checklist
@@ -90,12 +125,18 @@ $(document).ready(function () {
     $("#content").on("click", "#home_search_submit", function (e) {
         e.preventDefault();
         submit_home_search_form();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Go to login page
     $("#content").on("click", "#get_to_login, #help_login_button", function (e) {
         e.preventDefault();
         go_login();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Go to login page from registered 
@@ -109,12 +150,18 @@ $(document).ready(function () {
     $("#content").on("click", "#register_form_button", function (e) {
         e.preventDefault();
         submit_register_form();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Go register
     $("#content").on("click", "#help_register_button", function (e) {
         e.preventDefault();
         go_register();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
 
@@ -122,12 +169,18 @@ $(document).ready(function () {
     $("#content").on("click", "#edit_form_button", function (e) {
         e.preventDefault();
         submit_edit_form();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Submit register form by pressing ENTER
     $("#content").on("keyup", "#password_register", function (e) {
         if (e.keyCode === 13 && $("#content")) {
             submit_register_form();
+            $('html, body').animate({
+                scrollTop: $("#scrolltop").offset().top
+            }, 500);
         }
     });
 
@@ -135,12 +188,18 @@ $(document).ready(function () {
     $("#content").on("click", "#login_form_button", function (e) {
         e.preventDefault();
         submit_login_form();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Submit login form by pressing ENTER
     $("#content").on("keyup", "#password_login", function (e) {
         if (e.keyCode === 13) {
             submit_login_form();
+            $('html, body').animate({
+                scrollTop: $("#scrolltop").offset().top
+            }, 500);
         }
     });
 
@@ -157,12 +216,18 @@ $(document).ready(function () {
     $("#content").on("click", ".read_more_ad_button, .title_id", function (e) {
         e.preventDefault();
         go_read_more_ad_page($(this).data('id'));
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Pay your booked accomodation
     $("#content").on("click", ".payment_button", function (e) {
         e.preventDefault();
         go_payment_page($(this).data('id'), $(this).data('price'));
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Cancel payment
@@ -170,12 +235,18 @@ $(document).ready(function () {
         e.preventDefault();
         go_my_page();
         load_bookings();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Go back from read more to search
     $("#content").on("click", "#read_more_back", function (e) {
         e.preventDefault();
         go_search();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
 
@@ -183,6 +254,9 @@ $(document).ready(function () {
     $("#content").on("click", "#new_ad_button", function (e) {
         e.preventDefault();
         go_new_ad_page();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Reserve ad
@@ -207,6 +281,9 @@ $(document).ready(function () {
         $('#modal_reservation').modal('hide');
         $('.modal-backdrop').hide();
         go_my_page();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
     //Route to search after reservation
@@ -215,6 +292,9 @@ $(document).ready(function () {
         $('#modal_reservation').modal('hide');
         $('.modal-backdrop').hide();
         go_search();
+        $('html, body').animate({
+            scrollTop: $("#scrolltop").offset().top
+        }, 500);
     });
 
 
