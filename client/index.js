@@ -1226,6 +1226,7 @@ function load_burger() {
 
     $("#menu").prepend('<a href=""><li id="home_button" class="hide-menu">Hem</li></a>'
         + '<a href=""><li id="burger_add_accomodation" class="hide-menu d-block d-md-none">Lägg upp boende</li></a>')
+}
 
 //Function for calling all date loaders
 function load_register_dates() {
