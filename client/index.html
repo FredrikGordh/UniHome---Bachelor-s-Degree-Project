@@ -525,12 +525,37 @@
         </div>
         <div class="row justify-content-center">
           <div class= "col-3">
-            <button type="button" id="edit_form_button" class="btn btn-primary rounded-pill">Spara</button>
+            <button type="button" id="edit_form_button" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#modal_save_changes">Spara</button>
+                         <!-- Modal -->
+                         <div id="modal_save_changes" class="modal fade" role="dialog">
+                          <div class="modal-dialog">
+                        
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header row">
+                                <div class="col-2">
+                                <button id ="save_changes_to_search_button" type="button" class="btn btn-default">
+                                  <h3>&times;</h3>
+                                </button>
+                              </div>
+                              <div class=" col-10  justify-content-center">
+                                <h3 class="modal-title "> Sparade ändringar</h3>
+                              </div>
+                            </div>
+                              <div class="modal-body">
+                                <p>Dina ändringar har nu sparats.
+                                </p>
+                              </div>
+                            </div>
+                        
+                          </div>
+                        </div>
           </div>
         </div>  
         <br>
         <!-- <button type="button" id="cancel_edit_form_btn" class="btn btn-primary">Avbryt!</button> -->
       </form>
+      
     </div>
   </script>
 <!-- Login view -->
@@ -562,7 +587,11 @@
           <div class="col-4">
               <button type="button" id="login_form_button" class="btn btn-primary rounded-pill">Logga in</button>
           </div>
+        
         </div>
+        <br>
+        <div>Har du inget konto? Bli medlem genom att klicka <span class = "clickable_class" id = "get_to_register">här</span></div>
+
       </form>
     </div>
     </div>
@@ -607,7 +636,7 @@
       <br>
       <div class="row justify-content-center">
         <div class="col-3">
-        <button type="button" class="btn btn-primary rounded-pill" id = "log_in_from_registered_view>" onclick = go_login()>Till logga in</button>
+        <button type="button" class="btn btn-primary rounded-pill" id = "log_in_from_registered_view>" onclick = go_login()>Logga in</button>
       </div>
       </div>
       </div>

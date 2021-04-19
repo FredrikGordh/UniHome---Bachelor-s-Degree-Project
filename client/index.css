@@ -78,20 +78,33 @@ video {
 
 #sign_in_nav {
   display: block;
-  top: 30px;
-  right: 280px;
+  top: 25px;
+  right: 300px;
   position: absolute;
   z-index: 6;
   color: white;
+  font-size: 20px;
+  
+}
+
+#sign_in_nav:hover {
+  transform: scale(1.01);
+  color: rgb(255, 255, 197);
+}
+
+#ad_accomodation_nav:hover {
+  transform: scale(1.01);
+  color: rgb(255, 255, 197);
 }
 
 #ad_accomodation_nav {
   display: block;
-  top: 30px;
+  top: 25px;
   right: 120px;
   position: absolute;
   z-index: 6;
   color: white;
+  font-size: 20px;
 }
 
 #home-reviews {
