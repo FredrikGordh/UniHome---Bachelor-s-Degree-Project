@@ -10,7 +10,6 @@ import datetime
 import stripe
 import json
 import os
-# The imports down below handle images saved in the server.
 from flask import flash, redirect, url_for
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
@@ -39,13 +38,7 @@ stripe.api_key = "sk_test_51IdXd9I1LSmMkwS0JSJnHxWNUUhHIQJeZI8dO5H7qleNOh30X8cfF
 
 ###################################################### CLASSES ######################################################
 
-# The class user contains all information about the user.
-# Written by Jakob, Gustav, Joel & Fredrik
-
-# Set your secret key. Remember to switch to your live secret key in production.
-# See your keys here: https://dashboard.stripe.com/account/apikeys
-
-
+############# User class #############
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -56,8 +49,7 @@ class User(db.Model):
     birthdate = db.Column(db.Date, nullable=False)
 
     hostads = db.relationship("Ad", backref="host", foreign_keys="Ad.host_id")
-    bookedads = db.relationship(
-        "Ad", backref="tenant", foreign_keys="Ad.tenant_id")
+    bookedads = db.relationship("Ad", backref="tenant", foreign_keys="Ad.tenant_id")
 
     payments = db.relationship("Payment", backref="user")
 
@@ -91,11 +83,10 @@ class User(db.Model):
             return None
         else:
             return value
+############# User class #############
 
 
-# The class ad containts all the information about the ads. An ad is owned by a user.
-# Written by Jakob, Gustav, Joel
-# What to do: Change nullable from false to true, print attributes
+############# Ad class #############
 class Ad(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
@@ -135,7 +126,8 @@ class Ad(db.Model):
     def __repr__(self):
         return '<Ad {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.description,
                                                                                          self.neighbourhood, self.studentcity, self.streetaddress, self.streetnumber, self.city, self.postalcode,
-                                                                                         self.country, self.squaremetres, self.price, self.beds, self.accommodationtype, self.reserved, self.booked, self.paid, self.tenant_id, self.image_id, self.tenant_startdate, self.tenant_enddate)
+                                                                                         self.country, self.squaremetres, self.price, self.beds, self.accommodationtype, self.reserved, self.booked, 
+                                                                                         self.paid, self.tenant_id, self.image_id, self.tenant_startdate, self.tenant_enddate)
 
     def serialize(self):
         return dict(id=self.id, title=self.title, description=self.description, neighbourhood=self.neighbourhood,
@@ -160,11 +152,9 @@ class Ad(db.Model):
             return None
         else:
             return value
+############# Ad class #############
 
-
-# The class attributes contains all the attributes of ad that has a boolean.
-# Written by Jakob, Joel, Gustav
-# What to do: Connect to ad.
+############# Attributes class #############
 class Attributes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     dishwasher = db.Column(db.Boolean, nullable=False, default=False)
@@ -181,9 +171,9 @@ class Attributes(db.Model):
     def serialize(self):
         return dict(id=self.id, dishwasher=self.dishwasher, wifi=self.wifi,
                     washingmachine=self.washingmachine, sauna=self.sauna, bike=self.bike)
+############# Attributes class #############
 
-
-# The class contains details regarding a payment
+############# Payment class #############
 class Payment(db.Model):
     id = db.Column(db.String, primary_key=True)
     ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable=False)
@@ -199,9 +189,9 @@ class Payment(db.Model):
     def serialize(self):
         return dict(id=self.id, ad_id=self.ad_id, payment_person_id=self.payement_person_id,
                     payment_price=self.payment_price, ad_title=self.ad_title)
+############# Payment class #############
 
-
-# Image class
+############# Image class #############
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ad_id = db.Column(db.Integer, db.ForeignKey('ad.id'), nullable=False)
@@ -212,20 +202,17 @@ class Image(db.Model):
 
     def serialize(self):
         return dict(url=self.url)
+############# Image class #############
+###################################################### CLASSES ######################################################
 
 
 ###################################################### APP.ROUTES ######################################################
-
-# /user/signup has the method POST that is used when you want to create a new user on the website.
-# Written by Jakob, Gustav
-# KIND OF DONE
-
 
 @app.route('/')
 def default():
     return app.send_static_file("index.html")
 
-
+# /user/signup has the method POST that is used when you want to create a new user on the website.
 @app.route('/user/signup', methods=['POST'])
 def signup():
     newuser = request.get_json(force=True)
@@ -240,6 +227,7 @@ def signup():
         return "email_in_use", 409
 
 
+# /user/edit is used when wanting to edit to information of a user. 
 @app.route('/user/edit', methods=['PUT'])
 @jwt_required()
 def edit_user():
@@ -261,8 +249,6 @@ def edit_user():
 
 
 # /user/login has the method POST that is used when you want to log in with a user.
-# Written by Jakob, Gustav, Joel
-# KIND OF DONE
 @app.route('/user/login', methods=['POST'])
 def login():
     user = request.get_json(force=True)
@@ -277,7 +263,7 @@ def login():
     else:
         abort(401)
 
-
+#/user/ads is used for getting all the ads saved in the database for a specific user.
 @app.route('/user/ads', methods=['GET'])
 @jwt_required()
 def my_ads():
@@ -290,6 +276,7 @@ def my_ads():
         return jsonify(ad_list)
 
 
+#/user/bookings is used for getting all the bookings of a specific user.
 @app.route('/user/bookings', methods=['GET'])
 @jwt_required()
 def my_bookings():
@@ -304,8 +291,6 @@ def my_bookings():
 
 
 # /users has the method GET that is used when you want to retrieve all the users that are in the database. Not sure if we actually need it.
-# Written by Jakob, Gustav, Joel
-# KIND OF DONE
 @app.route('/users', methods=['GET'])
 def list_users():
     user_list = []
@@ -316,8 +301,8 @@ def list_users():
 
 
 # /ad/<int:ad_id> has the method PUT, GET. The method PUT .....
-# Written by Jakob, Joel, Gustav
 @app.route('/ad/<int:ad_id>', methods=['PUT', 'GET'])
+@jwt_required()
 def list_ad(ad_id):
     if request.method == 'GET':
         return jsonify(Ad.query.get_or_404(ad_id).serialize())
@@ -325,8 +310,9 @@ def list_ad(ad_id):
         # NOT NECCESSARY TO IMPLEMENT YET
         return "NYI"
 
-
+#/ad/<int:ad_id>/reserved is used for reservering a specific ad to a specific user.
 @app.route('/ad/<int:ad_id>/reserved', methods=['PUT'])
+@jwt_required()
 def set_reserved(ad_id):
     if request.method == 'PUT':
         reserved = request.get_json(force=True)
@@ -339,8 +325,9 @@ def set_reserved(ad_id):
         db.session.commit()
         return "success", 200
 
-# Used when a reservation is denied and the ad should no longer be reserved
+# /ad/<int:ad_id>/denied is used when a reservation is denied and the ad should no longer be reserved
 @app.route('/ad/<int:ad_id>/denied', methods=['PUT'])
+@jwt_required()
 def deny_tenant(ad_id):
     if request.method == 'PUT':
         status = request.get_json(force=True)
@@ -349,8 +336,9 @@ def deny_tenant(ad_id):
         db.session.commit()
         return "success", 200
 
-
+#/ad/<int:ad_id>/paid is used to save that an ad has been paid for. 
 @app.route('/ad/<int:ad_id>/paid', methods=['PUT'])
+@jwt_required()
 def set_paid(ad_id):
     if request.method == 'PUT':
         paid = request.get_json(force=True)
@@ -359,8 +347,9 @@ def set_paid(ad_id):
         db.session.commit()
         return "success", 200
 
-
+#/ad/<int:ad_id>/booked is used to set a booking status to booked. 
 @app.route('/ad/<int:ad_id>/booked', methods=['PUT'])
+@jwt_required()
 def set_booked(ad_id):
     if request.method == 'PUT':
         booked = request.get_json(force=True)
@@ -369,7 +358,7 @@ def set_booked(ad_id):
         db.session.commit()
         return "success", 200
 
-
+#/ad/<int:ad_id>/tenant is used for setting a tenant to an ad and to get which tenant an ad has.
 @app.route('/ad/<int:ad_id>/tenant', methods=['PUT', 'GET'])
 @jwt_required()
 def tenant(ad_id):
@@ -384,8 +373,7 @@ def tenant(ad_id):
         return jsonify(User.query.get_or_404(current_ad.tenant_id).serialize())
 
 
-# /ads has the method GET, it is used to retrieve all the ads that is stored in the database.
-# Written by Jakob, Gustav, Joel & Fredrik
+# /ads has the method GET, it is used to retrieve all the ads that is stored in the database and filter them.
 @app.route('/ads', methods=['GET'])
 def ads():
     if request.method == 'GET':
@@ -423,21 +411,7 @@ def ads():
             ad_list.append(ad.serialize())
         return jsonify(ad_list)
 
-
-# /ad/create has the method POST, it is used to make an ad that is connected to the specifik user that created it.
-# Written by Jakob, Gustav, Joel & Fredrik
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
-
-
+# /ad/create has the method POST, it is used to make an ad that is connected to the specific user that created it.
 @app.route('/ad/create', methods=['POST'])
 @jwt_required()
 def create_ad():
@@ -494,14 +468,8 @@ def create_ad():
         return "success", 200
 
 
-# Löser så att man kan lägga till bilder
-# @app.route('/ad/addimage/<int:ad_id>', methods = ['POST'])
-# @jwt_required
-# def addimage(ad):
-    #newImage = Image(ad_id = ad.id, url= ...)
 
-
-# By Abbetabbe
+# /areas is used to fetch all areas stored in the database.
 @app.route('/areas', methods=['GET'])
 def areas():
     area_list = []
@@ -511,7 +479,7 @@ def areas():
     return jsonify(area_list)
 
 
-# By Abbetabbe
+# /types is used to get the different accommodationtypes
 @app.route('/types', methods=['GET'])
 def types():
     type_list = []
@@ -520,20 +488,8 @@ def types():
         type_list.append(type)
     return jsonify(type_list)
 
-# Payment, functions and app routes
-
-
-def calculate_order_amount(id):
-    current_ad = Ad.query.get_or_404(id)
-    startdate = current_ad.tenant_startdate
-    enddate = current_ad.tenant_enddate
-    rental_period = enddate - startdate
-    amount_of_days = rental_period.days
-    return (current_ad.price * amount_of_days)* 100
-
 
 # Calculates the amount of days that tenant will rent the add
-
 @app.route('/rentalperiod', methods=['GET'])
 @jwt_required()
 def calculate_rentalperiod():
@@ -548,8 +504,6 @@ def calculate_rentalperiod():
 
 
 # Creates the payment intent
-
-
 @app.route('/create-payment-intent', methods=['POST'])
 def create_payment():
     try:
@@ -565,8 +519,6 @@ def create_payment():
         return jsonify(error=str(e)), 403
 
 # API to register a payment in the payment history + get:ing the payment history
-
-
 @app.route('/payments', methods=['GET', 'POST'])
 @jwt_required()
 def payments():
@@ -590,8 +542,6 @@ def payments():
         return jsonify(payment)
 
 # API för att registrera en betalning till betalningshistorik samt hämta betalningshistorik
-
-
 @app.route('/past-bookings', methods=['GET'])
 @jwt_required()
 def past_bookings():
@@ -606,55 +556,33 @@ def past_bookings():
         return jsonify(booking_list)
 # Ändra detta API när datum är implementerat i en bokning
 
-# ___________________________________________
+###################################################### APP.ROUTES ######################################################
 
+###################################################### FUNCTIONS ######################################################
+
+# Funcionality for uploading images.
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
+
+# Payment, functions and app routes
+def calculate_order_amount(id):
+    current_ad = Ad.query.get_or_404(id)
+    startdate = current_ad.tenant_startdate
+    enddate = current_ad.tenant_enddate
+    rental_period = enddate - startdate
+    amount_of_days = rental_period.days
+    return (current_ad.price * amount_of_days)* 100
 
 exec(open('script.py').read())
 
 if __name__ == "__main__":
     app.run(debug=True)
 
-# API:
-# Anvandare
-# Bli vard
-# Anvandaruppgifter
-# Anvandarnamn -
-# Epost -
-# Losenord -
-# Profilbeskrivning
-# Profilbild?
-# Bli medlem
-# Anvandaruppgifter
-# Anvandarnamn
-# Epost
-# Losenord
-# Profilbeskrivning
-# Profilbild?
-# Logga in/ut
-# Glomt losenord
-# Andra losenord
-# Redigera anvandare
-# Anvandaruppgifter
-# Anvandarnamn
-# Epost
-# Losenord
-# Profilbeskrivning
-# Profilbild?
-
-# Annonser
-# Lagga upp annons
-# Beskrivning
-# Bilder
-# Plats
-# Redigera annons
-# Beskrivning
-# Bilder
-# Plats
-# Sokning av annons
-# Plats
-# Adress
-# Stad
-# Omrade
-# Specifika attribut
-# Storlek pa lagenhet & rum
-# Funktioner
+###################################################### FUNCTIONS ######################################################
