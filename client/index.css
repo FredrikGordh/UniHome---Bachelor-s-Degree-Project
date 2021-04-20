@@ -386,7 +386,7 @@ video {
 } */
 
 #search_page_container {
-  background-color: #e7d8ca;
+  background-color: #f0f8ff;
   padding-top: 100px;
   padding-bottom: 100px;
 }
@@ -509,7 +509,7 @@ video {
   padding-bottom: 100px;
 }
 #my_page_background {
-  background-color: #e7d8ca; /* #F0F8FF; */
+  background-color: #f0f8ff;
 }
 
 #my_page_account_info_container {
@@ -851,6 +851,8 @@ Används när ines checkbox klasser används
   background-color: white;
   border-radius: 20px;
   color: black;
+  margin: 2vh; 
+  height:85vh;
 }
 
 .accomodation button {
@@ -858,11 +860,8 @@ Används när ines checkbox klasser används
 }
 
 .accomodation img {
-  width: 100%;
-  max-width: 400px;
-  max-height: 300px;
-  height: 100%;
-  overflow: hidden;
+  width: 30vh;
+  height: 30vh;
   object-fit: cover;
   border-radius: 20px;
   margin-left: 50%;
