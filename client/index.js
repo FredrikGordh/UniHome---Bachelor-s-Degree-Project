@@ -3,7 +3,9 @@ const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "
 var saved_input;
 //-------------------------JQuery events-------------------------
 
+
 $(document).ready(function () {
+    window.setTimeout( loader, 2000 );
     go_home();
 
     
@@ -873,6 +875,12 @@ function go_edit_bio_page() {
 function go_confirmation_page() {
 
 }
+
+//function for fading the loader and taking back the navbar
+function loader(){
+    $(".loader-wrapper").fadeOut("slow");
+    $("#navbar_main").removeClass("d-none")
+  }
 
 //Load account info in my page
 function load_account_info() {

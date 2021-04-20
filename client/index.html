@@ -20,10 +20,11 @@
 </head>
 
 <body>
-
+  
+  
   <div id="scrolltop"></div>
   <!------------------------------ Navbar: En hamburgarmeny + navbar ------------------------------>
-  <nav class="navbar navbar-style hide-menu">
+  <nav class="navbar navbar-style hide-menu d-none" id = "navbar_main">
     <a href="" class="navbar-brand hide-menu"><img id="navbar-logo" src="Media/Unihome-logga.png"></a>
     <a href="" id="ad_accomodation_nav" class="d-none d-md-block">Lägg upp boende</a>
     <a href="" id="sign_in_nav" class="d-none d-md-block">Logga in</a>
@@ -88,7 +89,13 @@
             Wernersgatan 36 , Plan 2, 582 46 Linköping, Sweden.</p>
         </div>
       </div>
+     </div>
+
+    <div class="loader-wrapper">
+      <a href="" class="navbar-brand hide-menu"><img id="loader-logo" src="Media/Unihome-logga.png"></a>
+      <span class="loader"><span class="loader-inner"></span></span>
     </div>
+
 
   <!------------------------------ Home page view ------------------------------>
   <script id="home_page" type="text/html">
@@ -209,6 +216,7 @@
       </div>
     </div>
   </script>
+
 
   <!-- De olika områdena i den interaktiva kartan -->
   <script id="ryd_view" type="text/html">
