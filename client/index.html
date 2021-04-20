@@ -95,7 +95,7 @@
     <div id="home_container">
       <div id="header">
         <video playsinline autoplay muted loop id="bgvid">
-          <source src="media/production_ID_3770033.mp4" type="video/mp4">
+          <source src="Media/production_ID_3770033.mp4" type="video/mp4">
         </video>
         
         <div class="container">
@@ -1150,17 +1150,41 @@
   <script id="payment_page" type="text/html">
 
     <div id="my_page_container" class="container">
+      <div class= "row justify-content-center">
+
+      <!-- LEFT payment page -->
+      <div id="left_payment_page" class="col-6">
+      <h1> Din bokning.</h1>
       <h3 id = "display_payment_info"></h3>
       <h1 id = "display_price"></h1>
-      <button type="button" id="cancel_payment_button">Avbryt betalning</button>
+      <!-- <div class= "row justify-content-center"> -->
+        <div class="col-12">
+          <img src="" id="readmore_img"> 
+        <!-- </div> -->
+        </div>
+        <div class="row justify-content-center">
+          <h1 id="payment_ad_description"></h1>
+        </div>
+        
+
+        <h1></h1>
+        <h1></h1>
+        <h1></h1>
+      </div>
+    </div>
+      
+      <!-- RIGHT payment page -->
+      <div id="right_payment_page" class="col-6">
+        <form id="payment-form" class="form1">
+        <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+        <button id="reservation_button" class="btn btn-success rounded-pill mt-3" data-toggle="modal" data-target="#modal_payment">Betala</button>
+        <button type="button" class="btn btn-success rounded-pill mt-3" id="cancel_payment_button">Avbryt</button>
+    
+      </div>
+    </div>
     </div>
 
     <div class="body1">
-      <form id="payment-form" class="form1">
-        <div id="card-element"><!--Stripe.js injects the Card Element--></div>
-        <button id="reservation_button" class="btn btn-success rounded-pill mt-3" data-toggle="modal" data-target="#modal_payment">Betala</button>
-        
-
                         <!-- Modal Successful payment-->
                         <div id="modal_payment" class="modal fade" role="dialog">
                           <div class="modal-dialog">
