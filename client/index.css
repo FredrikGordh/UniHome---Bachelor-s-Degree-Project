@@ -486,20 +486,28 @@ video {
 }
 
 #help_header h1 {
-  font-size: 80px;
+  font-size: 7vw;
 }
 
-#help_header p {
-  font-size: 30px;
+@media screen and (min-width: 601px) {
+  #help_header p  {
+    font-size: 35px;
+  }
+}
+@media screen and (max-width: 600px) {
+  #help_header p {
+    font-size: 20px;
+  }
 }
 
 #help_page_container {
   text-align: center;
   padding-bottom: 100px;
+  background-color: #f0f8ff;
 }
 
 #help_page_container p {
-  line-height: 40px;
+  line-height: 35px;
   margin: 50px 0;
 }
 
@@ -716,6 +724,12 @@ video {
 #staff {
   text-align: center;
   color: black;
+  font-size: 20px;
+  margin: 200px 0;
+}
+#staff h5{
+  text-align: center;
+  color: black;
   font-size: 30px;
   margin: 200px 0;
 }
@@ -742,7 +756,7 @@ video {
 }
 
 .helptext {
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .testamonial {
@@ -1574,4 +1588,38 @@ button:disabled {
 
   background-size: cover;
   
+}
+
+#image_help_page_1{
+    background-color: #37abab;
+    color: white;
+    padding: 10vh;
+    border-radius: 20px;
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(248, 252, 255, 0.2)
+      ),
+      url(Media/book.jpg) left no-repeat;
+  
+    background-size: cover; 
+}
+
+#image_help_page_2{
+    background-color: #37abab;
+    color: white;
+    padding: 10vh;
+    border-radius: 20px;
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(248, 252, 255, 0.2)
+      ),
+      url(Media/coffee.jpg) center no-repeat;
+  
+    background-size: cover; 
+}
+
+.footer a:hover {
+color:lightgrey;  
 }
