@@ -1552,6 +1552,16 @@ button:disabled {
   width: 70%;
 }
 
+.footer-brand{
+  width: 100%;
+}
+
+.border-footer{
+  border-bottom: #052b2b solid 2px;
+  padding-bottom: 50px;
+  opacity: 0.3;
+}
+
 #home_vision {
   text-align: center;
   color:rgb(255, 255, 197);  
@@ -1639,3 +1649,4 @@ color:lightgrey;
   padding-bottom: 30px;
 
 }
+
