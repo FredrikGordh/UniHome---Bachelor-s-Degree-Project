@@ -1575,3 +1575,12 @@ button:disabled {
   background-size: cover;
   
 }
+
+#payment_to_mypage_button {
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+  color: white;
+  text-align: center;
+  padding-bottom: 30px;
+}
