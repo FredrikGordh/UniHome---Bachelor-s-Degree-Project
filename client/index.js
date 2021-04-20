@@ -2,9 +2,7 @@
 const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Bekvämligheter": "Bekvämligheter" });
 var saved_input;
 //-------------------------JQuery events-------------------------
-function loader(){
-    $(".loader-wrapper").fadeOut("slow");
-  }
+
 
 $(document).ready(function () {
     window.setTimeout( loader, 2000 );
@@ -877,6 +875,12 @@ function go_edit_bio_page() {
 function go_confirmation_page() {
 
 }
+
+//function for fading the loader and taking back the navbar
+function loader(){
+    $(".loader-wrapper").fadeOut("slow");
+    $("#navbar_main").removeClass("d-none")
+  }
 
 //Load account info in my page
 function load_account_info() {
