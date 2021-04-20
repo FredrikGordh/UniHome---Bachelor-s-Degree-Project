@@ -1156,10 +1156,35 @@
     <div class="body1">
       <form id="payment-form" class="form1">
         <div id="card-element"><!--Stripe.js injects the Card Element--></div>
-        <button id="submit">
-          <div class="spinner hidden" id="spinner"></div>
-          <span id="button-text">Pay now</span>
-        </button>
+        <button id="reservation_button" class="btn btn-success rounded-pill mt-3" data-toggle="modal" data-target="#modal_payment">Betala</button>
+        
+
+                        <!-- Modal Successful payment-->
+                        <div id="modal_payment" class="modal fade" role="dialog">
+                          <div class="modal-dialog">
+                        
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header row">
+                                <div class="col-2">
+                                <button id ="payment_to_mypage_button" type="button" class="btn btn-default">
+                                  <h3>&times;</h3>
+                                </button>
+                              </div>
+                              <div class=" col-10  justify-content-center">
+                                <h3 class="modal-title "> Betalningen lyckades</h3>
+                              </div>
+                            </div>
+                              <div class="modal-body">
+                                <p>Du har nu betalat följande boende. Du kan hantera dina bokade boenden på dina sidor. 
+                                </p>
+                              </div>
+                              <div class="modal-footer">
+                                 </div>
+                            </div>
+                        
+                          </div>
+                        </div> 
         <p id="card-error" role="alert"></p>
         <p class="result-message hidden">
           Payment succeeded, see the result in your

@@ -297,6 +297,17 @@ $(document).ready(function () {
         }, 500);
     });
 
+        //Route to my page after payment
+        $("#content").on("click", "#payment_to_mypage_button", function (e) {
+            e.preventDefault();
+            $('#modal_payment').modal('hide');
+            $('.modal-backdrop').hide();
+            go_my_page();
+            $('html, body').animate({
+                scrollTop: $("#scrolltop").offset().top
+            }, 500);
+        });
+
 
 
 
