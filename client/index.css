@@ -487,20 +487,18 @@ video {
 }
 
 #help_header h1 {
-  font-size: 80px;
-}
-
-#help_header p {
-  font-size: 30px;
+  font-size: 7vh;
 }
 
 #help_page_container {
   text-align: center;
   padding-bottom: 100px;
+  background-color: #f0f8ff;
+
 }
 
 #help_page_container p {
-  line-height: 40px;
+  line-height: 35px;
   margin: 50px 0;
 }
 
@@ -576,7 +574,11 @@ video {
 #about_us_header {
   width: 100vw;
   height: 80vh;
-  background-image: url(Media/aboutusheader.jpg);
+  background: linear-gradient(
+      0deg,
+      rgba(94, 155, 206, 0.5),
+      rgba(94, 155, 206, 0.5)
+  ), url(Media/aboutusheader.jpg);
   background-position: center;
   background-repeat: none;
   background-size: cover;
@@ -593,6 +595,7 @@ video {
 #about_us_page_container {
   text-align: center;
   color: black;
+  background-color: #f0f8ff;
 }
 
 #about_us_page_container h2 {
@@ -717,9 +720,17 @@ video {
 #staff {
   text-align: center;
   color: black;
-  font-size: 30px;
+  font-size: 20px;
   margin: 200px 0;
+  background-color: #f0f8ff;
 }
+
+#staff h5{
+  text-align: center;
+  color: black;
+  font-size: 30px;
+}
+
 
 /* Klasser */
 
@@ -743,7 +754,7 @@ video {
 }
 
 .helptext {
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .testamonial {
@@ -1035,6 +1046,52 @@ Används när ines checkbox klasser används
 a:hover {
   text-decoration: none;
 }
+
+#image_help_page_1{
+    background-color: #37abab;
+    color: white;
+    padding: 10vh;
+    border-radius: 20px;
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(248, 252, 255, 0.2)
+      ),
+      url(Media/book.jpg) left no-repeat;
+  
+    background-size: cover; 
+}
+
+#image_help_page_2{
+    background-color: #37abab;
+    color: white;
+    padding: 10vh;
+    border-radius: 20px;
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(248, 252, 255, 0.2)
+      ),
+      url(Media/coffee.jpg) center no-repeat;
+  
+    background-size: cover; 
+}
+
+.footer a:hover {
+color:lightgrey;  
+}
+
+@media screen and (min-width: 901px) {
+  #help_header p  {
+    font-size: 35px;
+  }
+}
+@media screen and (max-width: 900px) {
+  #help_header p {
+    font-size: 20px;
+  }
+}
+
 
 .footer a {
   color: white;
