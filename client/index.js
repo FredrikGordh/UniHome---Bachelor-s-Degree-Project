@@ -2,8 +2,12 @@
 const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Bekvämligheter": "Bekvämligheter" });
 var saved_input;
 //-------------------------JQuery events-------------------------
+function loader(){
+    $(".loader-wrapper").fadeOut("slow");
+  }
 
 $(document).ready(function () {
+    window.setTimeout( loader, 2000 );
     go_home();
 
     
