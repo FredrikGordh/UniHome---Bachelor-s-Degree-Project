@@ -302,7 +302,6 @@ def list_users():
 
 # /ad/<int:ad_id> has the method PUT, GET. The method PUT .....
 @app.route('/ad/<int:ad_id>', methods=['PUT', 'GET'])
-@jwt_required()
 def list_ad(ad_id):
     if request.method == 'GET':
         return jsonify(Ad.query.get_or_404(ad_id).serialize())
