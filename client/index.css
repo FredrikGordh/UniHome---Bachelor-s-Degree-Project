@@ -634,8 +634,8 @@ video {
   text-align: center;
   width: 100%;
   padding-top: 100%;
-  margin: 0 auto;
-  border-radius: 100%;
+  margin: 20px auto;
+  border-radius: 20px;
 }
 
 #login_success_container {
@@ -730,7 +730,6 @@ video {
   text-align: center;
   color: black;
   font-size: 20px;
-  margin: 200px 0;
   background-color: #f0f8ff;
 }
 #staff h5{
