@@ -1650,3 +1650,8 @@ color:lightgrey;
 
 }
 
+#border-line-1{
+  border-bottom: #052b2b solid 2px;
+  opacity: 0.3;
+}
+
