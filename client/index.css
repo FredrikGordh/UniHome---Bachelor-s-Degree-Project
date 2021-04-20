@@ -11,6 +11,7 @@ html {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
+  zoom: 100%;
 }
 
 h1 {
@@ -307,7 +308,7 @@ video {
   background-repeat: none;
   color: black;
   width: 100%;
-  height: 110vh;
+  height: 100vh;
   position: absolute;
   top: 0;
   padding-top: 35vh;
@@ -486,28 +487,20 @@ video {
 }
 
 #help_header h1 {
-  font-size: 7vw;
+  font-size: 80px;
 }
 
-@media screen and (min-width: 601px) {
-  #help_header p  {
-    font-size: 35px;
-  }
-}
-@media screen and (max-width: 600px) {
-  #help_header p {
-    font-size: 20px;
-  }
+#help_header p {
+  font-size: 30px;
 }
 
 #help_page_container {
   text-align: center;
   padding-bottom: 100px;
-  background-color: #f0f8ff;
 }
 
 #help_page_container p {
-  line-height: 35px;
+  line-height: 40px;
   margin: 50px 0;
 }
 
@@ -583,11 +576,7 @@ video {
 #about_us_header {
   width: 100vw;
   height: 80vh;
-  background: linear-gradient(
-      0deg,
-      rgba(94, 155, 206, 0.5),
-      rgba(94, 155, 206, 0.5)
-    ), url(Media/aboutusheader.jpg);
+  background-image: url(Media/aboutusheader.jpg);
   background-position: center;
   background-repeat: none;
   background-size: cover;
@@ -604,7 +593,6 @@ video {
 #about_us_page_container {
   text-align: center;
   color: black;
-  background-color: #f0f8ff;
 }
 
 #about_us_page_container h2 {
@@ -634,8 +622,8 @@ video {
   text-align: center;
   width: 100%;
   padding-top: 100%;
-  margin: 20px auto;
-  border-radius: 20px;
+  margin: 0 auto;
+  border-radius: 100%;
 }
 
 #login_success_container {
@@ -729,13 +717,8 @@ video {
 #staff {
   text-align: center;
   color: black;
-  font-size: 20px;
-  background-color: #f0f8ff;
-}
-#staff h5{
-  text-align: center;
-  color: black;
   font-size: 30px;
+  margin: 200px 0;
 }
 
 /* Klasser */
@@ -760,7 +743,7 @@ video {
 }
 
 .helptext {
-  font-size: 20px;
+  font-size: 25px;
 }
 
 .testamonial {
@@ -941,13 +924,6 @@ Används när ines checkbox klasser används
   width: 50px;
   height: 50px;
   border-radius: 50px;
-  transform: translateY(40%);
-}
-
-@media (max-width: 1399px) {
-  .search_button {
-      transform: translateY(0);
-  }
 }
 
 .read_more_button {
@@ -1601,41 +1577,6 @@ button:disabled {
   
 }
 
-
-#image_help_page_1{
-    background-color: #37abab;
-    color: white;
-    padding: 10vh;
-    border-radius: 20px;
-    background: linear-gradient(
-        0deg,
-        rgba(255, 255, 255, 0.2),
-        rgba(248, 252, 255, 0.2)
-      ),
-      url(Media/book.jpg) left no-repeat;
-  
-    background-size: cover; 
-}
-
-#image_help_page_2{
-    background-color: #37abab;
-    color: white;
-    padding: 10vh;
-    border-radius: 20px;
-    background: linear-gradient(
-        0deg,
-        rgba(255, 255, 255, 0.2),
-        rgba(248, 252, 255, 0.2)
-      ),
-      url(Media/coffee.jpg) center no-repeat;
-  
-    background-size: cover; 
-}
-
-.footer a:hover {
-color:lightgrey;  
-}
-
 #payment_to_mypage_button {
   height: 40px;
   width: 40px;
@@ -1643,10 +1584,9 @@ color:lightgrey;
   color: white;
   text-align: center;
   padding-bottom: 30px;
-
 }
 
-/* gustav testar */
+/* css för loader */
 
 .loader-wrapper {
   width: 100%;
@@ -1703,3 +1643,4 @@ color:lightgrey;
   width:100%;
   height:100%;
 } */
+
