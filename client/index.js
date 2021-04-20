@@ -1208,7 +1208,7 @@ function load_read_more(ad_id) {
             $("#read_more_ad_startdate").html(ad.startdate);
             $("#read_more_ad_enddate").html(ad.enddate);
             $("#read_more_ad_squaremetres").html(ad.squaremetres + " kvm");
-            $("#read_more_ad_price").html(ad.price + " kr");
+            $("#read_more_ad_price").html(ad.price + " kr/natt");
             $("#read_more_ad_beds").html(ad.beds + " st");
             $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
