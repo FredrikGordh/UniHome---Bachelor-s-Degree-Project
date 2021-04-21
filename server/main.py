@@ -311,6 +311,7 @@ def list_ad(ad_id):
 
 #/ad/<int:ad_id>/reserved is used for reservering a specific ad to a specific user.
 @app.route('/ad/<int:ad_id>/reserved', methods=['PUT'])
+
 # @jwt_required()
 def set_reserved(ad_id):
     if request.method == 'PUT':
@@ -326,7 +327,6 @@ def set_reserved(ad_id):
 
 # /ad/<int:ad_id>/denied is used when a reservation is denied and the ad should no longer be reserved
 @app.route('/ad/<int:ad_id>/denied', methods=['PUT'])
-@jwt_required()
 def deny_tenant(ad_id):
     if request.method == 'PUT':
         status = request.get_json(force=True)
@@ -337,7 +337,10 @@ def deny_tenant(ad_id):
 
 #/ad/<int:ad_id>/paid is used to save that an ad has been paid for. 
 @app.route('/ad/<int:ad_id>/paid', methods=['PUT'])
+<<<<<<< server/main.py
 # @jwt_required()
+
+
 def set_paid(ad_id):
     if request.method == 'PUT':
         paid = request.get_json(force=True)
@@ -348,7 +351,9 @@ def set_paid(ad_id):
 
 #/ad/<int:ad_id>/booked is used to set a booking status to booked. 
 @app.route('/ad/<int:ad_id>/booked', methods=['PUT'])
+
 # @jwt_required()
+
 def set_booked(ad_id):
     if request.method == 'PUT':
         booked = request.get_json(force=True)

@@ -64,7 +64,7 @@ image1 = Image(url = "Media/fredrik.jpg", ad_id = ad1.id)
 db.session.add(image1)
 db.session.commit()
 
-ad2 = Ad(title="Centralt studentboende i Irrblosset", description="En 1:a med kök som ligger mitt i fina Valla och nära Campus Valla. Lägenheten ligger nära en studentbar, gym och matbutik. Uthyres till rökfria personer, längre uthyrningar prioriteras.", neighbourhood="Valla", studentcity="Linköping",
+ad2 = Ad(title="Centralt studentboende", description="En 1:a med kök som ligger mitt i fina Valla och nära Campus Valla. Lägenheten ligger nära en studentbar, gym och matbutik. Uthyres till rökfria personer, längre uthyrningar prioriteras.", neighbourhood="Valla", studentcity="Linköping",
          streetaddress="Vallavägen", streetnumber="4D", city="Linköping", postalcode="512 15", country="Sverige", squaremetres="27", price="450",
          beds="2", accommodationtype="Lägenhet", host_id="1", startdate=datetime.date(2021, 4, 19), enddate=datetime.date(2021, 4, 25))
 db.session.add(ad2)
@@ -78,7 +78,7 @@ db.session.add(image2)
 db.session.commit()
 
 
-ad3 = Ad(title="Liten och mysig student-etta", description="Nyrenoverad lägenhet, omgjord från korridorsrum i Ryd som ligger nära campus Valla. Det finns även en trevlig uteplats för husets boendegäster. Uthyres endast till djurfria personer.", neighbourhood="Ryd", studentcity="Linköping",
+ad3 = Ad(title="Liten och mysig etta", description="Nyrenoverad lägenhet, omgjord från korridorsrum i Ryd som ligger nära campus Valla. Det finns även en trevlig uteplats för husets boendegäster. Uthyres endast till djurfria personer.", neighbourhood="Ryd", studentcity="Linköping",
          streetaddress="Rydsvägen", streetnumber="258C", city="Linköping", postalcode="511 34", country="Sverige", squaremetres="20", price="150",
          beds="1", accommodationtype="Lägenhet", host_id="1", startdate=datetime.date(2021, 4, 19), enddate=datetime.date(2021, 4, 21))
 db.session.add(ad3)
@@ -91,7 +91,7 @@ db.session.add(image3)
 db.session.commit()
 
 
-ad4 = Ad(title="Fräsch 1:a nära campus Valla", description="Mysig 1:a med kök nära Ebbepark, ett stenkast från campus Valla. Mölighet till att hyra cykel finns. ", neighbourhood="Valla", studentcity="Linköping",
+ad4 = Ad(title="Fräsch 1:a nära Valla", description="Mysig 1:a med kök nära Ebbepark, ett stenkast från campus Valla. Mölighet till att hyra cykel finns. ", neighbourhood="Valla", studentcity="Linköping",
          streetaddress="Vallavägen", streetnumber="2c", city="Linköping", postalcode="511 34", country="Sverige", squaremetres="27", price="500",
          beds="1", accommodationtype="Lägenhet", host_id="2", startdate=datetime.date(2021, 4, 19), enddate=datetime.date(2021, 4, 26))
 db.session.add(ad4)
@@ -104,7 +104,7 @@ db.session.add(image4)
 db.session.commit()
 
 
-ad5 = Ad(title="Lägenhet med fin utsikt mitt i stan", description="Rymliga lägenhet i stadsdelen Vasastan, som passar utmärkt för ett par om två personer. På taket finns även en trevlig uteplats med sol under hela dagen, utemöbler och grill", neighbourhood="Vasastan", studentcity="Linköping",
+ad5 = Ad(title="Lägenhet mitt i stan", description="Rymliga lägenhet i stadsdelen Vasastan, som passar utmärkt för ett par om två personer. På taket finns även en trevlig uteplats med sol under hela dagen, utemöbler och grill", neighbourhood="Vasastan", studentcity="Linköping",
          streetaddress="Drottninggatan", streetnumber="37", city="Linköping", postalcode="511 35", country="Sverige", squaremetres="45", price="1100",
          beds="2", accommodationtype="Lägenhet", host_id="4", startdate=datetime.date(2021, 4, 19), enddate=datetime.date(2021, 4, 30))
 db.session.add(ad5)
@@ -117,7 +117,7 @@ db.session.add(image5)
 db.session.commit()
 
 
-ad6 = Ad(title="Större takvåning med utsikt i Vallastaden", description="Rymlig takvåning med 4 rum och kök på 5:e våningen med vacker utsikt i Vallastaden. Lägenheten har även en mysig balkong som passar perfekt för sommar- och vårkvällar. Uthyres till rök- och djurfria hyresgäster", neighbourhood="Vallastaden", studentcity="Linköping",
+ad6 = Ad(title="Takvåning med fin utsikt", description="Rymlig takvåning med 4 rum och kök på 5:e våningen med vacker utsikt i Vallastaden. Lägenheten har även en mysig balkong som passar perfekt för sommar- och vårkvällar. Uthyres till rök- och djurfria hyresgäster", neighbourhood="Vallastaden", studentcity="Linköping",
          streetaddress="Musikgränd", streetnumber="20A", city="Linköping", postalcode="511 35", country="Sverige", squaremetres="110", price="1050",
          beds="4", accommodationtype="Lägenhet", host_id="3", startdate=datetime.date(2021, 4, 19), enddate=datetime.date(2021, 9, 21))
 db.session.add(ad6)
