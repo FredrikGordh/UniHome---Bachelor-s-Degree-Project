@@ -11,6 +11,7 @@ html {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
+  zoom: 100%;
 }
 
 h1 {
@@ -385,7 +386,7 @@ video {
 } */
 
 #search_page_container {
-  background-color: #e7d8ca;
+  background-color: #f0f8ff;
   padding-top: 100px;
   padding-bottom: 100px;
 }
@@ -443,7 +444,7 @@ video {
   font-size: 20px;
 }
 
-.ad_label {
+.ad_labels {
   font-size: 20px;
   color: #000000;
 }
@@ -486,24 +487,14 @@ video {
 }
 
 #help_header h1 {
-  font-size: 7vw;
-}
-
-@media screen and (min-width: 601px) {
-  #help_header p  {
-    font-size: 35px;
-  }
-}
-@media screen and (max-width: 600px) {
-  #help_header p {
-    font-size: 20px;
-  }
+  font-size: 7vh;
 }
 
 #help_page_container {
   text-align: center;
   padding-bottom: 100px;
   background-color: #f0f8ff;
+
 }
 
 #help_page_container p {
@@ -516,7 +507,7 @@ video {
   padding-bottom: 100px;
 }
 #my_page_background {
-  background-color: #e7d8ca; /* #F0F8FF; */
+  background-color: #f0f8ff;
 }
 
 #my_page_account_info_container {
@@ -587,7 +578,7 @@ video {
       0deg,
       rgba(94, 155, 206, 0.5),
       rgba(94, 155, 206, 0.5)
-    ), url(Media/aboutusheader.jpg);
+  ), url(Media/aboutusheader.jpg);
   background-position: center;
   background-repeat: none;
   background-size: cover;
@@ -634,8 +625,9 @@ video {
   text-align: center;
   width: 100%;
   padding-top: 100%;
-  margin: 0 auto;
-  border-radius: 100%;
+  margin: 20px auto;
+  margin-left: 8px;
+  border-radius: 20px;
 }
 
 #login_success_container {
@@ -730,14 +722,16 @@ video {
   text-align: center;
   color: black;
   font-size: 20px;
-  margin: 200px 0;
+  padding: 200px 0;
   background-color: #f0f8ff;
 }
+
 #staff h5{
   text-align: center;
   color: black;
   font-size: 30px;
 }
+
 
 /* Klasser */
 
@@ -869,6 +863,8 @@ Används när ines checkbox klasser används
   background-color: white;
   border-radius: 20px;
   color: black;
+  margin: 2vh; 
+  height:85vh;
 }
 
 .accomodation button {
@@ -876,11 +872,8 @@ Används när ines checkbox klasser används
 }
 
 .accomodation img {
-  width: 100%;
-  max-width: 400px;
-  max-height: 300px;
-  height: 100%;
-  overflow: hidden;
+  width: 30vh;
+  height: 30vh;
   object-fit: cover;
   border-radius: 20px;
   margin-left: 50%;
@@ -942,6 +935,13 @@ Används när ines checkbox klasser används
   width: 50px;
   height: 50px;
   border-radius: 50px;
+  transform: translateY(40%);
+}
+
+@media (max-width: 1199px) {
+  .search_button {
+    transform: translateY(0);
+  }
 }
 
 .read_more_button {
@@ -1046,6 +1046,52 @@ Används när ines checkbox klasser används
 a:hover {
   text-decoration: none;
 }
+
+#image_help_page_1{
+    background-color: #37abab;
+    color: white;
+    padding: 10vh;
+    border-radius: 20px;
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(248, 252, 255, 0.2)
+      ),
+      url(Media/book.jpg) left no-repeat;
+  
+    background-size: cover; 
+}
+
+#image_help_page_2{
+    background-color: #37abab;
+    color: white;
+    padding: 10vh;
+    border-radius: 20px;
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(248, 252, 255, 0.2)
+      ),
+      url(Media/coffee.jpg) center no-repeat;
+  
+    background-size: cover; 
+}
+
+.footer a:hover {
+color:lightgrey;  
+}
+
+@media screen and (min-width: 901px) {
+  #help_header p  {
+    font-size: 35px;
+  }
+}
+@media screen and (max-width: 900px) {
+  #help_header p {
+    font-size: 20px;
+  }
+}
+
 
 .footer a {
   color: white;
@@ -1453,16 +1499,16 @@ button:disabled {
 }*/
 
 /* jhbjknjnjhbjkbjb     Ines testar checkboxes        jhbjhbjbljhbllhjblj */
-/* 
-[type="checkbox"]:not(:checked),
-[type="checkbox"]:checked {
+
+.fancy_chekbox:not(:checked),
+.fancy_chekbox:checked {
   position: absolute;
   left: 0;
   opacity: 0.01;
 }
 
-[type="checkbox"]:not(:checked) + label,
-[type="checkbox"]:checked + label {
+.fancy_chekbox:not(:checked) + label,
+.fancy_chekbox:checked + label {
   position: relative;
   padding-left: 2.3em;
   font-size: 1.05em;
@@ -1470,8 +1516,8 @@ button:disabled {
   cursor: pointer;
 }
 
-[type="checkbox"]:not(:checked) + label:before,
-[type="checkbox"]:checked + label:before {
+.fancy_chekbox:not(:checked) + label:before,
+.fancy_chekbox:checked + label:before {
   content: "";
   position: absolute;
   left: 0;
@@ -1486,8 +1532,8 @@ button:disabled {
   transition: all 0.275s;
 }
 
-[type="checkbox"]:not(:checked) + label:after,
-[type="checkbox"]:checked + label:after {
+.fancy_chekbox:not(:checked) + label:after,
+.fancy_chekbox:checked + label:after {
   content: "✕";
   position: absolute;
   top: 0.525em;
@@ -1499,13 +1545,13 @@ button:disabled {
   transition: all 0.2s;
 }
 
-[type="checkbox"]:not(:checked) + label:after {
+.fancy_chekbox:not(:checked) + label:after {
   opacity: 0;
   -webkit-transform: scale(0) rotate(45deg);
   transform: scale(0) rotate(45deg);
 }
 
-[type="checkbox"]:checked + label:after {
+.fancy_chekbox:checked + label:after {
   opacity: 1;
   -webkit-transform: scale(1) rotate(0);
   transform: scale(1) rotate(0);
@@ -1515,25 +1561,25 @@ button:disabled {
   background-color: violet;
 }
 
-[type="checkbox"]:disabled:not(:checked) + label:before,
-[type="checkbox"]:disabled:checked + label:before {
+.fancy_chekbox:disabled:not(:checked) + label:before,
+.fancy_chekbox:disabled:checked + label:before {
   box-shadow: none;
   border-color: #bbb;
   background-color: #e9e9e9;
 }
 
-[type="checkbox"]:disabled:checked + label:after {
+.fancy_chekbox:disabled:checked + label:after {
   color: #777;
 }
 
-[type="checkbox"]:disabled + label {
+.fancy_chekbox:disabled + label {
   color: #aaa;
 }
 
-[type="checkbox"]:checked:focus + label:before,
-[type="checkbox"]:not(:checked):focus + label:before {
+.fancy_chekbox:checked:focus + label:before,
+.fancy_chekbox:not(:checked):focus + label:before {
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 6px rgba(9, 77, 77, 0.2);
-} */
+}
 
 .cancel_button_modal {
   height: 40px;
@@ -1613,41 +1659,6 @@ button:disabled {
   
 }
 
-
-#image_help_page_1{
-    background-color: #37abab;
-    color: white;
-    padding: 10vh;
-    border-radius: 20px;
-    background: linear-gradient(
-        0deg,
-        rgba(255, 255, 255, 0.2),
-        rgba(248, 252, 255, 0.2)
-      ),
-      url(Media/book.jpg) left no-repeat;
-  
-    background-size: cover; 
-}
-
-#image_help_page_2{
-    background-color: #37abab;
-    color: white;
-    padding: 10vh;
-    border-radius: 20px;
-    background: linear-gradient(
-        0deg,
-        rgba(255, 255, 255, 0.2),
-        rgba(248, 252, 255, 0.2)
-      ),
-      url(Media/coffee.jpg) center no-repeat;
-  
-    background-size: cover; 
-}
-
-.footer a:hover {
-color:lightgrey;  
-}
-
 #payment_to_mypage_button {
   height: 40px;
   width: 40px;
@@ -1655,7 +1666,28 @@ color:lightgrey;
   color: white;
   text-align: center;
   padding-bottom: 30px;
+}
 
+/* css för loader */
+
+.loader-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #242f3f;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  border: 4px solid #Fff;
+  animation: loader 2s infinite ease;
 }
 
 #border-line-1{
@@ -1663,3 +1695,39 @@ color:lightgrey;
   opacity: 0.3;
 }
 
+.loader-inner {
+  vertical-align: top;
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+  animation: loader-inner 2s infinite ease-in;
+}
+@keyframes loader {
+  0% { transform: rotate(0deg);}
+  25% { transform: rotate(180deg);}
+  50% { transform: rotate(180deg);}
+  75% { transform: rotate(360deg);}
+  100% { transform: rotate(360deg);}
+}
+@keyframes loader-inner {
+  0% { height: 0%;}
+  25% { height: 0%;}
+  50% { height: 100%;}
+  75% { height: 100%;}
+  100% { height: 0%;}
+}
+
+#loader-logo {
+  width: 20vw;
+  min-width: 100px;
+  transform: translateY(-10%);
+  margin-left: 5px;
+}
+
+/* .loaded_content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  height:100%;
+} */
