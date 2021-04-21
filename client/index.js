@@ -656,6 +656,7 @@ function go_registered_page() {
 //Function for going to view: Payment page
 function go_payment_page(ad_id, ad_price) {
     $("#content").html($("#payment_page").html());
+    load_payment_ad(ad_id);
 
     $.ajax({
         url: host + '/rentalperiod',
@@ -665,8 +666,13 @@ function go_payment_page(ad_id, ad_price) {
             id: ad_id
         },
         success: function (amount_of_days) {
-            $("#display_payment_info").html("Bokad period: " + amount_of_days + " dagar. Pris per dag: " + ad_price + "kr");
-            $("#display_price").html("Totalt pris att betala: " + ad_price * amount_of_days + "kr");
+            $("#display_payment_info").html(ad_price + " kr x " + amount_of_days + " nätter");
+            $("#display_price").html( ad_price * amount_of_days + " kr");
+            $("#display_fee").html(100 + " kr");
+            $("#display_brutto").html(ad_price * amount_of_days + 100 + " kr");
+            var tax = (ad_price * amount_of_days + 100)*0.25;
+            $("#display_tax").html(tax + " kr");
+            $("#display_total").html(ad_price*amount_of_days + 100 +tax + " kr");
         }
     })
 
@@ -1225,6 +1231,61 @@ function load_read_more(ad_id) {
 
 }
 
+
+// Request for getting ad when making a payment
+
+//Function for making a request for all unique areas in database
+function load_areas(container) {
+    $.ajax({
+        url: host + '/areas',
+        type: 'GET',
+        async: false,
+        success: function (areas) {
+            areas.forEach(element => {
+                $(container).append("<option>" + element + "</option>");
+            });
+        }
+    })
+}
+
+
+//Function for making a request for all unique accomodation types in database
+function load_types(container) {
+    $.ajax({
+        url: host + '/types',
+        type: 'GET',
+        async: false,
+        success: function (types) {
+            types.forEach(element => {
+                $(container).append("<option>" + element + "</option>");
+            });
+        }
+    })
+}
+
+function load_payment_ad(ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id,
+        type: 'GET',
+        success: function (ad) {
+            $("#payment_more_ad_title").html(ad.title);
+            $("#payment_more_ad_description").html(ad.description);
+            $("#payment_more_ad_dates").html(" " + ad.tenant_startdate + " - " + ad.tenant_enddate);
+            $("#payment_more_ad_calculate price").html(ad.price + "kr ");
+            $("#payment_more_ad_neighbourhood").html(ad.neighbourhood)
+            $("#payment_more_ad_streetaddress").html(ad.streetaddress + " " + ad.streetnumber + ", " + ad.postalcode + ", " + ad.city);
+            $("#payment_more_ad_squaremetres").html(ad.squaremetres + " kvm");
+            $("#payment_more_ad_price").html(ad.price + " kr");
+            $("#payment_more_ad_beds").html(ad.beds + " st");
+            $("#payment_more_ad_accommodationtype").html(ad.accommodationtype);
+            $("#payment_more_ad_attributes").html(ad.attributes);
+            $("#payment_img").css("background-image", 'url(' + ad.image.url + ')');
+            
+        }
+    })
+
+}
+
 function update_reserved_status(status, ad_id, start_date, end_date) {
     data = {
         status: status,
@@ -1289,8 +1350,8 @@ function load_burger() {
         $("#menu").prepend('<a href=""><li id="register_button" class="hide-menu">Bli medlem</li></a>'
             + '<a href=""><li id="login_button" class="hide-menu d-block d-md-none">Logga in</li></a>')
     } else {
-        $("#menu").prepend('<a href=""><li id="my_page_button" class="hide-menu">Mina sidor</li></a>'
-            + '<a href=""><li id="logout_button" class="hide-menu">Logga ut</li></a>')
+        $("#menu").prepend('<a href=""><li id="my_page_button" class="hide-menu">Mina sidor</li></a>')
+        $("#menu").append('<a href=""><li id="logout_button" class="hide-menu">Logga ut</li></a>')
     }
 
     $("#menu").prepend('<a href=""><li id="home_button" class="hide-menu">Startsida</li></a>'
