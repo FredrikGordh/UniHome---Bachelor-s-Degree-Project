@@ -522,11 +522,11 @@ video {
 }
 
 #readmore_img {
-  width: 100%; 
+  width: 100%;
+  height: 100%;
   border-radius: 20px;
   background-size: cover;
   background-position: center;
-  margin-left: 10px;
 }
 
 #read_more_ad_price {
