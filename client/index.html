@@ -1148,41 +1148,91 @@
 
   <!-------------------------------- Payment view------------------------------ -->
   <script id="payment_page" type="text/html">
-
+    <div class="my_page_background">
     <div id="my_page_container" class="container">
-      <div class= "row justify-content-center">
+      <h1> Betalning av ditt boende</h1>
+      <div class= "row align-items-center ">
 
       <!-- LEFT payment page -->
-      <div id="left_payment_page" class="col-6">
-      <h1> Din bokning.</h1>
-      <h3 id = "display_payment_info"></h3>
-      <h1 id = "display_price"></h1>
-      <!-- <div class= "row justify-content-center"> -->
-        <div class="col-12">
-          <img src="" id="readmore_img"> 
-        <!-- </div> -->
+      <div id="left_payment_page" class="col-12 col-md-6">
+      
+      <div class= "row">
+        <div class="col-12 testamonial" id="payment_img">
         </div>
-        <div class="row justify-content-center">
-          <h1 id="payment_ad_description"></h1>
-        </div>
-        
 
-        <h1></h1>
-        <h1></h1>
-        <h1></h1>
       </div>
-    </div>
+      </div>
       
       <!-- RIGHT payment page -->
-      <div id="right_payment_page" class="col-6">
-        <form id="payment-form" class="form1">
+        <div id="right_payment_page" class=" col-12 col-md-6">
+        <form id="payment-form" class="form1 testamonial">
+          <div class="row justify-content-center" id="price_headline">
+            <div class = "col-12 col-lg-12" ><b>Pris:</b> </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class = "col-6 col-lg-6" id="display_payment_info"></div>
+            <div class = "offset-3 col-3 col-lg-3" id="display_price"></div>
+          </div>
+          <div class="row justify-content-center">
+            <div class = "col-6 col-lg-6" ><u>Bokningsavgift</u></div>
+            <div class = "offset-3 col-3 col-lg-3" id="display_fee"></div>
+          </div>
+          <div class="row justify-content-center">
+            <div class = "col-6 col-lg-6" >Moms (25%)</div>
+            <div class = "offset-3 col-3 col-lg-3" id="display_tax"></div>
+          </div>
+          <div class="row justify-content-center">
+          <div class = "col-6 col-lg-6" id="total_headline" ><b>Totalt</b></div>
+          <div class = "offset-3 col-3 col-lg-3" id="display_total"></div>
+        </div>
+        <div class="row">
+          <div class=col-8></div>
+          <div class="col-2 " id="visa_logo"><img id="visa_logo" src="Media/visa_logo.png"></div>
+          <div class="col-2" id="mscard_logo"><img id="mscard_logo" src="Media/mscard_logo.png"></div>
+        </div>
+          
         <div id="card-element"><!--Stripe.js injects the Card Element--></div>
-        <button id="reservation_button" class="btn btn-success rounded-pill mt-3" data-toggle="modal" data-target="#modal_payment">Betala</button>
+        <button id="reservation_button" class="btn   btn-success rounded-pill mt-3" data-toggle="modal" data-target="#modal_payment">Betala</button>
         <button type="button" class="btn btn-success rounded-pill mt-3" id="cancel_payment_button">Avbryt</button>
+        <p id="card-error" role="alert"></p>
+        <p class="result-message hidden">
+          Payment succeeded, see the result in your
+          <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+        </p>
+      </form>
+    </div>
+  </div>
     
+    
+
+    <div class="row justify-content-center">
+    <div class="payment_box1 col-6 col-lg-6 testamonial">
+      <div class="row justify-content-center"><h5>Bokningsinformation</h5></div>
+      <div class="row justify-content-center">
+        <b>Namn</b>
+        </div>
+        <div class="row justify-content-center">
+      <div id="payment_more_ad_title"> </div>
+    </div>
+      <div class="row justify-content-center">
+        <div><b>Adress</b></div>
+        </div>
+        <div class="row justify-content-center">
+        <div  id="payment_more_ad_streetaddress"></div>
       </div>
-    </div>
-    </div>
+      <div class="row justify-content-center">
+        <div ><b>Datum </b></div>
+        </div>
+        <div class="row justify-content-center">
+        <div  id="payment_more_ad_dates"></div>
+      </div>
+      </div>
+    <div class="col-lg-6"></div>
+  </div>
+      
+
+
+  
 
     <div class="body1">
                         <!-- Modal Successful payment-->
@@ -1211,13 +1261,8 @@
                         
                           </div>
                         </div> 
-        <p id="card-error" role="alert"></p>
-        <p class="result-message hidden">
-          Payment succeeded, see the result in your
-          <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
-        </p>
-      </form>
     </div>
+  </div>
   </script>
 
   <!-- Read more about the housing ad-->

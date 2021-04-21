@@ -707,8 +707,13 @@ function go_payment_page(ad_id, ad_price) {
             id: ad_id
         },
         success: function (amount_of_days) {
-            $("#display_payment_info").html("Bokad period: " + amount_of_days + " dagar. Pris per dag: " + ad_price + "kr");
-            $("#display_price").html("Totalt pris att betala: " + ad_price * amount_of_days + "kr");
+            $("#display_payment_info").html(ad_price + " kr x " + amount_of_days + " nätter");
+            $("#display_price").html( ad_price * amount_of_days + " kr");
+            $("#display_fee").html(100 + " kr");
+            $("#display_brutto").html(ad_price * amount_of_days + 100 + " kr");
+            var tax = (ad_price * amount_of_days + 100)*0.25;
+            $("#display_tax").html(tax + " kr");
+            $("#display_total").html(ad_price*amount_of_days + 100 +tax + " kr");
         }
     })
 
@@ -1298,17 +1303,18 @@ function load_payment_ad(ad_id) {
         url: host + '/ad/' + ad_id,
         type: 'GET',
         success: function (ad) {
-            $("#payment_ad_description").html(ad.description);
-            $("#payment_more_ad_startdate").html(ad.startdate);
-            $("#payment_ad_neighbourhood").html(ad.neighbourhood)
+            $("#payment_more_ad_title").html(ad.title);
+            $("#payment_more_ad_description").html(ad.description);
+            $("#payment_more_ad_dates").html(" " + ad.tenant_startdate + " - " + ad.tenant_enddate);
+            $("#payment_more_ad_calculate price").html(ad.price + "kr ");
+            $("#payment_more_ad_neighbourhood").html(ad.neighbourhood)
             $("#payment_more_ad_streetaddress").html(ad.streetaddress + " " + ad.streetnumber + ", " + ad.postalcode + ", " + ad.city);
-            $("#payment_more_ad_enddate").html(ad.enddate);
             $("#payment_more_ad_squaremetres").html(ad.squaremetres + " kvm");
             $("#payment_more_ad_price").html(ad.price + " kr");
             $("#payment_more_ad_beds").html(ad.beds + " st");
             $("#payment_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#payment_more_ad_attributes").html(ad.attributes);
-            $("#payment_img").attr("src", ad.image.url);
+            $("#payment_img").css("background-image", 'url(' + ad.image.url + ')');
             
         }
     })
