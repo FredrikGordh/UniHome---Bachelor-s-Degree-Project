@@ -7,7 +7,7 @@ var saved_input;
 $(document).ready(function () {
     window.setTimeout( loader, 2000 );
     go_home();
-
+    
     
 
     if (sessionStorage.getItem('auth')) {
@@ -19,11 +19,9 @@ $(document).ready(function () {
     $("#navbar-logo").click(function (e) {
         e.preventDefault();
         go_home();
+        $('html, body').scrollTop(0);
     });
 
-    $('html, body').animate({
-        scrollTop: $("#scrolltop").offset().top
-    }, 1000);
     
 
     //Using .on()-function since we need to check if the content of #content is loaded before checking for events
@@ -32,53 +30,41 @@ $(document).ready(function () {
     $("#menu").on("click", "#register_button", function (e) {
         e.preventDefault();
         go_register();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     $("#menu").on("click", "#home_button", function (e) {
         e.preventDefault();
         go_home();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Burger menu: Go login
     $("#menu").on("click", "#login_button", function (e) {
         e.preventDefault();
         go_login();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Burger menu: Go to my page
     $("#menu").on("click", "#my_page_button", function (e) {
         e.preventDefault();
         go_my_page();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Burger menu: Go to help page
     $("#menu").on("click", "#help_button", function (e) {
         e.preventDefault();
         go_help_page();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Burger menu: Go to about us page
     $("#menu").on("click", "#about_us_button", function (e) {
         e.preventDefault();
         go_about_us_page();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Burger menu: Go to contact page
@@ -86,9 +72,7 @@ $(document).ready(function () {
         e.preventDefault();
         go_contact_page();
         $("#close-menu").prop("checked", false);
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
 
@@ -97,18 +81,13 @@ $(document).ready(function () {
         e.preventDefault();
         console.log("ok");
         go_login();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Burger menu: Log Out
     $("#menu").on("click", "#logout_button", function (e) {
         e.preventDefault();
         logout();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
         });
 
     //Attributes: Dropdown checklist
@@ -126,18 +105,14 @@ $(document).ready(function () {
     $("#content").on("click", "#home_search_submit", function (e) {
         e.preventDefault();
         submit_home_search_form();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Go to login page
     $("#content").on("click", "#get_to_login, #help_login_button", function (e) {
         e.preventDefault();
         go_login();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Go to login page from registered 
@@ -151,18 +126,14 @@ $(document).ready(function () {
     $("#content").on("click", "#register_form_button", function (e) {
         e.preventDefault();
         submit_register_form();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Go register
     $("#content").on("click", "#help_register_button, #get_to_register", function (e) {
         e.preventDefault();
         go_register();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
 
@@ -170,16 +141,14 @@ $(document).ready(function () {
     $("#content").on("click", "#edit_form_button", function (e) {
         e.preventDefault();
         submit_edit_form();
- 
+        $('html, body').scrollTop(0);
     });
 
     //Submit register form by pressing ENTER
     $("#content").on("keyup", "#password_register", function (e) {
         if (e.keyCode === 13 && $("#content")) {
             submit_register_form();
-            $('html, body').animate({
-                scrollTop: $("#scrolltop").offset().top
-            }, 500);
+            $('html, body').scrollTop(0);
         }
     });
 
@@ -187,18 +156,15 @@ $(document).ready(function () {
     $("#content").on("click", "#login_form_button", function (e) {
         e.preventDefault();
         submit_login_form();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
+        
     });
 
     //Submit login form by pressing ENTER
     $("#content").on("keyup", "#password_login", function (e) {
         if (e.keyCode === 13) {
             submit_login_form();
-            $('html, body').animate({
-                scrollTop: $("#scrolltop").offset().top
-            }, 500);
+            $('html, body').scrollTop(0);
         }
     });
 
@@ -215,18 +181,14 @@ $(document).ready(function () {
     $("#content").on("click", ".read_more_ad_button, .title_id", function (e) {
         e.preventDefault();
         go_read_more_ad_page($(this).data('id'));
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Pay your booked accomodation
     $("#content").on("click", ".payment_button", function (e) {
         e.preventDefault();
         go_payment_page($(this).data('id'), $(this).data('price'));
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Cancel payment
@@ -234,18 +196,14 @@ $(document).ready(function () {
         e.preventDefault();
         go_my_page();
         load_bookings();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Go back from read more to search
     $("#content").on("click", "#read_more_back", function (e) {
         e.preventDefault();
         go_search();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
 
@@ -253,9 +211,7 @@ $(document).ready(function () {
     $("#content").on("click", "#new_ad_button", function (e) {
         e.preventDefault();
         go_new_ad_page();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Reserve ad
@@ -280,9 +236,7 @@ $(document).ready(function () {
         $('#modal_reservation').modal('hide');
         $('.modal-backdrop').hide();
         go_my_page();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
     //Route to search after reservation
@@ -291,9 +245,7 @@ $(document).ready(function () {
         $('#modal_reservation').modal('hide');
         $('.modal-backdrop').hide();
         go_search();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
 
@@ -303,9 +255,7 @@ $(document).ready(function () {
             $('#modal_payment').modal('hide');
             $('.modal-backdrop').hide();
             go_my_page();
-            $('html, body').animate({
-                scrollTop: $("#scrolltop").offset().top
-            }, 500);
+            $('html, body').scrollTop(0);
         });
 
     //Route to my pages from modal save changes
@@ -314,9 +264,7 @@ $(document).ready(function () {
         $('#modal_save_changes').modal('hide');
         $('.modal-backdrop').hide();
         go_my_page();
-        $('html, body').animate({
-            scrollTop: $("#scrolltop").offset().top
-        }, 500);
+        $('html, body').scrollTop(0);
     });
 
 
@@ -442,12 +390,14 @@ $(document).ready(function () {
     $("#content").on("click", "#read_more_login_button", function (e) {
         e.preventDefault();
         go_login();
+        $('html, body').scrollTop(0);
     });
 
     //Go login from nav
     $("nav").on("click", "#sign_in_nav", function (e) {
         e.preventDefault();
         go_login();
+        $('html, body').scrollTop(0);
     });
 
     //Go login from nav
@@ -457,6 +407,7 @@ $(document).ready(function () {
         search.area = $(this).data('area');
         sessionStorage.setItem('search', JSON.stringify(search));
         go_search();
+        $('html, body').scrollTop(0);
     });
 
     //Go create ad from nav
@@ -478,24 +429,28 @@ $(document).ready(function () {
 $("#start-page").on("click", function (e) {
     e.preventDefault();
     go_home();
+    $('html, body').scrollTop(0);
 });
 
 //webbplatskarta: Bli medlem
 $("#become-member").on("click", function (e) {
     e.preventDefault();
     go_register();
+    $('html, body').scrollTop(0);
 });
 
 // webbplatskarta: Logga in
 $("#log-in").on("click", function (e) {
     e.preventDefault();
     go_login();
+    $('html, body').scrollTop(0);
 });
 
 //webbplatskarta: Vilka är vi
 $("#who-are-we").on("click", function (e) {
     e.preventDefault();
     go_about_us_page();
+    $('html, body').scrollTop(0);
 });
 
 
@@ -503,12 +458,14 @@ $("#who-are-we").on("click", function (e) {
 $("#how-does-it-work").on("click", function (e) {
     e.preventDefault();
     go_help_page();
+    $('html, body').scrollTop(0);
 });
 
 //webbplatskarta: Kontakta oss
 $("#contact-us").on("click", function (e) {
     e.preventDefault();
     go_contact_page();
+    $('html, body').scrollTop(0);
 });
 
 //-------------------------Functions-------------------------
