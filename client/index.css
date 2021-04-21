@@ -780,12 +780,12 @@ video {
   margin: 30px auto;
 }
 
- 
+/* 
 Används när ines checkbox klasser används
 .search_checkbox {
   margin-left: 6%;
   z-index: 20;
-} 
+} */
 
 .search_date {
   background-color: white;
@@ -819,10 +819,6 @@ Används när ines checkbox klasser används
   background-repeat: none;
   background-size: cover;
   margin: 30px auto;
-}
-
-.upload_btn {
-  z-index: 0;
 }
 
 .testamonial h3 {
@@ -1388,11 +1384,11 @@ button:disabled {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 0.8rem;
-  z-index: 0;
+  z-index: 1;
 }
 
 .image-area img {
-  z-index: 0;
+  z-index: 2;
   position: relative;
 }
 
@@ -1422,6 +1418,7 @@ button:disabled {
 
 .dropdown-check-list {
   display: inline-block;
+  padding-left: 100px;
   color:grey;
   /* border: none; */
 }
@@ -1502,16 +1499,16 @@ button:disabled {
 }*/
 
 /* jhbjknjnjhbjkbjb     Ines testar checkboxes        jhbjhbjbljhbllhjblj */
-
-.fancy_chekbox:not(:checked),
-.fancy_chekbox:checked {
+/* 
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
   position: absolute;
   left: 0;
   opacity: 0.01;
 }
 
-.fancy_chekbox:not(:checked) + label,
-.fancy_chekbox:checked + label {
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
   position: relative;
   padding-left: 2.3em;
   font-size: 1.05em;
@@ -1519,8 +1516,8 @@ button:disabled {
   cursor: pointer;
 }
 
-.fancy_chekbox:not(:checked) + label:before,
-.fancy_chekbox:checked + label:before {
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
   content: "";
   position: absolute;
   left: 0;
@@ -1535,8 +1532,8 @@ button:disabled {
   transition: all 0.275s;
 }
 
-.fancy_chekbox:not(:checked) + label:after,
-.fancy_chekbox:checked + label:after {
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
   content: "✕";
   position: absolute;
   top: 0.525em;
@@ -1548,13 +1545,13 @@ button:disabled {
   transition: all 0.2s;
 }
 
-.fancy_chekbox:not(:checked) + label:after {
+[type="checkbox"]:not(:checked) + label:after {
   opacity: 0;
   -webkit-transform: scale(0) rotate(45deg);
   transform: scale(0) rotate(45deg);
 }
 
-.fancy_chekbox:checked + label:after {
+[type="checkbox"]:checked + label:after {
   opacity: 1;
   -webkit-transform: scale(1) rotate(0);
   transform: scale(1) rotate(0);
@@ -1564,25 +1561,25 @@ button:disabled {
   background-color: violet;
 }
 
-.fancy_chekbox:disabled:not(:checked) + label:before,
-.fancy_chekbox:disabled:checked + label:before {
+[type="checkbox"]:disabled:not(:checked) + label:before,
+[type="checkbox"]:disabled:checked + label:before {
   box-shadow: none;
   border-color: #bbb;
   background-color: #e9e9e9;
 }
 
-.fancy_chekbox:disabled:checked + label:after {
+[type="checkbox"]:disabled:checked + label:after {
   color: #777;
 }
 
-.fancy_chekbox:disabled + label {
+[type="checkbox"]:disabled + label {
   color: #aaa;
 }
 
-.fancy_chekbox:checked:focus + label:before,
-.fancy_chekbox:not(:checked):focus + label:before {
+[type="checkbox"]:checked:focus + label:before,
+[type="checkbox"]:not(:checked):focus + label:before {
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 6px rgba(9, 77, 77, 0.2);
-}
+} */
 
 .cancel_button_modal {
   height: 40px;
