@@ -1613,11 +1613,11 @@ button:disabled {
 }
 
 .sml-socialm-icon{
-  width: 70%;
+  width: 40px;
 }
 
 .footer-brand{
-  width: 100%;
+  width: 170px;
 }
 
 .border-footer{
@@ -1628,6 +1628,7 @@ button:disabled {
 
 #border-line-2{
   padding-top: 30px;
+  font-size: 13px;
 }
 
 .border-line-3{
