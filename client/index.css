@@ -626,6 +626,7 @@ video {
   width: 100%;
   padding-top: 100%;
   margin: 20px auto;
+  margin-left: 8px;
   border-radius: 20px;
 }
 
