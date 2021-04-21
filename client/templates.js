@@ -1,12 +1,10 @@
-var accomodation = '<a href= "" class = "title_id testamonial accomodation col-9 col-xl-3 mt-3 p-5" data-id="{{id}}">'
+var accomodation = '<a href= "" class = "title_id testamonial accomodation col-9 col-xl-3 mt-3 p-4" data-id="{{id}}">'
     + '<div class="row justify-content-center align-items-center">'
     + '<div class ="col-12">'
     + '<h5>{{title}}</h5>'
     + '<p class = "mt-6"> {{streetaddress}} {{streetnumber}}, {{neighbourhood}}</p>'
     + '</div>'
-    + '<div class="col-xl-12 col-12">'
-    + '<img src="{{image}}">'
-    + '</div>'
+    + '<div class="col-11 image_ad" style="background-image: url({{image}});"> </div>'
 
 
 
