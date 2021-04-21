@@ -1029,8 +1029,9 @@
     </div>
   </script>
 
-    <!-------------------------------- Read more about the housing ad -------------------------------->
-    <script id="read_more_ad_page" type="text/html">
+  <!-------------------------------- Read more about the housing ad -------------------------------->
+  <script id="read_more_ad_page" type="text/html">
+    <div class="read_more_background">
     <div class="row" >
       <div class="col-1">
         <button id="read_more_back" class="read_more_back_button btn btn-primary rounded-pill"><i class="fas fa-arrow-left"></i>
@@ -1042,13 +1043,12 @@
       <h1 id="read_more_ad_title"></h1>
       <h4 id="read_more_ad_neighbourhood"></h4>
       <div class="row">
-          <div class="col-7">
-          <img src="" id="readmore_img">   
+          <div class="col-12 col-lg-6 testamonial" id="readmore_div_img">
           </div> 
-          <div id="read_more_map" class="col-5"></div>
+          <div id="read_more_map" class="col-12 offset-lg-1 col-lg-5 testamonial"></div>
       </div>
       <div class="row justify-content-center">
-        <div class = "col-12 col-lg-7 read_more_description">
+        <div class = "col-12 col-lg-6 testamonial read_more_description">
           <div class="row justify-content-center attributes">
             
             <div class="col-3 read_more_squaremeters">
@@ -1072,7 +1072,7 @@
           <br>
           
             <div class = "row justify-content-center mb-4 read_more_attributes"> 
-              <i class = "col-2 offset-1 fas fa-wifi">
+              <i class = "col-2  fas fa-wifi">
                 <i id="wifi-attribute"></i>
               </i>
               <i class = "col-2 fas fa-utensils">
@@ -1092,20 +1092,20 @@
               <i class="fas fa-map-marker-alt"></i>
               <h5 id="read_more_ad_streetaddress"></h5>
             </div>
-        </div>
-        <div class="col-6 col-lg-5 offset-0 read_more_price_date">
+            </div>
+        
+        <div class="col-12 col-lg-5 offset-lg-1 testamonial read_more_price_date">
           <div class="row justify-content-center attributes">
             <div class="col-6 headline_startdate">
-              <b>Tidigast inflytt</b> 
+              <b>Tidigast möjligast inflytt</b> 
             </div>
             <div class="col-6 headline_enddate">
-              <b>Senast utflytt</b> 
+              <b>Senast möjligast utflytt</b> 
             </div>
-        </div>
-          
-        <div class="row justify-content-center attributes">
+            </div>
+        
+          <div class="row justify-content-center attributes">
               <div class="col-6 read_more_startdate">
-                
                   <h5 id="read_more_ad_startdate"></h5>
               </div>
                         
@@ -1114,24 +1114,23 @@
                   <h5 id="read_more_ad_enddate"></h5>
                 </div>
               </div>
-            </div>
-            
-              <h5 id="read_more_ad_attributes"></h5>
-              <div class= "read_more_price">
-                <div class="row justify-content-center mt-5">
-                  <h4 class="col-10" id="read_more_ad_price" ></h4>
-                </div>
               </div>
+            
+              <div class="row read_more_price justify-content-center mt-5">
+                <h4 class="col-10" id="read_more_ad_price" ></h4>
+              </div>
+              
               <div class="row mt-4" id="read_more_reserve">
                 <div class="col-6">
-                  <label for="read_more_select_start" class="d-none d-xl-inline">Inflytt</label>
+                  <label for="read_more_select_start" class="d-none d-xl-inline">Valt inflyttningsdatum</label>
                   <input type="date" id="read_more_select_start" style ="font-size: 20px;" class="no-border">
                 </div>
                 <div class="col-6">
-                  <label for="read_more_select_end" class="d-none d-xl-inline">Utflytt</label>
+                  <label for="read_more_select_end" class="d-none d-xl-inline">Valt utflyttningsdatum</label>
                   <input type="date" id="read_more_select_end" style ="font-size: 20px;" class="no-border">
                 </div>
                 <button id="reservation_button" class="btn btn-success rounded-pill mt-3" data-toggle="modal" data-target="#modal_reservation">Reservera</button>
+              
                 <!-- Modal -->
                 <div id="modal_reservation" class="modal fade" role="dialog">
                   <div class="modal-dialog">
@@ -1162,16 +1161,19 @@
                   </div>
                 </div>
               </div>
+            
               <div class="row mt-5" id="read_more_login">
                 <div class="col-12">
                   <p>Du måste logga in för att reservera ett boende.</p>
                 </div>
                 <button id="read_more_login_button" class="btn btn-success rounded-pill">Logga in</button>
               </div>
+            </div>
         </div>
       </div>
     </div>
   </div>
+</div>
     </script>
 
 
