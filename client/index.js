@@ -1343,7 +1343,6 @@ function load_burger() {
     $("#menu").empty();
 
     $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu">Om oss</li></a>'
-            + '<a href=""><li id="contact_button" class="hide-menu">Kontakta oss</li></a>'
             + '<a href=""><li id="help_button" class="hide-menu">Så fungerar det</li></a>')
 
     if (sessionStorage.getItem('auth') == null) {
