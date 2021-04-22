@@ -897,7 +897,8 @@ function load_bookings() {
 function logout() {
     sessionStorage.removeItem('auth');
     $("#sign_in_nav").addClass('d-none');
-    $("#sign_in_nav").removeClass('d-md-block');
+    $("#sign_in_nav").addClass('d-md-block');
+    $("#my_page_nav").removeClass('d-md-block');
     $("#my_page_nav").addClass('d-none');
     go_home();
 }
