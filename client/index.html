@@ -27,6 +27,7 @@
     <a href="" class="navbar-brand hide-menu"><img id="navbar-logo" src="Media/Unihome-logga.png"></a>
     <a href="" id="ad_accomodation_nav" class="d-none d-md-block">Lägg upp boende</a>
     <a href="" id="sign_in_nav" class="d-none d-md-block">Logga in</a>
+    <a href="" id="my_page_nav" class="d-none">Mina sidor</a>
     <div id="menuToggle" class="burger-menu">
 
       <input type="checkbox" id="close-menu" />
@@ -35,7 +36,7 @@
       <span></span>
       <span></span>
 
-      <ul id="menu">
+      <ul id="menu" class="testamonial">
       </ul>
 
     </div>
@@ -48,7 +49,8 @@
     <div class="row text-center">
       <div class="col-8 offset-2 col-lg-12 offset-lg-0 text-center">
         <div class="row justify-content-center">
-        <div class= "col-2" ><a href="http://localhost:5000"></a><img class="footer-brand" src="Media/Unihome-logga.png"></a></div>
+          <div class="col-2"><a href="http://localhost:5000"></a><img class="footer-brand"
+              src="Media/Unihome-logga.png"></a></div>
         </div>
       </div>
       <div class="col-8 offset-2 offset-lg-2 border-footer "></div>
@@ -73,28 +75,28 @@
         <ul class="no-dot-list">
           <h5>Kontakt</h5>
           <li>Kundtjänst: 013 - 50 21 44</li>
-          <li> Email:<a href="mailto:help@unihome.se">help@unihome.se</a></li>
+          <li> Email: <a href="mailto:help@unihome.se">help@unihome.se</a></li>
         </ul>
       </div>
-    
+
     </div>
     <div class="row text-center">
       <div id=border-line-1 class="offset-2 col-8 border-line-3 "></div>
       <div class="col-8 border-line-3 offset-2 col-lg-12 offset-lg-0 text-center">
         <div class="row justify-content-center">
           <div class="col-1" id="instagram-id"><a href="http://www.instagram.com"><img class="sml-socialm-icon"
-                src="media/instagram.png"></a></div>
+                src="Media/instagram.png"></a></div>
           <div class="col-1" id="facebook-id"><a href="http://www.facebook.com"><img class="sml-socialm-icon"
-                src="media/facebook.png"></a></div>
+                src="Media/facebook.png"></a></div>
           <div class="col-1" id="linkedin-id"><a href="http://www.linkedin.com"><img class="sml-socialm-icon"
-                src="media/linkedin.png"></a></div>
+                src="Media/linkedin.png"></a></div>
         </div>
       </div>
     </div>
 
     <div class="col-12">
-      <div class="row justify-content-center"> 
-        <div class= "col-6 text-center" >
+      <div class="row justify-content-center">
+        <div class="col-6 text-center">
           <div class="offset-2 col-8 border-footer "></div>
           <p id="border-line-2">© 2021 UniHome AB. All rights reserved. Org. nr. 559201-1745
             Wernersgatan 36 , Plan 2, 582 46 Linköping, Sweden.</p>
@@ -120,7 +122,7 @@
           <div class="row home_vision_div">
             <div class="col-12">
               <h1 id="home_vision">
-                för studenter, av studenter.
+               Hem för studenter av studenter
               </h1>
             </div>
           </div>
@@ -129,7 +131,7 @@
             <div class="col-12">
               <div class="row align-items-center justify-content-center">
                 <form class="col-12">
-                  <div class="form-row align-items-center" id="home_search">
+                  <div class="form-row align-items-center testamonial" id="home_search">
                     <div class="form-group col-9 col-xl-5">
                       <select class="form-control no-border" id="home_select_area">
                         <option>Område</option>
@@ -1029,8 +1031,8 @@
     </div>
   </script>
 
-  <!-------------------------------- Read more about the housing ad -------------------------------->
-  <script id="read_more_ad_page" type="text/html">
+    <!-------------------------------- Read more about the housing ad -------------------------------->
+    <script id="read_more_ad_page" type="text/html">
     <div class="read_more_background">
     <div class="row" >
       <div class="col-1">
@@ -1095,6 +1097,7 @@
             </div>
         
         <div class="col-12 col-lg-5 offset-lg-1 testamonial read_more_price_date">
+        
           <div class="row justify-content-center attributes">
             <div class="col-6 headline_startdate">
               <b>Tidigast möjligast inflytt</b> 
@@ -1116,11 +1119,13 @@
               </div>
               </div>
             
-              <div class="row read_more_price justify-content-center mt-5">
+              <!-- <div class="row read_more_price justify-content-center mt-5">
                 <h4 class="col-10" id="read_more_ad_price" ></h4>
-              </div>
+              </div> -->
+
               
-              <div class="row mt-4" id="read_more_reserve">
+              <div id="read_more_reserve">
+              <div class="row mt-4" >
                 <div class="col-6">
                   <label for="read_more_select_start" class="d-none d-xl-inline">Valt inflyttningsdatum</label>
                   <input type="date" id="read_more_select_start" style ="font-size: 20px;" class="no-border">
@@ -1129,6 +1134,31 @@
                   <label for="read_more_select_end" class="d-none d-xl-inline">Valt utflyttningsdatum</label>
                   <input type="date" id="read_more_select_end" style ="font-size: 20px;" class="no-border">
                 </div>
+              </div>
+              <br>
+
+                <!-- Pris info -->
+                <div class="row justify-content-center" id="price_headline">
+                  <div class = "col-6 col-lg-12" ><b>Pris:</b> </div>
+                
+                <div class="row justify-content-center"></div>
+                  <div class = "col-6 col-lg-6" id="display_payment_info"></div>
+                  <div class = "offset-3 col-3 col-lg-3" id="display_price"></div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class = "col-6 col-lg-6" ><u>Bokningsavgift</u></div>
+                  <div class = "offset-3 col-3 col-lg-3" id="display_fee"></div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class = "col-6 col-lg-6" >Moms (25%)</div>
+                  <div class = "offset-3 col-3 col-lg-3" id="display_tax"></div>
+                </div>
+                <div class="row justify-content-center">
+                <div class = "col-6 col-lg-6" id="total_headline" ><b>Totalt</b></div>
+                <div class = "offset-3 col-3 col-lg-3" id="display_total"></div>
+              </div>
+              <br>
+                
                 <button id="reservation_button" class="btn btn-success rounded-pill mt-3" data-toggle="modal" data-target="#modal_reservation">Reservera</button>
               
                 <!-- Modal -->
@@ -1160,7 +1190,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+            </div>
             
               <div class="row mt-5" id="read_more_login">
                 <div class="col-12">
@@ -1178,8 +1208,8 @@
 
 
 
-  <!-------------------------------- Payment view------------------------------ -->
-  <script id="payment_page" type="text/html">
+    <!-------------------------------- Payment view------------------------------ -->
+    <script id="payment_page" type="text/html">
     <div class="my_page_background">
     <div id="my_page_container" class="container">
       <h1> Betalning av ditt boende</h1>

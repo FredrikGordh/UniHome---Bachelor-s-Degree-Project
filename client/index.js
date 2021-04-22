@@ -5,14 +5,16 @@ var saved_input;
 
 
 $(document).ready(function () {
-    window.setTimeout( loader, 2000 );
+    window.setTimeout(loader, 2000);
     go_home();
-    
-    
+
+
 
     if (sessionStorage.getItem('auth')) {
         $("#sign_in_nav").removeClass('d-md-block');
         $("#sign_in_nav").addClass('d-none');
+        $("#my_page_nav").addClass('d-md-block');
+        $("#my_page_nav").addClass('d-none');
     }
 
     //Click on logo to go home
@@ -22,7 +24,7 @@ $(document).ready(function () {
         $('html, body').scrollTop(0);
     });
 
-    
+
 
     //Using .on()-function since we need to check if the content of #content is loaded before checking for events
 
@@ -48,6 +50,12 @@ $(document).ready(function () {
 
     //Burger menu: Go to my page
     $("#menu").on("click", "#my_page_button", function (e) {
+        e.preventDefault();
+        go_my_page();
+        $('html, body').scrollTop(0);
+    });
+
+    $("nav").on("click", "#my_page_nav", function (e) {
         e.preventDefault();
         go_my_page();
         $('html, body').scrollTop(0);
@@ -88,7 +96,7 @@ $(document).ready(function () {
     $("#menu").on("click", "#logout_button", function (e) {
         e.preventDefault();
         logout();
-        });
+    });
 
     //Attributes: Dropdown checklist
     $("#content").on("click", ".anchor", function (e) {
@@ -157,7 +165,7 @@ $(document).ready(function () {
         e.preventDefault();
         submit_login_form();
         $('html, body').scrollTop(0);
-        
+
     });
 
     //Submit login form by pressing ENTER
@@ -175,6 +183,11 @@ $(document).ready(function () {
     //Register update of search sort
     $("#content").on("change", ".checkboxupdate, #search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_ad_bike_id, #search_ad_dishwasher_id, #search_ad_wifi_id, #search_ad_sauna_id, #search_ad_washingmachine_id", function (e) {
         update_search();
+    });
+
+    //Register update of search sort
+    $("#content").on("change", "#read_more_select_start, #read_more_select_end", function (e) {
+        load_read_more($("#reservation_button").data('id'));
     });
 
     //Go to read more on an ad
@@ -249,17 +262,17 @@ $(document).ready(function () {
     });
 
 
-        //Route to my page after payment
-        $("#content").on("click", "#payment_to_mypage_button", function (e) {
-            e.preventDefault();
-            $('#modal_payment').modal('hide');
-            $('.modal-backdrop').hide();
-            go_my_page();
-            $('html, body').scrollTop(0);
-        });
+    //Route to my page after payment
+    $("#content").on("click", "#payment_to_mypage_button", function (e) {
+        e.preventDefault();
+        $('#modal_payment').modal('hide');
+        $('.modal-backdrop').hide();
+        go_my_page();
+        $('html, body').scrollTop(0);
+    });
 
     //Route to my pages from modal save changes
-       $("#content").on("click", "#save_changes_to_search_button", function (e) {
+    $("#content").on("click", "#save_changes_to_search_button", function (e) {
         e.preventDefault();
         $('#modal_save_changes').modal('hide');
         $('.modal-backdrop').hide();
@@ -667,12 +680,12 @@ function go_payment_page(ad_id, ad_price) {
         },
         success: function (amount_of_days) {
             $("#display_payment_info").html(ad_price + " kr x " + amount_of_days + " nätter");
-            $("#display_price").html( ad_price * amount_of_days + " kr");
+            $("#display_price").html(ad_price * amount_of_days + " kr");
             $("#display_fee").html(100 + " kr");
             $("#display_brutto").html(ad_price * amount_of_days + 100 + " kr");
-            var tax = (ad_price * amount_of_days + 100)*0.25;
+            var tax = (ad_price * amount_of_days + 100) * 0.25;
             $("#display_tax").html(tax + " kr");
-            $("#display_total").html(ad_price*amount_of_days + 100 +tax + " kr");
+            $("#display_total").html(ad_price * amount_of_days + 100 + tax + " kr");
         }
     })
 
@@ -840,10 +853,10 @@ function go_confirmation_page() {
 }
 
 //function for fading the loader and taking back the navbar
-function loader(){
+function loader() {
     $(".loader-wrapper").fadeOut("slow");
     $("#navbar_main").removeClass("d-none")
-  }
+}
 
 //Load account info in my page
 function load_account_info() {
@@ -885,6 +898,8 @@ function logout() {
     sessionStorage.removeItem('auth');
     $("#sign_in_nav").addClass('d-none');
     $("#sign_in_nav").addClass('d-md-block');
+    $("#my_page_nav").removeClass('d-md-block');
+    $("#my_page_nav").addClass('d-none');
     go_home();
 }
 
@@ -965,6 +980,7 @@ function load_my_ads_request() {
         headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'GET',
         success: function (ads) {
+            
             ads.forEach(element => {
                 if (element.paid == true) {
                     element.image = element.image.url
@@ -991,6 +1007,11 @@ function load_my_ads_request() {
                     $(".read_more_startdate_p"+element.id).html(element.tenant_enddate);
                 }
             });
+        },
+        statusCode: {
+            404: function () {
+                $("#my_page_ads_container").append("<h5>Inga bokningar</h5>"); 
+            },
         }
     })
 }
@@ -1109,6 +1130,9 @@ function login_request(user) {
             sessionStorage.setItem('auth', JSON.stringify(response));
             $("#sign_in_nav").removeClass('d-md-block');
             $("#sign_in_nav").addClass('d-none');
+            $("#my_page_nav").addClass('d-md-block');
+            $("#my_page_nav").addClass('d-none');
+
             go_home()
 
         }
@@ -1221,6 +1245,23 @@ function load_read_more(ad_id) {
             $("#read_more_ad_attributes").html(ad.attributes);
             $("#readmore_div_img").css("background-image", 'url(' + ad.image.url + ')');
 
+            start = Date.parse($("#read_more_select_start").val());
+            end = Date.parse($("#read_more_select_end").val());
+
+            var Difference_In_Time = end - start;
+
+            // To calculate the no. of days between two dates
+            var amount_of_days = Difference_In_Time / (1000 * 3600 * 24);
+
+            $("#display_payment_info").html(ad.price + " kr x " + amount_of_days + " nätter");
+            $("#display_price").html(ad.price * amount_of_days + " kr");
+            $("#display_fee").html(100 + " kr");
+            $("#display_brutto").html(ad.price * amount_of_days + 100 + " kr");
+            var tax = (ad.price * amount_of_days + 100) * 0.25;
+            $("#display_tax").html(tax + " kr");
+            $("#display_total").html(ad.price * amount_of_days + 100 + tax + " kr");
+
+
             if (ad.attributes.wifi) {
                 $("#wifi-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
             } else {
@@ -1324,7 +1365,7 @@ function load_payment_ad(ad_id) {
             $("#payment_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#payment_more_ad_attributes").html(ad.attributes);
             $("#payment_img").css("background-image", 'url(' + ad.image.url + ')');
-            
+
         }
     })
 
@@ -1387,13 +1428,13 @@ function load_burger() {
     $("#menu").empty();
 
     $("#menu").append('<a href=""><li id="about_us_button" class="hide-menu">Om oss</li></a>'
-            + '<a href=""><li id="help_button" class="hide-menu">Så fungerar det</li></a>')
+        + '<a href=""><li id="help_button" class="hide-menu">Så fungerar det</li></a>')
 
     if (sessionStorage.getItem('auth') == null) {
         $("#menu").prepend('<a href=""><li id="register_button" class="hide-menu">Bli medlem</li></a>'
             + '<a href=""><li id="login_button" class="hide-menu d-block d-md-none">Logga in</li></a>')
     } else {
-        $("#menu").prepend('<a href=""><li id="my_page_button" class="hide-menu">Mina sidor</li></a>')
+        $("#menu").prepend('<a href=""><li id="my_page_button" class="hide-menu d-block d-md-none">Mina sidor</li></a>')
         $("#menu").append('<a href=""><li id="logout_button" class="hide-menu">Logga ut</li></a>')
     }
 
@@ -1593,31 +1634,31 @@ function get_wanted_attributes_home() {
 
 }
 
-function set_attributes_ad(ad){
+function set_attributes_ad(ad) {
     if (ad.attributes.wifi) {
-        $("#wifi-attribute"+ ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+        $("#wifi-attribute" + ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
     } else {
-        $("#wifi-attribute"+ ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+        $("#wifi-attribute" + ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
     }
     if (ad.attributes.dishwasher) {
-        $("#dishwasher-attribute"+ ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+        $("#dishwasher-attribute" + ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
     } else {
-        $("#dishwasher-attribute"+ ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+        $("#dishwasher-attribute" + ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
     }
     if (ad.attributes.washingmachine) {
-        $("#washingmachine-attribute"+ ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+        $("#washingmachine-attribute" + ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
     } else {
-        $("#washingmachine-attribute"+ ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+        $("#washingmachine-attribute" + ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
     }
     if (ad.attributes.bike) {
-        $("#bike-attribute"+ ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+        $("#bike-attribute" + ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
     } else {
-        $("#bike-attribute"+ ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+        $("#bike-attribute" + ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
     }
     if (ad.attributes.sauna) {
-        $("#sauna-attribute"+ ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+        $("#sauna-attribute" + ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
     } else {
-        $("#sauna-attribute"+ ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+        $("#sauna-attribute" + ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
     }
 }
 
