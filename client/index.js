@@ -1176,6 +1176,24 @@ function load_read_more(ad_id) {
             $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
             $("#readmore_div_img").css("background-image", 'url(' + ad.image.url + ')');
+            console.log(ad.id)
+            $.ajax({
+                url: host + '/rentalperiod',
+                headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+                type: 'GET',
+                data: {
+                    id: ad.id
+                },
+                success: function (amount_of_days) {
+                    $("#display_payment_info").html(ad_price + " kr x " + amount_of_days + " nätter");
+                    $("#display_price").html( ad_price * amount_of_days + " kr");
+                    $("#display_fee").html(100 + " kr");
+                    $("#display_brutto").html(ad_price * amount_of_days + 100 + " kr");
+                    var tax = (ad_price * amount_of_days + 100)*0.25;
+                    $("#display_tax").html(tax + " kr");
+                    $("#display_total").html(ad_price*amount_of_days + 100 +tax + " kr");
+                }
+            })
 
             if (ad.attributes.wifi) {
                 $("#wifi-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");

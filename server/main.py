@@ -492,10 +492,11 @@ def types():
 
 # Calculates the amount of days that tenant will rent the add
 @app.route('/rentalperiod', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def calculate_rentalperiod():
     if request.method == 'GET':
         ad_id = request.args.get('id')
+        print(ad_id)
         current_ad = Ad.query.get_or_404(ad_id)
         startdate = current_ad.tenant_startdate
         enddate = current_ad.tenant_enddate
