@@ -130,21 +130,40 @@ class Ad(db.Model):
                                                                                          self.paid, self.tenant_id, self.image_id, self.tenant_startdate, self.tenant_enddate)
 
     def serialize(self):
-        return dict(id=self.id, title=self.title, description=self.description, neighbourhood=self.neighbourhood,
+        if (self.tenant_enddate != None):
+
+            return dict(id=self.id, title=self.title, description=self.description, neighbourhood=self.neighbourhood,
                     studentcity=self.studentcity, streetaddress=self.streetaddress, streetnumber=self.streetnumber, city=self.city,
                     postalcode=self.postalcode, country=self.country, squaremetres=self.squaremetres, price=self.price, beds=self.beds,
                     accommodationtype=self.accommodationtype, host=User.query.get(
                         self.host_id).serialize(),
                     startdate=self.startdate.strftime('%Y-%m-%d'),
                     enddate=self.enddate.strftime('%Y-%m-%d'),
-                    tenant_startdate=self.startdate.strftime('%Y-%m-%d'),
-                    tenant_enddate=self.enddate.strftime('%Y-%m-%d'),
+                    tenant_startdate=self.tenant_startdate.strftime('%Y-%m-%d'),
+                    tenant_enddate=self.tenant_enddate.strftime('%Y-%m-%d'),
                     reserved=self.reserved,
                     booked=self.booked,
                     paid=self.paid,
                     attributes=Attributes.query.filter_by(
                         ad_id=self.id).first().serialize(),
                     image=Image.query.filter_by(ad_id=self.id).first().serialize(), )
+        
+        else:
+
+            return dict(id=self.id, title=self.title, description=self.description, neighbourhood=self.neighbourhood,
+                    studentcity=self.studentcity, streetaddress=self.streetaddress, streetnumber=self.streetnumber, city=self.city,
+                    postalcode=self.postalcode, country=self.country, squaremetres=self.squaremetres, price=self.price, beds=self.beds,
+                    accommodationtype=self.accommodationtype, host=User.query.get(
+                        self.host_id).serialize(),
+                    startdate=self.startdate.strftime('%Y-%m-%d'),
+                    enddate=self.enddate.strftime('%Y-%m-%d'),
+                    reserved=self.reserved,
+                    booked=self.booked,
+                    paid=self.paid,
+                    attributes=Attributes.query.filter_by(
+                        ad_id=self.id).first().serialize(),
+                    image=Image.query.filter_by(ad_id=self.id).first().serialize(), )
+                
     
     @validates('title', 'describtion', 'streetaddress', 'city', 'postalcode', 'squaremetres', 'price', 'beds', 'accommodationtype')
     def empty_string_to_null(self, key, value):
