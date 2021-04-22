@@ -1436,7 +1436,6 @@ button:disabled {
 
 .dropdown-check-list {
   display: inline-block;
-  padding-left: 100px;
   color:grey;
   /* border: none; */
 }
