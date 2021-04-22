@@ -337,10 +337,7 @@ def deny_tenant(ad_id):
 
 #/ad/<int:ad_id>/paid is used to save that an ad has been paid for. 
 @app.route('/ad/<int:ad_id>/paid', methods=['PUT'])
-<<<<<<< server/main.py
 # @jwt_required()
-
-
 def set_paid(ad_id):
     if request.method == 'PUT':
         paid = request.get_json(force=True)
