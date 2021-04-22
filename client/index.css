@@ -153,6 +153,12 @@ video {
   background-color: slateblue;
 }
 
+.deny_ad_button{
+  width: 100%;
+  padding: 6px;
+  font-weight: normal;
+}
+
 #menuToggle input {
   display: block;
   width: 40px;
