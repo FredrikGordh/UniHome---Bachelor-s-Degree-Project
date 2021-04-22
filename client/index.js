@@ -1086,7 +1086,7 @@ function register_request(user) {
         },
         statusCode: {
             500: function () {
-                alert('fyll i alla fält horunge');
+                alert('Fyll i alla fält!');
             },
             409: function () {
                 $("#register_failed_container").html("Den här email-adressen används redan!");
@@ -1652,7 +1652,7 @@ function submitAdForm() {
             },
             statusCode: {
                 500: function () {
-                    alert('fyll i alla fält horunge');
+                    alert('Fyll i alla fält!');
                 },
             }
         })
