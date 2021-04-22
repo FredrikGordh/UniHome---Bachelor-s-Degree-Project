@@ -979,6 +979,7 @@ function load_my_ads_request() {
         headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'GET',
         success: function (ads) {
+            
             ads.forEach(element => {
                 if (element.paid == true) {
                     element.image = element.image.url
@@ -992,12 +993,16 @@ function load_my_ads_request() {
                     $("#my_page_ads_container").append(Mustache.render(my_accomodation_booked, element));
 
                 }
-
                 if (element.booked == true) {
                 } else if (element.reserved == true) {
                     get_tenant(element.id);
                 }
             });
+        },
+        statusCode: {
+            404: function () {
+                $("#my_page_ads_container").append("<h5>Inga bokningar</h5>"); 
+            },
         }
     })
 }
