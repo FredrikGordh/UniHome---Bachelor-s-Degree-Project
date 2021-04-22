@@ -820,7 +820,9 @@ function go_payment_page(ad_id, ad_price) {
 
 //Function for going to view: Successful payment page
 function go_successful_payment_page() {
-    $("#content").html($("#successful_payment_page").html());
+    // $("#content").html($("#successful_payment_page").html());
+    $("#modal_payment").modal("show");
+
 }
 
 //Function for going to view: Read more ad
@@ -1670,10 +1672,10 @@ function update_search() {
     } else if (sort == "Ö-A") {
         sort = "desc";
         sort_param = "title";
-    } else if (sort == "Pris ökande") {
+    } else if (sort == "Pris: Lägsta först") {
         sort = "asc";
         sort_param = "price";
-    } else if (sort == "Pris sjunkande") {
+    } else if (sort == "Pris: Högsta först") {
         sort = "desc";
         sort_param = "price";
     }
