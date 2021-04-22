@@ -373,6 +373,14 @@ def tenant(ad_id):
         current_ad = Ad.query.get_or_404(ad_id)
         return jsonify(User.query.get_or_404(current_ad.tenant_id).serialize())
 
+#/ad/<int:ad_id>/host is used getting who owns a specific ad.      
+@app.route('/ad/<int:ad_id>/host', methods=[ 'GET'])
+@jwt_required()
+def host(ad_id):
+    if request.method == 'GET':
+        current_ad = Ad.query.get_or_404(ad_id)
+        return jsonify(User.query.get_or_404(current_ad.host_id).serialize())
+
 
 # /ads has the method GET, it is used to retrieve all the ads that is stored in the database and filter them.
 @app.route('/ads', methods=['GET'])

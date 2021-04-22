@@ -969,17 +969,19 @@ function load_my_ads_request() {
                 if (element.paid == true) {
                     element.image = element.image.url
                     $("#my_page_ads_container").append(Mustache.render(my_accomodation_paid, element));
+                    set_attributes_ad(ad)
                 } else if (element.booked == false) {
                     element.image = element.image.url
                     $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
                     set_attributes_ad(element);
                 } else {
                     element.image = element.image.url
-                    $("#my_page_ads_container").append(Mustache.render(my_accomodation_booked, element));
-                    
+                    $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
+                    set_attributes_ad(ad)
                 }
 
                 if (element.booked == true) {
+                    print_tenant(element.id);
                 } else if (element.reserved == true) {
                     get_tenant(element.id);
                 }
@@ -1001,6 +1003,8 @@ function load_my_bookings_request() {
                 } else if (element.booked == false) {
                     element.image = element.image.url
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings, element));
+                    set_attributes_ad(element);
+                    print_host(element.id)
                 } else {
                     element.image = element.image.url
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings_booked, element));
@@ -1056,6 +1060,33 @@ function get_tenant(ad_id) {
         }
     })
 }
+
+function print_tenant(ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/tenant',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (result) {
+            result["ad_id"] = ad_id;
+            $(".accomodation_tennant_" + ad_id).append(Mustache.render(tenant_booked, result));
+            $("#tenant_button"+result.id).html("Boendet är bokat och väntar på betalning. Tryck för mer info.")
+        }
+    })
+}
+function print_host(ad_id) {
+    $.ajax({
+        url: host + '/ad/' + ad_id + '/host',
+        headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
+        type: 'GET',
+        success: function (result) {
+            result["ad_id"] = ad_id;
+            $(".accomodation_host_" + ad_id).append(Mustache.render(host_booked, result));
+            $("#host_button"+result.id).html("Boendet är reserverat och väntar på godkännande. Tryck för mer info.")
+
+        }
+    })
+}
+
 
 //Function for making a login request 
 function login_request(user) {
