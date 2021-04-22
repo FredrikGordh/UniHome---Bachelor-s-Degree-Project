@@ -273,6 +273,8 @@ def my_ads():
         ad_list = []
         for ad in all_ads:
             ad_list.append(ad.serialize())
+        if (len(ad_list) == 0):
+            abort(404)
         return jsonify(ad_list)
 
 
