@@ -972,9 +972,11 @@ function load_my_ads_request() {
                 } else if (element.booked == false) {
                     element.image = element.image.url
                     $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
+                    set_attributes_ad(element);
                 } else {
                     element.image = element.image.url
                     $("#my_page_ads_container").append(Mustache.render(my_accomodation_booked, element));
+                    
                 }
 
                 if (element.booked == true) {
@@ -1550,6 +1552,33 @@ function get_wanted_attributes_home() {
 
 }
 
+function set_attributes_ad(ad){
+    if (ad.attributes.wifi) {
+        $("#wifi-attribute"+ ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+    } else {
+        $("#wifi-attribute"+ ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+    }
+    if (ad.attributes.dishwasher) {
+        $("#dishwasher-attribute"+ ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+    } else {
+        $("#dishwasher-attribute"+ ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+    }
+    if (ad.attributes.washingmachine) {
+        $("#washingmachine-attribute"+ ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+    } else {
+        $("#washingmachine-attribute"+ ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+    }
+    if (ad.attributes.bike) {
+        $("#bike-attribute"+ ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+    } else {
+        $("#bike-attribute"+ ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+    }
+    if (ad.attributes.sauna) {
+        $("#sauna-attribute"+ ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
+    } else {
+        $("#sauna-attribute"+ ad.id).html("<i class='fas fa-times' style='color:lightsalmon;'> </i>");
+    }
+}
 
 function update_search() {
     sort = $("#search_page_sort").val();
