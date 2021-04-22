@@ -1097,6 +1097,7 @@
             </div>
         
         <div class="col-12 col-lg-5 offset-lg-1 testamonial read_more_price_date">
+        
           <div class="row justify-content-center attributes">
             <div class="col-6 headline_startdate">
               <b>Tidigast möjligast inflytt</b> 
@@ -1118,11 +1119,13 @@
               </div>
               </div>
             
-              <div class="row read_more_price justify-content-center mt-5">
+              <!-- <div class="row read_more_price justify-content-center mt-5">
                 <h4 class="col-10" id="read_more_ad_price" ></h4>
-              </div>
+              </div> -->
+
               
-              <div class="row mt-4" id="read_more_reserve">
+              <div id="read_more_reserve">
+              <div class="row mt-4" >
                 <div class="col-6">
                   <label for="read_more_select_start" class="d-none d-xl-inline">Valt inflyttningsdatum</label>
                   <input type="date" id="read_more_select_start" style ="font-size: 20px;" class="no-border">
@@ -1131,6 +1134,31 @@
                   <label for="read_more_select_end" class="d-none d-xl-inline">Valt utflyttningsdatum</label>
                   <input type="date" id="read_more_select_end" style ="font-size: 20px;" class="no-border">
                 </div>
+              </div>
+              <br>
+
+                <!-- Pris info -->
+                <div class="row justify-content-center" id="price_headline">
+                  <div class = "col-6 col-lg-12" ><b>Pris:</b> </div>
+                
+                <div class="row justify-content-center"></div>
+                  <div class = "col-6 col-lg-6" id="display_payment_info"></div>
+                  <div class = "offset-3 col-3 col-lg-3" id="display_price"></div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class = "col-6 col-lg-6" ><u>Bokningsavgift</u></div>
+                  <div class = "offset-3 col-3 col-lg-3" id="display_fee"></div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class = "col-6 col-lg-6" >Moms (25%)</div>
+                  <div class = "offset-3 col-3 col-lg-3" id="display_tax"></div>
+                </div>
+                <div class="row justify-content-center">
+                <div class = "col-6 col-lg-6" id="total_headline" ><b>Totalt</b></div>
+                <div class = "offset-3 col-3 col-lg-3" id="display_total"></div>
+              </div>
+              <br>
+                
                 <button id="reservation_button" class="btn btn-success rounded-pill mt-3" data-toggle="modal" data-target="#modal_reservation">Reservera</button>
               
                 <!-- Modal -->
@@ -1162,7 +1190,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+            </div>
             
               <div class="row mt-5" id="read_more_login">
                 <div class="col-12">

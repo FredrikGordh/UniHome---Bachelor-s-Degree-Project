@@ -185,6 +185,11 @@ $(document).ready(function () {
         update_search();
     });
 
+    //Register update of search sort
+    $("#content").on("change", "#read_more_select_start, #read_more_select_end", function (e) {
+        load_read_more($("#reservation_button").data('id'));
+    });
+
     //Go to read more on an ad
     $("#content").on("click", ".read_more_ad_button, .title_id", function (e) {
         e.preventDefault();
@@ -1190,6 +1195,23 @@ function load_read_more(ad_id) {
             $("#read_more_ad_accommodationtype").html(ad.accommodationtype);
             $("#read_more_ad_attributes").html(ad.attributes);
             $("#readmore_div_img").css("background-image", 'url(' + ad.image.url + ')');
+
+            start = Date.parse($("#read_more_select_start").val());
+            end = Date.parse($("#read_more_select_end").val());
+
+            var Difference_In_Time = end - start;
+
+            // To calculate the no. of days between two dates
+            var amount_of_days = Difference_In_Time / (1000 * 3600 * 24);
+
+            $("#display_payment_info").html(ad.price + " kr x " + amount_of_days + " nätter");
+            $("#display_price").html(ad.price * amount_of_days + " kr");
+            $("#display_fee").html(100 + " kr");
+            $("#display_brutto").html(ad.price * amount_of_days + 100 + " kr");
+            var tax = (ad.price * amount_of_days + 100) * 0.25;
+            $("#display_tax").html(tax + " kr");
+            $("#display_total").html(ad.price * amount_of_days + 100 + tax + " kr");
+
 
             if (ad.attributes.wifi) {
                 $("#wifi-attribute").html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
