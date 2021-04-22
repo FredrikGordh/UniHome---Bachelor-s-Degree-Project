@@ -80,7 +80,7 @@ video {
 #sign_in_nav {
   display: block;
   top: 25px;
-  right: 300px;
+  right: 125px;
   position: absolute;
   z-index: 6;
   color: white;
@@ -93,6 +93,22 @@ video {
   color: rgb(255, 255, 197);
 }
 
+#my_page_nav {
+  display: block;
+  top: 25px;
+  right: 125px;
+  position: absolute;
+  z-index: 6;
+  color: white;
+  font-size: 20px;
+  
+}
+
+#my_page_nav:hover {
+  transform: scale(1.01);
+  color: rgb(255, 255, 197);
+}
+
 #ad_accomodation_nav:hover {
   transform: scale(1.01);
   color: rgb(255, 255, 197);
@@ -101,7 +117,7 @@ video {
 #ad_accomodation_nav {
   display: block;
   top: 25px;
-  right: 120px;
+  right: 250px;
   position: absolute;
   z-index: 6;
   color: white;
