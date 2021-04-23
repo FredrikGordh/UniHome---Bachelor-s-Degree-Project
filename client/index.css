@@ -851,7 +851,7 @@ Används när ines checkbox klasser används
   margin: 30px auto;
 }
 
-.testamonial h3 {
+.reviews_homepage h3 {
   font-weight: lighter;
 }
 
@@ -1366,15 +1366,6 @@ button:disabled {
   }
 }
 
-.body1 {
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  /* height: 100vh; */
-  width: 100vw;
-}
 
 .form1 {
   width: 30vw;

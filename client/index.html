@@ -195,7 +195,7 @@
       </div>
 
       <!-- Recensioner -->
-      <div id="home-reviews" class="section">
+      <div id="home-reviews" class="section reviews_homepage">
         <div class="row">
           <div class="col-12">
             <h1>Tidigare kunders omdömen</h1>
@@ -341,8 +341,8 @@
             <select class="form-control no-border" id="search_page_sort">
               <option>A-Ö</option>
               <option>Ö-A</option>
-              <option>Pris ökande</option>
-              <option>Pris sjunkande</option>
+              <option>Pris: Lägsta först</option>
+              <option>Pris: Högsta först</option>
             </select>
           </div>
           <div class="col-12">
@@ -1175,7 +1175,7 @@
                         </button>
                       </div>
                       <div class=" col-10  justify-content-center">
-                        <h3 class="modal-title "> Reservationen lyckades</h3>
+                        <h3 class="modal-title" > Reservationen lyckades</h3>
                       </div>
                     </div>
                     </div>
@@ -1254,13 +1254,27 @@
         </div>
           
         <div id="card-element"><!--Stripe.js injects the Card Element--></div>
-        <button id="reservation_button" class="btn   btn-success rounded-pill mt-3" data-toggle="modal" data-target="#modal_payment">Betala</button>
+
+        <button id="submit" class="btn   btn-success rounded-pill mt-3">
+          <div class="spinner hidden" id="spinner"></div>
+          <span id="button-text">Betala</span>
+        </button>
         <button type="button" class="btn btn-success rounded-pill mt-3" id="cancel_payment_button">Avbryt</button>
         <p id="card-error" role="alert"></p>
         <p class="result-message hidden">
           Payment succeeded, see the result in your
           <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
         </p>
+        
+        <!-- <button id="reservation_button" class="btn   btn-success rounded-pill mt-3" data-toggle="modal" data-target="#modal_payment">Betala</button>
+        <button type="button" class="btn btn-success rounded-pill mt-3" id="cancel_payment_button">Avbryt</button>
+        <p id="card-error" role="alert"></p>
+        <p class="result-message hidden">
+          Payment succeeded, see the result in your
+          <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+        </p> -->
+
+
       </form>
     </div>
   </div>
@@ -1296,8 +1310,8 @@
 
   
 
-    <div class="body1">
-                        <!-- Modal Successful payment-->
+   
+           <!-- Modal Successful payment-->
                         <div id="modal_payment" class="modal fade" role="dialog">
                           <div class="modal-dialog">
                         
@@ -1323,7 +1337,7 @@
                             </div>
                         
                           </div>
-                        </div> 
+                        </div>              
     </div>
   </div>
   </script>
