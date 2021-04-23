@@ -1488,7 +1488,7 @@ function load_burger() {
     }
 
     $("#menu").prepend('<a href=""><li id="home_button" class="hide-menu">Startsida</li></a>'
-        + '<a href=""><li id="burger_add_accomodation" class="hide-menu d-block d-md-none">Lägg upp boende</li></a>')
+        + '<a href=""><li id="burger_add_accomodation" class="hide-menu d-block d-md-none">Skapa ny annons</li></a>')
 }
 
 //Function for calling all date loaders
