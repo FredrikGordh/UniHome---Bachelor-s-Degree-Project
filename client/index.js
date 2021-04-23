@@ -329,6 +329,8 @@ $(document).ready(function () {
     //My page menu: go to bookings
     $("#content").on("click", "#bookings_link", function (e) {
         e.preventDefault();
+        $('.modal-backdrop').hide();
+        go_my_page();
         load_bookings();
         $('html, body').animate({
             scrollTop: $("#my_page_content_scrolldown").offset().top
