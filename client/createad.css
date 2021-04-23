@@ -1,0 +1,23 @@
+#new_ad_page_container {
+  background-color: #f0f8ff; /* #E8CDB5;*/
+  padding-top: 100px;
+}
+
+#new_ad_page_section {
+  background-color: #f0f8ff;
+}
+
+#new_ad_page {
+  background-color: #f0f8ff;
+}
+
+#upload {
+  opacity: 0;
+}
+
+#upload-label {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+}

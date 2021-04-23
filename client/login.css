@@ -1,0 +1,22 @@
+#login_container_box {
+  margin-top: 20vh;
+  margin-bottom: 20vh;
+}
+
+#login_failed_container {
+  color: red;
+}
+
+#login_image {
+  background-color: #37abab;
+  color: white;
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(248, 252, 255, 0.2)
+    ),
+    url(Media/login.jpg) left no-repeat;
+
+  background-size: cover;
+  
+}

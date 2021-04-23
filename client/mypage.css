@@ -1,0 +1,54 @@
+#my_page_email_and_tel {
+  color: rgb(255, 255, 255);
+  font-size: large;
+}
+
+#my_page_bio_text {
+  color: rgb(255, 255, 255);
+  font-size: large;
+}
+
+#my_page_bio_header {
+  color: rgb(255, 255, 255);
+  font-size: large;
+}
+
+#my_page_email_and_tel {
+  font-size: large;
+}
+
+/* Funkar inte */
+#edit_bio_container {
+  background-color: white;
+  border-radius: 20px;
+  padding: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+#edit_form_button {
+  margin-bottom: 10px;
+}
+
+#my_page_container {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+#my_page_background {
+  background-color: #f0f8ff;
+}
+
+#my_page_account_info_container {
+  background-color: #094d4d;
+  border-radius: 20px;
+}
+
+#my_page_change_bio_btn {
+  border-radius: 50px;
+  width: auto;
+}
+
+#my_page_menu h3 fa-plus {
+  color: green;
+  background-color: #f10755;
+}
