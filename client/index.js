@@ -1,4 +1,4 @@
-//Enum för att översätta attribut vid sökning
+//Enum used to translate attributes when a search is done
 const Attr_Enum = Object.freeze({ "Cykel": "bike", "Diskmaskin": "dishwasher", "Tvättmaskin": "washingmachine", "Wifi": "wifi", "Bastu": "sauna", "Bekvämligheter": "Bekvämligheter" });
 var saved_input;
 //-------------------------JQuery events-------------------------
@@ -7,6 +7,8 @@ var saved_input;
 $(document).ready(function () {
     window.setTimeout(loader, 2000);
     go_home();
+
+    //Search variables are saved when the webapplication is entered
     var search = {
         area: $("#home_select_area").val(),
         start: $("#home_select_start").val(),
@@ -15,8 +17,6 @@ $(document).ready(function () {
         attributes: get_wanted_attributes_home()
     }
     sessionStorage.setItem('search', JSON.stringify(search));
-
-
 
     if (sessionStorage.getItem('auth')) {
         $("#sign_in_nav").removeClass('d-md-block');
@@ -43,6 +43,7 @@ $(document).ready(function () {
         $('html, body').scrollTop(0);
     });
 
+    //Burger menu: Go home page
     $("#menu").on("click", "#home_button", function (e) {
         e.preventDefault();
         go_home();
@@ -63,6 +64,7 @@ $(document).ready(function () {
         $('html, body').scrollTop(0);
     });
 
+    //Burger menu: Go my page from navbar
     $("nav").on("click", "#my_page_nav", function (e) {
         e.preventDefault();
         go_my_page();
@@ -91,7 +93,6 @@ $(document).ready(function () {
         $('html, body').scrollTop(0);
     });
 
-
     //Burger menu: Go login
     $("#menu").on("click", "#login_button", function (e) {
         e.preventDefault();
@@ -116,7 +117,6 @@ $(document).ready(function () {
         }
     });
 
-
     //Go to search page
     $("#content").on("click", "#home_search_submit", function (e) {
         e.preventDefault();
@@ -131,13 +131,6 @@ $(document).ready(function () {
         $('html, body').scrollTop(0);
     });
 
-    //Go to login page from registered 
-    // $("#registered_page_content").on("click", "#log_in_from_registered_view", function (e) {
-    //     e.preventDefault();
-    //     alert("hej")
-    //     go_login();
-    // });
-
     //Submit register form
     $("#content").on("click", "#register_form_button", function (e) {
         e.preventDefault();
@@ -151,7 +144,6 @@ $(document).ready(function () {
         go_register();
         $('html, body').scrollTop(0);
     });
-
 
     //Submit edit form
     $("#content").on("click", "#edit_form_button", function (e) {
@@ -184,13 +176,23 @@ $(document).ready(function () {
         }
     });
 
-    $("#menu, nav").on("click", ".hide-menu", function (e) {
+    //Submit form create new ad
+    $("#content").on("click", "#read_more_login_button", function (e) {
+        e.preventDefault();
+        go_login();
+        $('html, body').scrollTop(0);
+    });
+
+    //Hide the burger menu
+    $("#menu").on("click", ".hide-menu", function (e) {
         $("#close-menu").prop("checked", false);
     });
 
+    //Hide the burger menu when click somewhere on the page outside the menu
     $("#content").on("click", function (e) {
         $("#close-menu").prop("checked", false);
     });
+
     //Register update of search sort
     $("#content").on("change", ".checkboxupdate, #search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_ad_bike_id, #search_ad_dishwasher_id, #search_ad_wifi_id, #search_ad_sauna_id, #search_ad_washingmachine_id", function (e) {
         update_search();
@@ -229,7 +231,6 @@ $(document).ready(function () {
         go_search();
         $('html, body').scrollTop(0);
     });
-
 
     //Go to create new ad page
     $("#content").on("click", "#new_ad_button", function (e) {
@@ -272,7 +273,6 @@ $(document).ready(function () {
         $('html, body').scrollTop(0);
     });
 
-
     //Route to my page after payment
     $("#content").on("click", "#payment_to_mypage_button", function (e) {
         e.preventDefault();
@@ -291,17 +291,13 @@ $(document).ready(function () {
         $('html, body').scrollTop(0);
     });
 
-
-
-
-
     //Edit bio
     $("#content").on("click", "#my_page_change_bio_btn", function (e) {
         e.preventDefault();
         go_edit_bio_page();
     });
 
-    //cancel edit bio
+    //Cancel edit bio
     $("#content").on("click", "#cancel_edit_form_btn", function (e) {
         e.preventDefault();
         go_my_page();
@@ -349,43 +345,7 @@ $(document).ready(function () {
         }, 1000);
     });
 
-    //Home: change area facts: ryd
-    $("#content").on("click", "#map_ryd", function (e) {
-        e.preventDefault();
-        $("#area_facts").html($("#ryd_view").html());
-        exists = ($("#home_select_area").children().text().search("Ryd") == -1) ? true : false;
-        $("#go_area").toggleClass("d-none", exists);
-    });
-    //Home: change area facts: lambohov
-    $("#content").on("click", "#map_lambohov", function (e) {
-        e.preventDefault();
-        $("#area_facts").html($("#lambohov_view").html());
-        exists = ($("#home_select_area").children().text().search("Lambohov") == -1) ? true : false;
-        $("#go_area").toggleClass("d-none", exists);
-    });
-    //Home: change area facts: valla
-    $("#content").on("click", "#map_valla", function (e) {
-        e.preventDefault();
-        $("#area_facts").html($("#valla_view").html());
-        exists = ($("#home_select_area").children().text().search("Valla") == -1) ? true : false;
-        $("#go_area").toggleClass("d-none", exists);
-    });
-    //Home: change area facts: vasastan
-    $("#content").on("click", "#map_vasastan", function (e) {
-        e.preventDefault();
-        $("#area_facts").html($("#vasastan_view").html());
-        exists = ($("#home_select_area").children().text().search("Vasastan") == -1) ? true : false;
-        $("#go_area").toggleClass("d-none", exists);
-    });
-    //Home: change area facts: gottfridsberg
-    $("#content").on("click", "#map_gottfridsberg", function (e) {
-        e.preventDefault();
-        $("#area_facts").html($("#gottfridsberg_view").html());
-        exists = ($("#home_select_area").children().text().search("Gottfridsberg") == -1) ? true : false;
-        $("#go_area").toggleClass("d-none", exists);
-    });
-
-    //My page: approve tenant
+        //My page: approve tenant
     $("#content").on("click", ".book_ad_button", function (e) {
         e.preventDefault();
         approve_tenant($(this).data("id"));
@@ -399,6 +359,47 @@ $(document).ready(function () {
         // load_ads();
     });
 
+    //Home page
+
+    //Home: change area facts: Ryd
+    $("#content").on("click", "#map_ryd", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#ryd_view").html());
+        exists = ($("#home_select_area").children().text().search("Ryd") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
+    });
+
+    //Home: change area facts: Lambohov
+    $("#content").on("click", "#map_lambohov", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#lambohov_view").html());
+        exists = ($("#home_select_area").children().text().search("Lambohov") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
+    });
+
+    //Home: change area facts: Valla
+    $("#content").on("click", "#map_valla", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#valla_view").html());
+        exists = ($("#home_select_area").children().text().search("Valla") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
+    });
+
+    //Home: change area facts: Vasastan
+    $("#content").on("click", "#map_vasastan", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#vasastan_view").html());
+        exists = ($("#home_select_area").children().text().search("Vasastan") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
+    });
+
+    //Home: change area facts: Gottfridsberg
+    $("#content").on("click", "#map_gottfridsberg", function (e) {
+        e.preventDefault();
+        $("#area_facts").html($("#gottfridsberg_view").html());
+        exists = ($("#home_select_area").children().text().search("Gottfridsberg") == -1) ? true : false;
+        $("#go_area").toggleClass("d-none", exists);
+    });
 
     //Submit form create new ad
     $("#content").on("click", "#create_new_ad", function (e) {
@@ -410,13 +411,6 @@ $(document).ready(function () {
         } else {
             submitAdForm();
         }
-    });
-
-    //Submit form create new ad
-    $("#content").on("click", "#read_more_login_button", function (e) {
-        e.preventDefault();
-        go_login();
-        $('html, body').scrollTop(0);
     });
 
     //Go login from nav
@@ -459,48 +453,41 @@ $(document).ready(function () {
 
 //--------------------Webbplatskarta-------------------------
 
-//webbplatskarta: Startsida
+//Sitemap: Go to home page
 $("#start-page").on("click", function (e) {
     e.preventDefault();
     go_home();
     $('html, body').scrollTop(0);
 });
 
-//webbplatskarta: Bli medlem
+//Sitemap: Go to register page
 $("#become-member").on("click", function (e) {
     e.preventDefault();
     go_register();
     $('html, body').scrollTop(0);
 });
 
-// webbplatskarta: Logga in
+//Sitemap: Go to login page
 $("#log-in").on("click", function (e) {
     e.preventDefault();
     go_login();
     $('html, body').scrollTop(0);
 });
 
-//webbplatskarta: Vilka är vi
+//Sitemap: Go to about us page
 $("#who-are-we").on("click", function (e) {
     e.preventDefault();
     go_about_us_page();
     $('html, body').scrollTop(0);
 });
 
-
-//webbplatskarta: Hur funkar det
+//Sitemap: Go to "How does it work" page
 $("#how-does-it-work").on("click", function (e) {
     e.preventDefault();
     go_help_page();
     $('html, body').scrollTop(0);
 });
 
-//webbplatskarta: Kontakta oss
-$("#contact-us").on("click", function (e) {
-    e.preventDefault();
-    go_contact_page();
-    $('html, body').scrollTop(0);
-});
 
 //-------------------------Functions-------------------------
 
