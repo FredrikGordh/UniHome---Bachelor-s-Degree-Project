@@ -1,0 +1,257 @@
+body {
+  /* make it look decent enough */
+  background: white;
+  color: black;
+  font-family: "Roboto", sans-serif;
+}
+
+body,
+html {
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  zoom: 100%;
+}
+
+h1 {
+  margin: 0;
+}
+
+label {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  background: #094d4d;
+  color: #ffffff;
+  border-radius: 0 0 4px 4px;
+  border: 0;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: block;
+  transition: all 0.2s ease;
+  box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+  width: 100%;
+}
+
+button:hover {
+  filter: contrast(115%);
+  background-color: #094d4d;
+  color: #094d4d;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+  text-align: center;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+video {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+#navbar-logo {
+  width: 10vw;
+  min-width: 100px;
+  transform: translateY(-10%);
+  margin-left: 5px;
+}
+
+#menuToggle {
+  display: block;
+  top: 30px;
+  left: calc(100% - 80px);
+  width: 100px;
+  position: absolute;
+  z-index: 6;
+}
+
+#sign_in_nav {
+  display: block;
+  top: 25px;
+  right: 125px;
+  position: absolute;
+  z-index: 6;
+  color: white;
+  font-size: 20px;
+  
+}
+
+#sign_in_nav:hover {
+  transform: scale(1.01);
+  color: rgb(255, 255, 197);
+}
+
+#my_page_nav {
+  display: block;
+  top: 25px;
+  right: 125px;
+  position: absolute;
+  z-index: 6;
+  color: white;
+  font-size: 20px;
+}
+
+#my_page_nav:hover {
+  transform: scale(1.01);
+  color: rgb(255, 255, 197);
+}
+
+#search_nav {
+  display: block;
+  top: 25px;
+  right: 430px;
+  position: absolute;
+  z-index: 6;
+  color: white;
+  font-size: 20px;
+}
+
+#ad_accomodation_nav:hover {
+  transform: scale(1.01);
+  color: rgb(255, 255, 197);
+}
+
+#ad_accomodation_nav {
+  display: block;
+  top: 25px;
+  right: 250px;
+  position: absolute;
+  z-index: 6;
+  color: white;
+  font-size: 20px;
+}
+
+#menuToggle a {
+  text-decoration: none;
+  color: #232323;
+
+  transition: color 0.3s ease;
+}
+
+#menuToggle input {
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+
+  cursor: pointer;
+
+  opacity: 0; /* hide this */
+  z-index: 6; /* and place it over the hamburger */
+
+  -webkit-touch-callout: none;
+}
+
+#menuToggle span {
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+
+  background: white;
+  border-radius: 3px;
+
+  z-index: 5;
+
+  transform-origin: 4px 0px;
+
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+  background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+}
+
+#menuToggle span:first-child {
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+  transform-origin: 0% 100%;
+}
+
+#menuToggle input:checked ~ span {
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: #232323;
+}
+
+#menuToggle input:checked ~ span:nth-last-child(3) {
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+#menuToggle input:checked ~ span:nth-last-child(2) {
+  transform: rotate(-45deg) translate(0, -1px);
+}
+
+#menu {
+  position: absolute;
+  width: 300px;
+  padding: 50px;
+  border-radius: 20px;
+  /*opacity: 0;*/
+
+  background: #fcfeff;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
+
+  top: -20px;
+  left: -250px;
+  /*transform-origin: 0% 0%;*/
+  transform: translate(120%, 0%);
+
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+  z-index: 4;
+}
+
+#menu li {
+  padding: 10px 0;
+  font-size: 22px;
+}
+
+#menu li:hover {
+  font-size: 24px;
+  color: #37abab;
+}
+
+#menuToggle input:checked ~ ul {
+  transform: none;
+}
+
+#content {
+  padding: 0;
+  margin: 0;
+}

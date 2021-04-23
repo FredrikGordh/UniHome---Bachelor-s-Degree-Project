@@ -1,0 +1,27 @@
+#register_container {
+  margin-top: 20vh;
+  margin-bottom: 10vh;
+}
+
+#successfully_registered_page_container {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+#register_failed_container {
+  color: red;
+}
+
+#signup_image {
+  background-color: #37abab;
+  color: white;
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(248, 252, 255, 0.2)
+    ),
+    url(Media/signup.jpg) left no-repeat;
+
+  background-size: cover;
+  
+}

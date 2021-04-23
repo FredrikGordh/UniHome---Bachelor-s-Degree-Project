@@ -1,0 +1,70 @@
+#help_header {
+  background: linear-gradient(
+      0deg,
+      rgba(94, 155, 206, 0.5),
+      rgba(94, 155, 206, 0.5)
+    ),
+    url(Media/help.jpg) no-repeat center fixed;
+  background-size: cover;
+  width: 100%;
+  height: 800px;
+  padding-top: 300px;
+  color: white;
+  padding-left: 15vw;
+  padding-right: 15vw;
+}
+
+#help_header h1 {
+  font-size: 7vh;
+}
+
+#help_page_container {
+  text-align: center;
+  padding-bottom: 100px;
+  background-color: #f0f8ff;
+}
+
+#help_page_container p {
+  line-height: 35px;
+  margin: 50px 0;
+}
+
+#image_help_page_1{
+    background-color: #37abab;
+    color: white;
+    padding: 10vh;
+    border-radius: 20px;
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(248, 252, 255, 0.2)
+      ),
+      url(Media/book.jpg) left no-repeat;
+    background-size: cover; 
+}
+
+#image_help_page_2{
+    background-color: #37abab;
+    color: white;
+    padding: 10vh;
+    border-radius: 20px;
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(248, 252, 255, 0.2)
+      ),
+      url(Media/coffee.jpg) center no-repeat;
+    background-size: cover; 
+}
+
+@media screen and (min-width: 901px) {
+  #help_header p  {
+    font-size: 35px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  #help_header p {
+    font-size: 20px;
+  }
+}
