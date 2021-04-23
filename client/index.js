@@ -7,6 +7,14 @@ var saved_input;
 $(document).ready(function () {
     window.setTimeout(loader, 2000);
     go_home();
+    var search = {
+        area: $("#home_select_area").val(),
+        start: $("#home_select_start").val(),
+        end: $("#home_select_end").val(),
+        type: $("#home_select_type").val(),
+        attributes: get_wanted_attributes_home()
+    }
+    sessionStorage.setItem('search', JSON.stringify(search));
 
 
 
@@ -180,6 +188,9 @@ $(document).ready(function () {
         $("#close-menu").prop("checked", false);
     });
 
+    $("#content").on("click", function (e) {
+        $("#close-menu").prop("checked", false);
+    });
     //Register update of search sort
     $("#content").on("change", ".checkboxupdate, #search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_ad_bike_id, #search_ad_dishwasher_id, #search_ad_wifi_id, #search_ad_sauna_id, #search_ad_washingmachine_id", function (e) {
         update_search();
@@ -321,6 +332,8 @@ $(document).ready(function () {
     //My page menu: go to bookings
     $("#content").on("click", "#bookings_link", function (e) {
         e.preventDefault();
+        $('.modal-backdrop').hide();
+        go_my_page();
         load_bookings();
         $('html, body').animate({
             scrollTop: $("#my_page_content_scrolldown").offset().top
@@ -410,6 +423,14 @@ $(document).ready(function () {
     $("nav").on("click", "#sign_in_nav", function (e) {
         e.preventDefault();
         go_login();
+        $('html, body').scrollTop(0);
+    });
+
+    //Go login from nav
+    $("nav").on("click", "#search_nav", function (e) {
+        e.preventDefault();
+        sessionStorage.getItem('search');
+        go_search();
         $('html, body').scrollTop(0);
     });
 
@@ -982,34 +1003,34 @@ function load_my_ads_request() {
         headers: { "Authorization": "Bearer " + JSON.parse(sessionStorage.getItem('auth')).token },
         type: 'GET',
         success: function (ads) {
-            
+
             ads.forEach(element => {
-                
+
                 element.image = element.image.url
                 $("#my_page_ads_container").append(Mustache.render(my_accomodation, element));
                 set_attributes_ad(element)
-                
+
 
                 if (element.booked == true) {
                     if (element.paid == true) {
                         print_paid_tenant(element.id);
-                        $(".read_more_startdate_p"+element.id).html(element.tenant_startdate);
-                        $(".read_more_startdate_p"+element.id).html(element.tenant_enddate);
+                        $(".read_more_startdate_p" + element.id).html(element.tenant_startdate);
+                        $(".read_more_startdate_p" + element.id).html(element.tenant_enddate);
                     } else {
                         print_tenant(element.id);
-                        $(".read_more_startdate_p"+element.id).html(element.tenant_startdate);
-                        $(".read_more_startdate_p"+element.id).html(element.tenant_enddate);
+                        $(".read_more_startdate_p" + element.id).html(element.tenant_startdate);
+                        $(".read_more_startdate_p" + element.id).html(element.tenant_enddate);
                     }
                 } else if (element.reserved == true) {
                     get_tenant(element.id);
-                    $(".read_more_startdate_p"+element.id).html(element.tenant_startdate);
-                    $(".read_more_startdate_p"+element.id).html(element.tenant_enddate);
+                    $(".read_more_startdate_p" + element.id).html(element.tenant_startdate);
+                    $(".read_more_startdate_p" + element.id).html(element.tenant_enddate);
                 }
             });
         },
         statusCode: {
             404: function () {
-                $("#my_page_ads_container").append("<h5>Inga bokningar</h5>"); 
+                $("#my_page_ads_container").append("<h5>Inga bokningar</h5>");
             },
         }
     })
@@ -1037,7 +1058,7 @@ function load_my_bookings_request() {
                     $("#my_page_bookings_container").append(Mustache.render(my_bookings, element));
                     set_attributes_ad(element);
                     print_pay_host(element.id);
-                    $(".accomodation_host_"+element.id).append(Mustache.render(pay_button, element));
+                    $(".accomodation_host_" + element.id).append(Mustache.render(pay_button, element));
                 }
             });
         }
@@ -1087,9 +1108,9 @@ function get_tenant(ad_id) {
         success: function (result) {
             result["ad_id"] = ad_id;
             $(".accomodation_tennant_" + ad_id).append(Mustache.render(tenant, result));
-            
-            $(".headline_startdate_b"+ad_id).html("Inflytt");
-            $(".headline_enddate_b"+ad_id).html("Utflytt");
+
+            $(".headline_startdate_b" + ad_id).html("Inflytt");
+            $(".headline_enddate_b" + ad_id).html("Utflytt");
         }
     })
 }
@@ -1102,10 +1123,10 @@ function print_tenant(ad_id) {
         success: function (result) {
             result["ad_id"] = ad_id;
             $(".accomodation_tennant_" + ad_id).append(Mustache.render(tenant_booked, result));
-            $("#tenant_button2"+ad_id).html("Boendet är bokat och väntar på betalning. Tryck för mer info.");
-            $(".headline_startdate_b"+ad_id).html("Inflytt");
-            $(".headline_enddate_b"+ad_id).html("Utflytt");
-            
+            $("#tenant_button2" + ad_id).html("Boendet är bokat och väntar på betalning. Tryck för mer info.");
+            $(".headline_startdate_b" + ad_id).html("Inflytt");
+            $(".headline_enddate_b" + ad_id).html("Utflytt");
+
         }
     })
 }
@@ -1118,10 +1139,10 @@ function print_paid_tenant(ad_id) {
         success: function (result) {
             result["ad_id"] = ad_id;
             $(".accomodation_tennant_" + ad_id).append(Mustache.render(tenant_booked, result));
-            $("#tenant_button2"+ad_id).html("Boendet är nu betalat och bokat. Tryck för mer info.");
-            $(".headline_startdate_b"+ad_id).html("Inflytt");
-            $(".headline_enddate_b"+ad_id).html("Utflytt");
-            
+            $("#tenant_button2" + ad_id).html("Boendet är nu betalat och bokat. Tryck för mer info.");
+            $(".headline_startdate_b" + ad_id).html("Inflytt");
+            $(".headline_enddate_b" + ad_id).html("Utflytt");
+
         }
     })
 }
@@ -1134,8 +1155,8 @@ function print_host(ad_id) {
         success: function (result) {
             result["ad_id"] = ad_id;
             $(".accomodation_host_" + ad_id).append(Mustache.render(host_booked, result));
-            $("#host_button"+ad_id).html("Boendet är reserverat och väntar på godkännande. Tryck för mer info.");
-           
+            $("#host_button" + ad_id).html("Boendet är reserverat och väntar på godkännande. Tryck för mer info.");
+
         }
     })
 }
@@ -1148,8 +1169,8 @@ function print_pay_host(ad_id) {
         success: function (result) {
             result["ad_id"] = ad_id;
             $(".accomodation_host_" + ad_id).prepend(Mustache.render(host_booked, result));
-            $("#host_button"+ad_id).html("Boendet är godkänt och du kan nu betala. Tryck för mer info.");
-           
+            $("#host_button" + ad_id).html("Boendet är godkänt och du kan nu betala. Tryck för mer info.");
+
         }
     })
 }
@@ -1162,8 +1183,8 @@ function print_paid_host(ad_id) {
         success: function (result) {
             result["ad_id"] = ad_id;
             $(".accomodation_host_" + ad_id).append(Mustache.render(host_booked, result));
-            $("#host_button"+ad_id).html("Boendet är nu betalat och bokat. Tryck för mer info.");
-           
+            $("#host_button" + ad_id).html("Boendet är nu betalat och bokat. Tryck för mer info.");
+
         }
     })
 }
@@ -1809,6 +1830,8 @@ function submitAdForm() {
             contentType: false,
             success: function (successMessage) {
                 go_my_page();
+                $("#my_page_content").html($("#my_page_ads").html());
+                load_my_ads_request();
                 saved_input = null;
             },
             statusCode: {
