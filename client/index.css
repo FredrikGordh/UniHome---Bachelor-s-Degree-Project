@@ -622,8 +622,8 @@ video {
       0deg,
       rgba(94, 155, 206, 0.5),
       rgba(94, 155, 206, 0.5)
-  ), url(Media/aboutusheader.jpg);
-  background-position: center;
+  ), url(Media/IMG_5339.jpg);
+  background-position: top;
   background-repeat: none;
   background-size: cover;
   text-align: center;
@@ -1697,6 +1697,20 @@ button:disabled {
       rgba(248, 252, 255, 0.2)
     ),
     url(Media/login.jpg) left no-repeat;
+
+  background-size: cover;
+  
+}
+
+#createad_image {
+  background-color: #37abab;
+  color: white;
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(248, 252, 255, 0.2)
+    ),
+    url(Media/createad.jpg) left no-repeat;
 
   background-size: cover;
   

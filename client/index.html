@@ -25,7 +25,7 @@
   <!------------------------------ Navbar: En hamburgarmeny + navbar ------------------------------>
   <nav class="navbar navbar-style hide-menu d-none" id="navbar_main">
     <a href="" class="navbar-brand hide-menu"><img id="navbar-logo" src="Media/Unihome-logga.png"></a>
-    <a href="" id="ad_accomodation_nav" class="d-none d-md-block">Lägg upp boende</a>
+    <a href="" id="ad_accomodation_nav" class="d-none d-md-block">Skapa ny annons</a>
     <a href="" id="sign_in_nav" class="d-none d-md-block">Logga in</a>
     <a href="" id="my_page_nav" class="d-none">Mina sidor</a>
     <a href="" id="search_nav"><i class="fas fa-search"></i></a>
@@ -487,7 +487,7 @@
         <div id = "register_failed_container"></div>
 
           <div class="col-4">
-            <button type="button" id="register_form_button" class="btn btn-primary rounded-pill">Registrera</button>
+            <button type="button" id="register_form_button" class="btn btn-primary rounded-pill">Bli medlem</button>
           </div>
           <div>Har du redan ett konto? Logga in genom att klicka <span class = "clickable_class" id = "get_to_login">här</span></div>
         </div>
@@ -791,7 +791,9 @@
     <!-------------------------------- New ad view -------------------------------->
     <script id="new_ad_page" type="text/html">
   <div id="new_ad_page_section" class="section">
-    <div id="new_ad_page_container" class="container">
+    <div class="row">
+    <div class="col-12 col-lg-4" id ="createad_image"></div>
+    <div id="new_ad_page_container" class="col-12 offset-lg-1 col-lg-7">
       <h1>Skapa din annons</h1>
       <p>Fyll i fälten nedan med information om bostaden du vill hyra ut för att skapa din annons.</p>
       <form id="wide">
@@ -931,7 +933,7 @@
               </div>
             </div>
             </div>
-          </div>
+          
 
           <div class="container py-5">
         
@@ -955,13 +957,15 @@
             <br>
             <div class="row justify-content-center">
               <div class="col-3">
-                <button id="create_new_ad" class="btn btn-primary rounded-pill" type="button">Lägg upp annons</button>
+                <button id="create_new_ad" class="btn btn-primary rounded-pill" type="button">Skapa ny annons</button>
               </div>
             </div>
         </form>
     </form >
+  </div>
     </div>
   </div>
+</div>
 </script>
 
 
@@ -1007,7 +1011,7 @@
           <div class="col-10 col-lg-5">
             <h3>För hyresvärdar</h3>
             <p class="helptext">Som student kan du med hjälp av vår tjänst hyra ut ditt studentboende kortsiktigt, från en helg upp till sex månader.
-            Vår plattform är riktad enbart för studenter. Registrera dig och välj "Lägg upp boende" för att skapa och
+            Vår plattform är riktad enbart för studenter. Registrera dig och välj "Skapa ny annons" för att skapa och
             publicera en annons för din bostad. När en hyresgäst har reservat sig på ett utav dina boenden väljer du om du vill godkänna 
             eller neka personen till att hyra ditt boende. Vid en godkänd reservering ges sedan hyresgästen möjlighet att betala för sitt boende, 
             vi på UniHome håller pengarna tills den första vistelsenatten. 
@@ -1019,7 +1023,7 @@
           </div>
         </div>
       <div class="row justify-content-center ">
-          <div class="col-8 col-lg-3 mt-5" ><button id="help_login_button" class="btn btn-success rounded-pill">Registrera konto</button></div>
+          <div class="col-8 col-lg-3 mt-5" ><button id="help_login_button" class="btn btn-success rounded-pill">Bli medlem</button></div>
           <div class="col-8 col-lg-3 mt-5"><button id="help_register_button" class="btn btn-success rounded-pill">Logga in</button></div>
       </div>
       <div class="row justify-content-center mt-5">
