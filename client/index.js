@@ -188,6 +188,9 @@ $(document).ready(function () {
         $("#close-menu").prop("checked", false);
     });
 
+    $("#content").on("click", function (e) {
+        $("#close-menu").prop("checked", false);
+    });
     //Register update of search sort
     $("#content").on("change", ".checkboxupdate, #search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_ad_bike_id, #search_ad_dishwasher_id, #search_ad_wifi_id, #search_ad_sauna_id, #search_ad_washingmachine_id", function (e) {
         update_search();
@@ -329,6 +332,8 @@ $(document).ready(function () {
     //My page menu: go to bookings
     $("#content").on("click", "#bookings_link", function (e) {
         e.preventDefault();
+        $('.modal-backdrop').hide();
+        go_my_page();
         load_bookings();
         $('html, body').animate({
             scrollTop: $("#my_page_content_scrolldown").offset().top
@@ -1504,7 +1509,7 @@ function load_burger() {
     }
 
     $("#menu").prepend('<a href=""><li id="home_button" class="hide-menu">Startsida</li></a>'
-        + '<a href=""><li id="burger_add_accomodation" class="hide-menu d-block d-md-none">Lägg upp boende</li></a>')
+        + '<a href=""><li id="burger_add_accomodation" class="hide-menu d-block d-md-none">Skapa ny annons</li></a>')
 }
 
 //Function for calling all date loaders
