@@ -188,6 +188,9 @@ $(document).ready(function () {
         $("#close-menu").prop("checked", false);
     });
 
+    $("#content").on("click", function (e) {
+        $("#close-menu").prop("checked", false);
+    });
     //Register update of search sort
     $("#content").on("change", ".checkboxupdate, #search_page_select_area, #search_page_select_start, #search_page_select_end, #search_page_sort, #search_page_select_type, #search_ad_bike_id, #search_ad_dishwasher_id, #search_ad_wifi_id, #search_ad_sauna_id, #search_ad_washingmachine_id", function (e) {
         update_search();
