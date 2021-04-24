@@ -820,17 +820,11 @@ function go_payment_page(ad_id, ad_price) {
             document.querySelector("#button-text").classList.remove("hidden");
         }
     };
-
-
-
-    // använda ad_id för att beräkna pris
 }
 
 //Function for going to view: Successful payment page
 function go_successful_payment_page() {
-    // $("#content").html($("#successful_payment_page").html());
     $("#modal_payment").modal("show");
-
 }
 
 //Function for going to view: Read more ad
@@ -855,14 +849,9 @@ function go_edit_bio_page() {
     $("#phone_edit").val(user.telephone)
     $("#email_edit").val(user.email)
     $("#bio_edit").val(user.bio)
-
 }
 
-function go_confirmation_page() {
-
-}
-
-//function for fading the loader and taking back the navbar
+//Function for fading the loader and taking back the navbar
 function loader() {
     $(".loader-wrapper").fadeOut("slow");
     $("#navbar_main").removeClass("d-none")
@@ -904,6 +893,7 @@ function load_bookings() {
     load_my_bookings_request();
 }
 
+//Function for logout
 function logout() {
     sessionStorage.removeItem('auth');
     $("#sign_in_nav").addClass('d-none');
@@ -938,6 +928,7 @@ function showFileName(event) {
     infoArea.textContent = 'Filnamn: ' + fileName;
 }
 
+//Function to go to new add page to create a new add
 function go_new_ad_page() {
     $("#content").html($("#new_ad_page").html());
     $("#ad_start_id").val(new Date().toISOString().slice(0, 10));
@@ -984,6 +975,7 @@ function load_ads_request(search, sort = "asc", sort_param = "title") {
     })
 }
 
+//Function for loading all the users ads from the database
 function load_my_ads_request() {
     $.ajax({
         url: host + '/user/ads',
@@ -1023,6 +1015,7 @@ function load_my_ads_request() {
     })
 }
 
+//Function for loading all the users bookings from the database
 function load_my_bookings_request() {
     $.ajax({
         url: host + '/user/bookings',
@@ -1052,6 +1045,7 @@ function load_my_bookings_request() {
     })
 }
 
+//Funtion for loading all the users history, both payments and past bookings
 function my_past_bookings() {
     $.ajax({
         url: host + '/past-bookings',
@@ -1077,6 +1071,7 @@ function my_past_bookings() {
     })
 }
 
+//Function to set the tenant for a ad
 function set_tenant(ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/tenant',
@@ -1087,6 +1082,7 @@ function set_tenant(ad_id) {
     })
 }
 
+//Function to get the tenant for a ad
 function get_tenant(ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/tenant',
@@ -1102,6 +1098,7 @@ function get_tenant(ad_id) {
     })
 }
 
+//Function to get the tenant for a ad and display that an ad is booked but not payed for
 function print_tenant(ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/tenant',
@@ -1118,6 +1115,7 @@ function print_tenant(ad_id) {
     })
 }
 
+//Function to get the tenant for a ad from the database and display that an ad i booked and payed for
 function print_paid_tenant(ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/tenant',
@@ -1134,6 +1132,7 @@ function print_paid_tenant(ad_id) {
     })
 }
 
+//Function to get the host for a ad and display that an ad is booked and waiting to be accept/denied
 function print_host(ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/host',
@@ -1148,6 +1147,7 @@ function print_host(ad_id) {
     })
 }
 
+//Function to get the host for a ad from the database and display that an booking is accepted and can now be payed for
 function print_pay_host(ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/host',
@@ -1162,6 +1162,7 @@ function print_pay_host(ad_id) {
     })
 }
 
+//Function to get the host for a ad from the database and display that an booking is accepted and payed for
 function print_paid_host(ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/host',
@@ -1175,7 +1176,6 @@ function print_paid_host(ad_id) {
         }
     })
 }
-
 
 //Function for making a login request 
 function login_request(user) {
