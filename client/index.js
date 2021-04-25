@@ -1283,6 +1283,7 @@ function load_types(container) {
     })
 }
 
+//Funtion to show more info about an ad when the user wants to read more 
 function load_read_more(ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id,
@@ -1291,7 +1292,6 @@ function load_read_more(ad_id) {
             $("#read_more_ad_title").html(ad.title);
             $("#read_more_ad_description").html(ad.description);
             $("#read_more_ad_neighbourhood").html(ad.neighbourhood)
-            // $("#read_more_ad_studentcity").html(ad.studentcity);
             $("#read_more_ad_streetaddress").html(ad.streetaddress + " " + ad.streetnumber + ", " + ad.postalcode + ", " + ad.city);
             $("#read_more_ad_startdate").html(ad.startdate);
             $("#read_more_ad_enddate").html(ad.enddate);
@@ -1405,6 +1405,7 @@ function load_types(container) {
     })
 }
 
+//Function to display info about the accomodation on the payment page
 function load_payment_ad(ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id,
@@ -1428,6 +1429,7 @@ function load_payment_ad(ad_id) {
 
 }
 
+//Function to update the reservation status in the database on an ad with start and end date
 function update_reserved_status(status, ad_id, start_date, end_date) {
     data = {
         status: status,
@@ -1444,6 +1446,7 @@ function update_reserved_status(status, ad_id, start_date, end_date) {
     })
 }
 
+//Updates the reservation status on an ad  in the database without changing the start and end date
 function update_reserved_status_denied(status, ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/denied',
@@ -1455,7 +1458,7 @@ function update_reserved_status_denied(status, ad_id) {
     })
 }
 
-
+//Updates the booked status on an ad in the database
 function update_booked_status(status, ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/booked',
@@ -1467,6 +1470,7 @@ function update_booked_status(status, ad_id) {
     })
 }
 
+//Updates the paid status on an ad in the database
 function update_paid_status(status, ad_id) {
     $.ajax({
         url: host + '/ad/' + ad_id + '/paid',
@@ -1529,6 +1533,7 @@ function load_days(container) {
     }
 }
 
+//Funtion to load attributed in the dropdown menu on the search page
 function load_attr(container) {
     attributes = ["Cykel", "Wifi", "Diskmaskin", "Tvättmaskin", "Bastu"]
     attributes.forEach(element => {
@@ -1543,7 +1548,6 @@ function load_home_search_dropdowns() {
     load_days("#home_select_length");
     load_areas("#home_select_area");
     load_types("#home_select_type");
-    // load_attr("#home_select_attr");
 }
 
 //Function for loading data in dropdowns for search on search page
@@ -1586,6 +1590,7 @@ function deny_tenant(ad_id) {
 
 //----Form functions:
 
+//Collects info of an new user when the register form is submited
 function submit_register_form() {
     var user = {
         name: $("#name_register").val(),
@@ -1601,6 +1606,7 @@ function submit_register_form() {
 
 }
 
+//Collects info of an user when the edit form is submited
 function submit_edit_form() {
     var user = {
         name: $("#name_edit").val(),
@@ -1615,6 +1621,7 @@ function submit_edit_form() {
     edit_user_request(user);
 }
 
+//Collects login details of an user when the login form is submited
 function submit_login_form() {
     var user = {
         email: $("#email_login").val(),
@@ -1623,6 +1630,7 @@ function submit_login_form() {
     login_request(user);
 }
 
+//Collects data of an search made on the home page when the form is submited
 function submit_home_search_form() {
     var search = {
         area: $("#home_select_area").val(),
@@ -1639,6 +1647,7 @@ function submit_home_search_form() {
     }
 }
 
+//Function that collects the wanted attributes in a search
 function get_wanted_attributes() {
     var bike = $("#search_ad_bike_id").prop("checked");
     var dishwasher = $("#search_ad_dishwasher_id").prop("checked");
@@ -1674,6 +1683,7 @@ function get_wanted_attributes() {
 
 }
 
+//Collects the desired attributes from the search
 function get_wanted_attributes_home() {
     var attributes = ""
     $("input[name=attr]").each(function () {
@@ -1691,6 +1701,7 @@ function get_wanted_attributes_home() {
 
 }
 
+//Displays the attributes for the specific ad
 function set_attributes_ad(ad) {
     if (ad.attributes.wifi) {
         $("#wifi-attribute" + ad.id).html("<i class='fas fa-check' style='color:lightgreen;'> </i>");
@@ -1719,6 +1730,7 @@ function set_attributes_ad(ad) {
     }
 }
 
+//Updates the serach
 function update_search() {
     sort = $("#search_page_sort").val();
     if (sort == "A-Ö") {
@@ -1754,6 +1766,7 @@ function update_search() {
     }
 }
 
+//When the new ad form is submited a new ad is creates with the info collected from the fields
 function submitAdForm() {
     var formData = new FormData();
 
