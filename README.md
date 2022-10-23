@@ -12,7 +12,7 @@ The folloing participated in the project:
 - Jakob Fogelberg - jakfo369@student.liu.se
 - Joel Einarsson - joeei929@student.liu.se
 
-#Graphical guidlines:
+**Graphical guidlines:**  
 - Nice simple page
 - Simple payment page
 - Easy to upload images
