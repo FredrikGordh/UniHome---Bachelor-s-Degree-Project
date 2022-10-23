@@ -1,7 +1,9 @@
 Emelis Branch, WELCOME
 
-# TDDD83 - Kandidatprojekt | Grupp 11
-Detta är ett kandidatarbete gjort i kursen TDDD83 på Linköpings Universitet våren 2021.
+# UniHome - Bachelor's Degree Project | Group 11
+This is bachelor's degree project done in the course of TDDD83 at Linköping University, during the spring of 2021.
+The folloing participated in the project:
+
 - Albin Janzén - albja295@student.liu.se 
 - Emeli Anjel Lachas - emean372@student.liu.se
 - Fredrik Gordh Riseby - freri321@student.liu.se
@@ -10,31 +12,29 @@ Detta är ett kandidatarbete gjort i kursen TDDD83 på Linköpings Universitet v
 - Jakob Fogelberg - jakfo369@student.liu.se
 - Joel Einarsson - joeei929@student.liu.se
 
-# Grafiska Riktlinjer
-**Från brainwriting:**
-- Snygg enkel sida
-- Enkel betalsida
-- Lätt att ladda upp bilder
-- Smidig navbar
-- Tydliga datum för tillgänglighet
-- Tydlig kalender
-- Säker hantering av uppgifter
-- Smidigt att lägga till annonser
-- Responsiv
-- Snabba laddningstider
-- Estetisk design
-- Lätt navigation
-- Lätt att avboka
-- Förtroendeingivande
-- Snygg logga
-- Catchy namn
+#Graphical guidlines:
+- Nice simple page
+- Simple payment page
+- Easy to upload images
+- Smooth navbar
+- Clear dates of availability
+- Clear calendar
+- Safe handling of data
+- Easy to add ads
+- Responsive
+- Fast loading times
+- Aesthetic design
+- Easy navigation
+- Easy to cancel
+- Instilling confidence
+- Stylish logo
+- Catchy name
 - Modern widepage
-- Rundade ikoner
-- Förklarande bilder
-- Pastellfärger
+- Rounded icons
+- Explanatory pictures
+- Pastel colors
 
-**Färgförslag:**  
-
+**Color codes:**  
 - `#CCC0BC`
 - `#FF7C74`
 - `#A3625B`
